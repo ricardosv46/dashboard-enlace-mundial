@@ -49,7 +49,7 @@ const Sidebar = () => {
               <SidebarLink icon={Home} label="Tours" to="/tours" />
             </li>
             <li>
-              <SidebarLink icon={Home} label="Luna De Miel" to="/lunaDeMiel" />
+              <SidebarLink icon={Home} label="Luna De Miel" to="/luna-de-miel" />
             </li>
             <li>
               <SidebarLink icon={Home} label="Cruceros" to="/cruceros" />
