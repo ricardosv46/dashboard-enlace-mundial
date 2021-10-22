@@ -25,7 +25,7 @@ const Sidebar = () => {
   return (
     <>
       <div
-        className={`fixed z-10 transition-all flex flex-col top-0 md:left-0 w-64 bg-gray-900 h-full shadow-lg ${
+        className={`fixed z-10 transition-all flex flex-col top-0 md:left-0 w-64 bg-secondary-700 h-full shadow-lg ${
           isOpen ? 'left-0' : '-left-full'
         }`}
       >
