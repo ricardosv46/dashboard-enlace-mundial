@@ -1,5 +1,14 @@
 import { useState } from 'react'
 import { Home, LogOut, MoreVertical, Settings, User } from 'react-feather'
+import {
+  IconBlogs,
+  IconClients,
+  IconGalleries,
+  IconMessage,
+  IconOffer,
+  IconShip,
+  IconTour
+} from '../../assets/icons/icons'
 
 // import useAuth from '@/hooks/useAuth'
 import SidebarLink from './SidebarLink'
@@ -46,34 +55,46 @@ const Sidebar = () => {
               <SidebarLink icon={Home} label="Inicio" to="/" />
             </li>
             <li>
-              <SidebarLink icon={Home} label="Tours" to="/tours" />
+              <SidebarLink icon={IconTour} label="Tours" to="/tours" />
             </li>
             <li>
-              <SidebarLink icon={Home} label="Luna De Miel" to="/luna-de-miel" />
+              <SidebarLink
+                icon={Home}
+                label="Luna De Miel"
+                to="/luna-de-miel"
+              />
             </li>
             <li>
-              <SidebarLink icon={Home} label="Cruceros" to="/cruceros" />
+              <SidebarLink icon={IconShip} label="Cruceros" to="/cruceros" />
             </li>
             <li>
-              <SidebarLink icon={Home} label="Clientes" to="/clientes" />
+              <SidebarLink icon={IconClients} label="Clientes" to="/clientes" />
             </li>
             <li>
-              <SidebarLink icon={Home} label="Ofertas" to="/ofertas" />
+              <SidebarLink icon={IconOffer} label="Ofertas" to="/ofertas" />
             </li>
             <li>
               <SidebarLink icon={Home} label="Categorias" to="/categorias" />
             </li>
             <li>
-              <SidebarLink icon={Home} label="Galerias" to="/galerias" />
+              <SidebarLink
+                icon={IconGalleries}
+                label="Galerias"
+                to="/galerias"
+              />
             </li>
             <li>
-              <SidebarLink icon={Home} label="Blogs" to="/blogs" />
+              <SidebarLink icon={IconBlogs} label="Blogs" to="/blogs" />
             </li>
             <li>
               <SidebarLink icon={Home} label="Comentarios" to="/comentarios" />
             </li>
             <li>
-              <SidebarLink icon={Home} label="Contactos" to="/contactos" />
+              <SidebarLink
+                icon={IconMessage}
+                label="Contactos"
+                to="/contactos"
+              />
             </li>
             <li className="px-5">
               <div className="flex flex-row items-center h-8">
