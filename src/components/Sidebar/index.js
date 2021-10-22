@@ -1,9 +1,9 @@
 import { useState } from 'react'
-import { Box, Home, LogOut, MoreVertical, Settings, User } from 'react-feather'
+import { Home, LogOut, MoreVertical, Settings, User } from 'react-feather'
 
 // import useAuth from '@/hooks/useAuth'
 import SidebarLink from './SidebarLink'
-import SidebarCollapse from './SidebarCollapse'
+// import SidebarCollapse from './SidebarCollapse'
 
 const Sidebar = () => {
   // const { LogoutAction } = useAuth()
@@ -46,10 +46,34 @@ const Sidebar = () => {
               <SidebarLink icon={Home} label="Inicio" to="/" />
             </li>
             <li>
-              <SidebarCollapse icon={Box} label="Despacho">
-                <SidebarLink label="Lista" to="/lista-despacho" />
-                <SidebarLink label="Crear Despacho" to="/nuevo-despacho" />
-              </SidebarCollapse>
+              <SidebarLink icon={Home} label="Tours" to="/tours" />
+            </li>
+            <li>
+              <SidebarLink icon={Home} label="Luna De Miel" to="/luna-de-miel" />
+            </li>
+            <li>
+              <SidebarLink icon={Home} label="Cruceros" to="/cruceros" />
+            </li>
+            <li>
+              <SidebarLink icon={Home} label="Clientes" to="/clientes" />
+            </li>
+            <li>
+              <SidebarLink icon={Home} label="Ofertas" to="/ofertas" />
+            </li>
+            <li>
+              <SidebarLink icon={Home} label="Categorias" to="/categorias" />
+            </li>
+            <li>
+              <SidebarLink icon={Home} label="Galerias" to="/galerias" />
+            </li>
+            <li>
+              <SidebarLink icon={Home} label="Blogs" to="/blogs" />
+            </li>
+            <li>
+              <SidebarLink icon={Home} label="Comentarios" to="/comentarios" />
+            </li>
+            <li>
+              <SidebarLink icon={Home} label="Contactos" to="/contactos" />
             </li>
             <li className="px-5">
               <div className="flex flex-row items-center h-8">
