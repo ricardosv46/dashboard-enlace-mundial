@@ -24,7 +24,7 @@ const AuthRoutes = () => {
 
 const RootRouter = () => {
   const history = useHistory()
-  const [isAuth] = useState(false)
+  const [isAuth] = useState(true)
 
   useEffect(() => {
     if (isAuth) {
