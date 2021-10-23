@@ -9,55 +9,83 @@ const Cruceros = () => {
   const history = useHistory()
 
   const dataHead = [
-    ['Nombre', 18],
-    ['Edad', 48],
-    ['Domicilio', 48],
-    ['Fecha Ingreso', 52],
-    ['Estado', 48]
+    ['Id', 1],
+    ['Titulo', 2],
+    ['Estado', 3],
+    ['Destacado', 4],
+    []
   ]
 
   const dataBody = [
     {
-      name: 'percy',
-      edad: '27',
-      domicilio: 'AHH NESTOR MARTOS MZ D LT 35',
-      fechaIngreso: '10/01/2020',
-      estado: <button>Pedro</button>
+      id: '001',
+      titulo: 'Crucero 1',
+      estado: 'activo',
+      destacado: 'si',
+      detalle: (
+        <Button
+          onClick={() => history.push('/cruceros/editar-crucero')}
+          variant="primary"
+          size="sm"
+        >
+          Editar
+        </Button>
+      )
     },
     {
-      name: 'percy',
-      edad: '27',
-      domicilio: 'AHH NESTOR MARTOS MZ D LT 35',
-      fechaIngreso: '10/01/2020',
-      estado: <button>Pedro</button>
+      id: '002',
+      titulo: 'Crucero 2',
+      estado: 'activo',
+      destacado: 'si',
+      detalle: (
+        <Button
+          onClick={() => history.push('/cruceros/editar-crucero')}
+          variant="primary"
+          size="sm"
+        >
+          Editar
+        </Button>
+      )
     },
     {
-      name: 'percy',
-      edad: '27',
-      domicilio: 'AHH NESTOR MARTOS MZ D LT 35',
-      fechaIngreso: '10/01/2020',
-      estado: <button>Pedro</button>
+      id: '003',
+      titulo: 'Crucero 3',
+      estado: 'activo',
+      destacado: 'si',
+      detalle: (
+        <Button
+          onClick={() => history.push('/cruceros/editar-crucero')}
+          variant="primary"
+          size="sm"
+        >
+          Editar
+        </Button>
+      )
     },
     {
-      name: 'percy',
-      edad: '27',
-      domicilio: 'AHH NESTOR MARTOS MZ D LT 35',
-      fechaIngreso: '10/01/2020',
-      estado: <button>Pedro</button>
-    },
-    {
-      name: 'percy',
-      edad: '27',
-      domicilio: 'AHH NESTOR MARTOS MZ D LT 35',
-      fechaIngreso: '10/01/2020',
-      estado: <button>Pedro</button>
+      id: '004',
+      titulo: 'Crucero 4',
+      estado: 'activo',
+      destacado: 'si',
+      detalle: (
+        <Button
+          onClick={() => history.push('/cruceros/editar-crucero')}
+          variant="primary"
+          size="sm"
+        >
+          Editar
+        </Button>
+      )
     }
   ]
   return (
     <div className="shadow md:rounded bg-white p-5 py-10 md:p-10">
       <div className="flex justify-between mb-5">
         <Heading>Cruceros</Heading>
-        <Button onClick={() => history.push('/cruceros/crear-crucero')} size="sm">
+        <Button
+          onClick={() => history.push('/cruceros/crear-crucero')}
+          size="sm"
+        >
           Nuevo
         </Button>
       </div>

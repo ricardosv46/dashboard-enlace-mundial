@@ -18,11 +18,64 @@ const Tours = () => {
 
   const dataBody = [
     {
-      id: 'percy',
-      titulo: '27',
-      estado: 'AHH NESTOR MARTOS MZ D LT 35',
-      destacado: true,
-      detalle: <button>Detalle</button>
+      id: '001',
+      titulo: 'Ica y Paracas',
+      estado: 'activo',
+      destacado: 'si',
+      detalle: (
+        <Button
+          onClick={() => history.push('/tours/editar-tour')}
+          variant="primary"
+          size="sm"
+        >
+          Editar
+        </Button>
+      )
+    },
+    {
+      id: '002',
+      titulo: 'Marcapomacocha',
+      estado: 'activo',
+      destacado: 'si',
+      detalle: (
+        <Button
+          onClick={() => history.push('/tours/editar-tour')}
+          variant="primary"
+          size="sm"
+        >
+          Editar
+        </Button>
+      )
+    },
+    {
+      id: '003',
+      titulo: 'Cordillera La Viuda',
+      estado: 'activo',
+      destacado: 'si',
+      detalle: (
+        <Button
+          onClick={() => history.push('/tours/editar-tour')}
+          variant="primary"
+          size="sm"
+        >
+          Editar
+        </Button>
+      )
+    },
+    {
+      id: '004',
+      titulo: 'Antioquía',
+      estado: 'activo',
+      destacado: 'si',
+      detalle: (
+        <Button
+          onClick={() => history.push('/tours/editar-tour')}
+          variant="primary"
+          size="sm"
+        >
+          Editar
+        </Button>
+      )
     }
   ]
   return (

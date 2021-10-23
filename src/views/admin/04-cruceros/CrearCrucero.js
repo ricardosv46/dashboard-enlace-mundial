@@ -18,7 +18,7 @@ const CrearCrucero = () => {
         >
           <IconBackArrow />
         </span>
-        <Heading>Crear Nueva Luna de Miel</Heading>
+        <Heading>Crear Nuevo Viaje en Crucero</Heading>
       </div>
       <form
         onSubmit={() => {}}
