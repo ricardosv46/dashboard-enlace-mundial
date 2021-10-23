@@ -13,22 +13,33 @@ import Blogs from '../views/admin/09-blogs'
 import Comentarios from '../views/admin/10-comentarios'
 import Contactos from '../views/admin/11-contactos'
 import Home from '../views/admin/01-home'
+import CrearTour from '../views/admin/02-tours/CrearTour'
+import CrearLunaDeMiel from '../views/admin/03-lunaDeMiel/CrearLunaDeMiel'
+import CrearCrucero from '../views/admin/04-cruceros/CrearCrucero'
 
 const HomeRoutes = () => {
   return (
     <Layout>
       <Switch>
         <Route exact path="/" component={Home} />
-        <Route path="/tours" component={Tours} />
-        <Route path="/luna-de-miel" component={LunaDeMiel} />
-        <Route path="/cruceros" component={Cruceros} />
-        <Route path="/clientes" component={Clientes} />
-        <Route path="/ofertas" component={Ofertas} />
-        <Route path="/categorias" component={Categorias} />
-        <Route path="/galerias" component={Galerias} />
-        <Route path="/blogs" component={Blogs} />
-        <Route path="/comentarios" component={Comentarios} />
-        <Route path="/contactos" component={Contactos} />
+        <Route exact path="/tours" component={Tours} />
+        <Route exact path="/tours/crear-tour" component={CrearTour} />
+        <Route exact path="/luna-de-miel" component={LunaDeMiel} />
+        <Route
+          exact
+          path="/luna-de-miel/crear-luna-de-miel"
+          component={CrearLunaDeMiel}
+        />
+        <Route exact path="/cruceros/crear-crucero" component={CrearCrucero} />
+        <Route exact path="/cruceros" component={Cruceros} />
+
+        <Route exact path="/clientes" component={Clientes} />
+        <Route exact path="/ofertas" component={Ofertas} />
+        <Route exact path="/categorias" component={Categorias} />
+        <Route exact path="/galerias" component={Galerias} />
+        <Route exact path="/blogs" component={Blogs} />
+        <Route exact path="/comentarios" component={Comentarios} />
+        <Route exact path="/contactos" component={Contactos} />
       </Switch>
     </Layout>
   )

@@ -6,7 +6,7 @@ import InputText from '../../../components/Forms/InputText/InputText'
 import TextArea from '../../../components/Forms/TextArea'
 import Heading from '../../../components/Heading'
 
-const CrearTour = () => {
+const CrearCrucero = () => {
   const history = useHistory()
 
   return (
@@ -18,7 +18,7 @@ const CrearTour = () => {
         >
           <IconBackArrow />
         </span>
-        <Heading>Crear Nuevo Tour</Heading>
+        <Heading>Crear Nueva Luna de Miel</Heading>
       </div>
       <form
         onSubmit={() => {}}
@@ -76,38 +76,17 @@ const CrearTour = () => {
               htmlFor="destacado"
               className="block text-gray-700 text-left text-sm"
             >
-              Categorias
+              Categoria
             </label>
-            <div className="grid grid-cols-1 sm:grid-cols-2">
-              <label className="cursor-pointer my-2 text-secondary-500 text-md">
-                <input type="checkbox" className="mr-2" />
-                Cata de Vinos y Licores
-              </label>
-              <label className="cursor-pointer my-2 text-secondary-500 text-md">
-                <input type="checkbox" className="mr-2" />
-                Naturaleza y paisaje
-              </label>
-              <label className="cursor-pointer my-2 text-secondary-500 text-md">
-                <input type="checkbox" className="mr-2" />
-                Rutas y Recorridos
-              </label>
-              <label className="cursor-pointer my-2 text-secondary-500 text-md">
-                <input type="checkbox" className="mr-2" />
-                Turismo Ecológico
-              </label>
-              <label className="cursor-pointer my-2 text-secondary-500 text-md">
-                <input type="checkbox" className="mr-2" />
-                Turismo Gastronómico
-              </label>
-              <label className="cursor-pointer my-2 text-secondary-500 text-md">
-                <input type="checkbox" className="mr-2" />
-                Turismo de Sol y Playa
-              </label>
-            </div>
+            <select
+              className="w-full text-sm text-black transition ease-in duration-150 px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
+              id="categoria"
+              name="categoria"
+              autoComplete="off"
+            >
+              <option defaultValue>Selecciona una categoria</option>
+            </select>
           </div>
-        </div>
-
-        <div className="flex flex-col lg:flex-row lg:space-x-4 items-center mb-3">
           <InputText
             name="horarios"
             label="Horarios"
@@ -213,4 +192,4 @@ const CrearTour = () => {
   )
 }
 
-export default CrearTour
+export default CrearCrucero

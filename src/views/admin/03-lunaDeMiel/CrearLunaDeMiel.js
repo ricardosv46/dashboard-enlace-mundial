@@ -6,7 +6,7 @@ import InputText from '../../../components/Forms/InputText/InputText'
 import TextArea from '../../../components/Forms/TextArea'
 import Heading from '../../../components/Heading'
 
-const CrearTour = () => {
+const CrearLunaDeMiel = () => {
   const history = useHistory()
 
   return (
@@ -18,7 +18,7 @@ const CrearTour = () => {
         >
           <IconBackArrow />
         </span>
-        <Heading>Crear Nuevo Tour</Heading>
+        <Heading>Crear Nueva Luna de Miel</Heading>
       </div>
       <form
         onSubmit={() => {}}
@@ -213,4 +213,4 @@ const CrearTour = () => {
   )
 }
 
-export default CrearTour
+export default CrearLunaDeMiel
