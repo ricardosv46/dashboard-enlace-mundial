@@ -19,6 +19,7 @@ import CrearCrucero from '../views/admin/04-cruceros/CrearCrucero'
 import EditarTour from '../views/admin/02-tours/EditarTour'
 import EditarLunaDeMiel from '../views/admin/03-lunaDeMiel/EditarLunaDeMiel'
 import EditarCrucero from '../views/admin/04-cruceros/EditarCrucero'
+import CrearCliente from '../views/admin/05-clientes/CrearCliente'
 
 const HomeRoutes = () => {
   return (
@@ -50,6 +51,7 @@ const HomeRoutes = () => {
         />
 
         <Route exact path="/clientes" component={Clientes} />
+        <Route exact path="/clientes/crear-cliente" component={CrearCliente} />
         <Route exact path="/ofertas" component={Ofertas} />
         <Route exact path="/categorias" component={Categorias} />
         <Route exact path="/galerias" component={Galerias} />

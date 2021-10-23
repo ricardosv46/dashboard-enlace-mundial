@@ -21,7 +21,7 @@ const CrearTour = () => {
         <Heading>Crear Nuevo Tour</Heading>
       </div>
       <form
-        onSubmit={() => {}}
+        onSubmit={() => { }}
         className="w-full max-w-xl lg:px-4 px-0 mx-auto"
       >
         <div className="flex flex-col lg:flex-row lg:space-x-4 mb-3">
