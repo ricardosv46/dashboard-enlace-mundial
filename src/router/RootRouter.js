@@ -16,6 +16,7 @@ import Home from '../views/admin/01-home'
 import CrearTour from '../views/admin/02-tours/CrearTour'
 import CrearLunaDeMiel from '../views/admin/03-lunaDeMiel/CrearLunaDeMiel'
 import CrearCrucero from '../views/admin/04-cruceros/CrearCrucero'
+import CrearCliente from '../views/admin/05-clientes/CrearCliente'
 
 const HomeRoutes = () => {
   return (
@@ -34,6 +35,7 @@ const HomeRoutes = () => {
         <Route exact path="/cruceros" component={Cruceros} />
 
         <Route exact path="/clientes" component={Clientes} />
+        <Route exact path="/clientes/crear-cliente" component={CrearCliente} />
         <Route exact path="/ofertas" component={Ofertas} />
         <Route exact path="/categorias" component={Categorias} />
         <Route exact path="/galerias" component={Galerias} />
