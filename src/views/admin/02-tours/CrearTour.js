@@ -1,4 +1,5 @@
 import React from 'react'
+import InputText from '../../../components/Forms/InputText/InputText'
 
 const CrearTour = () => {
   return (
@@ -6,40 +7,25 @@ const CrearTour = () => {
       <div className="flex flex-col lg:flex-row lg:space-x-4 mb-3">
         <div className="flex flex-col w-full mb-4 lg:mb-0">
           <label
-            htmlFor="Cliente"
+            htmlFor="titulo"
             className="block text-gray-700 text-left text-sm"
           >
-            Cliente
+            Titulo
           </label>
 
-          <div className="relative">
-            <input
-              className="w-full text-sm text-black transition ease-in duration-150 px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
-              autoComplete="off"
-              required
-              id="Cliente"
-              name="Cliente"
-              type="text"
-              placeholder="Buscar un cliente"
-            />
-          </div>
+          <input
+            className="w-full text-sm text-black transition ease-in duration-150 px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
+            autoComplete="off"
+            required
+            id="titulo"
+            name="titulo"
+            type="text"
+            placeholder="Título de la guía"
+          />
         </div>
 
         <div className="flex flex-col w-full">
-          <label
-            htmlFor="FechaEntrega"
-            className="block text-gray-700 text-left text-sm"
-          >
-            Fecha De Entrega
-          </label>
-          <input
-            className="w-full text-sm text-black transition ease-in duration-150 px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
-            required
-            id="FechaEntrega"
-            name="FechaEntrega"
-            type="date"
-            placeholder="Ingresa La Fecha d"
-          />
+          <InputText name="slug" label="Slug" placeholder="slug" />
         </div>
       </div>
 
