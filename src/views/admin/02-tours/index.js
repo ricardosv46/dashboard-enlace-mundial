@@ -4,7 +4,7 @@ import Input from '../../../components/Input/Input'
 import TableGeneral from '../../../components/Tables/TableGeneral'
 
 const Tours = () => {
-  const dataHead = [['Nombre', 18], ['Edad', 48], ['Domicilio', 48], ['Fecha Ingreso', 52], ['Estado', 48]]
+  const dataHead = [['Nombre', 0], ['Edad', 0], ['Domicilio', 52], ['Fecha Ingreso', 0], ['Estado', 0]]
 
   const dataBody = [
     {
@@ -75,7 +75,7 @@ const Tours = () => {
       edad: '27',
       domicilio: 'AHH NESTOR MARTOS MZ D LT 35',
       fechaIngreso: '10/01/2020',
-      estado: <button>Pedro</button>
+      estado: <button className="px-3 py-2 rounded-sm bg-primary text-white">Pedro</button>
     },
     {
       name: 'percy',
