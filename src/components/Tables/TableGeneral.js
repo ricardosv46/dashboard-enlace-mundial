@@ -3,7 +3,7 @@ import React from 'react'
 const TableGeneral = ({
   dataBody,
   dataHead,
-  borderColor = 'primary-100',
+  borderColor = 'primary-300',
   headerTextColor = 'gray-800',
   bodyTextColor = 'gray-700',
   headerBgColor = 'white',
@@ -24,7 +24,7 @@ const TableGeneral = ({
 
   return (
     <div className="w-full mb-8 overflow-hidden ">
-      <div className="w-full overflow-x-auto">
+      <div className="w-full overflow-x-auto min-h-screen">
         {dataBody && (
           <table className="w-full  text-center">
             <thead className="shadow-2xl">
@@ -41,9 +41,9 @@ const TableGeneral = ({
             </thead>
             <tbody className={`${bodyBg} border ${borderC} text-base ${textColorB} `}>
               {dataBody.map((row, index) => (
-                <tr key={index} className=" font-medium">
+                <tr key={index} className=" font-medium ">
                   {handleArray(row).map((column, index) => (
-                    <td key={index}>{column}</td>
+                    <td className="border " key={index}>{column}</td>
                   ))}
                 </tr>
               ))}
