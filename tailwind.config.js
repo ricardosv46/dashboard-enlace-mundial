@@ -10,7 +10,8 @@ const generatePalette = require('./src/@tailwind/utils/generate-palette')
  * Tailwind-like color palettes automatically
  */
 const customPalettes = {
-  brand: generatePalette('#0833a2')
+  brand: generatePalette('#23CE6B'),
+  secondary: generatePalette('#2C508A')
 }
 
 /**
@@ -22,6 +23,10 @@ const themes = {
     primary: {
       // ...colors.green,
       ...customPalettes.brand,
+      DEFAULT: customPalettes[600]
+    },
+    secondary: {
+      ...customPalettes.secondary,
       DEFAULT: customPalettes[600]
     },
     accent: {
