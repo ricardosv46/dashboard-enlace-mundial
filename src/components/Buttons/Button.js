@@ -2,7 +2,7 @@ import React from 'react'
 
 const Button = ({
   children,
-  variant = 'primary-outline',
+  variant = 'primary',
   size = 'md',
   onClick = () => {},
   type = 'button',
