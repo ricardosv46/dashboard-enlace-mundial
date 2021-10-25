@@ -1,5 +1,6 @@
 import React from 'react'
 import BtnAcciones from '../../../components/btnAcciones/BtnAcciones'
+import BtnEstado from '../../../components/BtnEstado/BtnEstado'
 // import BtnAcciones from '../../../components/btnAcciones/BtnAcciones'
 import Heading from '../../../components/Heading'
 import TableGeneral from '../../../components/Tables/TableGeneral'
@@ -8,7 +9,7 @@ const Categorias = () => {
   const dataHead = [
     ['Imagen', 20],
     ['Nombre', 52],
-    ['Estado', 0],
+    ['Estado', 20],
     ['Destacar', 20],
     ['Acciones', 24]
   ]
@@ -17,42 +18,42 @@ const Categorias = () => {
     {
       imagen: '',
       nombre: 'Cata de Vinos y Licores',
-      estado: 'Activo',
+      estado: <BtnEstado estado={true} />,
       descatar: true,
       acciones: <BtnAcciones />
     },
     {
       imagen: '',
       nombre: 'Naturaleza y Paisajes',
-      estado: 'Activo',
+      estado: <BtnEstado estado={true} />,
       descatar: true,
       acciones: <BtnAcciones />
     },
     {
       imagen: '',
       nombre: 'Rutas y Recorridos',
-      estado: 'Activo',
+      estado: <BtnEstado estado={false} />,
       descatar: true,
       acciones: <BtnAcciones />
     },
     {
       imagen: '',
       nombre: 'Turismo Ecológico',
-      estado: 'Activo',
+      estado: <BtnEstado estado={true} />,
       destacar: false,
       acciones: <BtnAcciones />
     },
     {
       imagen: '',
       nombre: 'Turismo Gastronómico',
-      estado: 'Activo',
+      estado: <BtnEstado estado={false} />,
       descatar: false,
       acciones: <BtnAcciones />
     },
     {
       imagen: '',
       nombre: 'Turismo de sol y Playa',
-      estado: 'Activo',
+      estado: <BtnEstado estado={true} />,
       descatar: true,
       acciones: <BtnAcciones />
     }
