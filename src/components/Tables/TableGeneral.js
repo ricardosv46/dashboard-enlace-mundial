@@ -3,7 +3,7 @@ import React from 'react'
 const TableGeneral = ({
   dataBody,
   dataHead,
-  borderColor = 'primary-300',
+  borderColor = 'gray-100',
   headerTextColor = 'gray-800',
   bodyTextColor = 'gray-700',
   headerBgColor = 'white',
@@ -26,24 +26,24 @@ const TableGeneral = ({
     <div className="w-full mb-8 overflow-hidden ">
       <div className="w-full overflow-x-auto min-h-screen">
         {dataBody && (
-          <table className="w-full  text-center">
-            <thead className="shadow-2xl">
+          <table className={`w-full  text-left border-2 ${borderC} `}>
+            <thead className="shadow-2xl ">
               <tr
-                className={`text-lg font-bold tracking-wide ${textColorH} 
-              ${headBg} border ${borderC}  text-center`}
+                className={`text-base font-semibold tracking-wide ${textColorH} 
+              ${headBg}  text-center`}
               >
                 {dataHead.map((th, index) => (
-                  <th className={`px-4 py-3 min-w-${th[1]}`} key={index}>
+                  <th className={`px-4 py-4 min-w-${th[1]} text-gray-600 text-left`} key={index}>
                     {th[0]}
                   </th>
                 ))}
               </tr>
             </thead>
-            <tbody className={`${bodyBg} border ${borderC} text-base ${textColorB} `}>
+            <tbody className={`${bodyBg}  ${borderC} text-base ${textColorB} `}>
               {dataBody.map((row, index) => (
-                <tr key={index} className=" font-medium ">
+                <tr key={index} className=" font-medium cursor-pointer hover:shadow-md hover:-translate-y-2 transform transition-all duration-300">
                   {handleArray(row).map((column, index) => (
-                    <td className="border " key={index}>{column}</td>
+                    <td className=" uppercase text-gray-600 py-2 px-4" key={index}>{column}</td>
                   ))}
                 </tr>
               ))}

@@ -6,74 +6,54 @@ import TableGeneral from '../../../components/Tables/TableGeneral'
 
 const Categorias = () => {
   const dataHead = [
-    ['Id', 0],
-    ['Título', 52],
-    ['Descripción', 80],
+    ['Imagen', 20],
+    ['Nombre', 52],
     ['Estado', 0],
-    ['Img Principal', 52],
-    ['Img Secundaria', 52],
+    ['Destacar', 20],
     ['Acciones', 24]
   ]
 
   const dataBody = [
     {
-      id: '#',
-      titulo: 'Cata de Vinos y Licores',
-      descripcion:
-        ' Lorem ipsum dolor sit amet consectetur adipisicing elit.Illum ',
+      imagen: '',
+      nombre: 'Cata de Vinos y Licores',
       estado: 'Activo',
-      imgPrincipal: 'Cusco.png',
-      imgSecundaria: 'Cusco.png',
+      descatar: true,
       acciones: <BtnAcciones />
     },
     {
-      id: '#',
-      titulo: 'Naturaleza y Paisajes',
-      descripcion:
-        ' Lorem ipsum dolor sit amet consectetur adipisicing elit.Illum',
+      imagen: '',
+      nombre: 'Naturaleza y Paisajes',
       estado: 'Activo',
-      imgPrincipal: 'Cusco.png',
-      imgSecundaria: 'Cusco.png',
+      descatar: true,
       acciones: <BtnAcciones />
     },
     {
-      id: '#',
-      titulo: 'Rutas y Recorridos',
-      descripcion:
-        ' Lorem ipsum dolor sit amet consectetur adipisicing elit.Illum',
+      imagen: '',
+      nombre: 'Rutas y Recorridos',
       estado: 'Activo',
-      imgPrincipal: 'Cusco.png',
-      imgSecundaria: 'Cusco.png',
+      descatar: true,
       acciones: <BtnAcciones />
     },
     {
-      id: '#',
-      titulo: 'Turismo Ecológico',
-      descripcion:
-        ' Lorem ipsum dolor sit amet consectetur adipisicing elit.Illum',
+      imagen: '',
+      nombre: 'Turismo Ecológico',
       estado: 'Activo',
-      imgPrincipal: 'Cusco.png',
-      imgSecundaria: 'Cusco.png',
+      destacar: false,
       acciones: <BtnAcciones />
     },
     {
-      id: '#',
-      titulo: 'Turismo Gastronómico',
-      descripcion:
-        ' Lorem ipsum dolor sit amet consectetur adipisicing elit.Illum',
+      imagen: '',
+      nombre: 'Turismo Gastronómico',
       estado: 'Activo',
-      imgPrincipal: 'Cusco.png',
-      imgSecundaria: 'Cusco.png',
+      descatar: false,
       acciones: <BtnAcciones />
     },
     {
-      id: '#',
-      titulo: 'Turismo de sol y Playa',
-      descripcion:
-        ' Lorem ipsum dolor sit amet consectetur adipisicing elit.Illum',
+      imagen: '',
+      nombre: 'Turismo de sol y Playa',
       estado: 'Activo',
-      imgPrincipal: 'Cusco.png',
-      imgSecundaria: 'Cusco.png',
+      descatar: true,
       acciones: <BtnAcciones />
     }
   ]

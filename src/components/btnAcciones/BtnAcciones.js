@@ -25,7 +25,7 @@ const BtnAcciones = ({
           ? 'border text-sm opacity-100 pointer-events-auto transition-all duration-300 '
           : ' opacity-0 pointer-events-none '
           }
-               py-4  w-36   text-base  absolute -bottom-28 right-2 bg-white z-999
+               py-4  w-36   text-base  absolute -bottom-28 right-2 bg-white z-99
                hover:text-black text-gray-700  shadow-md`}
       >
         <p className="flex  cursor-pointer  py-2 pl-6 hover:bg-primary-300 transition-all duration-200"
