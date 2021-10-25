@@ -1,5 +1,6 @@
 import React from 'react'
 import BtnAcciones from '../../../components/btnAcciones/BtnAcciones'
+import BtnDestacado from '../../../components/BtnDestacado/BtnDestacado'
 import BtnEstado from '../../../components/BtnEstado/BtnEstado'
 // import BtnAcciones from '../../../components/btnAcciones/BtnAcciones'
 import Heading from '../../../components/Heading'
@@ -19,42 +20,42 @@ const Categorias = () => {
       imagen: '',
       nombre: 'Cata de Vinos y Licores',
       estado: <BtnEstado estado={true} />,
-      descatar: true,
+      descatar: <BtnDestacado estado={true}/>,
       acciones: <BtnAcciones />
     },
     {
       imagen: '',
       nombre: 'Naturaleza y Paisajes',
       estado: <BtnEstado estado={true} />,
-      descatar: true,
+      descatar: <BtnDestacado estado={false}/>,
       acciones: <BtnAcciones />
     },
     {
       imagen: '',
       nombre: 'Rutas y Recorridos',
       estado: <BtnEstado estado={false} />,
-      descatar: true,
+      descatar: <BtnDestacado estado={false}/>,
       acciones: <BtnAcciones />
     },
     {
       imagen: '',
       nombre: 'Turismo Ecológico',
       estado: <BtnEstado estado={true} />,
-      destacar: false,
+      destacar: <BtnDestacado estado={true}/>,
       acciones: <BtnAcciones />
     },
     {
       imagen: '',
       nombre: 'Turismo Gastronómico',
       estado: <BtnEstado estado={false} />,
-      descatar: false,
+      descatar: <BtnDestacado estado={false}/>,
       acciones: <BtnAcciones />
     },
     {
       imagen: '',
       nombre: 'Turismo de sol y Playa',
       estado: <BtnEstado estado={true} />,
-      descatar: true,
+      descatar: <BtnDestacado estado={true}/>,
       acciones: <BtnAcciones />
     }
   ]
