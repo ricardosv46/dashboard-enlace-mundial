@@ -20,6 +20,8 @@ import EditarTour from '../views/admin/02-tours/EditarTour'
 import EditarLunaDeMiel from '../views/admin/03-lunaDeMiel/EditarLunaDeMiel'
 import EditarCrucero from '../views/admin/04-cruceros/EditarCrucero'
 import CrearCliente from '../views/admin/05-clientes/CrearCliente'
+import CrearOferta from '../views/admin/06-ofertas/CrearOferta'
+import EditarOferta from '../views/admin/06-ofertas/EditarOferta'
 
 const HomeRoutes = () => {
   return (
@@ -53,6 +55,9 @@ const HomeRoutes = () => {
         <Route exact path="/clientes" component={Clientes} />
         <Route exact path="/clientes/crear-cliente" component={CrearCliente} />
         <Route exact path="/ofertas" component={Ofertas} />
+        <Route exact path="/ofertas/crear-oferta" component={CrearOferta} />
+        <Route exact path="/ofertas/editar-oferta" component={EditarOferta} />
+
         <Route exact path="/categorias" component={Categorias} />
         <Route exact path="/galerias" component={Galerias} />
         <Route exact path="/blogs" component={Blogs} />
