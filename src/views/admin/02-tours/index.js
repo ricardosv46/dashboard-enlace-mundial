@@ -1,6 +1,7 @@
 import React from 'react'
 import { useHistory } from 'react-router'
 import IconAcciones from '../../../components/btnAcciones/IconAcciones'
+import BtnDestacado from '../../../components/BtnDestacado/BtnDestacado'
 import Button from '../../../components/Buttons/Button'
 import InputToggle from '../../../components/Forms/InputToggle/InputToggle'
 import Heading from '../../../components/Heading'
@@ -22,7 +23,7 @@ const Tours = () => {
       id: '001',
       titulo: 'Ica y Paracas',
       estado: <InputToggle status="true" />,
-      destacado: 'si',
+      destacado: <BtnDestacado estado={true} />,
       detalle: (
         <IconAcciones onEdit={() => history.push('/tours/editar-tour')} />
       )
@@ -31,7 +32,7 @@ const Tours = () => {
       id: '002',
       titulo: 'Marcapomacocha',
       estado: <InputToggle status="true" />,
-      destacado: 'si',
+      destacado: <BtnDestacado estado={false} />,
       detalle: (
         <IconAcciones onEdit={() => history.push('/tours/editar-tour')} />
       )
@@ -40,7 +41,7 @@ const Tours = () => {
       id: '003',
       titulo: 'Cordillera La Viuda',
       estado: <InputToggle status="false" />,
-      destacado: 'si',
+      destacado: <BtnDestacado estado={true} />,
       detalle: (
         <IconAcciones onEdit={() => history.push('/tours/editar-tour')} />
       )
@@ -49,7 +50,7 @@ const Tours = () => {
       id: '004',
       titulo: 'Antioquía',
       estado: <InputToggle status="true" />,
-      destacado: 'si',
+      destacado: <BtnDestacado estado={true} />,
       detalle: (
         <IconAcciones onEdit={() => history.push('/tours/editar-tour')} />
       )

@@ -5,6 +5,7 @@ import InputToggle from '../../../components/Forms/InputToggle/InputToggle'
 import Heading from '../../../components/Heading'
 import TableGeneral from '../../../components/Tables/TableGeneral'
 import IconAcciones from '../../../components/btnAcciones/IconAcciones'
+import BtnDestacado from '../../../components/BtnDestacado/BtnDestacado'
 
 const Cruceros = () => {
   const history = useHistory()
@@ -22,7 +23,7 @@ const Cruceros = () => {
       id: '001',
       titulo: 'Crucero 1',
       estado: <InputToggle status="true" />,
-      destacado: 'si',
+      destacado: <BtnDestacado estado={true} />,
       detalle: (
         <IconAcciones onEdit={() => history.push('/cruceros/editar-crucero')} />
       )
@@ -31,7 +32,7 @@ const Cruceros = () => {
       id: '002',
       titulo: 'Crucero 2',
       estado: <InputToggle status="false" />,
-      destacado: 'si',
+      destacado: <BtnDestacado estado={true} />,
       detalle: (
         <IconAcciones onEdit={() => history.push('/cruceros/editar-crucero')} />
       )
@@ -40,7 +41,7 @@ const Cruceros = () => {
       id: '003',
       titulo: 'Crucero 3',
       estado: <InputToggle status="false" />,
-      destacado: 'si',
+      destacado: <BtnDestacado estado={true} />,
       detalle: (
         <IconAcciones onEdit={() => history.push('/cruceros/editar-crucero')} />
       )
@@ -49,7 +50,7 @@ const Cruceros = () => {
       id: '004',
       titulo: 'Crucero 4',
       estado: <InputToggle status="true" />,
-      destacado: 'si',
+      destacado: <BtnDestacado estado={true} />,
       detalle: (
         <IconAcciones onEdit={() => history.push('/cruceros/editar-crucero')} />
       )

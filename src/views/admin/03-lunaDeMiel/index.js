@@ -1,6 +1,7 @@
 import React from 'react'
 import { useHistory } from 'react-router'
 import IconAcciones from '../../../components/btnAcciones/IconAcciones'
+import BtnDestacado from '../../../components/BtnDestacado/BtnDestacado'
 import Button from '../../../components/Buttons/Button'
 import InputToggle from '../../../components/Forms/InputToggle/InputToggle'
 import Heading from '../../../components/Heading'
@@ -22,7 +23,7 @@ const LunaDeMiel = () => {
       id: '001',
       titulo: 'Paquete Turístico 1',
       estado: <InputToggle status="true" />,
-      destacado: 'si',
+      destacado: <BtnDestacado estado={true} />,
       detalle: (
         <IconAcciones onEdit={() => history.push('/luna-de-miel/editar-luna-de-miel')} />
       )
@@ -31,7 +32,7 @@ const LunaDeMiel = () => {
       id: '001',
       titulo: 'Paquete Turístico 2',
       estado: <InputToggle status="true" />,
-      destacado: 'si',
+      destacado: <BtnDestacado estado={true} />,
       detalle: (
         <IconAcciones onEdit={() => history.push('/luna-de-miel/editar-luna-de-miel')} />
       )
@@ -40,7 +41,7 @@ const LunaDeMiel = () => {
       id: '001',
       titulo: 'Paquete Turístico 3',
       estado: <InputToggle status="true" />,
-      destacado: 'si',
+      destacado: <BtnDestacado estado={true} />,
       detalle: (
         <IconAcciones onEdit={() => history.push('/luna-de-miel/editar-luna-de-miel')} />
       )
@@ -49,7 +50,7 @@ const LunaDeMiel = () => {
       id: '001',
       titulo: 'Paquete Turístico 4',
       estado: <InputToggle status="true" />,
-      destacado: 'si',
+      destacado: <BtnDestacado estado={true} />,
       detalle: (
         <IconAcciones onEdit={() => history.push('/luna-de-miel/editar-luna-de-miel')} />
       )
