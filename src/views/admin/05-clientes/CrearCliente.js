@@ -40,7 +40,7 @@ const CrearCliente = () => {
           <div className="flex flex-col w-full mb-4 lg:mb-0">
             <p className="block text-gray-700 text-left text-sm">Estado</p>
             <div className="h-full flex mt-2 items-center justify-start">
-              <InputToggle Toggle={Toggle} SetToggle={SetToggle} />
+              <InputToggle Toggle={Toggle} SetToggle={SetToggle} box="box" />
             </div>
 
           </div>
