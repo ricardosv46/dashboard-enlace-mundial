@@ -3,103 +3,103 @@ import Button from '../../../components/Buttons/Button'
 import InputToggle from '../../../components/Forms/InputToggle/InputToggle'
 import Heading from '../../../components/Heading'
 import TableGeneral from '../../../components/Tables/TableGeneral'
-import { useState } from 'react'
 
 const Clientes = () => {
-  const dataHead = [['Id', 18], ['Nombres', 18], ['Apellido', 48], ['Email', 48], ['Estado', 10]]
-  const [Toggle, SetToggle] = useState(false)
+  const dataHead = [
+    ['Id', 18],
+    ['Nombres', 18],
+    ['Apellido', 48],
+    ['Email', 48],
+    ['Estado', 10]
+  ]
   const history = useHistory()
   const dataBody = [
     {
       id: 1,
       name: 'percy',
-      apellido: 'Toranzo',
+      apellido: 'toranzo',
       email: 'admin@admin.com',
-      estado: <InputToggle Toggle={Toggle} SetToggle={SetToggle} />
+      estado: <InputToggle status={false} />
     },
     {
-      id: 1,
+      id: 2,
       name: 'percy',
       apellido: 'toranzo',
       email: 'admin@admin.com',
-      estado: <InputToggle Toggle={Toggle} SetToggle={SetToggle} />
+      estado: <InputToggle status={false} />
     },
     {
-      id: 1,
+      id: 3,
       name: 'percy',
       apellido: 'toranzo',
       email: 'admin@admin.com',
-      estado: <InputToggle Toggle={Toggle} SetToggle={SetToggle} />
+      estado: <InputToggle status={true} />
     },
     {
-      id: 1,
+      id: 4,
       name: 'percy',
       apellido: 'toranzo',
       email: 'admin@admin.com',
-      estado: <InputToggle Toggle={Toggle} SetToggle={SetToggle} />
+      estado: <InputToggle status={true} />
     },
     {
-      id: 1,
+      id: 5,
       name: 'percy',
       apellido: 'toranzo',
       email: 'admin@admin.com',
-      estado: <InputToggle Toggle={Toggle} SetToggle={SetToggle} />
+      estado: <InputToggle status={true} />
     },
     {
-      id: 1,
+      id: 6,
       name: 'percy',
       apellido: 'toranzo',
       email: 'admin@admin.com',
-      estado: <InputToggle Toggle={Toggle} SetToggle={SetToggle} />
+      estado: <InputToggle status={true} />
     },
     {
-      id: 1,
+      id: 7,
       name: 'percy',
       apellido: 'toranzo',
       email: 'admin@admin.com',
-      estado: <InputToggle Toggle={Toggle} SetToggle={SetToggle} />
+      estado: <InputToggle status={true} />
     },
     {
-      id: 1,
+      id: 8,
       name: 'percy',
       apellido: 'toranzo',
       email: 'admin@admin.com',
-      estado: <InputToggle Toggle={Toggle} SetToggle={SetToggle} />
+      estado: <InputToggle status={true} />
     },
     {
-      id: 1,
+      id: 9,
       name: 'percy',
       apellido: 'toranzo',
       email: 'admin@admin.com',
-      estado: <InputToggle Toggle={Toggle} SetToggle={SetToggle} />
+      estado: <InputToggle status={true} />
     },
     {
-      id: 1,
+      id: 10,
       name: 'percy',
       apellido: 'toranzo',
       email: 'admin@admin.com',
-      estado: <InputToggle Toggle={Toggle} SetToggle={SetToggle} />
+      estado: <InputToggle status={true} />
     },
     {
-      id: 1,
+      id: 11,
       name: 'percy',
       apellido: 'toranzo',
       email: 'admin@admin.com',
-      estado: <InputToggle Toggle={Toggle} SetToggle={SetToggle} />
-    },
-    {
-      id: 1,
-      name: 'percy',
-      apellido: 'toranzo',
-      email: 'admin@admin.com',
-      estado: <InputToggle Toggle={Toggle} SetToggle={SetToggle} />
+      estado: <InputToggle status={false} />
     }
   ]
   return (
     <div className="shadow md:rounded bg-white p-5 py-10 md:p-10">
       <div className="flex justify-between mb-5">
         <Heading>Clientes</Heading>
-        <Button size="sm" onClick={() => history.push('/clientes/crear-cliente')}>
+        <Button
+          size="sm"
+          onClick={() => history.push('/clientes/crear-cliente')}
+        >
           Nuevo Cliente
         </Button>
       </div>
