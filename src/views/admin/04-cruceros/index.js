@@ -4,6 +4,7 @@ import Button from '../../../components/Buttons/Button'
 import InputToggle from '../../../components/Forms/InputToggle/InputToggle'
 import Heading from '../../../components/Heading'
 import TableGeneral from '../../../components/Tables/TableGeneral'
+import IconAcciones from '../../../components/btnAcciones/IconAcciones'
 
 const Cruceros = () => {
   const history = useHistory()
@@ -13,7 +14,7 @@ const Cruceros = () => {
     ['Titulo', 2],
     ['Estado', 3],
     ['Destacado', 4],
-    []
+    ['Acciones', 23]
   ]
 
   const dataBody = [
@@ -23,13 +24,7 @@ const Cruceros = () => {
       estado: <InputToggle status="true" />,
       destacado: 'si',
       detalle: (
-        <Button
-          onClick={() => history.push('/cruceros/editar-crucero')}
-          variant="primary"
-          size="sm"
-        >
-          Editar
-        </Button>
+        <IconAcciones onEdit={() => history.push('/cruceros/editar-crucero')} />
       )
     },
     {
@@ -38,13 +33,7 @@ const Cruceros = () => {
       estado: <InputToggle status="false" />,
       destacado: 'si',
       detalle: (
-        <Button
-          onClick={() => history.push('/cruceros/editar-crucero')}
-          variant="primary"
-          size="sm"
-        >
-          Editar
-        </Button>
+        <IconAcciones onEdit={() => history.push('/cruceros/editar-crucero')} />
       )
     },
     {
@@ -53,13 +42,7 @@ const Cruceros = () => {
       estado: <InputToggle status="false" />,
       destacado: 'si',
       detalle: (
-        <Button
-          onClick={() => history.push('/cruceros/editar-crucero')}
-          variant="primary"
-          size="sm"
-        >
-          Editar
-        </Button>
+        <IconAcciones onEdit={() => history.push('/cruceros/editar-crucero')} />
       )
     },
     {
@@ -68,13 +51,7 @@ const Cruceros = () => {
       estado: <InputToggle status="true" />,
       destacado: 'si',
       detalle: (
-        <Button
-          onClick={() => history.push('/cruceros/editar-crucero')}
-          variant="primary"
-          size="sm"
-        >
-          Editar
-        </Button>
+        <IconAcciones onEdit={() => history.push('/cruceros/editar-crucero')} />
       )
     }
   ]

@@ -1,5 +1,6 @@
 import React from 'react'
 import { useHistory } from 'react-router'
+import IconAcciones from '../../../components/btnAcciones/IconAcciones'
 import Button from '../../../components/Buttons/Button'
 import InputToggle from '../../../components/Forms/InputToggle/InputToggle'
 import Heading from '../../../components/Heading'
@@ -13,7 +14,7 @@ const Tours = () => {
     ['Titulo', 'Tour Lima - Paracas'],
     ['Estado', 48],
     ['Destacado', 20],
-    []
+    ['Acciones', 23]
   ]
 
   const dataBody = [
@@ -23,13 +24,7 @@ const Tours = () => {
       estado: <InputToggle status="true" />,
       destacado: 'si',
       detalle: (
-        <Button
-          onClick={() => history.push('/tours/editar-tour')}
-          variant="primary"
-          size="sm"
-        >
-          Editar
-        </Button>
+        <IconAcciones onEdit={() => history.push('/tours/editar-tour')} />
       )
     },
     {
@@ -38,13 +33,7 @@ const Tours = () => {
       estado: <InputToggle status="true" />,
       destacado: 'si',
       detalle: (
-        <Button
-          onClick={() => history.push('/tours/editar-tour')}
-          variant="primary"
-          size="sm"
-        >
-          Editar
-        </Button>
+        <IconAcciones onEdit={() => history.push('/tours/editar-tour')} />
       )
     },
     {
@@ -53,13 +42,7 @@ const Tours = () => {
       estado: <InputToggle status="false" />,
       destacado: 'si',
       detalle: (
-        <Button
-          onClick={() => history.push('/tours/editar-tour')}
-          variant="primary"
-          size="sm"
-        >
-          Editar
-        </Button>
+        <IconAcciones onEdit={() => history.push('/tours/editar-tour')} />
       )
     },
     {
@@ -68,13 +51,7 @@ const Tours = () => {
       estado: <InputToggle status="true" />,
       destacado: 'si',
       detalle: (
-        <Button
-          onClick={() => history.push('/tours/editar-tour')}
-          variant="primary"
-          size="sm"
-        >
-          Editar
-        </Button>
+        <IconAcciones onEdit={() => history.push('/tours/editar-tour')} />
       )
     }
   ]
