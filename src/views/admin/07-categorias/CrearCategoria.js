@@ -6,7 +6,7 @@ import InputText from '../../../components/Forms/InputText/InputText'
 import TextArea from '../../../components/Forms/TextArea'
 import Heading from '../../../components/Heading'
 
-const EditarCategoria = () => {
+const CrearCategoria = () => {
   const history = useHistory()
   return (
     <div className="shadow md:rounded bg-white p-5 py-10 md:p-10">
@@ -17,10 +17,10 @@ const EditarCategoria = () => {
         >
           <IconBackArrow />
         </span>
-        <Heading>Edita la Categoria</Heading>
+        <Heading>Crea una Categoría</Heading>
       </div>
       <form
-        onSubmit={() => { }}
+        onSubmit={() => {}}
         className="w-full max-w-xl lg:px-4 px-0 mx-auto"
       >
         <div className="flex flex-col lg:flex-row lg:space-x-4 mb-3">
@@ -103,7 +103,7 @@ const EditarCategoria = () => {
         </div>
         <div className="my-10 text-center">
           <Button variant="primary" size="lg">
-            EDITAR
+            CREAR
           </Button>
         </div>
       </form>
@@ -111,4 +111,4 @@ const EditarCategoria = () => {
   )
 }
 
-export default EditarCategoria
+export default CrearCategoria
