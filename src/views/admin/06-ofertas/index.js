@@ -8,7 +8,6 @@ import OfertaIca from '../../../assets/imgs/ofertaIca.jpg'
 
 const Ofertas = () => {
   const history = useHistory()
-  const handleRedirectEditOferta = () => { history.push('/ofertas/editar-oferta') }
   const dataHead = [['imagen', 18], ['Tipo', 18], ['Titulo', 48], ['Url', 48], ['Accion', 10]]
   const dataBody = [
     {
@@ -16,14 +15,14 @@ const Ofertas = () => {
       tipo: 'Oferta interna',
       titulo: 'Arma tu pack',
       url: 'armar-pack',
-      accion: <IconAcciones handleEdit={handleRedirectEditOferta} />
+      accion: <IconAcciones onEdit={() => history.push('/ofertas/editar-oferta')} />
     },
     {
       imagen: <img src={OfertaIca} className="w-20" />,
       tipo: 'Oferta externa',
       titulo: 'OFERTA DEL MES! Leggin rayado + Polo piel de durazno 💜',
       url: 'armar-pack',
-      accion: <IconAcciones />
+      accion: <IconAcciones onEdit={() => history.push('/ofertas/editar-oferta')} />
     }
   ]
   return (

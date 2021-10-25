@@ -1,11 +1,15 @@
 import React from 'react'
 import { IconDelete, IconEdit } from '../../assets/icons/icons'
 
-const IconAcciones = ({ handleEdit }) => {
+const IconAcciones = ({ onEdit = () => { }, onDelete = () => { } }) => {
   return (
     <div className="flex gap-2">
-      <span><IconEdit handleEdit={handleEdit} /></span>
-      <span><IconDelete /></span>
+      <span onClick={onEdit}>
+        <IconEdit />
+      </span>
+      <span onClick={onDelete}>
+        <IconDelete />
+      </span>
     </div>
   )
 }

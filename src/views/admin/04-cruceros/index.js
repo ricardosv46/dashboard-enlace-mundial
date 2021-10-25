@@ -1,9 +1,11 @@
 import React from 'react'
 import { useHistory } from 'react-router'
 import Button from '../../../components/Buttons/Button'
+import InputToggle from '../../../components/Forms/InputToggle/InputToggle'
 import Heading from '../../../components/Heading'
-import Input from '../../../components/Input/Input'
 import TableGeneral from '../../../components/Tables/TableGeneral'
+import IconAcciones from '../../../components/btnAcciones/IconAcciones'
+import BtnDestacado from '../../../components/BtnDestacado/BtnDestacado'
 
 const Cruceros = () => {
   const history = useHistory()
@@ -13,68 +15,44 @@ const Cruceros = () => {
     ['Titulo', 2],
     ['Estado', 3],
     ['Destacado', 4],
-    []
+    ['Acciones', 23]
   ]
 
   const dataBody = [
     {
       id: '001',
       titulo: 'Crucero 1',
-      estado: 'activo',
-      destacado: 'si',
+      estado: <InputToggle status="true" />,
+      destacado: <BtnDestacado estado={true} />,
       detalle: (
-        <Button
-          onClick={() => history.push('/cruceros/editar-crucero')}
-          variant="primary"
-          size="sm"
-        >
-          Editar
-        </Button>
+        <IconAcciones onEdit={() => history.push('/cruceros/editar-crucero')} />
       )
     },
     {
       id: '002',
       titulo: 'Crucero 2',
-      estado: 'activo',
-      destacado: 'si',
+      estado: <InputToggle status="false" />,
+      destacado: <BtnDestacado estado={true} />,
       detalle: (
-        <Button
-          onClick={() => history.push('/cruceros/editar-crucero')}
-          variant="primary"
-          size="sm"
-        >
-          Editar
-        </Button>
+        <IconAcciones onEdit={() => history.push('/cruceros/editar-crucero')} />
       )
     },
     {
       id: '003',
       titulo: 'Crucero 3',
-      estado: 'activo',
-      destacado: 'si',
+      estado: <InputToggle status="false" />,
+      destacado: <BtnDestacado estado={true} />,
       detalle: (
-        <Button
-          onClick={() => history.push('/cruceros/editar-crucero')}
-          variant="primary"
-          size="sm"
-        >
-          Editar
-        </Button>
+        <IconAcciones onEdit={() => history.push('/cruceros/editar-crucero')} />
       )
     },
     {
       id: '004',
       titulo: 'Crucero 4',
-      estado: 'activo',
-      destacado: 'si',
+      estado: <InputToggle status="true" />,
+      destacado: <BtnDestacado estado={true} />,
       detalle: (
-        <Button
-          onClick={() => history.push('/cruceros/editar-crucero')}
-          variant="primary"
-          size="sm"
-        >
-          Editar
-        </Button>
+        <IconAcciones onEdit={() => history.push('/cruceros/editar-crucero')} />
       )
     }
   ]
@@ -89,7 +67,6 @@ const Cruceros = () => {
           Nuevo
         </Button>
       </div>
-      <Input />
       <TableGeneral dataBody={dataBody} dataHead={dataHead} />
     </div>
   )

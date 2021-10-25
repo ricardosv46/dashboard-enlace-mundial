@@ -2,8 +2,9 @@ import Heading from '../../../components/Heading'
 import InputText from '../../../components/Forms/InputText/InputText'
 import { IconBackArrow } from '../../../assets/icons/icons'
 import Button from '../../../components/Buttons/Button'
-
+import { useHistory } from 'react-router'
 const CrearOferta = () => {
+  const history = useHistory()
   return (
     <div className="shadow md:rounded bg-white p-5 py-10 md:p-10">
       <div className="flex justify-center pt-3 relative">
