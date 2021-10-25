@@ -1,15 +1,14 @@
 import { useState } from 'react'
 
-const InputToggle = ({ status = true }) => {
+const InputToggle = ({ status = 'true', ...props }) => {
   const [state, setState] = useState(status)
 
   const handleChange = () => setState((prev) => !prev)
-  console.log(handleChange)
 
   return (
     <label
       // htmlFor="toggle"
-      className="flex items-center cursor-pointer justify-center"
+      className="cursor-pointer"
     >
       <div className="relative">
         <input
@@ -17,6 +16,7 @@ const InputToggle = ({ status = true }) => {
           // id="toggle"
           className="sr-only"
           onClick={handleChange}
+          {...props}
         />
         <div
           className={`block ${
@@ -25,7 +25,7 @@ const InputToggle = ({ status = true }) => {
         ></div>
         <div
           className={` absolute left-1 top-1  w-5 h-5 rounded-full transition ${
-            state ? ' transform translate-x-full bg-white' : ' bg-primary'
+            state ? ' transform translate-x-full bg-white' : ' bg-primary-400'
           } `}
         ></div>
       </div>

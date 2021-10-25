@@ -1,8 +1,8 @@
 import React from 'react'
 import { useHistory } from 'react-router'
 import Button from '../../../components/Buttons/Button'
+import InputToggle from '../../../components/Forms/InputToggle/InputToggle'
 import Heading from '../../../components/Heading'
-import Input from '../../../components/Input/Input'
 import TableGeneral from '../../../components/Tables/TableGeneral'
 
 const Cruceros = () => {
@@ -20,7 +20,7 @@ const Cruceros = () => {
     {
       id: '001',
       titulo: 'Crucero 1',
-      estado: 'activo',
+      estado: <InputToggle status="true" />,
       destacado: 'si',
       detalle: (
         <Button
@@ -35,7 +35,7 @@ const Cruceros = () => {
     {
       id: '002',
       titulo: 'Crucero 2',
-      estado: 'activo',
+      estado: <InputToggle status="false" />,
       destacado: 'si',
       detalle: (
         <Button
@@ -50,7 +50,7 @@ const Cruceros = () => {
     {
       id: '003',
       titulo: 'Crucero 3',
-      estado: 'activo',
+      estado: <InputToggle status="false" />,
       destacado: 'si',
       detalle: (
         <Button
@@ -65,7 +65,7 @@ const Cruceros = () => {
     {
       id: '004',
       titulo: 'Crucero 4',
-      estado: 'activo',
+      estado: <InputToggle status="true" />,
       destacado: 'si',
       detalle: (
         <Button
@@ -89,7 +89,6 @@ const Cruceros = () => {
           Nuevo
         </Button>
       </div>
-      <Input />
       <TableGeneral dataBody={dataBody} dataHead={dataHead} />
     </div>
   )

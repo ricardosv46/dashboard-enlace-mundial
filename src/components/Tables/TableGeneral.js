@@ -23,13 +23,13 @@ const TableGeneral = ({
   const borderC = `border-${borderColor}`
 
   return (
-    <div className="w-full mb-8 overflow-hidden ">
+    <div className="w-full mb-8 overflow-hidden rounded-md">
       <div className="w-full overflow-x-auto min-h-screen">
         {dataBody && (
           <table className={`w-full  text-left border-2 ${borderC} `}>
             <thead className="shadow-2xl ">
               <tr
-                className={`text-base font-semibold tracking-wide ${textColorH} 
+                className={`text-base font-semibold tracking-wide bg-gray-100 ${textColorH} 
               ${headBg}  text-center`}
               >
                 {dataHead.map((th, index) => (
@@ -43,7 +43,7 @@ const TableGeneral = ({
               {dataBody.map((row, index) => (
                 <tr key={index} className=" font-medium cursor-pointer hover:shadow-md hover:-translate-y-2 transform transition-all duration-300">
                   {handleArray(row).map((column, index) => (
-                    <td className=" uppercase text-gray-600 py-2 px-4" key={index}>{column}</td>
+                    <td className="text-start uppercase text-gray-600 py-2 px-4" key={index}>{column}</td>
                   ))}
                 </tr>
               ))}
