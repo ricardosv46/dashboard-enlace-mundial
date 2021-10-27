@@ -4,24 +4,25 @@ import TableGeneral from '../../../components/Tables/TableGeneral'
 import Button from '../../../components/Buttons/Button'
 import { useHistory } from 'react-router'
 import IconAcciones from '../../../components/btnAcciones/IconAcciones'
+import OfertaIca from '../../../assets/imgs/ofertaIca.jpg'
 
 const Ofertas = () => {
   const history = useHistory()
   const dataHead = [['imagen', 18], ['Tipo', 18], ['Titulo', 48], ['Url', 48], ['Accion', 10]]
   const dataBody = [
     {
-      imagen: '',
+      imagen: <img src={OfertaIca} className="w-20" />,
       tipo: 'Oferta interna',
       titulo: 'Arma tu pack',
       url: 'armar-pack',
-      accion: <IconAcciones />
+      accion: <IconAcciones onEdit={() => history.push('/ofertas/editar-oferta')} />
     },
     {
-      imagen: '',
+      imagen: <img src={OfertaIca} className="w-20" />,
       tipo: 'Oferta externa',
       titulo: 'OFERTA DEL MES! Leggin rayado + Polo piel de durazno 💜',
       url: 'armar-pack',
-      accion: <IconAcciones />
+      accion: <IconAcciones onEdit={() => history.push('/ofertas/editar-oferta')} />
     }
   ]
   return (

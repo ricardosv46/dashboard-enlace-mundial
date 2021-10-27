@@ -114,7 +114,6 @@ export const IconBackArrow = (props) => {
     </svg>
   )
 }
-
 export const IconEdit = (props) => {
   return (
     <svg
