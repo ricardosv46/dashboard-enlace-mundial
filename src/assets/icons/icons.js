@@ -119,8 +119,8 @@ export const IconEdit = (props) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width={17}
-      height={17}
+      width={24}
+      height={24}
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
@@ -137,8 +137,8 @@ export const IconDelete = (props) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width={17}
-      height={17}
+      width={24}
+      height={24}
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
@@ -183,6 +183,26 @@ export const IconHeartSolid = (props) => {
         fill="#ff7878"
         d="M20.205 4.791a5.938 5.938 0 00-4.209-1.754A5.906 5.906 0 0012 4.595a5.904 5.904 0 00-3.996-1.558 5.942 5.942 0 00-4.213 1.758c-2.353 2.363-2.352 6.059.002 8.412L12 21.414l8.207-8.207c2.354-2.353 2.355-6.049-.002-8.416z"
       />
+    </svg>
+  )
+}
+
+export const IconCalendar = (props) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={24}
+      height={24}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="prefix__feather prefix__feather-calendar"
+      {...props}
+    >
+      <rect x={3} y={4} width={18} height={18} rx={2} ry={2} />
+      <path fill="currentColor" d="M16 2v4M8 2v4M3 10h18" />
     </svg>
   )
 }

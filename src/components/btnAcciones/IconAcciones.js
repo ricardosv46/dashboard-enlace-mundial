@@ -1,7 +1,11 @@
 import React from 'react'
-import { IconDelete, IconEdit } from '../../assets/icons/icons'
+import { IconCalendar, IconDelete, IconEdit } from '../../assets/icons/icons'
 
-const IconAcciones = ({ onEdit = () => {}, onDelete = () => {} }) => {
+const IconAcciones = ({
+  onEdit = () => {},
+  onDelete = () => {},
+  onCalendar = () => {}
+}) => {
   return (
     <div className="flex gap-2">
       <span onClick={onEdit}>
@@ -9,6 +13,9 @@ const IconAcciones = ({ onEdit = () => {}, onDelete = () => {} }) => {
       </span>
       <span onClick={onDelete}>
         <IconDelete />
+      </span>
+      <span onClick={onCalendar}>
+        <IconCalendar />
       </span>
     </div>
   )

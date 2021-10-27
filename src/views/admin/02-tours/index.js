@@ -25,7 +25,10 @@ const Tours = () => {
       estado: <InputToggle status="true" />,
       destacado: <BtnDestacado estado={true} />,
       detalle: (
-        <IconAcciones onEdit={() => history.push('/tours/editar-tour')} />
+        <IconAcciones
+          onCalendar={() => history.push('/tours/editar-calendario')}
+          onEdit={() => history.push('/tours/editar-tour')}
+        />
       )
     },
     {
