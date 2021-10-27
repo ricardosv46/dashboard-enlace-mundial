@@ -3,7 +3,8 @@ import InputText from '../../../components/Forms/InputText/InputText'
 import { IconBackArrow } from '../../../assets/icons/icons'
 import Button from '../../../components/Buttons/Button'
 import { useHistory } from 'react-router'
-const CrearOferta = () => {
+
+const EditarOferta = () => {
   const history = useHistory()
   return (
     <div className="shadow md:rounded bg-white p-5 py-10 md:p-10">
@@ -14,7 +15,7 @@ const CrearOferta = () => {
         >
           <IconBackArrow />
         </span>
-        <Heading>Crear Nueva Oferta</Heading>
+        <Heading>Editar Oferta</Heading>
       </div>
       <form
         onSubmit={() => { }}
@@ -41,7 +42,7 @@ const CrearOferta = () => {
         </div>
         <div className="my-10 text-center">
           <Button variant="primary" size="lg">
-            CREAR OFERTA
+            EDITAR OFERTA
           </Button>
         </div>
       </form>
@@ -49,4 +50,4 @@ const CrearOferta = () => {
   )
 }
 
-export default CrearOferta
+export default EditarOferta

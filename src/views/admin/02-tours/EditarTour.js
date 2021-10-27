@@ -1,23 +1,15 @@
 import React from 'react'
-import { useHistory } from 'react-router'
-import { IconBackArrow } from '../../../assets/icons/icons'
 import Button from '../../../components/Buttons/Button'
+import ButtonBack from '../../../components/Buttons/ButtonBack'
 import InputText from '../../../components/Forms/InputText/InputText'
 import TextArea from '../../../components/Forms/TextArea'
 import Heading from '../../../components/Heading'
 
 const EditarTour = () => {
-  const history = useHistory()
-
   return (
     <div className="shadow md:rounded bg-white p-5 py-10 md:p-10">
       <div className="flex justify-center pt-3 relative">
-        <span
-          onClick={() => history.goBack()}
-          className="absolute left-0 top-0 cursor-pointer text-primary hover:bg-primary hover:text-white rounded-full"
-        >
-          <IconBackArrow />
-        </span>
+        <ButtonBack />
         <Heading>Editar Tour</Heading>
       </div>
       <form

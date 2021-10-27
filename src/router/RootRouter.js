@@ -23,6 +23,9 @@ import CrearCliente from '../views/admin/05-clientes/CrearCliente'
 import EditarCategoria from '../views/admin/07-categorias/editarCategoria'
 import CrearCategoria from '../views/admin/07-categorias/CrearCategoria'
 import CrearPublicacion from '../views/admin/09-blogs/CrearPublicacion'
+import CrearOferta from '../views/admin/06-ofertas/CrearOferta'
+import EditarOferta from '../views/admin/06-ofertas/EditarOferta'
+import CalendarioTour from '../views/admin/02-tours/CalendarioTour'
 
 const HomeRoutes = () => {
   return (
@@ -33,6 +36,7 @@ const HomeRoutes = () => {
         <Route exact path="/tours" component={Tours} />
         <Route exact path="/tours/crear-tour" component={CrearTour} />
         <Route exact path="/tours/editar-tour" component={EditarTour} />
+        <Route exact path="/tours/editar-calendario" component={CalendarioTour} />
 
         <Route exact path="/luna-de-miel" component={LunaDeMiel} />
         <Route
@@ -56,9 +60,20 @@ const HomeRoutes = () => {
         <Route exact path="/clientes" component={Clientes} />
         <Route exact path="/clientes/crear-cliente" component={CrearCliente} />
         <Route exact path="/ofertas" component={Ofertas} />
+        <Route exact path="/ofertas/crear-oferta" component={CrearOferta} />
+        <Route exact path="/ofertas/editar-oferta" component={EditarOferta} />
+
         <Route exact path="/categorias" component={Categorias} />
-        <Route exact path="/categorias/editar-categoria" component={EditarCategoria} />
-        <Route exact path="/categorias/crear-categoria" component={CrearCategoria} />
+        <Route
+          exact
+          path="/categorias/editar-categoria"
+          component={EditarCategoria}
+        />
+        <Route
+          exact
+          path="/categorias/crear-categoria"
+          component={CrearCategoria}
+        />
         <Route exact path="/galerias" component={Galerias} />
         <Route exact path="/blogs" component={Blogs} />
         <Route exact path="/blogs/crear-publiacion" component={CrearPublicacion} />

@@ -1,8 +1,10 @@
 import React from 'react'
 import { useHistory } from 'react-router'
+import IconAcciones from '../../../components/btnAcciones/IconAcciones'
+import BtnDestacado from '../../../components/BtnDestacado/BtnDestacado'
 import Button from '../../../components/Buttons/Button'
+import InputToggle from '../../../components/Forms/InputToggle/InputToggle'
 import Heading from '../../../components/Heading'
-import Input from '../../../components/Input/Input'
 import TableGeneral from '../../../components/Tables/TableGeneral'
 
 const LunaDeMiel = () => {
@@ -13,60 +15,44 @@ const LunaDeMiel = () => {
     ['Titulo', 2],
     ['Estado', 48],
     ['Destacado', 20],
-    []
+    ['Acciones', 23]
   ]
 
   const dataBody = [
     {
       id: '001',
       titulo: 'Paquete Turístico 1',
-      estado: 'activo',
-      destacado: 'si',
+      estado: <InputToggle status="true" />,
+      destacado: <BtnDestacado estado={true} />,
       detalle: (
-        <Button
-          onClick={() => history.push('/luna-de-miel/editar-luna-de-miel')}
-         variant="primary" size="sm">
-          Editar
-        </Button>
+        <IconAcciones onEdit={() => history.push('/luna-de-miel/editar-luna-de-miel')} />
       )
     },
     {
       id: '001',
       titulo: 'Paquete Turístico 2',
-      estado: 'activo',
-      destacado: 'si',
+      estado: <InputToggle status="true" />,
+      destacado: <BtnDestacado estado={true} />,
       detalle: (
-        <Button
-          onClick={() => history.push('/luna-de-miel/editar-luna-de-miel')}
-         variant="primary" size="sm">
-          Editar
-        </Button>
+        <IconAcciones onEdit={() => history.push('/luna-de-miel/editar-luna-de-miel')} />
       )
     },
     {
       id: '001',
       titulo: 'Paquete Turístico 3',
-      estado: 'activo',
-      destacado: 'si',
+      estado: <InputToggle status="true" />,
+      destacado: <BtnDestacado estado={true} />,
       detalle: (
-        <Button
-          onClick={() => history.push('/luna-de-miel/editar-luna-de-miel')}
-         variant="primary" size="sm">
-          Editar
-        </Button>
+        <IconAcciones onEdit={() => history.push('/luna-de-miel/editar-luna-de-miel')} />
       )
     },
     {
       id: '001',
       titulo: 'Paquete Turístico 4',
-      estado: 'activo',
-      destacado: 'si',
+      estado: <InputToggle status="true" />,
+      destacado: <BtnDestacado estado={true} />,
       detalle: (
-        <Button
-          onClick={() => history.push('/luna-de-miel/editar-luna-de-miel')}
-         variant="primary" size="sm">
-          Editar
-        </Button>
+        <IconAcciones onEdit={() => history.push('/luna-de-miel/editar-luna-de-miel')} />
       )
     }
   ]
@@ -81,7 +67,6 @@ const LunaDeMiel = () => {
           Nueva
         </Button>
       </div>
-      <Input />
       <TableGeneral dataBody={dataBody} dataHead={dataHead} />
     </div>
   )
