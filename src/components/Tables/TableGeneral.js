@@ -41,9 +41,9 @@ const TableGeneral = ({
             </thead>
             <tbody className={`${bodyBg}  ${borderC} text-base ${textColorB} `}>
               {dataBody.map((row, index) => (
-                <tr key={index} className=" font-medium cursor-pointer hover:shadow-md hover:-translate-y-2 transform transition-all duration-300">
+                <tr key={index} className=" font-medium cursor-pointer hover:shadow-md hover:border-b transform transition-all duration-300">
                   {handleArray(row).map((column, index) => (
-                    <td className=" uppercase text-gray-600 py-2 px-4" key={index}>{column}</td>
+                    <td className=" uppercase text-gray-600 py-2 px-4 " key={index}>{column}</td>
                   ))}
                 </tr>
               ))}

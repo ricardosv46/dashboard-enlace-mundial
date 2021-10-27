@@ -7,10 +7,10 @@ import InputText from '../../../components/Forms/InputText/InputText'
 import TextArea from '../../../components/Forms/TextArea'
 import Heading from '../../../components/Heading'
 
-const CrearCategoria = () => {
+const CrearPublicacion = () => {
   const history = useHistory()
   return (
-    <div className="shadow md:rounded bg-white p-5 py-10 md:p-10">
+    <div className=" md:rounded bg-white p-5 py-10 md:p-10 border ">
       <div className="flex justify-center pt-3 relative">
         <span
           onClick={() => history.goBack()}
@@ -18,13 +18,13 @@ const CrearCategoria = () => {
         >
           <IconBackArrow />
         </span>
-        <Heading>Crea una Categoría</Heading>
+        <Heading>Crea Publicación</Heading>
       </div>
       <form
         onSubmit={() => { }}
-        className="w-full max-w-xl lg:px-4 px-0 mx-auto"
+        className="w-full  lg:px-4 px-0 mx-auto py-3 md:shadow-md"
       >
-        <div className="flex flex-col lg:flex-row lg:space-x-4 mb-3">
+        <div className="flex flex-col lg:flex-row lg:space-x-4 mb-5 gap-y-5">
           <InputText
             name="titulo"
             label="Titulo"
@@ -33,7 +33,7 @@ const CrearCategoria = () => {
           <InputText name="slug" label="Slug" placeholder="slug" />
         </div>
 
-        <div className="flex flex-col lg:flex-row lg:space-x-4 mb-3">
+        <div className="flex flex-col lg:flex-row lg:space-x-4 mb-5 gap-y-5">
           <div className="flex flex-col w-full mb-4 lg:mb-0">
             <label
               htmlFor="IdDestino"
@@ -72,19 +72,27 @@ const CrearCategoria = () => {
           </div>
         </div>
 
-        <div className="flex flex-col lg:flex-row lg:space-x-4 items-center mb-3">
+        <div className="flex flex-col lg:flex-row lg:space-x-4 items-center mb-5 border  ">
           <EditorText />
         </div>
 
-        <div className="flex flex-col lg:flex-row lg:space-x-4 items-center mb-3">
+        <div className="flex flex-col lg:flex-row lg:space-x-4 items-center mb-5">
           <TextArea
-            label="Descripción Larga"
-            name="DescripcionLarga"
+            label="Descripción corta"
+            name="DescripcionCorta"
             rows="2"
           />
         </div>
+        <div className="flex flex-col lg:flex-row lg:space-x-4 items-center mb-5">
+          <InputText
+            name="keywords"
+            label="Keywords"
+            placeholder="ingrese las plabras claves separadas con comas"
+            type="text"
+          />
+        </div>
 
-        <div className="flex flex-col lg:flex-row lg:space-x-4 items-center mb-3">
+        <div className="flex flex-col lg:flex-row lg:space-x-4 items-center mb-5 gap-y-5">
           <InputText
             name="imagenPrincipal"
             label="Imagen Principal"
@@ -103,9 +111,9 @@ const CrearCategoria = () => {
             CREAR
           </Button>
         </div>
-      </form>
-    </div>
+      </form >
+    </div >
   )
 }
 
-export default CrearCategoria
+export default CrearPublicacion

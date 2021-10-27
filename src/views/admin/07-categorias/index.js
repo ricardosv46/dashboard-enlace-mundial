@@ -26,42 +26,42 @@ const Categorias = () => {
 
   const dataBody = [
     {
-      imagen: <img src={vinos} className="w-20" />,
+      imagen: <img src={vinos} className="w-20 h-25" />,
       nombre: 'Cata de Vinos y Licores',
       estado: <BtnEstado estado={true} />,
       descatar: <BtnDestacado estado={true} />,
       acciones: <BtnAcciones handleEdit={handleRedirectEditCategory} />
     },
     {
-      imagen: <img src={naturalezaPaisajes} className="w-20" />,
+      imagen: <img src={naturalezaPaisajes} className="w-20  h-25" />,
       nombre: 'Naturaleza y Paisajes',
       estado: <BtnEstado estado={true} />,
       descatar: <BtnDestacado estado={false} />,
       acciones: <BtnAcciones />
     },
     {
-      imagen: <img src={rutas} className="w-20" />,
+      imagen: <img src={rutas} className="w-20  h-25" />,
       nombre: 'Rutas y Recorridos',
       estado: <BtnEstado estado={false} />,
       descatar: <BtnDestacado estado={false} />,
       acciones: <BtnAcciones />
     },
     {
-      imagen: <img src={turismoEcologico} className="w-20" />,
+      imagen: <img src={turismoEcologico} className="w-20  h-25" />,
       nombre: 'Turismo Ecológico',
       estado: <BtnEstado estado={true} />,
       destacar: <BtnDestacado estado={true} />,
       acciones: <BtnAcciones />
     },
     {
-      imagen: <img src={turismoGatronomico} className="w-20" />,
+      imagen: <img src={turismoGatronomico} className="w-20  h-25" />,
       nombre: 'Turismo Gastronómico',
       estado: <BtnEstado estado={false} />,
       descatar: <BtnDestacado estado={false} />,
       acciones: <BtnAcciones />
     },
     {
-      imagen: <img src={solPlaya} className="w-20" />,
+      imagen: <img src={solPlaya} className="w-20  h-25" />,
       nombre: 'Turismo de sol y Playa',
       estado: <BtnEstado estado={true} />,
       descatar: <BtnDestacado estado={true} />,

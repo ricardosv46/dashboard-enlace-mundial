@@ -4,7 +4,7 @@ import destacoTrue from '../../assets/imgs/icon_corazon_true.svg'
 const BtnDestacado = ({ estado = false }) => {
   return (
     <>
-      <img src={estado ? destacoTrue : destacoFalse} className="w-6" />
+      <img src={estado ? destacoTrue : destacoFalse} className="w-6 mx-auto" />
     </>
   )
 }
