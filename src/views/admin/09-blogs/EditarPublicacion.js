@@ -2,14 +2,15 @@ import React from 'react'
 import { useHistory } from 'react-router'
 import { IconBackArrow } from '../../../assets/icons/icons'
 import Button from '../../../components/Buttons/Button'
+import EditorText from '../../../components/EditorText/EditorText'
 import InputText from '../../../components/Forms/InputText/InputText'
 import TextArea from '../../../components/Forms/TextArea'
 import Heading from '../../../components/Heading'
 
-const EditarCategoria = () => {
+const EditarPublicacion = () => {
   const history = useHistory()
   return (
-    <div className="shadow md:rounded bg-white p-5 py-10 md:p-10">
+    <div className=" md:rounded bg-white p-5 py-10 md:p-10 border ">
       <div className="flex justify-center pt-3 relative">
         <span
           onClick={() => history.goBack()}
@@ -17,13 +18,13 @@ const EditarCategoria = () => {
         >
           <IconBackArrow />
         </span>
-        <Heading>Edita la Categoria</Heading>
+        <Heading>Editar Publicacion</Heading>
       </div>
       <form
         onSubmit={() => { }}
-        className="w-full md:shadow-md lg:px-4 px-0 mx-auto py-5"
+        className="w-full  lg:px-4 px-0 mx-auto py-3 md:shadow-md"
       >
-        <div className="flex flex-col lg:flex-row lg:space-x-4 mb-5">
+        <div className="flex flex-col lg:flex-row lg:space-x-4 mb-5 gap-y-5">
           <InputText
             name="titulo"
             label="Titulo"
@@ -32,7 +33,7 @@ const EditarCategoria = () => {
           <InputText name="slug" label="Slug" placeholder="slug" />
         </div>
 
-        <div className="flex flex-col lg:flex-row lg:space-x-4 mb-5">
+        <div className="flex flex-col lg:flex-row lg:space-x-4 mb-5 gap-y-5">
           <div className="flex flex-col w-full mb-4 lg:mb-0">
             <label
               htmlFor="IdDestino"
@@ -51,7 +52,7 @@ const EditarCategoria = () => {
               <option>Inactivo</option>
             </select>
           </div>
-          <div className="flex flex-col w-full mb-5 lg:mb-0">
+          <div className="flex flex-col w-full mb-4 lg:mb-0">
             <label
               htmlFor="destacado"
               className="block text-gray-700 text-left text-sm"
@@ -71,23 +72,27 @@ const EditarCategoria = () => {
           </div>
         </div>
 
-        <div className="flex flex-col lg:flex-row lg:space-x-4 items-center mb-5">
-          <TextArea
-            label="Descripción Corta"
-            name="DescripcionCorta"
-            rows="1"
-          />
+        <div className="flex flex-col lg:flex-row lg:space-x-4 items-center mb-5 border  ">
+          <EditorText />
         </div>
 
         <div className="flex flex-col lg:flex-row lg:space-x-4 items-center mb-5">
           <TextArea
-            label="Descripción Larga"
-            name="DescripcionLarga"
+            label="Descripción corta"
+            name="DescripcionCorta"
             rows="2"
           />
         </div>
-
         <div className="flex flex-col lg:flex-row lg:space-x-4 items-center mb-5">
+          <InputText
+            name="keywords"
+            label="Keywords"
+            placeholder="ingrese las plabras claves separadas con comas"
+            type="text"
+          />
+        </div>
+
+        <div className="flex flex-col lg:flex-row lg:space-x-4 items-center mb-5 gap-y-5">
           <InputText
             name="imagenPrincipal"
             label="Imagen Principal"
@@ -103,12 +108,12 @@ const EditarCategoria = () => {
         </div>
         <div className="my-10 text-center">
           <Button variant="primary" size="lg">
-            EDITAR
+            ACTUALIZAR
           </Button>
         </div>
-      </form>
-    </div>
+      </form >
+    </div >
   )
 }
 
-export default EditarCategoria
+export default EditarPublicacion

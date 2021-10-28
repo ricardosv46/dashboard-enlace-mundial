@@ -11,7 +11,7 @@ const BtnDestacado = ({ estado = false, disabled = () => {} }) => {
     // <>
     //   <img src={estado ? destacoTrue : destacoFalse} className="w-6" />
     // </>
-    <button onClick={toggle}>
+    <button onClick={toggle} className="mx-auto flex ">
       {state ? <IconHeartSolid /> : <IconHeartEmpty />}
     </button>
   )

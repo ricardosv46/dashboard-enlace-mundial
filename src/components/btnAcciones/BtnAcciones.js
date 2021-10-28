@@ -10,35 +10,35 @@ const BtnAcciones = ({
     setShow(!show)
   }
   return (
-    <div className="mx-auto w-8 flex flex-col  items-center relative text-center ">
+    <div className="mx-auto w-8 flex flex-col  items-center  text-center  ">
       <p
-        className={`${show ? 'text-black' : 'text-gray-500'
-          } text-3xl w-5 text-center  flex flex-col cursor-pointer justify-center `}
+        className={`${
+          show ? 'text-black' : 'text-gray-500'
+        } text-3xl w-5 text-center  flex flex-col cursor-pointer justify-center z-80 relative`}
         onClick={handleClick}
       >
         <span className="-mt-4 ">.</span>
         <span className="-mt-7 ">.</span>
         <span className="-mt-7 ">.</span>
       </p>
-      <div
-        className={`${show
-          ? 'border text-sm opacity-100 pointer-events-auto transition-all duration-300 '
-          : ' opacity-0 pointer-events-none  '
-          }
-               py-4  w-36   text-base  absolute -bottom-28 right-2 bg-white z-99
-               hover:text-black text-gray-700  shadow-md`}
-      >
-        <p className="flex  cursor-pointer  py-2 pl-6 hover:bg-primary-300 transition-all duration-200"
-          onClick={() => handleEdit()}
-        >
-          <img src={iconEditar} className="w-4 mr-2 " /> <span>Editar</span>
-        </p>
-        <p className="flex cursor-pointer  py-2 pl-6 hover:bg-primary-300 transition-all duration-200"
-          onClick={() => handleDelete()}
-        >
-          <img src={iconEditar} className="w-4 mr-2 " /> <span>Borrar</span>
-        </p>
-      </div>
+      {show && (
+        <div className="absolute flex justify-end bg-transparent border  z-70 top-0 left-0 min-w-full h-full">
+          <div className=" w-36 h-20 mr-16 sm:mr-22 mt-0  shadow-md rounded-lg bg-white">
+            <p
+              className="flex  cursor-pointer  py-2 pl-6  hover:bg-gray-200 transition-all duration-300"
+              onClick={() => handleEdit()}
+            >
+              <img src={iconEditar} className="w-4 mr-2 " /> <span>Editar</span>
+            </p>
+            <p
+              className="flex cursor-pointer  py-2 pl-6  hover:bg-gray-200 transition-all duration-300"
+              onClick={() => handleDelete()}
+            >
+              <img src={iconEditar} className="w-4 mr-2 " /> <span>Borrar</span>
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

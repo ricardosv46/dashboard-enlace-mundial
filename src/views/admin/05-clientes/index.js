@@ -1,4 +1,5 @@
 import { useHistory } from 'react-router'
+import BtnAcciones from '../../../components/btnAcciones/BtnAcciones'
 import Button from '../../../components/Buttons/Button'
 import InputToggle from '../../../components/Forms/InputToggle/InputToggle'
 import Heading from '../../../components/Heading'
@@ -10,7 +11,8 @@ const Clientes = () => {
     ['Nombres', 18],
     ['Apellido', 48],
     ['Email', 48],
-    ['Estado', 10]
+    ['Estado', 10],
+    ['Acciones', 20]
   ]
   const history = useHistory()
   const dataBody = [
@@ -19,77 +21,88 @@ const Clientes = () => {
       name: 'percy',
       apellido: 'toranzo',
       email: 'admin@admin.com',
-      estado: <InputToggle status={false} />
+      estado: <InputToggle status={false} />,
+      acciones: <BtnAcciones />
     },
     {
       id: 2,
       name: 'percy',
       apellido: 'toranzo',
       email: 'admin@admin.com',
-      estado: <InputToggle status={false} />
+      estado: <InputToggle status={false} />,
+      acciones: <BtnAcciones />
     },
     {
       id: 3,
       name: 'percy',
       apellido: 'toranzo',
       email: 'admin@admin.com',
-      estado: <InputToggle status={true} />
+      estado: <InputToggle status={true} />,
+      acciones: <BtnAcciones />
     },
     {
       id: 4,
       name: 'percy',
       apellido: 'toranzo',
       email: 'admin@admin.com',
-      estado: <InputToggle status={true} />
+      estado: <InputToggle status={true} />,
+      acciones: <BtnAcciones />
     },
     {
       id: 5,
       name: 'percy',
       apellido: 'toranzo',
       email: 'admin@admin.com',
-      estado: <InputToggle status={true} />
+      estado: <InputToggle status={true} />,
+      acciones: <BtnAcciones />
     },
     {
       id: 6,
       name: 'percy',
       apellido: 'toranzo',
       email: 'admin@admin.com',
-      estado: <InputToggle status={true} />
+      estado: <InputToggle status={true} />,
+      acciones: <BtnAcciones />
     },
     {
       id: 7,
       name: 'percy',
       apellido: 'toranzo',
       email: 'admin@admin.com',
-      estado: <InputToggle status={true} />
+      estado: <InputToggle status={true} />,
+      acciones: <BtnAcciones />
     },
     {
       id: 8,
       name: 'percy',
       apellido: 'toranzo',
       email: 'admin@admin.com',
-      estado: <InputToggle status={true} />
+      estado: <InputToggle status={true} />,
+      acciones: <BtnAcciones />
     },
     {
       id: 9,
       name: 'percy',
       apellido: 'toranzo',
       email: 'admin@admin.com',
-      estado: <InputToggle status={true} />
+      estado: <InputToggle status={true} />,
+      acciones: <BtnAcciones />
     },
     {
       id: 10,
       name: 'percy',
       apellido: 'toranzo',
       email: 'admin@admin.com',
-      estado: <InputToggle status={true} />
+      estado: <InputToggle status={true} />,
+      acciones: <BtnAcciones />
     },
     {
       id: 11,
       name: 'percy',
       apellido: 'toranzo',
       email: 'admin@admin.com',
-      estado: <InputToggle status={false} />
+      estado: <InputToggle status={false} />,
+      acciones: <BtnAcciones />
     }
   ]
   return (

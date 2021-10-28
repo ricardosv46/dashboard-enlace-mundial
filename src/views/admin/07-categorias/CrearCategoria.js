@@ -2,7 +2,6 @@ import React from 'react'
 import { useHistory } from 'react-router'
 import { IconBackArrow } from '../../../assets/icons/icons'
 import Button from '../../../components/Buttons/Button'
-import EditorText from '../../../components/EditorText/EditorText'
 import InputText from '../../../components/Forms/InputText/InputText'
 import TextArea from '../../../components/Forms/TextArea'
 import Heading from '../../../components/Heading'
@@ -22,7 +21,7 @@ const CrearCategoria = () => {
       </div>
       <form
         onSubmit={() => { }}
-        className="w-full max-w-xl lg:px-4 px-0 mx-auto"
+        className="w-full  lg:px-4 px-0 mx-auto md:shadow-md py-5"
       >
         <div className="flex flex-col lg:flex-row lg:space-x-4 mb-3">
           <InputText
@@ -73,13 +72,17 @@ const CrearCategoria = () => {
         </div>
 
         <div className="flex flex-col lg:flex-row lg:space-x-4 items-center mb-3">
-          <EditorText />
+          <TextArea
+            label="Descripción Larga"
+            name="DescripcionLarga"
+            rows="2"
+          />
         </div>
 
         <div className="flex flex-col lg:flex-row lg:space-x-4 items-center mb-3">
           <TextArea
-            label="Descripción Larga"
-            name="DescripcionLarga"
+            label="Descripción Corta"
+            name="DescripcionCorta"
             rows="2"
           />
         </div>
