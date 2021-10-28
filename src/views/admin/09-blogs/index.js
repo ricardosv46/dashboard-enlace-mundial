@@ -8,13 +8,13 @@ import Heading from '../../../components/Heading'
 import TableGeneral from '../../../components/Tables/TableGeneral'
 
 const dataHead = [
-  ['Foto', 30],
-  ['Título', 52],
-  ['Categoria', 30],
-  ['F. Publicación', 40],
-  ['Estado', 10],
-  ['Destacar', 10],
-  ['Acciones', 6]
+  ['Foto', 30, 'left'],
+  ['Título', 52, 'left'],
+  ['Categoria', 30, 'left'],
+  ['F. Publicación', 40, 'left'],
+  ['Estado', 10, 'center'],
+  ['Destacar', 10, 'center'],
+  ['Acciones', 6, 'center']
 ]
 
 const dataBody = [

@@ -23,7 +23,7 @@ const BtnAcciones = ({
       </p>
       {show && (
         <div className="absolute flex justify-end bg-transparent border  z-70 top-0 left-0 min-w-full h-full">
-          <div className=" w-36 h-20 mr-16 sm:mr-22 mt-0  shadow-md rounded-lg bg-white">
+          <div className=" w-36 h-20 mr-16 sm:mr-22 mt-0  shadow-lg rounded-lg bg-white">
             <p
               className="flex  cursor-pointer  py-2 pl-6  hover:bg-gray-200 transition-all duration-300"
               onClick={() => handleEdit()}

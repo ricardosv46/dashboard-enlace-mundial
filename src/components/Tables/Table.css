@@ -1,0 +1,14 @@
+.tableGeneral {
+  scrollbar-color:#23CE6B  rgba(0, 0, 0, 0.534) ;
+  scrollbar-width: thin;
+}
+
+.tableGeneral::-webkit-scrollbar {
+  width: 3px;
+  background:rgba(0, 0, 0, 0.534) ;
+}
+.tableGeneral::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  height: 0.4rem;
+  background: #23CE6B ;
+}

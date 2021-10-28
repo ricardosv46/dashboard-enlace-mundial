@@ -1,28 +1,28 @@
 import React from 'react'
 import { useHistory } from 'react-router'
 import Button from '../../../components/Buttons/Button'
-import InputToggle from '../../../components/Forms/InputToggle/InputToggle'
 import Heading from '../../../components/Heading'
 import TableGeneral from '../../../components/Tables/TableGeneral'
 import IconAcciones from '../../../components/btnAcciones/IconAcciones'
 import BtnDestacado from '../../../components/BtnDestacado/BtnDestacado'
+import BtnEstado from '../../../components/BtnEstado/BtnEstado'
 
 const Cruceros = () => {
   const history = useHistory()
 
   const dataHead = [
-    ['Id', 1],
-    ['Titulo', 2],
-    ['Estado', 3],
-    ['Destacado', 4],
-    ['Acciones', 23]
+    ['Id', 1, 'left'],
+    ['Titulo', 2, 'left'],
+    ['Estado', 3, 'center'],
+    ['Destacado', 4, 'center'],
+    ['Acciones', 23, 'left']
   ]
 
   const dataBody = [
     {
       id: '001',
       titulo: 'Crucero 1',
-      estado: <InputToggle status="true" />,
+      estado: <BtnEstado estado={true} />,
       destacado: <BtnDestacado estado={true} />,
       detalle: (
         <IconAcciones onEdit={() => history.push('/cruceros/editar-crucero')} />
@@ -31,7 +31,7 @@ const Cruceros = () => {
     {
       id: '002',
       titulo: 'Crucero 2',
-      estado: <InputToggle status="false" />,
+      estado: < BtnEstado estado={true} />,
       destacado: <BtnDestacado estado={true} />,
       detalle: (
         <IconAcciones onEdit={() => history.push('/cruceros/editar-crucero')} />
@@ -40,7 +40,7 @@ const Cruceros = () => {
     {
       id: '003',
       titulo: 'Crucero 3',
-      estado: <InputToggle status="false" />,
+      estado: < BtnEstado estado={false} />,
       destacado: <BtnDestacado estado={true} />,
       detalle: (
         <IconAcciones onEdit={() => history.push('/cruceros/editar-crucero')} />
@@ -49,7 +49,7 @@ const Cruceros = () => {
     {
       id: '004',
       titulo: 'Crucero 4',
-      estado: <InputToggle status="true" />,
+      estado: < BtnEstado estado={true} />,
       destacado: <BtnDestacado estado={true} />,
       detalle: (
         <IconAcciones onEdit={() => history.push('/cruceros/editar-crucero')} />

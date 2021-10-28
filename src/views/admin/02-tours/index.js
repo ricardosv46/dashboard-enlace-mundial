@@ -2,8 +2,8 @@ import React from 'react'
 import { useHistory } from 'react-router'
 import IconAcciones from '../../../components/btnAcciones/IconAcciones'
 import BtnDestacado from '../../../components/BtnDestacado/BtnDestacado'
+import BtnEstado from '../../../components/BtnEstado/BtnEstado'
 import Button from '../../../components/Buttons/Button'
-import InputToggle from '../../../components/Forms/InputToggle/InputToggle'
 import Heading from '../../../components/Heading'
 import TableGeneral from '../../../components/Tables/TableGeneral'
 
@@ -11,18 +11,18 @@ const Tours = () => {
   const history = useHistory()
 
   const dataHead = [
-    ['Id', 1],
-    ['Titulo', 'Tour Lima - Paracas'],
-    ['Estado', 48],
-    ['Destacado', 20],
-    ['Acciones', 23]
+    ['Id', 1, 'left'],
+    ['Titulo', 10, 'left'],
+    ['Estado', 10, 'center'],
+    ['Destacado', 10, 'center'],
+    ['Acciones', 23, 'left']
   ]
 
   const dataBody = [
     {
       id: '001',
       titulo: 'Ica y Paracas',
-      estado: <InputToggle status="true" />,
+      estado: <BtnEstado estado={false} />,
       destacado: <BtnDestacado estado={true} />,
       detalle: (
         <IconAcciones
@@ -34,7 +34,7 @@ const Tours = () => {
     {
       id: '002',
       titulo: 'Marcapomacocha',
-      estado: <InputToggle status="true" />,
+      estado: <BtnEstado estado={true} />,
       destacado: <BtnDestacado estado={false} />,
       detalle: (
         <IconAcciones onEdit={() => history.push('/tours/editar-tour')} />
@@ -43,7 +43,7 @@ const Tours = () => {
     {
       id: '003',
       titulo: 'Cordillera La Viuda',
-      estado: <InputToggle status="false" />,
+      estado: <BtnEstado estado={true} />,
       destacado: <BtnDestacado estado={true} />,
       detalle: (
         <IconAcciones onEdit={() => history.push('/tours/editar-tour')} />
@@ -52,7 +52,7 @@ const Tours = () => {
     {
       id: '004',
       titulo: 'Antioquía',
-      estado: <InputToggle status="true" />,
+      estado: <BtnEstado estado={false} />,
       destacado: <BtnDestacado estado={true} />,
       detalle: (
         <IconAcciones onEdit={() => history.push('/tours/editar-tour')} />

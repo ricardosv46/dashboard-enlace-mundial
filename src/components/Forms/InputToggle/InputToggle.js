@@ -8,9 +8,9 @@ const InputToggle = ({ status = 'true', ...props }) => {
   return (
     <label
       // htmlFor="toggle"
-      className="cursor-pointer"
+      className="cursor-pointer "
     >
-      <div className="relative z-50">
+      <div className="relative z-50  border  ">
         <input
           type="checkbox"
           // id="toggle"

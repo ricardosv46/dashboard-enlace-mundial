@@ -1,5 +1,5 @@
 import React from 'react'
-
+import './Table.css'
 const TableGeneral = ({
   dataBody,
   dataHead,
@@ -23,18 +23,18 @@ const TableGeneral = ({
   const borderC = `border-${borderColor}`
 
   return (
-    <div className="w-full mb-8 overflow-hidden rounded-md relative ">
+    <div className="w-full mb-8 overflow-hidden rounded-md md:shadow-xl max-h-screen overflow-y-auto tableGeneral ">
       <div className="w-full overflow-x-auto min-h-screen">
         {dataBody && (
           <table className={`w-full  text-left border-2 ${borderC} `}>
-            <thead className="shadow-2xl ">
+            <thead className="">
               <tr
-                className={`text-base font-semibold tracking-wide bg-gray-100 ${textColorH} 
+                className={`text-lg font-semibold  tracking-wide bg-gray-100 ${textColorH} 
               ${headBg}  text-center`}
               >
                 {dataHead.map((th, index) => (
                   <th
-                    className={`px-4 py-4 min-w-${th[1]} text-gray-600 text-left`}
+                    className={`px-4 py-6 min-w-${th[1]} text-gray-600 text-${th[2]} `}
                     key={index}
                   >
                     {th[0]}
@@ -46,7 +46,7 @@ const TableGeneral = ({
               {dataBody.map((row, index) => (
                 <tr
                   key={index}
-                  className=" font-medium hover:shadow-md hover:border-b transform transition-all duration-300 border-b"
+                  className=" font-medium hover:shadow-md  transform transition-all duration-300 border- cursor-pointer hover:-translate-y-1"
                 >
                   {handleArray(row).map((column, index) => (
                     <td

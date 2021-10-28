@@ -8,7 +8,12 @@ import OfertaIca from '../../../assets/imgs/ofertaIca.jpg'
 
 const Ofertas = () => {
   const history = useHistory()
-  const dataHead = [['imagen', 18], ['Tipo', 18], ['Titulo', 48], ['Url', 48], ['Accion', 10]]
+  const dataHead = [
+    ['imagen', 18, 'left'],
+    ['Tipo', 40, 'left'],
+    ['Titulo', 48, 'left'],
+    ['Url', 48, 'left'],
+    ['Accion', 10, 'left']]
   const dataBody = [
     {
       imagen: <img src={OfertaIca} className="w-20" />,

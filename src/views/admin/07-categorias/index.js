@@ -22,11 +22,11 @@ const Categorias = () => {
   }
 
   const dataHead = [
-    ['Imagen', 20],
-    ['Nombre', 52],
-    ['Estado', 20],
-    ['Destacar', 10],
-    ['Acciones', 24]
+    ['Imagen', 20, 'left'],
+    ['Nombre', 52, 'left'],
+    ['Estado', 20, 'center'],
+    ['Destacar', 10, 'center'],
+    ['Acciones', 24, 'center']
   ]
 
   const dataBody = [
