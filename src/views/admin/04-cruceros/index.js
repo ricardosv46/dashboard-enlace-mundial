@@ -12,6 +12,7 @@ const Cruceros = () => {
 
   const dataHead = [
     ['Id', 1, 'left'],
+    ['Foto', 10, 'left'],
     ['Titulo', 2, 'left'],
     ['Estado', 3, 'center'],
     ['Destacado', 4, 'center'],
@@ -21,6 +22,12 @@ const Cruceros = () => {
   const dataBody = [
     {
       id: '001',
+      foto: (
+        <img
+          className="w-26 h-22"
+          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwFREKBd9LuwkjcQSrLP5p4Bg-f51e8upAqw&usqp=CAU"
+        />
+      ),
       titulo: 'Crucero 1',
       estado: <BtnEstado estado={true} />,
       destacado: <BtnDestacado estado={true} />,
@@ -30,6 +37,12 @@ const Cruceros = () => {
     },
     {
       id: '002',
+      foto: (
+        <img
+          className="w-26 h-22"
+          src="https://facultades.usil.edu.pe/administracion-hotelera-turismo-gastronomia/wp-content/uploads/2020/10/panorama-reactivacion-cruceros.jpg"
+        />
+      ),
       titulo: 'Crucero 2',
       estado: < BtnEstado estado={true} />,
       destacado: <BtnDestacado estado={true} />,
@@ -39,6 +52,12 @@ const Cruceros = () => {
     },
     {
       id: '003',
+      foto: (
+        <img
+          className="w-26 h-22"
+          src="https://www.eluniversal.com.mx/sites/default/files/2021/03/17/cruceros_vacunas.jpg"
+        />
+      ),
       titulo: 'Crucero 3',
       estado: < BtnEstado estado={false} />,
       destacado: <BtnDestacado estado={true} />,
@@ -48,6 +67,12 @@ const Cruceros = () => {
     },
     {
       id: '004',
+      foto: (
+        <img
+          className="w-26 h-22"
+          src="https://www.valemany.com/blog/wp-content/uploads/queen-mary-2.jpg"
+        />
+      ),
       titulo: 'Crucero 4',
       estado: < BtnEstado estado={true} />,
       destacado: <BtnDestacado estado={true} />,

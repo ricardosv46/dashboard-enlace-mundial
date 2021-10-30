@@ -1,7 +1,7 @@
 import React from 'react'
 
 const Heading = ({ size = 'md', children }) => {
-  const applySize = (size) => {
+  const applySize = () => {
     switch (size) {
       case 'sm':
         return 'text-sm'
@@ -16,7 +16,7 @@ const Heading = ({ size = 'md', children }) => {
 
   return (
     <p
-      className={`flex items-center ${applySize()} md:text-2xl font-regular tracking-wide mb-5`}
+      className={`flex items-center ${applySize()} md:text-2xl font-semibold tracking-wide mb-5`}
     >
       {children}
     </p>

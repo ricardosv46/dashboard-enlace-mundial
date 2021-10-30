@@ -12,6 +12,7 @@ const LunaDeMiel = () => {
 
   const dataHead = [
     ['Id', 1, 'left'],
+    ['Foto', 10, 'left'],
     ['Titulo', 2, 'left'],
     ['Estado', 10, 'center'],
     ['Destacado', 10, 'center'],
@@ -21,6 +22,12 @@ const LunaDeMiel = () => {
   const dataBody = [
     {
       id: '001',
+      foto: (
+        <img
+          className="w-26 h-22"
+          src="https://lh3.googleusercontent.com/proxy/r6hANISbBXc9YUgwU7sCT3aEmnVYdf9L9-W4LgrutApGTncUE5BvnPMkhS6Kp_0jpjn41KNXReLMMAaL2jwXyTyUVm6-bG1lXjQQ-5lx9DID-VPHakguX9Tl4XdJCDt0"
+        />
+      ),
       titulo: 'Paquete Turístico 1',
       estado: <BtnEstado estado={true} />,
       destacado: <BtnDestacado estado={true} />,
@@ -29,7 +36,13 @@ const LunaDeMiel = () => {
       )
     },
     {
-      id: '001',
+      id: '002',
+      foto: (
+        <img
+          className="w-26 h-22"
+          src="https://www.nupciasmagazine.com/wp-content/uploads/2020/04/nupcias-maldivas.jpg"
+        />
+      ),
       titulo: 'Paquete Turístico 2',
       estado: <BtnEstado estado={true} />,
       destacado: <BtnDestacado estado={true} />,
@@ -38,7 +51,13 @@ const LunaDeMiel = () => {
       )
     },
     {
-      id: '001',
+      id: '003',
+      foto: (
+        <img
+          className="w-26 h-22"
+          src="https://www.nupciasmagazine.com/wp-content/uploads/2020/07/Azulik.jpg"
+        />
+      ),
       titulo: 'Paquete Turístico 3',
       estado: <BtnEstado estado={false} />,
       destacado: <BtnDestacado estado={true} />,
@@ -47,7 +66,13 @@ const LunaDeMiel = () => {
       )
     },
     {
-      id: '001',
+      id: '004',
+      foto: (
+        <img
+          className="w-26 h-22"
+          src="https://www.evento.love/blog/wp-content/uploads/2018/06/Origen-de-la-luna-de-miel-pareja-marido-mujer-atardecer-1200x720.png"
+        />
+      ),
       titulo: 'Paquete Turístico 4',
       estado: <BtnEstado estado={false} />,
       destacado: <BtnDestacado estado={true} />,
@@ -62,9 +87,9 @@ const LunaDeMiel = () => {
         <Heading>Lunas de Miel</Heading>
         <Button
           onClick={() => history.push('/luna-de-miel/crear-luna-de-miel')}
-          size="sm"
+          size="md"
         >
-          Nueva
+          Nueva Luna de Miel
         </Button>
       </div>
       <TableGeneral dataBody={dataBody} dataHead={dataHead} />
