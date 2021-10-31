@@ -3,21 +3,21 @@ import { useHistory } from 'react-router'
 import Button from '../../../components/Buttons/Button'
 import Heading from '../../../components/Heading'
 import TableGeneral from '../../../components/Tables/TableGeneral'
-import IconAcciones from '../../../components/btnAcciones/IconAcciones'
 import BtnDestacado from '../../../components/BtnDestacado/BtnDestacado'
 import BtnEstado from '../../../components/BtnEstado/BtnEstado'
+import BtnAccionesCalendary from '../../../components/btnAcciones/BtnAccionesCalendary'
 
 const Cruceros = () => {
   const history = useHistory()
 
   const dataHead = [
-    ['Id', 1, 'left'],
-    ['Foto', 10, 'left'],
-    ['Título', 2, 'left'],
-    ['Categoría', 20, 'left'],
-    ['Estado', 3, 'center'],
-    ['Destacado', 4, 'center'],
-    ['Acciones', 23, 'left']
+    ['Id', 'min-w-4', 'left'],
+    ['Foto', 'min-w-30', 'left'],
+    ['Título', 'min-w-40', 'left'],
+    ['Categoría', 'min-w-50', 'left'],
+    ['Estado', '', 'center'],
+    ['Destacado', '', 'center'],
+    ['Acciones', '', 'left']
   ]
 
   const dataBody = [
@@ -34,7 +34,10 @@ const Cruceros = () => {
       estado: <BtnEstado estado={true} />,
       destacado: <BtnDestacado estado={true} />,
       detalle: (
-        <IconAcciones onEdit={() => history.push('/cruceros/editar-crucero')} />
+        <BtnAccionesCalendary
+          handleEdit={() => history.push('/cruceros/editar-crucero')}
+          handleCalendary={() => history.push('/calendario')}
+        />
       )
     },
     {
@@ -47,10 +50,13 @@ const Cruceros = () => {
       ),
       titulo: 'Crucero 2',
       categoria: 'Rutas y Recorridos',
-      estado: < BtnEstado estado={true} />,
+      estado: <BtnEstado estado={true} />,
       destacado: <BtnDestacado estado={true} />,
       detalle: (
-        <IconAcciones onEdit={() => history.push('/cruceros/editar-crucero')} />
+        <BtnAccionesCalendary
+          handleEdit={() => history.push('/cruceros/editar-crucero')}
+          handleCalendary={() => history.push('/calendario')}
+        />
       )
     },
     {
@@ -63,10 +69,13 @@ const Cruceros = () => {
       ),
       titulo: 'Crucero 3',
       categoria: 'Rutas y Recorridos',
-      estado: < BtnEstado estado={false} />,
+      estado: <BtnEstado estado={false} />,
       destacado: <BtnDestacado estado={true} />,
       detalle: (
-        <IconAcciones onEdit={() => history.push('/cruceros/editar-crucero')} />
+        <BtnAccionesCalendary
+          handleEdit={() => history.push('/cruceros/editar-crucero')}
+          handleCalendary={() => history.push('/calendario')}
+        />
       )
     },
     {
@@ -79,10 +88,13 @@ const Cruceros = () => {
       ),
       titulo: 'Crucero 4',
       categoria: 'Rutas y Recorridos',
-      estado: < BtnEstado estado={true} />,
+      estado: <BtnEstado estado={true} />,
       destacado: <BtnDestacado estado={true} />,
       detalle: (
-        <IconAcciones onEdit={() => history.push('/cruceros/editar-crucero')} />
+        <BtnAccionesCalendary
+          handleEdit={() => history.push('/cruceros/editar-crucero')}
+          handleCalendary={() => history.push('/calendario')}
+        />
       )
     }
   ]

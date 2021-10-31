@@ -7,13 +7,13 @@ import TableGeneral from '../../../components/Tables/TableGeneral'
 
 const Clientes = () => {
   const dataHead = [
-    ['Id', 18, 'left'],
-    ['Foto', 36, 'left'],
-    ['Nombres', 40, 'left'],
-    ['Apellidos', 40, 'left'],
-    ['Email', 48, 'left'],
-    ['Estado', 10, 'center'],
-    ['Acciones', 20, 'center']
+    ['Id', 'min-w-4', 'left'],
+    ['Foto', 'min-w-30', 'left'],
+    ['Nombres', 'min-w-40', 'left'],
+    ['Apellidos', 'min-w-40', 'left'],
+    ['Email', 'min-w-10', 'left'],
+    ['Estado', '', 'center'],
+    ['Acciones', '', 'center']
   ]
   const history = useHistory()
   const dataBody = [
@@ -29,7 +29,7 @@ const Clientes = () => {
       apellido: 'córdova flores',
       email: 'cordovaflores1994@hotmail.com',
       estado: <BtnEstado estado={true} />,
-      acciones: <BtnAcciones />
+      acciones: <BtnAcciones handleEdit={() => history.push('/clientes/editar-cliente')} handleDelete={() => alert('cliente eliminado')} />
     },
     {
       id: 2,
@@ -43,7 +43,7 @@ const Clientes = () => {
       apellido: 'córdova flores',
       email: 'cordovaflores1994@hotmail.com',
       estado: <BtnEstado estado={true} />,
-      acciones: <BtnAcciones />
+      acciones: <BtnAcciones handleEdit={() => history.push('/clientes/editar-cliente')} handleDelete={() => alert('cliente eliminado')}/>
     },
     {
       id: 3,
@@ -57,7 +57,7 @@ const Clientes = () => {
       apellido: 'córdova flores',
       email: 'cordovaflores1994@hotmail.com',
       estado: <BtnEstado estado={false} />,
-      acciones: <BtnAcciones />
+      acciones: <BtnAcciones handleEdit={() => history.push('/clientes/editar-cliente')} handleDelete={() => alert('cliente eliminado')}/>
     },
     {
       id: 4,
@@ -71,7 +71,7 @@ const Clientes = () => {
       apellido: 'córdova flores',
       email: 'cordovaflores1994@hotmail.com',
       estado: <BtnEstado estado={false} />,
-      acciones: <BtnAcciones />
+      acciones: <BtnAcciones handleEdit={() => history.push('/clientes/editar-cliente')} handleDelete={() => alert('cliente eliminado')} />
     },
     {
       id: 5,
@@ -85,7 +85,7 @@ const Clientes = () => {
       apellido: 'córdova flores',
       email: 'cordovaflores1994@hotmail.com',
       estado: <BtnEstado estado={false} />,
-      acciones: <BtnAcciones />
+      acciones: <BtnAcciones handleEdit={() => history.push('/clientes/editar-cliente')} handleDelete={() => alert('cliente eliminado')}/>
     },
     {
       id: 6,

@@ -11,13 +11,13 @@ const LunaDeMiel = () => {
   const history = useHistory()
 
   const dataHead = [
-    ['Id', 1, 'left'],
-    ['Foto', 10, 'left'],
-    ['Titulo', 2, 'left'],
-    ['Categoría', 20, 'left'],
-    ['Estado', 10, 'center'],
-    ['Destacado', 10, 'center'],
-    ['Acciones', 23, 'left']
+    ['Id', 'min-w-4', 'left'],
+    ['Foto', 'min-w-30', 'left'],
+    ['Titulo', 'min-w-50', 'left'],
+    ['Categoría', 'min-w-50', 'left'],
+    ['Estado', '', 'center'],
+    ['Destacado', '', 'center'],
+    ['Acciones', '', 'left']
   ]
 
   const dataBody = [
@@ -33,7 +33,7 @@ const LunaDeMiel = () => {
       categoria: 'Rutas y Recorridos',
       estado: <BtnEstado estado={true} />,
       destacado: <BtnDestacado estado={true} disabled={false} />,
-      detalle: <BtnAccionesCalendary handleEdit={() => history.push('/luna-de-miel/editar-luna-de-miel')} />
+      detalle: <BtnAccionesCalendary handleEdit={() => history.push('/luna-de-miel/editar-luna-de-miel')} handleCalendary={() => history.push('/calendario')} />
     },
     {
       id: '002',
@@ -47,7 +47,7 @@ const LunaDeMiel = () => {
       categoria: 'Rutas y Recorridos',
       estado: <BtnEstado estado={false} />,
       destacado: <BtnDestacado estado={true} disabled={false} />,
-      detalle: <BtnAccionesCalendary handleEdit={() => history.push('/luna-de-miel/editar-luna-de-miel')} />
+      detalle: <BtnAccionesCalendary handleEdit={() => history.push('/luna-de-miel/editar-luna-de-miel')} handleCalendary={() => history.push('/calendario')} />
     },
     {
       id: '003',
@@ -61,7 +61,7 @@ const LunaDeMiel = () => {
       categoria: 'Rutas y Recorridos',
       estado: <BtnEstado estado={false} />,
       destacado: <BtnDestacado estado={true} disabled={false} />,
-      detalle: <BtnAccionesCalendary handleEdit={() => history.push('/luna-de-miel/editar-luna-de-miel')} />
+      detalle: <BtnAccionesCalendary handleEdit={() => history.push('/luna-de-miel/editar-luna-de-miel')} handleCalendary={() => history.push('/calendario')}/>
     },
     {
       id: '004',
@@ -75,7 +75,7 @@ const LunaDeMiel = () => {
       categoria: 'Rutas y Recorridos',
       estado: <BtnEstado estado={true} />,
       destacado: <BtnDestacado estado={true} disabled={false} />,
-      detalle: <BtnAccionesCalendary handleEdit={() => history.push('/luna-de-miel/editar-luna-de-miel')} />
+      detalle: <BtnAccionesCalendary handleEdit={() => history.push('/luna-de-miel/editar-luna-de-miel')} handleCalendary={() => history.push('/calendario')}/>
     }
   ]
   return (

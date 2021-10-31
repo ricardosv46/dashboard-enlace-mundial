@@ -5,17 +5,16 @@ import BtnDestacado from '../../../components/BtnDestacado/BtnDestacado'
 import BtnEstado from '../../../components/BtnEstado/BtnEstado'
 import Button from '../../../components/Buttons/Button'
 import Heading from '../../../components/Heading'
-
 import TableGeneral from '../../../components/Tables/TableGeneral'
 
 const dataHead = [
   ['Id', 'min-w-4', 'left'],
-  ['Foto', 'min-w-30', 'left'],
-  ['Titulo', 10, 'left'],
-  ['Categoria', 20, 'left'],
-  ['Estado', 10, 'center'],
-  ['Destacado', 10, 'center'],
-  ['Acciones', 23, 'left']
+  ['Foto', 'min-w-30 ', 'left'],
+  ['Titulo', 'min-w-50', 'left'],
+  ['Categoria', 'min-w-50', 'left'],
+  ['Estado', '', 'center'],
+  ['Destacado', '', 'center'],
+  ['Acciones', '', 'left']
 ]
 
 const Tours = () => {
@@ -33,14 +32,17 @@ const Tours = () => {
       categoria: 'Rutas y Recorridos',
       estado: <BtnEstado estado={false} />,
       destacado: <BtnDestacado estado={true} disabled={false} />,
-      detalle: <BtnAccionesCalendary handleEdit={() => history.push('/tours/editar-tour')} />
+      detalle: <BtnAccionesCalendary
+        handleEdit={() => history.push('/tours/editar-tour')}
+        handleCalendary={() => history.push('/calendario')}
+      />
     },
 
     {
       id: '002',
       foto: (
         <img
-          className="w-26 h-22"
+          className="w-26 h-22 "
           src="https://turismoi.pe/uploads/photo/version2/photo_file/54018/optimized_2187-1.jpg"
         />
       ),
@@ -48,7 +50,7 @@ const Tours = () => {
       categoria: 'Turismos Ecológico',
       estado: <BtnEstado estado={true} />,
       destacado: <BtnDestacado disabled={false} />,
-      detalle: <BtnAccionesCalendary handleEdit={() => history.push('/tours/editar-tour')} />
+      detalle: <BtnAccionesCalendary handleEdit={() => history.push('/tours/editar-tour')} handleCalendary={() => history.push('/calendario')} />
     },
     {
       id: '003',
@@ -62,7 +64,7 @@ const Tours = () => {
       categoria: 'Naturaleza y paisajes',
       estado: <BtnEstado estado={true} />,
       destacado: <BtnDestacado estado={true} disabled={false} />,
-      detalle: <BtnAccionesCalendary handleEdit={() => history.push('/tours/editar-tour')} />
+      detalle: <BtnAccionesCalendary handleEdit={() => history.push('/tours/editar-tour')} handleCalendary={() => history.push('/calendario')}/>
     },
     {
       id: '004',
@@ -76,7 +78,7 @@ const Tours = () => {
       categoria: 'Rutas y Recorridos',
       estado: <BtnEstado estado={false} />,
       destacado: <BtnDestacado estado={true} disabled={false} />,
-      detalle: <BtnAccionesCalendary handleEdit={() => history.push('/tours/editar-tour')} />
+      detalle: <BtnAccionesCalendary handleEdit={() => history.push('/tours/editar-tour')} handleCalendary={() => history.push('/calendario')} />
     }
   ]
   return (

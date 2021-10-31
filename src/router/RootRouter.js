@@ -26,6 +26,8 @@ import CrearPublicacion from '../views/admin/09-blogs/CrearPublicacion'
 import CrearOferta from '../views/admin/06-ofertas/CrearOferta'
 import EditarOferta from '../views/admin/06-ofertas/EditarOferta'
 import CalendarioTour from '../views/admin/02-tours/CalendarioTour'
+import EditarCliente from '../views/admin/05-clientes/EditarCliente'
+import EditarPublicacion from '../views/admin/09-blogs/EditarPublicacion'
 
 const HomeRoutes = () => {
   return (
@@ -36,7 +38,7 @@ const HomeRoutes = () => {
         <Route exact path="/tours" component={Tours} />
         <Route exact path="/tours/crear-tour" component={CrearTour} />
         <Route exact path="/tours/editar-tour" component={EditarTour} />
-        <Route exact path="/tours/editar-calendario" component={CalendarioTour} />
+        <Route exact path="/calendario" component={CalendarioTour} />
 
         <Route exact path="/luna-de-miel" component={LunaDeMiel} />
         <Route
@@ -59,6 +61,7 @@ const HomeRoutes = () => {
 
         <Route exact path="/clientes" component={Clientes} />
         <Route exact path="/clientes/crear-cliente" component={CrearCliente} />
+        <Route exact path="/clientes/editar-cliente" component={EditarCliente} />
         <Route exact path="/ofertas" component={Ofertas} />
         <Route exact path="/ofertas/crear-oferta" component={CrearOferta} />
         <Route exact path="/ofertas/editar-oferta" component={EditarOferta} />
@@ -77,6 +80,7 @@ const HomeRoutes = () => {
         <Route exact path="/galerias" component={Galerias} />
         <Route exact path="/blogs" component={Blogs} />
         <Route exact path="/blogs/crear-publiacion" component={CrearPublicacion} />
+        <Route exact path="/blogs/editar-publiacion" component={EditarPublicacion} />
         <Route exact path="/comentarios" component={Comentarios} />
         <Route exact path="/contactos" component={Contactos} />
       </Switch>

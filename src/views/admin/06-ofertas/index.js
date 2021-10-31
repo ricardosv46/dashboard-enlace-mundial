@@ -3,31 +3,31 @@ import Heading from '../../../components/Heading'
 import TableGeneral from '../../../components/Tables/TableGeneral'
 import Button from '../../../components/Buttons/Button'
 import { useHistory } from 'react-router'
-import IconAcciones from '../../../components/btnAcciones/IconAcciones'
 import OfertaIca from '../../../assets/imgs/ofertaIca.jpg'
+import BtnAcciones from '../../../components/btnAcciones/BtnAcciones'
 
 const Ofertas = () => {
   const history = useHistory()
   const dataHead = [
-    ['imagen', 18, 'left'],
-    ['Tipo', 40, 'left'],
-    ['Titulo', 48, 'left'],
-    ['Url', 48, 'left'],
-    ['Accion', 10, 'left']]
+    ['imagen', 'min-w-30', 'left'],
+    ['Tipo', 'min-w-40', 'left'],
+    ['Titulo', 'min-w-50', 'left'],
+    ['Url', 'min-w-40', 'left'],
+    ['Acciones', '', 'left']]
   const dataBody = [
     {
-      imagen: <img src={OfertaIca} className="w-20" />,
+      imagen: <img src={OfertaIca} className="w-26 h-22" />,
       tipo: 'Oferta interna',
       titulo: 'Arma tu pack',
       url: 'armar-pack',
-      accion: <IconAcciones onEdit={() => history.push('/ofertas/editar-oferta')} />
+      acciones: <BtnAcciones handleEdit={() => history.push('/ofertas/editar-oferta')} handleDelete={() => alert('oferta eliminada')} />
     },
     {
-      imagen: <img src={OfertaIca} className="w-20" />,
+      imagen: <img src={OfertaIca} className="w-26 h-22" />,
       tipo: 'Oferta externa',
       titulo: 'OFERTA DEL MES! Leggin rayado + Polo piel de durazno 💜',
       url: 'armar-pack',
-      accion: <IconAcciones onEdit={() => history.push('/ofertas/editar-oferta')} />
+      acciones: <BtnAcciones handleEdit={() => history.push('/ofertas/editar-oferta')} handleDelete={() => alert('oferta eliminada')} />
     }
   ]
   return (
