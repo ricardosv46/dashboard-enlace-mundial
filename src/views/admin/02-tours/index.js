@@ -9,8 +9,8 @@ import Heading from '../../../components/Heading'
 import TableGeneral from '../../../components/Tables/TableGeneral'
 
 const dataHead = [
-  ['Id', 1, 'left'],
-  ['Foto', 30, 'left'],
+  ['Id', 'min-w-4', 'left'],
+  ['Foto', 'min-w-30', 'left'],
   ['Titulo', 10, 'left'],
   ['Categoria', 20, 'left'],
   ['Estado', 10, 'center'],
@@ -48,7 +48,7 @@ const Tours = () => {
       categoria: 'Turismos Ecológico',
       estado: <BtnEstado estado={true} />,
       destacado: <BtnDestacado disabled={false} />,
-      detalle: <BtnAccionesCalendary handleEdit={() => history.push('/tours/editar-tour')}/>
+      detalle: <BtnAccionesCalendary handleEdit={() => history.push('/tours/editar-tour')} />
     },
     {
       id: '003',
@@ -76,7 +76,7 @@ const Tours = () => {
       categoria: 'Rutas y Recorridos',
       estado: <BtnEstado estado={false} />,
       destacado: <BtnDestacado estado={true} disabled={false} />,
-      detalle: <BtnAccionesCalendary handleEdit={() => history.push('/tours/editar-tour')}/>
+      detalle: <BtnAccionesCalendary handleEdit={() => history.push('/tours/editar-tour')} />
     }
   ]
   return (

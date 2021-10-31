@@ -34,7 +34,7 @@ const TableGeneral = ({
               >
                 {dataHead.map((th, index) => (
                   <th
-                    className={`px-4 py-6 min-w-${th[1]} text-gray-600 text-${th[2]} `}
+                    className={`px-4 py-6 ${th[1]} text-gray-600 text-${th[2]} `}
                     key={index}
                   >
                     {th[0]}
