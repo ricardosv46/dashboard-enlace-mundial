@@ -1,6 +1,6 @@
 import React from 'react'
 import { useHistory } from 'react-router'
-import IconAcciones from '../../../components/btnAcciones/IconAcciones'
+import BtnAccionesCalendary from '../../../components/btnAcciones/BtnAccionesCalendary'
 import BtnDestacado from '../../../components/BtnDestacado/BtnDestacado'
 import BtnEstado from '../../../components/BtnEstado/BtnEstado'
 import Button from '../../../components/Buttons/Button'
@@ -14,6 +14,7 @@ const LunaDeMiel = () => {
     ['Id', 1, 'left'],
     ['Foto', 10, 'left'],
     ['Titulo', 2, 'left'],
+    ['Categoría', 20, 'left'],
     ['Estado', 10, 'center'],
     ['Destacado', 10, 'center'],
     ['Acciones', 23, 'left']
@@ -25,15 +26,14 @@ const LunaDeMiel = () => {
       foto: (
         <img
           className="w-26 h-22"
-          src="https://lh3.googleusercontent.com/proxy/r6hANISbBXc9YUgwU7sCT3aEmnVYdf9L9-W4LgrutApGTncUE5BvnPMkhS6Kp_0jpjn41KNXReLMMAaL2jwXyTyUVm6-bG1lXjQQ-5lx9DID-VPHakguX9Tl4XdJCDt0"
+          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvql9ZV79RAaLOnuWpywB4xeIwCRC83usl7w&usqp=CAU"
         />
       ),
       titulo: 'Paquete Turístico 1',
+      categoria: 'Rutas y Recorridos',
       estado: <BtnEstado estado={true} />,
-      destacado: <BtnDestacado estado={true} />,
-      detalle: (
-        <IconAcciones onEdit={() => history.push('/luna-de-miel/editar-luna-de-miel')} />
-      )
+      destacado: <BtnDestacado estado={true} disabled={false} />,
+      detalle: <BtnAccionesCalendary handleEdit={() => history.push('/luna-de-miel/editar-luna-de-miel')} />
     },
     {
       id: '002',
@@ -44,11 +44,10 @@ const LunaDeMiel = () => {
         />
       ),
       titulo: 'Paquete Turístico 2',
-      estado: <BtnEstado estado={true} />,
-      destacado: <BtnDestacado estado={true} />,
-      detalle: (
-        <IconAcciones onEdit={() => history.push('/luna-de-miel/editar-luna-de-miel')} />
-      )
+      categoria: 'Rutas y Recorridos',
+      estado: <BtnEstado estado={false} />,
+      destacado: <BtnDestacado estado={true} disabled={false} />,
+      detalle: <BtnAccionesCalendary handleEdit={() => history.push('/luna-de-miel/editar-luna-de-miel')} />
     },
     {
       id: '003',
@@ -59,11 +58,10 @@ const LunaDeMiel = () => {
         />
       ),
       titulo: 'Paquete Turístico 3',
+      categoria: 'Rutas y Recorridos',
       estado: <BtnEstado estado={false} />,
-      destacado: <BtnDestacado estado={true} />,
-      detalle: (
-        <IconAcciones onEdit={() => history.push('/luna-de-miel/editar-luna-de-miel')} />
-      )
+      destacado: <BtnDestacado estado={true} disabled={false} />,
+      detalle: <BtnAccionesCalendary handleEdit={() => history.push('/luna-de-miel/editar-luna-de-miel')} />
     },
     {
       id: '004',
@@ -74,11 +72,10 @@ const LunaDeMiel = () => {
         />
       ),
       titulo: 'Paquete Turístico 4',
-      estado: <BtnEstado estado={false} />,
-      destacado: <BtnDestacado estado={true} />,
-      detalle: (
-        <IconAcciones onEdit={() => history.push('/luna-de-miel/editar-luna-de-miel')} />
-      )
+      categoria: 'Rutas y Recorridos',
+      estado: <BtnEstado estado={true} />,
+      destacado: <BtnDestacado estado={true} disabled={false} />,
+      detalle: <BtnAccionesCalendary handleEdit={() => history.push('/luna-de-miel/editar-luna-de-miel')} />
     }
   ]
   return (

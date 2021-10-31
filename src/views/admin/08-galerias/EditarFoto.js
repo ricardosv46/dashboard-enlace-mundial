@@ -3,7 +3,7 @@ import React, { useEffect } from 'react'
 import InputText from '../../../components/Forms/InputText/InputText'
 import UseForm from '../../../hooks/UseForm'
 
-const EditarFoto = ({ url, alt, closeModal }) => {
+const EditarFoto = ({ url, alt, closeModal, opcion = false }) => {
   const { form, handleInputChange, resetForm } = UseForm({ descripcion: alt })
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -36,28 +36,36 @@ const EditarFoto = ({ url, alt, closeModal }) => {
         <div className="flex flex-col lg:flex-row lg:space-x-4 my-5 gap-y-4">
           <button
             type="submit"
-            disabled={`${
-              form.descripcion.trim() === '' || form.descripcion.trim() === alt
-                ? true
-                : ''
-            }`}
+            disabled={`${form.descripcion.trim() === '' || form.descripcion.trim() === alt
+              ? true
+              : ''
+              }`}
             onClick={() => alert(alt)}
-            className={`transition-all duration-300 ${
-              form.descripcion.trim() === '' || form.descripcion.trim() === alt
-                ? 'bg-gray-300  '
-                : 'bg-transparent text-primary border-primary hover:bg-primary hover:text-white hover:border-transparen '
-            } 
+            className={`transition-all duration-300 ${form.descripcion.trim() === '' || form.descripcion.trim() === alt
+              ? 'bg-gray-300  '
+              : 'bg-transparent text-primary border-primary hover:bg-primary hover:text-white hover:border-transparen '
+              } 
             t
              h-11 w-80 font-semibold border-2 rounded-lg`}
           >
             Actualiazar
           </button>
-          <button
-            type="button"
-            className="transition-all duration-300 bg-transparent text-red-500 border-red-500 hover:bg-red-500 hover:text-white hover:border-transparent h-11 w-80 font-semibold border-2 rounded-lg"
-          >
-            Eliminar
-          </button>
+          {opcion
+            ? <button
+              type="button"
+              className="transition-all duration-300 bg-transparent text-blue-600 border-blue-600 hover:bg-blue-600 hover:text-white hover:border-transparent h-11 w-80 font-semibold border-2 rounded-lg"
+            >
+              Escoger
+            </button>
+
+            : <button
+              type="button"
+              className="transition-all duration-300 bg-transparent text-red-500 border-red-500 hover:bg-red-500 hover:text-white hover:border-transparent h-11 w-80 font-semibold border-2 rounded-lg"
+            >
+              Eliminar
+            </button>
+
+          }
         </div>
       </form>
     </div>

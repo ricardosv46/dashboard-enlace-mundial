@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
+import Button from '../../../components/Buttons/Button'
 import Heading from '../../../components/Heading'
 import Modal from '../../../components/Modales/Modal'
 import { useModal } from '../../../hooks/useModal'
@@ -34,38 +35,93 @@ const imgsList = [
     alt: ''
   }
 ]
-const Galerias = () => {
+const Galerias = ({ opcion }) => {
+  const inputFile = useRef()
+  const dropArea = useRef()
+  console.log('valor current', inputFile)
   const [url, setUrl] = useState('')
   const [alt, setAlt] = useState('')
+  const [selectView, setSelectView] = useState(true)
   const [isOpenModal, openModal, closeModal] = useModal(false)
+  const [dataFiles, setDataFiles] = useState([])
+  const [value, setValue] = useState('')
+  const dataNames = []
+  console.log(dataFiles, inputFile.current)
+  for (let index = 0; index < dataFiles.length; index++) {
+    dataNames.push(dataFiles[index].name)
+    // console.log('valors de nombres', dataFiles[index].name)
+  }
+  // console.log(dataNames)
   const handleOpenModal = (url, alt) => {
     openModal()
     setUrl(url)
     setAlt(alt)
   }
+  const handleSubmitImg = () => {
+    inputFile.current.click()
+  }
+
+  useEffect(() => {
+    const handleChangue = (e) => {
+      setDataFiles(e.target.files)
+      setValue(e.target.value)
+    }
+
+    if (selectView === false) {
+      inputFile.current.addEventListener('change', handleChangue)
+    } else {
+      setDataFiles([])
+      setValue('')
+    }
+  }, [selectView])
+
   return (
     <div className="shadow md:rounded bg-white p-5 py-10 md:p-10">
-      <Heading>Galerias</Heading>
-      <div className="gap-4 contenedor-imagenes">
-        {imgsList.map((image, index) => (
-          <div
-            key={index}
-            className="contenedor-imagen rounded flex  justify-center overflow-hidden shadow-lg "
-          >
-            <img
-              className="w-full"
-              src={image.url}
-              alt={image.alt}
-              onClick={() => handleOpenModal(image.url, image.alt)}
-            />
-          </div>
-        ))}
+      <div className="flex justify-between mb-8">
+        <Heading>Galeria</Heading>
+        <Button size="md" onClick={() => setSelectView(!selectView)}> {selectView ? 'Subir Imágenes' : 'Ver Galeria'}</Button>
       </div>
-      <Modal
-        isOpen={isOpenModal}
-        closeModal={closeModal}
-      >
-        <EditarFoto url={url} alt={alt} closeModal={closeModal}/>
+      {selectView
+        ? (<div className="gap-4 contenedor-imagenes">
+          {imgsList.map((image, index) => (
+            <div
+              key={index}
+              className="contenedor-imagen rounded flex  justify-center overflow-hidden shadow-lg "
+            >
+              <img
+                className="w-full"
+                src={image.url}
+                alt={image.alt}
+                onClick={() => handleOpenModal(image.url, image.alt)}
+              />
+            </div>
+          ))}
+        </div>)
+        : (<div
+          className="w-full min-h-40 text-gray-600  border-2 border-primary border-dashed cursor-pointer flex flex-col justify-center items-center px-4 text-center lg:px-50 py-10"
+          onClick={handleSubmitImg}
+          ref={dropArea}
+        >
+          <p className="text-xl">
+            Arrastre imagenes o haga click aquí para seleccionar.Archivos permitidos: .jpg, .jpeg, .png
+          </p>
+          <div className="flex flex-wrap gap-x-4 text-sm mt-5">
+            {dataNames.map((name, index) => <p key={index} className="py-1 px-2 bg-gray-700 text-white border rounded-lg">{name}</p>)}
+          </div>
+
+          <input
+            type="file"
+            ref={inputFile}
+            className="hidden"
+            multiple
+            value={value}
+            accept="image/svg"
+          />
+        </div>)
+
+      }
+      <Modal isOpen={isOpenModal} closeModal={closeModal}>
+        <EditarFoto url={url} alt={alt} closeModal={closeModal} opcion={opcion} />
       </Modal>
     </div>
   )

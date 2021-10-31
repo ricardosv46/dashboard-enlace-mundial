@@ -5,21 +5,21 @@ import BtnDestacado from '../../../components/BtnDestacado/BtnDestacado'
 import BtnEstado from '../../../components/BtnEstado/BtnEstado'
 import Button from '../../../components/Buttons/Button'
 import Heading from '../../../components/Heading'
+
 import TableGeneral from '../../../components/Tables/TableGeneral'
+
+const dataHead = [
+  ['Id', 1, 'left'],
+  ['Foto', 30, 'left'],
+  ['Titulo', 10, 'left'],
+  ['Categoria', 20, 'left'],
+  ['Estado', 10, 'center'],
+  ['Destacado', 10, 'center'],
+  ['Acciones', 23, 'left']
+]
 
 const Tours = () => {
   const history = useHistory()
-
-  const dataHead = [
-    ['Id', 1, 'left'],
-    ['Foto', 30, 'left'],
-    ['Titulo', 10, 'left'],
-    ['Categoria', 20, 'left'],
-    ['Estado', 10, 'center'],
-    ['Destacado', 10, 'center'],
-    ['Acciones', 23, 'left']
-  ]
-
   const dataBody = [
     {
       id: '001',
@@ -32,9 +32,10 @@ const Tours = () => {
       titulo: 'Ica y Paracas',
       categoria: 'Rutas y Recorridos',
       estado: <BtnEstado estado={false} />,
-      destacado: <BtnDestacado estado={true} />,
-      detalle: <BtnAccionesCalendary />
+      destacado: <BtnDestacado estado={true} disabled={false} />,
+      detalle: <BtnAccionesCalendary handleEdit={() => history.push('/tours/editar-tour')} />
     },
+
     {
       id: '002',
       foto: (
@@ -46,8 +47,8 @@ const Tours = () => {
       titulo: 'Marcapomacocha',
       categoria: 'Turismos Ecológico',
       estado: <BtnEstado estado={true} />,
-      destacado: <BtnDestacado estado={false} />,
-      detalle: <BtnAccionesCalendary />
+      destacado: <BtnDestacado disabled={false} />,
+      detalle: <BtnAccionesCalendary handleEdit={() => history.push('/tours/editar-tour')}/>
     },
     {
       id: '003',
@@ -60,8 +61,8 @@ const Tours = () => {
       titulo: 'Cordillera La Viuda',
       categoria: 'Naturaleza y paisajes',
       estado: <BtnEstado estado={true} />,
-      destacado: <BtnDestacado estado={true} />,
-      detalle: <BtnAccionesCalendary />
+      destacado: <BtnDestacado estado={true} disabled={false} />,
+      detalle: <BtnAccionesCalendary handleEdit={() => history.push('/tours/editar-tour')} />
     },
     {
       id: '004',
@@ -74,8 +75,8 @@ const Tours = () => {
       titulo: 'Antioquía',
       categoria: 'Rutas y Recorridos',
       estado: <BtnEstado estado={false} />,
-      destacado: <BtnDestacado estado={true} />,
-      detalle: <BtnAccionesCalendary />
+      destacado: <BtnDestacado estado={true} disabled={false} />,
+      detalle: <BtnAccionesCalendary handleEdit={() => history.push('/tours/editar-tour')}/>
     }
   ]
   return (
@@ -87,6 +88,7 @@ const Tours = () => {
         </Button>
       </div>
       <TableGeneral dataBody={dataBody} dataHead={dataHead} />
+
     </div>
   )
 }

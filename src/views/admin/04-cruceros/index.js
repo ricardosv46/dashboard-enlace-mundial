@@ -13,7 +13,8 @@ const Cruceros = () => {
   const dataHead = [
     ['Id', 1, 'left'],
     ['Foto', 10, 'left'],
-    ['Titulo', 2, 'left'],
+    ['Título', 2, 'left'],
+    ['Categoría', 20, 'left'],
     ['Estado', 3, 'center'],
     ['Destacado', 4, 'center'],
     ['Acciones', 23, 'left']
@@ -29,6 +30,7 @@ const Cruceros = () => {
         />
       ),
       titulo: 'Crucero 1',
+      categoria: 'Rutas y Recorridos',
       estado: <BtnEstado estado={true} />,
       destacado: <BtnDestacado estado={true} />,
       detalle: (
@@ -44,6 +46,7 @@ const Cruceros = () => {
         />
       ),
       titulo: 'Crucero 2',
+      categoria: 'Rutas y Recorridos',
       estado: < BtnEstado estado={true} />,
       destacado: <BtnDestacado estado={true} />,
       detalle: (
@@ -59,6 +62,7 @@ const Cruceros = () => {
         />
       ),
       titulo: 'Crucero 3',
+      categoria: 'Rutas y Recorridos',
       estado: < BtnEstado estado={false} />,
       destacado: <BtnDestacado estado={true} />,
       detalle: (
@@ -74,6 +78,7 @@ const Cruceros = () => {
         />
       ),
       titulo: 'Crucero 4',
+      categoria: 'Rutas y Recorridos',
       estado: < BtnEstado estado={true} />,
       destacado: <BtnDestacado estado={true} />,
       detalle: (
@@ -87,9 +92,9 @@ const Cruceros = () => {
         <Heading>Cruceros</Heading>
         <Button
           onClick={() => history.push('/cruceros/crear-crucero')}
-          size="sm"
+          size="md"
         >
-          Nuevo
+          Nuevo Crucero
         </Button>
       </div>
       <TableGeneral dataBody={dataBody} dataHead={dataHead} />
