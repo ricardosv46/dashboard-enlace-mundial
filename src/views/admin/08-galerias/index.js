@@ -38,19 +38,22 @@ const imgsList = [
 const Galerias = ({ opcion }) => {
   const inputFile = useRef()
   const dropArea = useRef()
-  console.log('valor current', inputFile)
   const [url, setUrl] = useState('')
   const [alt, setAlt] = useState('')
   const [selectView, setSelectView] = useState(true)
   const [isOpenModal, openModal, closeModal] = useModal(false)
   const [dataFiles, setDataFiles] = useState([])
   const [value, setValue] = useState('')
-  const dataNames = []
+
+  const dataNames = [{}]
   console.log(dataFiles, inputFile.current)
   for (let index = 0; index < dataFiles.length; index++) {
-    dataNames.push(dataFiles[index].name)
-    // console.log('valors de nombres', dataFiles[index].name)
+    dataNames.push({
+      name: (dataFiles[index].name),
+      url: URL.createObjectURL(dataFiles[index])
+    })
   }
+
   // console.log(dataNames)
   const handleOpenModal = (url, alt) => {
     openModal()
@@ -64,6 +67,7 @@ const Galerias = ({ opcion }) => {
   useEffect(() => {
     const handleChangue = (e) => {
       setDataFiles(e.target.files)
+      // console.log('url', URL.createObjectURL(e.target.files[0]))
       setValue(e.target.value)
     }
 
@@ -105,8 +109,19 @@ const Galerias = ({ opcion }) => {
           <p className="text-xl">
             Arrastre imagenes o haga click aquí para seleccionar.Archivos permitidos: .jpg, .jpeg, .png
           </p>
-          <div className="flex flex-wrap gap-x-4 text-sm mt-5">
-            {dataNames.map((name, index) => <p key={index} className="py-1 px-2 bg-gray-700 text-white border rounded-lg">{name}</p>)}
+          <div className="flex flex-wrap gap-4 text-sm mt-5">
+            {dataNames.map((dataImg, index) =>
+              (index > 0) &&
+              (
+                <>
+                  <p key={index} className="py-1 px-2  text-gray-500 border rounded-lg flex gap-x-2">
+                    {dataImg.name}
+                    <img src={dataImg.url} alt="" className="w-5" />
+                  </p>
+
+                </>
+              )
+            )}
           </div>
 
           <input
@@ -115,7 +130,7 @@ const Galerias = ({ opcion }) => {
             className="hidden"
             multiple
             value={value}
-            accept="image/svg"
+            accept="image/*"
           />
         </div>)
 

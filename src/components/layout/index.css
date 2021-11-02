@@ -1,0 +1,15 @@
+
+.container-progress .progress-bar {
+  position: absolute;
+  height: 100%;
+  animation: progress-animation 3s forwards;
+}
+
+@keyframes progress-animation {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
+}
