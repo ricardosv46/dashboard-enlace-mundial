@@ -35,7 +35,12 @@ const imgsList = [
     alt: ''
   }
 ]
-const Galerias = ({ opcion, handleEdit, handleDelete }) => {
+const Galerias = ({
+  opcion,
+  handleEdit,
+  handleDelete,
+  closeModalGaleria = () => { }
+}) => {
   const inputFile = useRef()
   const dropArea = useRef()
   const [url, setUrl] = useState('')
@@ -143,6 +148,7 @@ const Galerias = ({ opcion, handleEdit, handleDelete }) => {
           opcion={opcion}
           handleDelete={handleDelete}
           handleEdit={handleEdit}
+          closeModalGaleria={closeModalGaleria}
         />
       </Modal>
     </div>

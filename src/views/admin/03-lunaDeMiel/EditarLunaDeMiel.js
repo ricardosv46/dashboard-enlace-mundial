@@ -21,7 +21,7 @@ const EditarLunaDeMiel = () => {
         <Heading>Editar Luna de Miel</Heading>
       </div>
       <form
-        onSubmit={() => {}}
+        onSubmit={() => { }}
         className="w-full lg:shadow-md lg:px-4 px-0 mx-auto py-10"
       >
         <div className="flex flex-col lg:flex-row lg:space-x-4 mb-5">
@@ -56,6 +56,18 @@ const EditarLunaDeMiel = () => {
               </option>
             </select>
           </div>
+        </div>
+        <div className="flex flex-col lg:flex-row lg:space-x-4 items-center mb-5">
+          <InputText
+            name="region"
+            label="Región"
+            placeholder="Ingrese la Región"
+          />
+          <InputText
+            name="ciudad"
+            label="Ciudad"
+            placeholder="Ingrese la Ciudad"
+          />
         </div>
 
         <div className="flex justify-between sm:justify-around lg:justify-start  my-5">

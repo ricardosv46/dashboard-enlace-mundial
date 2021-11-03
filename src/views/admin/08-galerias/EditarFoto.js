@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 // import { useEffect } from 'react'
 import InputText from '../../../components/Forms/InputText/InputText'
 import UseForm from '../../../hooks/UseForm'
@@ -10,14 +10,28 @@ const EditarFoto = (
     alt,
     closeModal,
     opcion = false,
-    handleEdit = () => { }
+    closeModalGaleria = () => { }
   }
+  // opcion sirve para saber si voy a usar la galeria para escoger una imagen o para actualizarla, si opcion=true se muestra el btn escoger si no se muestar el btn actualizar
 ) => {
   const { form, handleInputChange, resetForm } = UseForm({ descripcion: alt })
   const { img, setImg } = useContext(ImgContext)
+  const [disabled, setDisabled] = useState(true)
+
   const handleSubmit = (e) => {
     e.preventDefault()
     resetForm()
+  }
+
+  const validationDisabled = () => {
+    if (form.descripcion.trim() === '' || form.descripcion.trim() === alt) {
+      setDisabled(true)
+    } else {
+      setDisabled(false)
+    }
+  }
+
+  const handleUpdate = () => {
     swal({
       title: 'Actualizar',
       text: 'Se Actualizo correctamente el atributo Alt',
@@ -25,6 +39,7 @@ const EditarFoto = (
       button: 'Aceptar',
       timer: 2000
     })
+    resetForm()
     closeModal()
   }
 
@@ -44,6 +59,7 @@ const EditarFoto = (
           button: 'Aceptar',
           timer: 2000
         })
+        resetForm()
         closeModal()
       }
     })
@@ -51,16 +67,29 @@ const EditarFoto = (
 
   const handleChoose = () => {
     setImg({ ...img, url, alt })
+    swal({
+      title: 'SELECCIONADA',
+      text: 'Imágen Seleccionada',
+      icon: 'success',
+      button: 'Aceptar',
+      timer: 2000
+    })
     closeModal()
+    closeModalGaleria()
   }
 
   useEffect(() => {
     resetForm()
   }, [url, alt])
+
+  useEffect(() => {
+    validationDisabled()
+  }, [form])
+
   return (
     <div className="w-full md:w-100 flex flex-col ">
       <h1 className="md:text-2xl font-semibold tracking-wide mb-5 flex items-center mx-auto">
-        Información de la Imagen
+        Información de la Imágen
       </h1>
       <div className="w-full md:w-60  mx-auto">
         <img src={url} alt={alt} className="h-50" />
@@ -78,21 +107,16 @@ const EditarFoto = (
 
         <div className="flex flex-col lg:flex-row lg:space-x-4 my-5 gap-y-4">
           <button
-            type="submit"
-            disabled={`${form.descripcion.trim() === '' || form.descripcion.trim() === alt
-              ? true
-              : ''
-              }`}
-            onClick={() => handleEdit}
-            className={`transition-all duration-300 ${form.descripcion.trim() === '' || form.descripcion.trim() === alt
+            type="button"
+            disabled={disabled}
+            onClick={handleUpdate}
+            className={`transition-all duration-300 ${disabled
               ? 'bg-gray-300  '
-              : 'bg-transparent text-primary border-primary hover:bg-primary hover:text-white hover:border-transparen '
-              } 
-            t
-             h-11 w-80 font-semibold border-2 rounded-lg`}
-          >
+              : 'bg-transparent text-primary border-primary hover:bg-primary hover:text-white hover:border-transparent '
+              }  h-11 w-80 font-semibold border-2 rounded-lg`} >
             Actualiazar
           </button>
+
           {opcion
             ? <button
               type="button"

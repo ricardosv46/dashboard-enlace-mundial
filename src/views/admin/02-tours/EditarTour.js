@@ -57,6 +57,56 @@ const EditarTour = () => {
             </select>
           </div>
         </div>
+        <div className="flex flex-col lg:flex-row lg:space-x-4 mb-5">
+          <div className="flex flex-col w-full mb-4 lg:mb-0">
+            <label
+              htmlFor="region"
+              className="block text-gray-700 text-left text-sm"
+            >
+              Región
+            </label>
+            <select
+              className="cursor-pointer w-full text-sm text-black transition ease-in duration-150 px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
+              id="region"
+              name="region"
+              autoComplete="off"
+            >
+              <option defaultValue className="cursor-pointer">
+                Selecciona una Region
+              </option>
+              <option>PIURA</option>
+              <option>LAMBAYEQUE</option>
+              <option value="">TUMBES</option>
+              <option value="">CAJAMARCA</option>
+              <option value="">LIMA</option>
+              <option value="" >ÁNCASH</option>
+            </select>
+          </div>
+          <div className="flex flex-col w-full mb-4 lg:mb-0">
+            <label
+              htmlFor="categorias"
+              className="block text-gray-700 text-left text-sm"
+            >
+              Ciudad
+            </label>
+            <select
+              className="cursor-pointer w-full text-sm text-black transition ease-in duration-150 px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
+              id="ciudad"
+              name="ciudad"
+              autoComplete="off"
+            >
+              <option defaultValue className="cursor-pointer">
+                Selecciona una ciudad
+              </option>
+              <option>PIURA</option>
+              <option>CHICLAYO</option>
+              <option value="">AREQUIPA</option>
+              <option value="">LIMA</option>
+              <option value="">PASCO</option>
+              <option value="" >TRUJILLO</option>
+            </select>
+          </div>
+        </div>
 
         <div className="flex justify-between sm:justify-around lg:justify-start  my-5">
           <div className="flex  items-center lg:w-full">

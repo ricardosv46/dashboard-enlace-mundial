@@ -12,26 +12,28 @@ import Galerias from '../08-galerias'
 import { ImgContext } from '../../../context/auth/ImgContext'
 const CrearTour = () => {
   const [destacado, setDestacado] = useState(false)
-  const [isOpenModal, openModal, closeModal] = useModal(false)
+  const [isOpenModalGalria, openModalGaleria, closeModalGaleria] = useModal(false)
   const [img1, setImge1] = useState({})
   const [img2, setImge2] = useState({})
+  const [state, setState] = useState(true)
   const { img, setImg } = useContext(ImgContext)
-
   const handleImg1 = () => {
-    openModal()
-    setImge1(img)
-    setImg({})
+    openModalGaleria()
+    setState(true)
   }
   const handleImg2 = () => {
-    openModal()
-    setImge2(img)
-    setImg({})
+    openModalGaleria()
+    setState(false)
   }
   useEffect(() => {
-    console.log('el dato de la img es ', img)
-    console.log('el dato de la img1 es ', img1)
-    console.log('el dato de la img2 es ', img2)
-  }, [img])
+    if (state) {
+      setImge1(img)
+    } else {
+      setImge2(img)
+    }
+  }, [img, state])
+  useEffect(() => { setImg({}) }, [])
+
   return (
     <div className="shadow md:rounded bg-white p-5 py-10 md:p-10">
       <div className="flex justify-center pt-3 relative">
@@ -40,7 +42,7 @@ const CrearTour = () => {
         <Heading>Crear Nuevo Tour</Heading>
       </div>
       <form
-        onSubmit={() => {}}
+        onSubmit={() => { }}
         className="w-full lg:shadow-md lg:px-4 px-0 mx-auto py-10"
       >
         <div className="flex flex-col lg:flex-row lg:space-x-4 mb-5">
@@ -73,6 +75,57 @@ const CrearTour = () => {
               <option value="" className="cursor-pointer">
                 TURISMO DE SOL Y PLAYA
               </option>
+            </select>
+          </div>
+        </div>
+
+        <div className="flex flex-col lg:flex-row lg:space-x-4 mb-5">
+          <div className="flex flex-col w-full mb-4 lg:mb-0">
+            <label
+              htmlFor="region"
+              className="block text-gray-700 text-left text-sm"
+            >
+              Región
+            </label>
+            <select
+              className="cursor-pointer w-full text-sm text-black transition ease-in duration-150 px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
+              id="region"
+              name="region"
+              autoComplete="off"
+            >
+              <option defaultValue className="cursor-pointer">
+                Selecciona una Region
+              </option>
+              <option>PIURA</option>
+              <option>LAMBAYEQUE</option>
+              <option value="">TUMBES</option>
+              <option value="">CAJAMARCA</option>
+              <option value="">LIMA</option>
+              <option value="" >ÁNCASH</option>
+            </select>
+          </div>
+          <div className="flex flex-col w-full mb-4 lg:mb-0">
+            <label
+              htmlFor="categorias"
+              className="block text-gray-700 text-left text-sm"
+            >
+              Ciudad
+            </label>
+            <select
+              className="cursor-pointer w-full text-sm text-black transition ease-in duration-150 px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
+              id="ciudad"
+              name="ciudad"
+              autoComplete="off"
+            >
+              <option defaultValue className="cursor-pointer">
+                Selecciona una ciudad
+              </option>
+              <option>PIURA</option>
+              <option>CHICLAYO</option>
+              <option value="">AREQUIPA</option>
+              <option value="">LIMA</option>
+              <option value="">PASCO</option>
+              <option value="" >TRUJILLO</option>
             </select>
           </div>
         </div>
@@ -193,35 +246,59 @@ const CrearTour = () => {
         </div>
 
         <div className="flex flex-col gap-y-5 sm:flex-row lg:space-x-4 items-center mb-5 ">
-          <div className="sm:w-1/2 flex items-center justify-evenly w-full ">
-            <Button onClick={handleImg1}>Imágen Principal</Button>
-            <div className="border-dashed border border-primary w-30 h-30 shadow-lg">
+          <div className="sm:w-1/2 flex items-center justify-evenly w-full py-4 shadow-lg">
+            <Button
+              onClick={handleImg1}
+              className="btn1"
+            >
+              Imágen Principal
+            </Button>
+            <div className="max-w-30 max-h-30">
               <img
                 src={img1.url}
-                alt="sube la imágen principal"
+                alt=""
                 className="text-gray-500 text-md text-center w-full h-full object-cover "
               />
             </div>
           </div>
-          <div className="sm:w-1/2 flex items-center justify-evenly w-full">
+          <div className="sm:w-1/2 flex items-center justify-evenly w-full shadow-lg py-4">
             <Button onClick={handleImg2}>Imágen Secundaria</Button>
-            <div className="border-dashed w-30 h-30 border border-primary shadow-lg">
+            <div className=" max-w-30 max-h-30 ">
               <img
                 src={img2.url}
-                alt="sube la imágen secundaria"
+                alt=""
                 className="text-gray-500 text-md text-center w-full h-full object-cover"
               />
             </div>
           </div>
         </div>
+
+        <div className="flex flex-col gap-y-5 sm:flex-row lg:space-x-4 items-center mb-5 ">
+
+          <div className=" flex items-center gap-x-3 w-full shadow-lg py-4">
+            <Button onClick={handleImg2}>Galeria</Button>
+            <div className=" max-w-30 max-h-30 ">
+              <img
+                src={img2.url}
+                alt=""
+                className="text-gray-500 text-md text-center w-full h-full object-cover"
+              />
+            </div>
+          </div>
+        </div>
+
         <div className="my-10 text-center">
           <Button variant="primary" size="lg">
             CREAR
           </Button>
         </div>
       </form>
-      <Modal closeModal={closeModal} isOpen={isOpenModal}>
-        <Galerias opcion={true} />
+      <Modal
+        closeModal={closeModalGaleria}
+        isOpen={isOpenModalGalria}>
+        <Galerias opcion={true}
+          closeModalGaleria={closeModalGaleria}
+        />
       </Modal>
     </div>
   )

@@ -58,6 +58,18 @@ const EditarCrucero = () => {
             </select>
           </div>
         </div>
+        <div className="flex flex-col lg:flex-row lg:space-x-4 items-center mb-5">
+          <InputText
+            name="region"
+            label="Región"
+            placeholder="Ingrese la Región"
+          />
+          <InputText
+            name="ciudad"
+            label="Ciudad"
+            placeholder="Ingrese la Ciudad"
+          />
+        </div>
 
         <div className="flex justify-between sm:justify-around lg:justify-start  my-5">
           <div className="flex  items-center lg:w-full">
