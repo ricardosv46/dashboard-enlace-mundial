@@ -3,11 +3,11 @@ import React from 'react'
 const HamburguesBtn = ({ handleClick, show }) => {
   return (
     <button
-      className={`flex border  justify-center items-center top-0 right-0 fixed bg-primary ${show ? 'rounded-full p-2 mr-2 mt-1' : 'rounded-bl-full w-28 h-28'}   z-999 md:hidden `}
+      className={`flex  justify-center items-center top-0 right-0 fixed bg-primary ${show ? 'rounded-full p-2 mr-2 mt-1 w-20 h-20' : 'rounded-bl-full w-28 h-28'}   z-999 md:hidden `}
       onClick={() => handleClick()}
     >
       {!show
-        ? <svg xmlns='ttp://www.w3.org/2000/svg' width="45" height="45" viewBox="0 0 24 24" className={`${show ? '' : '-mt-8'}`}>
+        ? <svg xmlns='ttp://www.w3.org/2000/svg' width="45" height="45" viewBox="0 0 24 24" className={`${show ? '' : '-mt-8 '}`}>
       <path style={{ fill: '#fff' }} d="M4 6H20V8H4zM4 11H20V13H4zM4 16H20V18H4z" />
     </svg>
 
