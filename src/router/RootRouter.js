@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Switch, Route, useHistory } from 'react-router-dom'
 import Layout from '../components/layout'
-import LoginView from '../views/auth/LoginView'
 import Tours from '../views/admin/02-tours'
 import LunaDeMiel from '../views/admin/03-lunaDeMiel'
 import Cruceros from '../views/admin/04-cruceros'
@@ -28,6 +27,7 @@ import EditarOferta from '../views/admin/06-ofertas/EditarOferta'
 import CalendarioTour from '../views/admin/02-tours/CalendarioTour'
 import EditarCliente from '../views/admin/05-clientes/EditarCliente'
 import EditarPublicacion from '../views/admin/09-blogs/EditarPublicacion'
+import Login from '../views/auth/Login'
 
 const HomeRoutes = () => {
   return (
@@ -61,7 +61,11 @@ const HomeRoutes = () => {
 
         <Route exact path="/clientes" component={Clientes} />
         <Route exact path="/clientes/crear-cliente" component={CrearCliente} />
-        <Route exact path="/clientes/editar-cliente" component={EditarCliente} />
+        <Route
+          exact
+          path="/clientes/editar-cliente"
+          component={EditarCliente}
+        />
         <Route exact path="/ofertas" component={Ofertas} />
         <Route exact path="/ofertas/crear-oferta" component={CrearOferta} />
         <Route exact path="/ofertas/editar-oferta" component={EditarOferta} />
@@ -79,8 +83,16 @@ const HomeRoutes = () => {
         />
         <Route exact path="/galerias" component={Galerias} />
         <Route exact path="/blogs" component={Blogs} />
-        <Route exact path="/blogs/crear-publiacion" component={CrearPublicacion} />
-        <Route exact path="/blogs/editar-publiacion" component={EditarPublicacion} />
+        <Route
+          exact
+          path="/blogs/crear-publiacion"
+          component={CrearPublicacion}
+        />
+        <Route
+          exact
+          path="/blogs/editar-publiacion"
+          component={EditarPublicacion}
+        />
         <Route exact path="/comentarios" component={Comentarios} />
         <Route exact path="/contactos" component={Contactos} />
       </Switch>
@@ -88,17 +100,21 @@ const HomeRoutes = () => {
   )
 }
 
-const AuthRoutes = () => {
+const AuthRoutes = (setIsAuth) => {
   return (
     <Switch>
-      <Route path="/auth/login" component={LoginView} />
+      <Route
+        path="/auth/login"
+        exact
+        // eslint-disable-next-line react/no-children-prop
+        children={<Login setIsAuth={setIsAuth} />} />
     </Switch>
   )
 }
 
 const RootRouter = () => {
   const history = useHistory()
-  const [isAuth] = useState(true)
+  const [isAuth, setIsAuth] = useState(false)
 
   useEffect(() => {
     if (isAuth) {
@@ -108,7 +124,7 @@ const RootRouter = () => {
     }
   }, [isAuth])
 
-  return <div>{isAuth ? HomeRoutes() : AuthRoutes()}</div>
+  return <div>{isAuth ? HomeRoutes() : AuthRoutes(setIsAuth)}</div>
 }
 
 export default RootRouter

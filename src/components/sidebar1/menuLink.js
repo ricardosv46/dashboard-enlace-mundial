@@ -28,7 +28,7 @@ const MenuLink = ({
           onClick={handleShowSubMenu}
           to={linkPath}
           exact
-          activeClassName="border-l-2 border-primary bg-text bg-gray-600 text-white  pl-1 rounded-l-2xl"
+          activeClassName="border-l-4 border-primary bg-text bg-gray-600 text-white  pl-1 rounded-l-2xl"
 
         >
           {iconValue && <img className="mr-3 w-6 h-6" src={getIcon} />}

@@ -35,7 +35,7 @@ const imgsList = [
     alt: ''
   }
 ]
-const Galerias = ({ opcion }) => {
+const Galerias = ({ opcion, handleEdit, handleDelete }) => {
   const inputFile = useRef()
   const dropArea = useRef()
   const [url, setUrl] = useState('')
@@ -46,7 +46,7 @@ const Galerias = ({ opcion }) => {
   const [value, setValue] = useState('')
 
   const dataNames = [{}]
-  console.log(dataFiles, inputFile.current)
+  // console.log(dataFiles, inputFile.current)
   for (let index = 0; index < dataFiles.length; index++) {
     dataNames.push({
       name: (dataFiles[index].name),
@@ -136,7 +136,14 @@ const Galerias = ({ opcion }) => {
 
       }
       <Modal isOpen={isOpenModal} closeModal={closeModal}>
-        <EditarFoto url={url} alt={alt} closeModal={closeModal} opcion={opcion} />
+        <EditarFoto
+          url={url}
+          alt={alt}
+          closeModal={closeModal}
+          opcion={opcion}
+          handleDelete={handleDelete}
+          handleEdit={handleEdit}
+        />
       </Modal>
     </div>
   )

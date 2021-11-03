@@ -6,13 +6,16 @@ import './styles/index.css'
 import App from './App'
 import client from './apollo'
 import AuthState from './context/auth/AuthState'
+import ImageState from './context/auth/ImgContext'
 
 const Entry = () => (
   <ApolloProvider client={client}>
     <AuthState>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+      <ImageState>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </ImageState>
     </AuthState>
   </ApolloProvider>
 )
