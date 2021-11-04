@@ -38,6 +38,19 @@ export const menuData = [
     }
   },
   {
+    nameLink: 'Categorias',
+    icono: {
+      value: true,
+      getIcon: iconCategorias
+    },
+
+    path: '/categorias',
+
+    subMenu: {
+      value: false
+    }
+  },
+  {
     nameLink: 'Tours',
     icono: {
       value: true,
@@ -126,18 +139,6 @@ export const menuData = [
     subMenu: {
       value: false
     }
-  },
-  {
-    nameLink: 'Categorias',
-    icono: {
-      value: true,
-      getIcon: iconCategorias
-    },
-
-    path: '/categorias',
-
-    subMenu: {
-      value: false
-    }
   }
+
 ]

@@ -10,6 +10,7 @@ import { useModal } from '../../../hooks/useModal'
 import Modal from '../../../components/Modales/Modal'
 import Galerias from '../08-galerias'
 import { ImgContext } from '../../../context/auth/ImgContext'
+import MostrarGaleria from '../08-galerias/MostrarGaleria'
 const CrearTour = () => {
   const [destacado, setDestacado] = useState(false)
   const [isOpenModalGalria, openModalGaleria, closeModalGaleria] = useModal(false)
@@ -275,16 +276,7 @@ const CrearTour = () => {
 
         <div className="flex flex-col gap-y-5 sm:flex-row lg:space-x-4 items-center mb-5 ">
 
-          <div className=" flex items-center gap-x-3 w-full shadow-lg py-4">
-            <Button onClick={handleImg2}>Galeria</Button>
-            <div className=" max-w-30 max-h-30 ">
-              <img
-                src={img2.url}
-                alt=""
-                className="text-gray-500 text-md text-center w-full h-full object-cover"
-              />
-            </div>
-          </div>
+          <MostrarGaleria />
         </div>
 
         <div className="my-10 text-center">
