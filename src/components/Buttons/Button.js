@@ -28,7 +28,7 @@ const Button = ({
       return 'h-10 w-32 font-medium border-2 rounded-lg'
     }
     if (size === 'md') {
-      return 'h-10 w-48 font-semibold border-2 rounded-lg'
+      return 'h-10 w-52 font-semibold border-2 rounded-lg'
     }
     if (size === 'lg') {
       return 'h-11 w-80 font-semibold border-2 rounded-lg'

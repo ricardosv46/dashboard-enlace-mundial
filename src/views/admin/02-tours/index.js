@@ -82,11 +82,11 @@ const Tours = () => {
     }
   ]
   return (
-    <div className="shadow md:rounded bg-white p-5 py-10 md:p-10">
-      <div className="flex justify-between mb-5">
-        <Heading size="lg">Tours</Heading>
-        <Button size="sm" onClick={() => history.push('/tours/crear-tour')}>
-          Nuevo Tour
+    <div className="shadow  md:rounded bg-white p-5 py-10 md:p-10">
+      <div className="flex-col gap-y-9  flex items-center  sm:flex-row sm:justify-between mb-5">
+        <Heading size="xl" className="text-3xl text-gray-800">Tours</Heading>
+        <Button size="md" className="border" onClick={() => history.push('/tours/crear-tour')}>
+          + Agregar Tour
         </Button>
       </div>
       <TableGeneral dataBody={dataBody} dataHead={dataHead} />

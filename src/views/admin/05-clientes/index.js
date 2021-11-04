@@ -234,10 +234,10 @@ const Clientes = () => {
       <div className="flex justify-between mb-5">
         <Heading>Clientes</Heading>
         <Button
-          size="sm"
+          size="md"
           onClick={() => history.push('/clientes/crear-cliente')}
         >
-          Nuevo Cliente
+          + Agregar Cliente
         </Button>
       </div>
       <TableGeneral dataBody={dataBody} dataHead={dataHead} />

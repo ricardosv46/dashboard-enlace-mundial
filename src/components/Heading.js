@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Heading = ({ size = 'md', children }) => {
+const Heading = ({ size = 'md', children, ...props }) => {
   const applySize = () => {
     switch (size) {
       case 'sm':
@@ -9,6 +9,8 @@ const Heading = ({ size = 'md', children }) => {
         return 'text-md'
       case 'lg':
         return 'text-lg'
+      case 'xl':
+        return 'text-xl'
       default:
         return 'text-md'
     }
@@ -17,6 +19,7 @@ const Heading = ({ size = 'md', children }) => {
   return (
     <p
       className={`flex items-center ${applySize()} md:text-2xl font-semibold tracking-wide mb-5`}
+      {...props}
     >
       {children}
     </p>

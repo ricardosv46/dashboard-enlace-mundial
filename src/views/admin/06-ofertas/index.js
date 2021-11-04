@@ -34,8 +34,8 @@ const Ofertas = () => {
     <div className="shadow md:rounded bg-white p-5 py-10 md:p-10">
       <div className="flex justify-between mb-5">
         <Heading>Clientes</Heading>
-        <Button size="sm" onClick={() => history.push('/ofertas/crear-oferta')}>
-          Nueva Oferta
+        <Button size="md" onClick={() => history.push('/ofertas/crear-oferta')}>
+          + Agregar Oferta
         </Button>
       </div>
       <TableGeneral dataBody={dataBody} dataHead={dataHead} />

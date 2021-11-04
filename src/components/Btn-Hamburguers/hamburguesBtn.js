@@ -3,7 +3,7 @@ import React from 'react'
 const HamburguesBtn = ({ handleClick, show }) => {
   return (
     <button
-      className={`flex  justify-center items-center top-0 right-0 fixed bg-primary ${show ? 'rounded-full p-2 mr-2 mt-1 w-20 h-20' : 'rounded-bl-full w-28 h-28'}   z-999 md:hidden `}
+      className={`flex  justify-center items-center top-0 right-0 fixed bg-primary ${show ? 'rounded-full p-2 mr-2 mt-1 w-20 h-20' : 'rounded-bl-full w-28 h-28'}   z-999 lg:hidden `}
       onClick={() => handleClick()}
     >
       {!show

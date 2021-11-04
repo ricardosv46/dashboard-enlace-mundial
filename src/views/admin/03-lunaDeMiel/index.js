@@ -86,7 +86,7 @@ const LunaDeMiel = () => {
           onClick={() => history.push('/luna-de-miel/crear-luna-de-miel')}
           size="md"
         >
-          Nueva Luna de Miel
+          + Agregar Luna de Miel
         </Button>
       </div>
       <TableGeneral dataBody={dataBody} dataHead={dataHead} />

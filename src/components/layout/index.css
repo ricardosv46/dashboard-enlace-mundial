@@ -1,15 +1,22 @@
+.sidebar {
+  scrollbar-color: #23ce6b rgba(0, 0, 0, 0.75);
+  scrollbar-width:none;
+}
 
 .container-progress .progress-bar {
   position: absolute;
   height: 100%;
-  animation: progress-animation 3s forwards;
+  animation: progress-animation 2s forwards;
 }
 
 @keyframes progress-animation {
   0% {
     width: 0%;
   }
-  100% {
+  50% {
+    width: 50%;
+  }
+  80% {
     width: 100%;
   }
 }

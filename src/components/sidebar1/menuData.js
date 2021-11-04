@@ -8,6 +8,8 @@ import iconOfertas from '../../assets/imgs/ofertas.png'
 import iconCategorias from '../../assets/imgs/category.png'
 import iconGaleria from '../../assets/imgs/galeria.png'
 import iconBlogs from '../../assets/imgs/blogs.png'
+import iconDesplegar from '../../assets/imgs/desplegable.png'
+import iconBall from '../../assets/imgs/ball.png'
 export const menuData = [
   {
     nameLink: 'Dashboard',
@@ -75,6 +77,31 @@ export const menuData = [
     }
   },
   {
+    nameLink: 'Blogs',
+    icono: {
+      value: true,
+      getIcon: iconBlogs
+    },
+
+    path: '/blogs',
+
+    subMenu: {
+      value: true,
+      iconDeploy: iconDesplegar,
+      links: [
+
+        {
+          nameLink: 'Categorias',
+          icono: {
+            value: true,
+            getIcon: iconBall
+          },
+          path: '/blogs/categorias'
+        }
+      ]
+    }
+  },
+  {
     nameLink: 'Clientes',
     icono: {
       value: true,
@@ -108,19 +135,6 @@ export const menuData = [
     },
 
     path: '/categorias',
-
-    subMenu: {
-      value: false
-    }
-  },
-  {
-    nameLink: 'Blogs',
-    icono: {
-      value: true,
-      getIcon: iconBlogs
-    },
-
-    path: '/blogs',
 
     subMenu: {
       value: false

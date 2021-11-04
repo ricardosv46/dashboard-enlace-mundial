@@ -31,7 +31,7 @@ const CrearTour = () => {
     } else {
       setImge2(img)
     }
-  }, [img, state])
+  }, [img, state, img1, img2])
   useEffect(() => { setImg({}) }, [])
 
   return (

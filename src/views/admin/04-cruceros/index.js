@@ -106,7 +106,7 @@ const Cruceros = () => {
           onClick={() => history.push('/cruceros/crear-crucero')}
           size="md"
         >
-          Nuevo Crucero
+          + Agregar Crucero
         </Button>
       </div>
       <TableGeneral dataBody={dataBody} dataHead={dataHead} />

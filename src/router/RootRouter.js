@@ -9,8 +9,6 @@ import Ofertas from '../views/admin/06-ofertas'
 import Categorias from '../views/admin/07-categorias'
 import Galerias from '../views/admin/08-galerias'
 import Blogs from '../views/admin/09-blogs'
-import Comentarios from '../views/admin/10-comentarios'
-import Contactos from '../views/admin/11-contactos'
 import Home from '../views/admin/01-home'
 import CrearTour from '../views/admin/02-tours/CrearTour'
 import CrearLunaDeMiel from '../views/admin/03-lunaDeMiel/CrearLunaDeMiel'
@@ -28,6 +26,9 @@ import CalendarioTour from '../views/admin/02-tours/CalendarioTour'
 import EditarCliente from '../views/admin/05-clientes/EditarCliente'
 import EditarPublicacion from '../views/admin/09-blogs/EditarPublicacion'
 import Login from '../views/auth/Login'
+import ListarCategoriasBlog from '../views/admin/09-blogs/categorias/ListaCategoriasBlog'
+import CrearCategoriaBlog from '../views/admin/09-blogs/categorias/CrearCategoria'
+import EditarCategoriaBlog from '../views/admin/09-blogs/categorias/editarCategoria'
 
 const HomeRoutes = () => {
   return (
@@ -35,11 +36,13 @@ const HomeRoutes = () => {
       <Switch>
         <Route exact path="/" component={Home} />
 
+        {/* VISTAS DE TOURS */}
         <Route exact path="/tours" component={Tours} />
         <Route exact path="/tours/crear-tour" component={CrearTour} />
         <Route exact path="/tours/editar-tour" component={EditarTour} />
         <Route exact path="/calendario" component={CalendarioTour} />
 
+        {/* VISTAS DE LUNA DE MIEL */}
         <Route exact path="/luna-de-miel" component={LunaDeMiel} />
         <Route
           exact
@@ -51,6 +54,8 @@ const HomeRoutes = () => {
           path="/luna-de-miel/editar-luna-de-miel"
           component={EditarLunaDeMiel}
         />
+
+        {/* VISTAS DE CRUCEROS */}
         <Route exact path="/cruceros" component={Cruceros} />
         <Route exact path="/cruceros/crear-crucero" component={CrearCrucero} />
         <Route
@@ -59,6 +64,7 @@ const HomeRoutes = () => {
           component={EditarCrucero}
         />
 
+        {/* VISTAS DE CLEINTES */}
         <Route exact path="/clientes" component={Clientes} />
         <Route exact path="/clientes/crear-cliente" component={CrearCliente} />
         <Route
@@ -66,10 +72,13 @@ const HomeRoutes = () => {
           path="/clientes/editar-cliente"
           component={EditarCliente}
         />
+
+        {/* VISTAS DE OFERTAS */}
         <Route exact path="/ofertas" component={Ofertas} />
         <Route exact path="/ofertas/crear-oferta" component={CrearOferta} />
         <Route exact path="/ofertas/editar-oferta" component={EditarOferta} />
 
+        {/* VISTAS DE CATEGORIAS */}
         <Route exact path="/categorias" component={Categorias} />
         <Route
           exact
@@ -81,7 +90,11 @@ const HomeRoutes = () => {
           path="/categorias/crear-categoria"
           component={CrearCategoria}
         />
+
+        {/* VISTAS DE LA GALERIA */}
         <Route exact path="/galerias" component={Galerias} />
+
+        {/* VISTAS DEL BLOG */}
         <Route exact path="/blogs" component={Blogs} />
         <Route
           exact
@@ -93,8 +106,10 @@ const HomeRoutes = () => {
           path="/blogs/editar-publiacion"
           component={EditarPublicacion}
         />
-        <Route exact path="/comentarios" component={Comentarios} />
-        <Route exact path="/contactos" component={Contactos} />
+        <Route exact path="/blogs/categorias" component={ListarCategoriasBlog} />
+        <Route exact path="/blogs/categorias/crear-categoria" component={CrearCategoriaBlog} />
+        <Route exact path="/blogs/categorias/editar-categoria" component={EditarCategoriaBlog} />
+
       </Switch>
     </Layout>
   )

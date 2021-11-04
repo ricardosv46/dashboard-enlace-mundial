@@ -68,13 +68,14 @@ const Blogs = () => {
       fecha: '20-11-2021',
       estado: <BtnEstado estado={true} />,
       descatar: <BtnDestacado estado={true} />,
-      acciones: <BtnAcciones handleEdit={() => history.push('/blogs/editar-publiacion')}/>
+      acciones: <BtnAcciones handleEdit={() => history.push('/blogs/editar-publiacion')} />
     }
   ]
   return (
     <div className="shadow md:rounded bg-white p-5 py-10 md:p-10 mb-20 min-h-screen ">
-      <Heading>Publiacaciones Blog</Heading>
-      <div className="mb-6">
+
+      <div className="flex justify-between mb-5">
+        <Heading>Publiacaciones Blog</Heading>
         <Button
           variant="primary"
           size="md"

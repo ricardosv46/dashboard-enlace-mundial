@@ -76,8 +76,11 @@ const Categorias = () => {
 
   return (
     <div className="shadow md:rounded bg-white p-5 py-10 md:p-10 mb-20 min-h-screen ">
-      <Heading>Categorias</Heading>
-      <div className="mb-6">
+
+      <div className="flex justify-between mb-5">
+
+        <Heading>Categorias</Heading>
+
         <Button variant="primary" size="md" onClick={handleRedirectNewCategory}>
           + Agregar Categoria
         </Button>
