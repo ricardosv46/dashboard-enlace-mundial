@@ -1,0 +1,3 @@
+mutation DeleteCategoriaBlog($input:CategoriaBlogInput){
+  DeleteCategoriaBlog(input:$input) 
+}

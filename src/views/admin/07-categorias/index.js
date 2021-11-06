@@ -11,12 +11,6 @@ import Spinner from '../../../components/Spinner/Spinner'
 
 const Categorias = () => {
   const history = useHistory()
-  const handleRedirectEditCategory = () => {
-    history.push('/categorias/editar-categoria')
-  }
-  const handleRedirectNewCategory = () => {
-    history.push('/categorias/crear-categoria')
-  }
   const [dataBody, setDataBody] = useState([])
 
   const dataHead = [
@@ -27,7 +21,15 @@ const Categorias = () => {
     ['Acciones', 24, 'center']
   ]
 
+  const handleRedirectNewCategory = () => {
+    history.push('/categorias/crear-categoria')
+  }
+
   const armarFilasCategorias = (categorias, setDataBody) => {
+    const handleRedirectEditCategory = () => {
+      history.push('/categorias/editar-categoria')
+    }
+
     const filasCategorias = categorias.map((categoria) => ({
       id: categoria?.categoriaId,
       imagen: (
@@ -47,13 +49,13 @@ const Categorias = () => {
     }
   }
 
+  // TRAE LA DATA
   const { loading } = useGetCategoriaQuery({
     fetchPolicy: 'network-only',
     variables: {
       estadoCategoria: ''
     },
     onCompleted: (categorias) => {
-      console.log('categorias onCompleted ', categorias)
       armarFilasCategorias(categorias.GetCategoria, setDataBody)
     }
   })
