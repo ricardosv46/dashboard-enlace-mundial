@@ -8,6 +8,7 @@ import Heading from '../../../components/Heading'
 import TableGeneral from '../../../components/Tables/TableGeneral'
 
 const dataHead = [
+
   ['Foto', 'min-w-30', 'left'],
   ['Título', 'min-w-50', 'left'],
   ['Categoria', 'min-w-40', 'left'],
