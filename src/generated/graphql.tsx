@@ -29,8 +29,8 @@ export type Blog = {
   categoriaBlogId?: Maybe<Scalars['String']>;
   descripcionCortaBlog?: Maybe<Scalars['String']>;
   descripcionLargaBlog?: Maybe<Scalars['String']>;
-  destacadoBlog?: Maybe<Scalars['Int']>;
-  estadoBlog?: Maybe<Scalars['Int']>;
+  destacadoBlog?: Maybe<Scalars['String']>;
+  estadoBlog?: Maybe<Scalars['String']>;
   galeriaBlog?: Maybe<Array<Maybe<Imagenes>>>;
   imagenPrincipalBlog?: Maybe<Imagenes>;
   imagenSecundariaBlog?: Maybe<Imagenes>;
@@ -43,8 +43,8 @@ export type BlogInput = {
   blogId?: Maybe<Scalars['Int']>;
   descripcionCortaBlog?: Maybe<Scalars['String']>;
   descripcionLargaBlog?: Maybe<Scalars['String']>;
-  destacadoBlog?: Maybe<Scalars['Int']>;
-  estadoBlog?: Maybe<Scalars['Int']>;
+  destacadoBlog?: Maybe<Scalars['String']>;
+  estadoBlog?: Maybe<Scalars['String']>;
   galeriaBlog?: Maybe<Array<Maybe<Scalars['Int']>>>;
   imagenPrincipalBlog?: Maybe<Scalars['Int']>;
   imagenSecundariaBlog?: Maybe<Scalars['Int']>;
@@ -63,7 +63,7 @@ export type Categoria = {
   __typename?: 'Categoria';
   categoriaId?: Maybe<Scalars['Int']>;
   descripcion?: Maybe<Scalars['String']>;
-  estadoCategoria?: Maybe<Scalars['Int']>;
+  estadoCategoria?: Maybe<Scalars['String']>;
   imagenPrincipalCategoria?: Maybe<Imagenes>;
   imagenSecundariaCategoria?: Maybe<Imagenes>;
   keywordsCategoria?: Maybe<Scalars['String']>;
@@ -75,7 +75,7 @@ export type CategoriaBlog = {
   __typename?: 'CategoriaBlog';
   categoriaBlogId?: Maybe<Scalars['Int']>;
   descripcionCategoriaBlog?: Maybe<Scalars['String']>;
-  estadoCategoriaBlog?: Maybe<Scalars['Int']>;
+  estadoCategoriaBlog?: Maybe<Scalars['String']>;
   imagenPrincipalCategoriaBlog?: Maybe<Imagenes>;
   imagenSecundariaCategoriaBlog?: Maybe<Imagenes>;
   keywordsCategoriaBlog?: Maybe<Scalars['String']>;
@@ -86,7 +86,7 @@ export type CategoriaBlog = {
 export type CategoriaBlogInput = {
   categoriaBlogId?: Maybe<Scalars['Int']>;
   descripcionCategoriaBlog?: Maybe<Scalars['String']>;
-  estadoCategoriaBlog?: Maybe<Scalars['Int']>;
+  estadoCategoriaBlog?: Maybe<Scalars['String']>;
   imagenPrincipalCategoriaBlog?: Maybe<Scalars['Int']>;
   imagenSecundariaCategoriaBlog?: Maybe<Scalars['Int']>;
   keywordsCategoriaBlog?: Maybe<Scalars['String']>;
@@ -97,7 +97,7 @@ export type CategoriaBlogInput = {
 export type CategoriaInput = {
   categoriaId?: Maybe<Scalars['Int']>;
   descripcion?: Maybe<Scalars['String']>;
-  estadoCategoria?: Maybe<Scalars['Int']>;
+  estadoCategoria?: Maybe<Scalars['String']>;
   imagenPrincipalCategoria?: Maybe<Scalars['Int']>;
   imagenSecundariaCategoria?: Maybe<Scalars['Int']>;
   keywordsCategoria?: Maybe<Scalars['String']>;
@@ -114,8 +114,8 @@ export type Crucero = {
   cruceroId?: Maybe<Scalars['Int']>;
   descripcionCortaCrucero?: Maybe<Scalars['String']>;
   descripcionLargaCrucero?: Maybe<Scalars['String']>;
-  destacadoCrucero?: Maybe<Scalars['Int']>;
-  estadoCrucero?: Maybe<Scalars['Int']>;
+  destacadoCrucero?: Maybe<Scalars['String']>;
+  estadoCrucero?: Maybe<Scalars['String']>;
   galeriaCrucero?: Maybe<Array<Maybe<Imagenes>>>;
   imagenPrincipalCrucero?: Maybe<Imagenes>;
   imagenSecundariaCrucero?: Maybe<Imagenes>;
@@ -139,8 +139,8 @@ export type CruceroInput = {
   cruceroId?: Maybe<Scalars['Int']>;
   descripcionCortaCrucero?: Maybe<Scalars['String']>;
   descripcionLargaCrucero?: Maybe<Scalars['String']>;
-  destacadoCrucero?: Maybe<Scalars['Int']>;
-  estadoCrucero?: Maybe<Scalars['Int']>;
+  destacadoCrucero?: Maybe<Scalars['String']>;
+  estadoCrucero?: Maybe<Scalars['String']>;
   galeriaCrucero?: Maybe<Array<Maybe<Scalars['Int']>>>;
   imagenPrincipalCrucero?: Maybe<Scalars['Int']>;
   imagenSecundariaCrucero?: Maybe<Scalars['Int']>;
@@ -215,8 +215,8 @@ export type LunaMiel = {
   ciudadLuna?: Maybe<Scalars['String']>;
   descripcionCortaLuna?: Maybe<Scalars['String']>;
   descripcionLargaLuna?: Maybe<Scalars['String']>;
-  destacadoLuna?: Maybe<Scalars['Int']>;
-  estadoLuna?: Maybe<Scalars['Int']>;
+  destacadoLuna?: Maybe<Scalars['String']>;
+  estadoLuna?: Maybe<Scalars['String']>;
   galeriaLuna?: Maybe<Array<Maybe<Imagenes>>>;
   imagenPrincipalLuna?: Maybe<Imagenes>;
   imagenSecundariaLuna?: Maybe<Imagenes>;
@@ -240,8 +240,8 @@ export type LunaMielInput = {
   ciudadLuna?: Maybe<Scalars['String']>;
   descripcionCortaLuna?: Maybe<Scalars['String']>;
   descripcionLargaLuna?: Maybe<Scalars['String']>;
-  destacadoLuna?: Maybe<Scalars['Int']>;
-  estadoLuna?: Maybe<Scalars['Int']>;
+  destacadoLuna?: Maybe<Scalars['String']>;
+  estadoLuna?: Maybe<Scalars['String']>;
   galeriaLuna?: Maybe<Array<Maybe<Scalars['Int']>>>;
   imagenPrincipalLuna?: Maybe<Scalars['Int']>;
   imagenSecundariaLuna?: Maybe<Scalars['Int']>;
@@ -492,14 +492,14 @@ export type PaginatorInfo = {
 export type Query = {
   __typename?: 'Query';
   GetAllBlog?: Maybe<GetAllBlog>;
-  GetAllCategoriasBlog?: Maybe<GetAllBlog>;
+  GetAllBlogCategoria?: Maybe<GetAllBlog>;
+  GetAllCategoriaBlog?: Maybe<Array<Maybe<CategoriaBlog>>>;
   GetAllCrucero?: Maybe<GetAllCrucero>;
   GetAllLunaMiel?: Maybe<GetAllLunaMiel>;
   GetAllSuscripciones?: Maybe<GetAllSuscripciones>;
   GetAllTour?: Maybe<GetAllTour>;
   GetAllUsers?: Maybe<GetAllUsers>;
   GetCategoria?: Maybe<Array<Maybe<Categoria>>>;
-  GetCategoriaBlog?: Maybe<Array<Maybe<CategoriaBlog>>>;
   GetCategoriaCrucero?: Maybe<GetAllCrucero>;
   GetCategoriaLunaMiel?: Maybe<GetAllLunaMiel>;
   GetCategoriaTour?: Maybe<GetAllTour>;
@@ -519,11 +519,16 @@ export type QueryGetAllBlogArgs = {
 };
 
 
-export type QueryGetAllCategoriasBlogArgs = {
+export type QueryGetAllBlogCategoriaArgs = {
   estadoBlog?: Maybe<Scalars['String']>;
   numberPaginate?: Maybe<Scalars['Int']>;
   page?: Maybe<Scalars['Int']>;
   slugCategoriaBlog?: Maybe<Scalars['String']>;
+};
+
+
+export type QueryGetAllCategoriaBlogArgs = {
+  estadoCategoriaBlog?: Maybe<Scalars['String']>;
 };
 
 
@@ -564,11 +569,6 @@ export type QueryGetAllUsersArgs = {
 
 export type QueryGetCategoriaArgs = {
   estadoCategoria?: Maybe<Scalars['String']>;
-};
-
-
-export type QueryGetCategoriaBlogArgs = {
-  estadoCategoriaBlog?: Maybe<Scalars['String']>;
 };
 
 
@@ -636,8 +636,8 @@ export type Tour = {
   ciudadTour?: Maybe<Scalars['String']>;
   descripcionCortaTour?: Maybe<Scalars['String']>;
   descripcionLargaTour?: Maybe<Scalars['String']>;
-  destacadoTour?: Maybe<Scalars['Int']>;
-  estadoTour?: Maybe<Scalars['Int']>;
+  destacadoTour?: Maybe<Scalars['String']>;
+  estadoTour?: Maybe<Scalars['String']>;
   galeriaTour?: Maybe<Array<Maybe<Imagenes>>>;
   imagenPrincipalTour?: Maybe<Imagenes>;
   imagenSecundariaTour?: Maybe<Imagenes>;
@@ -660,8 +660,8 @@ export type TourInput = {
   ciudadTour?: Maybe<Scalars['String']>;
   descripcionCortaTour?: Maybe<Scalars['String']>;
   descripcionLargaTour?: Maybe<Scalars['String']>;
-  destacadoTour?: Maybe<Scalars['Int']>;
-  estadoTour?: Maybe<Scalars['Int']>;
+  destacadoTour?: Maybe<Scalars['String']>;
+  estadoTour?: Maybe<Scalars['String']>;
   galeriaTour?: Maybe<Array<Maybe<Scalars['Int']>>>;
   imagenPrincipalTour?: Maybe<Scalars['Int']>;
   imagenSecundariaTour?: Maybe<Scalars['Int']>;
@@ -727,6 +727,13 @@ export type SuscripcionInput = {
   suscripcionId?: Maybe<Scalars['Int']>;
 };
 
+export type GetAllCategoriaBlogQueryVariables = Exact<{
+  estadoCategoriaBlog?: Maybe<Scalars['String']>;
+}>;
+
+
+export type GetAllCategoriaBlogQuery = { __typename?: 'Query', GetAllCategoriaBlog?: Array<{ __typename?: 'CategoriaBlog', categoriaBlogId?: number | null | undefined, slugCategoriaBlog?: string | null | undefined, tituloCategoriaBlog?: string | null | undefined, estadoCategoriaBlog?: string | null | undefined, descripcionCategoriaBlog?: string | null | undefined, keywordsCategoriaBlog?: string | null | undefined, imagenPrincipalCategoriaBlog?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined, imagenSecundariaCategoriaBlog?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined } | null | undefined> | null | undefined };
+
 export type GetAllUsersQueryVariables = Exact<{
   page?: Maybe<Scalars['Int']>;
   numberPaginate?: Maybe<Scalars['Int']>;
@@ -738,6 +745,56 @@ export type GetAllUsersQueryVariables = Exact<{
 export type GetAllUsersQuery = { __typename?: 'Query', GetAllUsers?: { __typename?: 'GetAllUsers', nroTotalItems?: number | null | undefined, data?: Array<{ __typename?: 'User', userId?: string | null | undefined, nombre?: string | null | undefined, apellidos?: string | null | undefined, email?: string | null | undefined, estado?: number | null | undefined, apiToken?: string | null | undefined }> | null | undefined } | null | undefined };
 
 
+export const GetAllCategoriaBlogDocument = gql`
+    query GetAllCategoriaBlog($estadoCategoriaBlog: String) {
+  GetAllCategoriaBlog(estadoCategoriaBlog: $estadoCategoriaBlog) {
+    categoriaBlogId
+    slugCategoriaBlog
+    tituloCategoriaBlog
+    estadoCategoriaBlog
+    descripcionCategoriaBlog
+    keywordsCategoriaBlog
+    imagenPrincipalCategoriaBlog {
+      id
+      descripcion
+      url
+    }
+    imagenSecundariaCategoriaBlog {
+      id
+      descripcion
+      url
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetAllCategoriaBlogQuery__
+ *
+ * To run a query within a React component, call `useGetAllCategoriaBlogQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAllCategoriaBlogQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAllCategoriaBlogQuery({
+ *   variables: {
+ *      estadoCategoriaBlog: // value for 'estadoCategoriaBlog'
+ *   },
+ * });
+ */
+export function useGetAllCategoriaBlogQuery(baseOptions?: Apollo.QueryHookOptions<GetAllCategoriaBlogQuery, GetAllCategoriaBlogQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetAllCategoriaBlogQuery, GetAllCategoriaBlogQueryVariables>(GetAllCategoriaBlogDocument, options);
+      }
+export function useGetAllCategoriaBlogLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAllCategoriaBlogQuery, GetAllCategoriaBlogQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetAllCategoriaBlogQuery, GetAllCategoriaBlogQueryVariables>(GetAllCategoriaBlogDocument, options);
+        }
+export type GetAllCategoriaBlogQueryHookResult = ReturnType<typeof useGetAllCategoriaBlogQuery>;
+export type GetAllCategoriaBlogLazyQueryHookResult = ReturnType<typeof useGetAllCategoriaBlogLazyQuery>;
+export type GetAllCategoriaBlogQueryResult = Apollo.QueryResult<GetAllCategoriaBlogQuery, GetAllCategoriaBlogQueryVariables>;
 export const GetAllUsersDocument = gql`
     query GetAllUsers($page: Int, $numberPaginate: Int, $tipoUsuario: String, $estado: String) {
   GetAllUsers(

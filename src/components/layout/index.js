@@ -10,7 +10,7 @@ const Layout = ({ children, setIsAuth }) => {
   const [showProgressBsar, setShowProgressBar] = useState(false)
   const [showBtn, setShowBtn] = useState(false)
   const [showSidebar, setShowSidebar] = useState(true)
-  const [screenX, setScreenX] = useState(window.screen.width)
+  const [screenX, setScreenX] = useState(window.outerWidth)
   const handleShowBtn = () => {
     setShowBtn(!showBtn)
   }
@@ -21,9 +21,9 @@ const Layout = ({ children, setIsAuth }) => {
     }, 2000)
   }, [pathname])
   useEffect(() => {
-    const detectScreenX = () => setScreenX(window.screen.width)
+    const detectScreenX = () => setScreenX(window.outerWidth)
     window.addEventListener('resize', detectScreenX)
-
+    console.log(screenX)
     if (screenX >= 1280) {
       setShowSidebar(true)
     } else {

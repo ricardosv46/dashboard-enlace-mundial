@@ -1,0 +1,20 @@
+query GetAllCategoriaBlog($estadoCategoriaBlog: String) {
+  GetAllCategoriaBlog(estadoCategoriaBlog: $estadoCategoriaBlog) {
+    categoriaBlogId
+    slugCategoriaBlog
+    tituloCategoriaBlog
+    estadoCategoriaBlog
+    descripcionCategoriaBlog
+    keywordsCategoriaBlog
+    imagenPrincipalCategoriaBlog {
+      id
+      descripcion
+      url
+    }
+    imagenSecundariaCategoriaBlog {
+      id
+      descripcion
+      url
+    }
+  }
+}
