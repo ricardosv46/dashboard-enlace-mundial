@@ -5,9 +5,13 @@ import BtnEstado from '../../../components/BtnEstado/BtnEstado'
 import Button from '../../../components/Buttons/Button'
 import Heading from '../../../components/Heading'
 import TableGeneral from '../../../components/Tables/TableGeneral'
-import { useGetCategoriaQuery } from '../../../generated/graphql'
+import {
+  useDeleteCategoriaMutation,
+  useGetCategoriaQuery
+} from '../../../generated/graphql'
 import { useState } from 'react'
 import Spinner from '../../../components/Spinner/Spinner'
+import swal from 'sweetalert'
 
 const Categorias = () => {
   const history = useHistory()
@@ -26,12 +30,12 @@ const Categorias = () => {
   }
 
   const armarFilasCategorias = (categorias, setDataBody, deleteCategoria) => {
+    console.log('categorias filas ', categorias)
     const handleRedirectEditCategory = (id, objCategoria) => {
       history.push(`/categorias/editar-categoria/${id}`, objCategoria)
     }
 
     const filasCategorias = categorias.map((categoria) => ({
-      id: categoria?.categoriaId,
       imagen: (
         <img
           src={categoria?.imagenPrincipalCategoria?.url}
@@ -43,8 +47,10 @@ const Categorias = () => {
       descatar: <BtnDestacado estado={false} />,
       acciones: (
         <BtnAcciones
-          handleEdit={() => handleRedirectEditCategory(categoria?.categoriaId, categoria)}
-          handleDelete={() => deleteCategoria(categoria?.categoriaId)}
+          handleEdit={() =>
+            handleRedirectEditCategory(categoria?.categoriaId, categoria)
+          }
+          handleDelete={() => deleteCategoria(categoria)}
         />
       )
     }))
@@ -53,8 +59,6 @@ const Categorias = () => {
       setDataBody(filasCategorias)
     }
   }
-
-  const deleteCategoria = (id) => {}
 
   // TRAE LA DATA
   const { loading } = useGetCategoriaQuery({
@@ -70,6 +74,39 @@ const Categorias = () => {
       )
     }
   })
+
+  const [deleteCategoriaMutation] = useDeleteCategoriaMutation({
+    onCompleted: (data) => {
+      console.log('onCompleted delete', data)
+    },
+    onError: (err) => {
+      console.log('onError delete', err?.debugMessage)
+      swal({
+        title: 'Eliminando',
+        icon: 'success'
+      })
+    }
+  })
+
+  const deleteCategoria = (categoria) => {
+    swal({
+      title: `Desea eliminar la categoria ${categoria?.tituloCategoria}?`,
+      text: 'Una vez eliminada, no podrás recuperar la categoria!',
+      icon: 'warning',
+      buttons: true,
+      dangerMode: true
+    }).then(async (rpta) => {
+      if (rpta) {
+        deleteCategoriaMutation({
+          variables: {
+            input: {
+              categoriaId: categoria.categoriaId
+            }
+          }
+        })
+      }
+    })
+  }
 
   return (
     <div className="shadow md:rounded bg-white p-5 py-10 md:p-10 mb-20 min-h-screen ">
