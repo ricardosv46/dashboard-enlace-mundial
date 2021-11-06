@@ -3,7 +3,10 @@ import Button from '../../../../components/Buttons/Button'
 import Heading from '../../../../components/Heading'
 import Spinner from '../../../../components/Spinner/Spinner'
 import TableGeneral from '../../../../components/Tables/TableGeneral'
-import { useGetAllCategoriaBlogQuery } from '../../../../generated/graphql'
+import {
+  useDeleteCategoriaBlogMutation,
+  useGetAllCategoriaBlogQuery
+} from '../../../../generated/graphql'
 import { useGestionarCategoriasBlog } from '../../../../services/GestionarCategoriasBlog'
 
 const dataHead = [
@@ -15,7 +18,8 @@ const dataHead = [
 ]
 const ListarCategoriasBlog = () => {
   const history = useHistory()
-  const handleRedirectEditCategory = () => {
+  const [deleteCtegory] = useDeleteCategoriaBlogMutation({ onError: (error) => { console.log(error.graphQLErrors[0]) } })
+  const handleEdit = () => {
     history.push('/blogs/categorias/editar-categoria')
   }
   const handleRedirectNewCategory = () => {
@@ -26,8 +30,22 @@ const ListarCategoriasBlog = () => {
     variables: { estadoCategoriaBlog: '' }
   })
 
+  // Funcion para Eliminar una categoria
+  const handleDelete = async (id) => {
+    try {
+      await deleteCtegory({
+        variables: {
+
+          input: {
+            categoriaBlogId: id
+          }
+
+        }
+      })
+    } catch (error) { console.log(error) }
+  }
   const { getAllCategoriasBlog } = useGestionarCategoriasBlog()
-  const [dataBody] = getAllCategoriasBlog(handleRedirectEditCategory)
+  const [dataBody] = getAllCategoriasBlog(handleEdit, handleDelete)
 
   return (
     <div className="shadow md:rounded bg-white p-5 py-10 md:p-10 mb-20 min-h-screen ">
