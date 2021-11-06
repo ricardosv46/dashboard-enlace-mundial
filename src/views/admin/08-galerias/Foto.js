@@ -13,8 +13,7 @@ const Foto = ({ url, alt, id, galeria, dispatch }) => {
       alt,
       marcado: !select
     }
-    setSelect(!select)
-
+    setSelect(select => !select)
     const action = {
       type: 'addImage',
       payload: newImage
@@ -24,8 +23,8 @@ const Foto = ({ url, alt, id, galeria, dispatch }) => {
   }
 
   useEffect(() => {
-    console.log(galeria)
-  }, [galeria])
+    setSelect(false)
+  }, [])
   return (
     <div
       className={` ${select && 'border-primary border'

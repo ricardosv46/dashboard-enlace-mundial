@@ -17,11 +17,11 @@ const MostrarGaleria = () => {
     dispatch({
       type: 'resetImage'
     })
+    console.log(galeria)
   }, [])
   return (
-    <div className=" flex flex-col gap-y-6 md:flex-row items-center gap-x-3 w-full shadow-lg sm:py-4">
-      <Button onClick={() => openModal()}>Galeria Principal</Button>
-      <div className=" max-w-full  flex gap-2 flex-wrap">
+    <div className=" flex flex-col gap-y-6 items-center gap-x-3 w-full shadow-lg sm:py-4 py-4 px-2">
+      <div className="   flex gap-2 flex-wrap">
         {
           galeria.map((imagen, index) =>
             imagen.marcado && <img
@@ -32,8 +32,8 @@ const MostrarGaleria = () => {
             />
           )
         }
-
       </div>
+      <Button onClick={() => openModal()} className="min-w-40">Galeria Principal</Button>
       <Modal isOpen={isOpenModal} closeModal={closeModal}>
         <SeleccionarFotos
           galeria={galeria}

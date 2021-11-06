@@ -247,13 +247,7 @@ const CrearTour = () => {
         </div>
 
         <div className="flex flex-col gap-y-5 sm:flex-row lg:space-x-4 items-center mb-5 ">
-          <div className="sm:w-1/2 flex items-center justify-evenly w-full py-4 shadow-lg">
-            <Button
-              onClick={handleImg1}
-              className="btn1"
-            >
-              Imágen Principal
-            </Button>
+          <div className="sm:w-1/2 flex flex-col items-center justify-evenly w-full py-4 gap-y-5 shadow-lg">
             <div className="max-w-30 max-h-30">
               <img
                 src={img1.url}
@@ -261,9 +255,14 @@ const CrearTour = () => {
                 className="text-gray-500 text-md text-center w-full h-full object-cover "
               />
             </div>
+            <Button
+              onClick={handleImg1}
+              className="btn1"
+            >
+              Imágen Principal
+            </Button>
           </div>
-          <div className="sm:w-1/2 flex items-center justify-evenly w-full shadow-lg py-4">
-            <Button onClick={handleImg2}>Imágen Secundaria</Button>
+          <div className="sm:w-1/2 flex flex-col gap-y-5 items-center justify-evenly w-full shadow-lg py-4">
             <div className=" max-w-30 max-h-30 ">
               <img
                 src={img2.url}
@@ -271,6 +270,7 @@ const CrearTour = () => {
                 className="text-gray-500 text-md text-center w-full h-full object-cover"
               />
             </div>
+            <Button onClick={handleImg2}>Imágen Secundaria</Button>
           </div>
         </div>
 
