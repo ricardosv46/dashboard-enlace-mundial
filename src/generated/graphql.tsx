@@ -727,6 +727,13 @@ export type SuscripcionInput = {
   suscripcionId?: Maybe<Scalars['Int']>;
 };
 
+export type DeleteCategoriaBlogMutationVariables = Exact<{
+  input?: Maybe<CategoriaBlogInput>;
+}>;
+
+
+export type DeleteCategoriaBlogMutation = { __typename?: 'Mutation', DeleteCategoriaBlog?: string | null | undefined };
+
 export type GetCategoriaQueryVariables = Exact<{
   estadoCategoria?: Maybe<Scalars['String']>;
 }>;
@@ -752,6 +759,37 @@ export type GetAllUsersQueryVariables = Exact<{
 export type GetAllUsersQuery = { __typename?: 'Query', GetAllUsers?: { __typename?: 'GetAllUsers', nroTotalItems?: number | null | undefined, data?: Array<{ __typename?: 'User', userId?: string | null | undefined, nombre?: string | null | undefined, apellidos?: string | null | undefined, email?: string | null | undefined, estado?: number | null | undefined, apiToken?: string | null | undefined }> | null | undefined } | null | undefined };
 
 
+export const DeleteCategoriaBlogDocument = gql`
+    mutation DeleteCategoriaBlog($input: CategoriaBlogInput) {
+  DeleteCategoriaBlog(input: $input)
+}
+    `;
+export type DeleteCategoriaBlogMutationFn = Apollo.MutationFunction<DeleteCategoriaBlogMutation, DeleteCategoriaBlogMutationVariables>;
+
+/**
+ * __useDeleteCategoriaBlogMutation__
+ *
+ * To run a mutation, you first call `useDeleteCategoriaBlogMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteCategoriaBlogMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteCategoriaBlogMutation, { data, loading, error }] = useDeleteCategoriaBlogMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useDeleteCategoriaBlogMutation(baseOptions?: Apollo.MutationHookOptions<DeleteCategoriaBlogMutation, DeleteCategoriaBlogMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteCategoriaBlogMutation, DeleteCategoriaBlogMutationVariables>(DeleteCategoriaBlogDocument, options);
+      }
+export type DeleteCategoriaBlogMutationHookResult = ReturnType<typeof useDeleteCategoriaBlogMutation>;
+export type DeleteCategoriaBlogMutationResult = Apollo.MutationResult<DeleteCategoriaBlogMutation>;
+export type DeleteCategoriaBlogMutationOptions = Apollo.BaseMutationOptions<DeleteCategoriaBlogMutation, DeleteCategoriaBlogMutationVariables>;
 export const GetCategoriaDocument = gql`
     query GetCategoria($estadoCategoria: String) {
   GetCategoria(estadoCategoria: $estadoCategoria) {

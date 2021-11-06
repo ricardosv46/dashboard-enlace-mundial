@@ -7,7 +7,7 @@ import {
 } from '../generated/graphql'
 
 export const useGestionarCategoriasBlog = () => {
-  const getAllCategoriasBlog = (handleEdit = () => {}) => {
+  const getAllCategoriasBlog = (handleEdit = () => { }, handleDelete = () => { }) => {
     const [dataBod, setDataBod] = useState([])
     const { data, loading } = useGetAllCategoriaBlogQuery({
       variables: { estadoCategoriaBlog: '' }
@@ -40,7 +40,7 @@ export const useGestionarCategoriasBlog = () => {
             acciones: (
               <BtnAcciones
                 handleEdit={handleEdit}
-                // handleDelete={handleDelete(category.categoriaBlogId)}
+                handleDelete={() => handleDelete(category.categoriaBlogId)}
               />
             )
           }
@@ -50,11 +50,6 @@ export const useGestionarCategoriasBlog = () => {
 
     return [dataBod, setDataBod, data]
   }
-
-  // // Funcion para Eliminar una categoria
-  // const handleDelete = (idCategoria) => {
-  //   useDeleteCategoriaBlogMutation({ variables: { categoriaBlogId: idCategoria } })
-  // }
 
   return { getAllCategoriasBlog }
 }
