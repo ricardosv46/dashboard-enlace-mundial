@@ -25,9 +25,9 @@ const Categorias = () => {
     history.push('/categorias/crear-categoria')
   }
 
-  const armarFilasCategorias = (categorias, setDataBody) => {
-    const handleRedirectEditCategory = () => {
-      history.push('/categorias/editar-categoria')
+  const armarFilasCategorias = (categorias, setDataBody, deleteCategoria) => {
+    const handleRedirectEditCategory = (id, objCategoria) => {
+      history.push(`/categorias/editar-categoria/${id}`, objCategoria)
     }
 
     const filasCategorias = categorias.map((categoria) => ({
@@ -41,13 +41,20 @@ const Categorias = () => {
       nombre: categoria?.tituloCategoria,
       estado: <BtnEstado estado={categoria?.estadoCategoria} />,
       descatar: <BtnDestacado estado={false} />,
-      acciones: <BtnAcciones handleEdit={handleRedirectEditCategory} />
+      acciones: (
+        <BtnAcciones
+          handleEdit={() => handleRedirectEditCategory(categoria?.categoriaId, categoria)}
+          handleDelete={() => deleteCategoria(categoria?.categoriaId)}
+        />
+      )
     }))
 
     if (filasCategorias.length > 0) {
       setDataBody(filasCategorias)
     }
   }
+
+  const deleteCategoria = (id) => {}
 
   // TRAE LA DATA
   const { loading } = useGetCategoriaQuery({
@@ -56,7 +63,11 @@ const Categorias = () => {
       estadoCategoria: ''
     },
     onCompleted: (categorias) => {
-      armarFilasCategorias(categorias.GetCategoria, setDataBody)
+      armarFilasCategorias(
+        categorias.GetCategoria,
+        setDataBody,
+        deleteCategoria
+      )
     }
   })
 
