@@ -727,6 +727,13 @@ export type SuscripcionInput = {
   suscripcionId?: Maybe<Scalars['Int']>;
 };
 
+export type GetCategoriaQueryVariables = Exact<{
+  estadoCategoria?: Maybe<Scalars['String']>;
+}>;
+
+
+export type GetCategoriaQuery = { __typename?: 'Query', GetCategoria?: Array<{ __typename?: 'Categoria', categoriaId?: number | null | undefined, slugCategoria?: string | null | undefined, tituloCategoria?: string | null | undefined, descripcion?: string | null | undefined, estadoCategoria?: string | null | undefined, keywordsCategoria?: string | null | undefined, imagenPrincipalCategoria?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined, imagenSecundariaCategoria?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined } | null | undefined> | null | undefined };
+
 export type GetAllCategoriaBlogQueryVariables = Exact<{
   estadoCategoriaBlog?: Maybe<Scalars['String']>;
 }>;
@@ -745,6 +752,56 @@ export type GetAllUsersQueryVariables = Exact<{
 export type GetAllUsersQuery = { __typename?: 'Query', GetAllUsers?: { __typename?: 'GetAllUsers', nroTotalItems?: number | null | undefined, data?: Array<{ __typename?: 'User', userId?: string | null | undefined, nombre?: string | null | undefined, apellidos?: string | null | undefined, email?: string | null | undefined, estado?: number | null | undefined, apiToken?: string | null | undefined }> | null | undefined } | null | undefined };
 
 
+export const GetCategoriaDocument = gql`
+    query GetCategoria($estadoCategoria: String) {
+  GetCategoria(estadoCategoria: $estadoCategoria) {
+    categoriaId
+    slugCategoria
+    tituloCategoria
+    descripcion
+    estadoCategoria
+    keywordsCategoria
+    imagenPrincipalCategoria {
+      id
+      descripcion
+      url
+    }
+    imagenSecundariaCategoria {
+      id
+      descripcion
+      url
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetCategoriaQuery__
+ *
+ * To run a query within a React component, call `useGetCategoriaQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetCategoriaQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetCategoriaQuery({
+ *   variables: {
+ *      estadoCategoria: // value for 'estadoCategoria'
+ *   },
+ * });
+ */
+export function useGetCategoriaQuery(baseOptions?: Apollo.QueryHookOptions<GetCategoriaQuery, GetCategoriaQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetCategoriaQuery, GetCategoriaQueryVariables>(GetCategoriaDocument, options);
+      }
+export function useGetCategoriaLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetCategoriaQuery, GetCategoriaQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetCategoriaQuery, GetCategoriaQueryVariables>(GetCategoriaDocument, options);
+        }
+export type GetCategoriaQueryHookResult = ReturnType<typeof useGetCategoriaQuery>;
+export type GetCategoriaLazyQueryHookResult = ReturnType<typeof useGetCategoriaLazyQuery>;
+export type GetCategoriaQueryResult = Apollo.QueryResult<GetCategoriaQuery, GetCategoriaQueryVariables>;
 export const GetAllCategoriaBlogDocument = gql`
     query GetAllCategoriaBlog($estadoCategoriaBlog: String) {
   GetAllCategoriaBlog(estadoCategoriaBlog: $estadoCategoriaBlog) {
