@@ -2,20 +2,24 @@ import { useEffect, useState } from 'react'
 import BtnAcciones from '../components/btnAcciones/BtnAcciones'
 import BtnDestacado from '../components/BtnDestacado/BtnDestacado'
 import BtnEstado from '../components/BtnEstado/BtnEstado'
-import { useGetAllCategoriaBlogQuery } from '../generated/graphql'
+import {
+  useDeleteCategoriaBlogMutation,
+  useGetAllCategoriaBlogQuery
+} from '../generated/graphql'
 
 export const useGestionarCategoriasBlog = () => {
-  const getAllCategoriasBlog = (
-    handleEdit = () => { },
-    handleDelete = () => { }
-  ) => {
+  const getAllCategoriasBlog = (handleEdit = () => { }) => {
     const [dataBod, setDataBod] = useState([])
     const { data, loading } = useGetAllCategoriaBlogQuery({
       variables: { estadoCategoriaBlog: '' }
     })
+    const createDataBody = loading ? [] : data?.GetAllCategoriaBlog
 
+    // Funcion para Eliminar una categoria
+    const handleDelete = (idCategoria) => {
+      useDeleteCategoriaBlogMutation({ variables: { categoriaBlogId: idCategoria } })
+    }
     useEffect(() => {
-      const createDataBody = loading ? [] : data?.GetAllCategoriaBlog
       createDataBody.map((category) =>
         setDataBod((data) => [
           ...data,
@@ -23,10 +27,11 @@ export const useGestionarCategoriasBlog = () => {
             imagen: (
               <img
                 src={category.imagenPrincipalCategoriaBlog.url}
-                className={category.imagenPrincipalCategoriaBlog.descripcion}
+                alt={category.imagenPrincipalCategoriaBlog.descripcion}
+                className="w-26 h-22"
               />
             ),
-            nombre: category.descripcionCategoriaBlog,
+            nombre: category.tituloCategoriaBlog,
 
             estado: (
               <BtnEstado
@@ -40,13 +45,13 @@ export const useGestionarCategoriasBlog = () => {
             acciones: (
               <BtnAcciones
                 handleEdit={handleEdit}
-                handleDelete={handleDelete}
+                handleDelete={handleDelete(category.categoriaBlogId)}
               />
             )
           }
         ])
       )
-    }, [loading, data])
+    }, [loading, createDataBody])
 
     return [dataBod, setDataBod, data]
   }

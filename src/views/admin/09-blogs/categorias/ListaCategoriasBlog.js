@@ -21,9 +21,11 @@ const ListarCategoriasBlog = () => {
   const handleRedirectNewCategory = () => {
     history.push('/blogs/categorias/crear-categoria')
   }
+
   const { loading } = useGetAllCategoriaBlogQuery({
     variables: { estadoCategoriaBlog: '' }
   })
+
   const { getAllCategoriasBlog } = useGestionarCategoriasBlog()
   const [dataBody] = getAllCategoriasBlog(handleRedirectEditCategory)
 
