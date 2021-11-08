@@ -4,12 +4,12 @@ import Heading from '../../../../components/Heading'
 import Spinner from '../../../../components/Spinner/Spinner'
 import TableGeneral from '../../../../components/Tables/TableGeneral'
 import {
-  useDeleteCategoriaBlogMutation,
   useGetAllCategoriaBlogQuery
 } from '../../../../generated/graphql'
 import { useGestionarCategoriasBlog } from '../../../../services/GestionarCategoriasBlog'
 
 const dataHead = [
+  ['Id', 'min-w-10', 'left'],
   ['Imagen', 20, 'left'],
   ['Nombre', 52, 'left'],
   ['Estado', 20, 'center'],
@@ -18,33 +18,11 @@ const dataHead = [
 ]
 const ListarCategoriasBlog = () => {
   const history = useHistory()
-  const [deleteCtegory] = useDeleteCategoriaBlogMutation({ onError: (error) => { console.log(error.graphQLErrors[0]) } })
-  const handleEdit = () => {
-    history.push('/blogs/categorias/editar-categoria')
-  }
-  const handleRedirectNewCategory = () => {
-    history.push('/blogs/categorias/crear-categoria')
-  }
-
-  const { loading } = useGetAllCategoriaBlogQuery({
-    variables: { estadoCategoriaBlog: '' }
-  })
-
-  // Funcion para Eliminar una categoria
-  const handleDelete = async (id) => {
-    try {
-      await deleteCtegory({
-        variables: {
-          input: {
-            categoriaBlogId: id
-          }
-
-        }
-      })
-    } catch (error) { console.log(error) }
-  }
+  const { loading } = useGetAllCategoriaBlogQuery({ variables: { estadoCategoriaBlog: '' } })
   const { getAllCategoriasBlog } = useGestionarCategoriasBlog()
-  const [dataBody] = getAllCategoriasBlog(handleEdit, handleDelete)
+  const [dataBody] = getAllCategoriasBlog()
+  // funcion que me permite redireccionar a la vista crear categoria
+  const handleRedirectNewCategory = () => { history.push('/blogs/categorias/crear-categoria') }
 
   return (
     <div className="shadow md:rounded bg-white p-5 py-10 md:p-10 mb-20 min-h-screen ">

@@ -23,7 +23,7 @@ const Layout = ({ children, setIsAuth }) => {
   useEffect(() => {
     const detectScreenX = () => setScreenX(window.outerWidth)
     window.addEventListener('resize', detectScreenX)
-    console.log(screenX)
+    // console.log(screenX)
     if (screenX >= 1280) {
       setShowSidebar(true)
     } else {
