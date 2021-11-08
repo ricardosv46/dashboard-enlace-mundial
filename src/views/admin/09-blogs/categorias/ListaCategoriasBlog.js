@@ -35,7 +35,6 @@ const ListarCategoriasBlog = () => {
     try {
       await deleteCtegory({
         variables: {
-
           input: {
             categoriaBlogId: id
           }

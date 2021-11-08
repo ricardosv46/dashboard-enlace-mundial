@@ -5,17 +5,16 @@ import BtnEstado from '../../../components/BtnEstado/BtnEstado'
 import Button from '../../../components/Buttons/Button'
 import Heading from '../../../components/Heading'
 import TableGeneral from '../../../components/Tables/TableGeneral'
-import {
-  useDeleteCategoriaMutation,
-  useGetCategoriaQuery
-} from '../../../generated/graphql'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Spinner from '../../../components/Spinner/Spinner'
-import swal from 'sweetalert'
+import { useCategoriasServices } from '../../../services/useCategoriaServices'
 
 const Categorias = () => {
   const history = useHistory()
   const [dataBody, setDataBody] = useState([])
+  const { data, loading, deleteCategoria } = useCategoriasServices()
+
+  console.log('data vista ', data)
 
   const dataHead = [
     ['Imagen', 20, 'left'],
@@ -25,16 +24,11 @@ const Categorias = () => {
     ['Acciones', 24, 'center']
   ]
 
-  const handleRedirectNewCategory = () => {
-    history.push('/categorias/crear-categoria')
-  }
-
-  const armarFilasCategorias = (categorias, setDataBody, deleteCategoria) => {
-    console.log('categorias filas ', categorias)
-    const handleRedirectEditCategory = (id, objCategoria) => {
-      history.push(`/categorias/editar-categoria/${id}`, objCategoria)
-    }
-
+  const armarFilasCategorias = (
+    categorias,
+    setDataBody,
+    handleDeleteCategoria
+  ) => {
     const filasCategorias = categorias.map((categoria) => ({
       imagen: (
         <img
@@ -48,9 +42,12 @@ const Categorias = () => {
       acciones: (
         <BtnAcciones
           handleEdit={() =>
-            handleRedirectEditCategory(categoria?.categoriaId, categoria)
+            history.push(
+              `/categorias/editar-categoria/${categoria.categoriaId}`,
+              categoria
+            )
           }
-          handleDelete={() => deleteCategoria(categoria)}
+          handleDelete={() => handleDeleteCategoria(categoria)}
         />
       )
     }))
@@ -60,60 +57,20 @@ const Categorias = () => {
     }
   }
 
-  // TRAE LA DATA
-  const { loading } = useGetCategoriaQuery({
-    fetchPolicy: 'network-only',
-    variables: {
-      estadoCategoria: ''
-    },
-    onCompleted: (categorias) => {
-      armarFilasCategorias(
-        categorias.GetCategoria,
-        setDataBody,
-        deleteCategoria
-      )
-    }
-  })
-
-  const [deleteCategoriaMutation] = useDeleteCategoriaMutation({
-    onCompleted: (data) => {
-      console.log('onCompleted delete', data)
-    },
-    onError: (err) => {
-      console.log('onError delete', err?.debugMessage)
-      swal({
-        title: 'Eliminando',
-        icon: 'success'
-      })
-    }
-  })
-
-  const deleteCategoria = (categoria) => {
-    swal({
-      title: `Desea eliminar la categoria ${categoria?.tituloCategoria}?`,
-      text: 'Una vez eliminada, no podrás recuperar la categoria!',
-      icon: 'warning',
-      buttons: true,
-      dangerMode: true
-    }).then(async (rpta) => {
-      if (rpta) {
-        deleteCategoriaMutation({
-          variables: {
-            input: {
-              categoriaId: categoria.categoriaId
-            }
-          }
-        })
-      }
-    })
-  }
+  useEffect(() => {
+    armarFilasCategorias(data, setDataBody, deleteCategoria)
+  }, [data])
 
   return (
     <div className="shadow md:rounded bg-white p-5 py-10 md:p-10 mb-20 min-h-screen ">
       <div className="flex justify-between mb-5">
         <Heading>Categorias</Heading>
 
-        <Button variant="primary" size="md" onClick={handleRedirectNewCategory}>
+        <Button
+          variant="primary"
+          size="md"
+          onClick={() => history.push('/categorias/crear-categoria')}
+        >
           + Agregar Categoria
         </Button>
       </div>
