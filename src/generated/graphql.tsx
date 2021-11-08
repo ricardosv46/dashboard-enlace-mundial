@@ -727,6 +727,13 @@ export type SuscripcionInput = {
   suscripcionId?: Maybe<Scalars['Int']>;
 };
 
+export type DeleteCategoriaMutationVariables = Exact<{
+  input?: Maybe<CategoriaInput>;
+}>;
+
+
+export type DeleteCategoriaMutation = { __typename?: 'Mutation', DeleteCategoria?: string | null | undefined };
+
 export type DeleteCategoriaBlogMutationVariables = Exact<{
   input?: Maybe<CategoriaBlogInput>;
 }>;
@@ -759,6 +766,37 @@ export type GetAllUsersQueryVariables = Exact<{
 export type GetAllUsersQuery = { __typename?: 'Query', GetAllUsers?: { __typename?: 'GetAllUsers', nroTotalItems?: number | null | undefined, data?: Array<{ __typename?: 'User', userId?: string | null | undefined, nombre?: string | null | undefined, apellidos?: string | null | undefined, email?: string | null | undefined, estado?: number | null | undefined, apiToken?: string | null | undefined }> | null | undefined } | null | undefined };
 
 
+export const DeleteCategoriaDocument = gql`
+    mutation DeleteCategoria($input: CategoriaInput) {
+  DeleteCategoria(input: $input)
+}
+    `;
+export type DeleteCategoriaMutationFn = Apollo.MutationFunction<DeleteCategoriaMutation, DeleteCategoriaMutationVariables>;
+
+/**
+ * __useDeleteCategoriaMutation__
+ *
+ * To run a mutation, you first call `useDeleteCategoriaMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteCategoriaMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteCategoriaMutation, { data, loading, error }] = useDeleteCategoriaMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useDeleteCategoriaMutation(baseOptions?: Apollo.MutationHookOptions<DeleteCategoriaMutation, DeleteCategoriaMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteCategoriaMutation, DeleteCategoriaMutationVariables>(DeleteCategoriaDocument, options);
+      }
+export type DeleteCategoriaMutationHookResult = ReturnType<typeof useDeleteCategoriaMutation>;
+export type DeleteCategoriaMutationResult = Apollo.MutationResult<DeleteCategoriaMutation>;
+export type DeleteCategoriaMutationOptions = Apollo.BaseMutationOptions<DeleteCategoriaMutation, DeleteCategoriaMutationVariables>;
 export const DeleteCategoriaBlogDocument = gql`
     mutation DeleteCategoriaBlog($input: CategoriaBlogInput) {
   DeleteCategoriaBlog(input: $input)

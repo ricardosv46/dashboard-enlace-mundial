@@ -32,7 +32,7 @@ const BtnAcciones = ({
             </p>
             <p
               className="flex cursor-pointer py-2 px-3 transition-all duration-300 transform hover:-translate-y-1"
-              onClick={ handleDelete}
+              onClick={handleDelete}
             >
               <IconDelete />
             </p>
