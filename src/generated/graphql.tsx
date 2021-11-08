@@ -727,6 +727,13 @@ export type SuscripcionInput = {
   suscripcionId?: Maybe<Scalars['Int']>;
 };
 
+export type DeleteBlogMutationVariables = Exact<{
+  input?: Maybe<BlogInput>;
+}>;
+
+
+export type DeleteBlogMutation = { __typename?: 'Mutation', DeleteBlog?: string | null | undefined };
+
 export type DeleteCategoriaMutationVariables = Exact<{
   input?: Maybe<CategoriaInput>;
 }>;
@@ -740,6 +747,15 @@ export type DeleteCategoriaBlogMutationVariables = Exact<{
 
 
 export type DeleteCategoriaBlogMutation = { __typename?: 'Mutation', DeleteCategoriaBlog?: string | null | undefined };
+
+export type GetAllBlogQueryVariables = Exact<{
+  page?: Maybe<Scalars['Int']>;
+  numberPaginate?: Maybe<Scalars['Int']>;
+  estadoBlog?: Maybe<Scalars['String']>;
+}>;
+
+
+export type GetAllBlogQuery = { __typename?: 'Query', GetAllBlog?: { __typename?: 'GetAllBlog', nroTotalItems?: number | null | undefined, data?: Array<{ __typename?: 'Blog', blogId?: number | null | undefined, tituloBlog?: string | null | undefined, estadoBlog?: string | null | undefined, destacadoBlog?: string | null | undefined, keywordsBlog?: string | null | undefined, descripcionCortaBlog?: string | null | undefined, descripcionLargaBlog?: string | null | undefined, slugCategoriaBlog?: string | null | undefined, categoriaBlogId?: string | null | undefined, imagenPrincipalBlog?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined, imagenSecundariaBlog?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined, galeriaBlog?: Array<{ __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined> | null | undefined, CategoriaBlog?: { __typename?: 'CategoriaBlog', categoriaBlogId?: number | null | undefined, slugCategoriaBlog?: string | null | undefined, tituloCategoriaBlog?: string | null | undefined, estadoCategoriaBlog?: string | null | undefined, descripcionCategoriaBlog?: string | null | undefined, keywordsCategoriaBlog?: string | null | undefined, imagenPrincipalCategoriaBlog?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined, imagenSecundariaCategoriaBlog?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined } | null | undefined }> | null | undefined } | null | undefined };
 
 export type GetCategoriaQueryVariables = Exact<{
   estadoCategoria?: Maybe<Scalars['String']>;
@@ -766,6 +782,37 @@ export type GetAllUsersQueryVariables = Exact<{
 export type GetAllUsersQuery = { __typename?: 'Query', GetAllUsers?: { __typename?: 'GetAllUsers', nroTotalItems?: number | null | undefined, data?: Array<{ __typename?: 'User', userId?: string | null | undefined, nombre?: string | null | undefined, apellidos?: string | null | undefined, email?: string | null | undefined, estado?: number | null | undefined, apiToken?: string | null | undefined }> | null | undefined } | null | undefined };
 
 
+export const DeleteBlogDocument = gql`
+    mutation DeleteBlog($input: BlogInput) {
+  DeleteBlog(input: $input)
+}
+    `;
+export type DeleteBlogMutationFn = Apollo.MutationFunction<DeleteBlogMutation, DeleteBlogMutationVariables>;
+
+/**
+ * __useDeleteBlogMutation__
+ *
+ * To run a mutation, you first call `useDeleteBlogMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteBlogMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteBlogMutation, { data, loading, error }] = useDeleteBlogMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useDeleteBlogMutation(baseOptions?: Apollo.MutationHookOptions<DeleteBlogMutation, DeleteBlogMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteBlogMutation, DeleteBlogMutationVariables>(DeleteBlogDocument, options);
+      }
+export type DeleteBlogMutationHookResult = ReturnType<typeof useDeleteBlogMutation>;
+export type DeleteBlogMutationResult = Apollo.MutationResult<DeleteBlogMutation>;
+export type DeleteBlogMutationOptions = Apollo.BaseMutationOptions<DeleteBlogMutation, DeleteBlogMutationVariables>;
 export const DeleteCategoriaDocument = gql`
     mutation DeleteCategoria($input: CategoriaInput) {
   DeleteCategoria(input: $input)
@@ -828,6 +875,91 @@ export function useDeleteCategoriaBlogMutation(baseOptions?: Apollo.MutationHook
 export type DeleteCategoriaBlogMutationHookResult = ReturnType<typeof useDeleteCategoriaBlogMutation>;
 export type DeleteCategoriaBlogMutationResult = Apollo.MutationResult<DeleteCategoriaBlogMutation>;
 export type DeleteCategoriaBlogMutationOptions = Apollo.BaseMutationOptions<DeleteCategoriaBlogMutation, DeleteCategoriaBlogMutationVariables>;
+export const GetAllBlogDocument = gql`
+    query GetAllBlog($page: Int, $numberPaginate: Int, $estadoBlog: String) {
+  GetAllBlog(
+    page: $page
+    numberPaginate: $numberPaginate
+    estadoBlog: $estadoBlog
+  ) {
+    nroTotalItems
+    data {
+      blogId
+      tituloBlog
+      estadoBlog
+      destacadoBlog
+      keywordsBlog
+      descripcionCortaBlog
+      descripcionLargaBlog
+      imagenPrincipalBlog {
+        id
+        descripcion
+        url
+      }
+      imagenSecundariaBlog {
+        id
+        descripcion
+        url
+      }
+      galeriaBlog {
+        id
+        descripcion
+        url
+      }
+      slugCategoriaBlog
+      categoriaBlogId
+      CategoriaBlog {
+        categoriaBlogId
+        slugCategoriaBlog
+        tituloCategoriaBlog
+        estadoCategoriaBlog
+        descripcionCategoriaBlog
+        keywordsCategoriaBlog
+        imagenPrincipalCategoriaBlog {
+          id
+          descripcion
+          url
+        }
+        imagenSecundariaCategoriaBlog {
+          id
+          descripcion
+          url
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetAllBlogQuery__
+ *
+ * To run a query within a React component, call `useGetAllBlogQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAllBlogQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAllBlogQuery({
+ *   variables: {
+ *      page: // value for 'page'
+ *      numberPaginate: // value for 'numberPaginate'
+ *      estadoBlog: // value for 'estadoBlog'
+ *   },
+ * });
+ */
+export function useGetAllBlogQuery(baseOptions?: Apollo.QueryHookOptions<GetAllBlogQuery, GetAllBlogQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetAllBlogQuery, GetAllBlogQueryVariables>(GetAllBlogDocument, options);
+      }
+export function useGetAllBlogLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAllBlogQuery, GetAllBlogQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetAllBlogQuery, GetAllBlogQueryVariables>(GetAllBlogDocument, options);
+        }
+export type GetAllBlogQueryHookResult = ReturnType<typeof useGetAllBlogQuery>;
+export type GetAllBlogLazyQueryHookResult = ReturnType<typeof useGetAllBlogLazyQuery>;
+export type GetAllBlogQueryResult = Apollo.QueryResult<GetAllBlogQuery, GetAllBlogQueryVariables>;
 export const GetCategoriaDocument = gql`
     query GetCategoria($estadoCategoria: String) {
   GetCategoria(estadoCategoria: $estadoCategoria) {

@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import swal from 'sweetalert'
 import {
-  GetCategoriaDocument,
   useDeleteCategoriaMutation,
   useGetCategoriaQuery
 } from '../generated/graphql'
