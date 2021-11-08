@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useHistory } from 'react-router'
+import swal from 'sweetalert'
 import BtnAcciones from '../components/btnAcciones/BtnAcciones'
 import BtnDestacado from '../components/BtnDestacado/BtnDestacado'
 import BtnEstado from '../components/BtnEstado/BtnEstado'
@@ -22,15 +23,34 @@ export const useGestionarCategoriasBlog = () => {
       history.push('/blogs/categorias/editar-categoria')
     }
     // Funcion para Eliminar una categoria
-    const handleDelete = async (id) => {
+    const handleDelete = (id) => {
       try {
-        await deleteCtegory({
-          variables: {
+        swal({
+          title: 'Eliminar',
+          text: '¿Esta seguro que desea eliminar esta categoria?',
+          icon: 'warning',
+          buttons: ['NO', 'SI'],
+          timer: 5000
+        }).then(respuesta => {
+          if (respuesta) {
+            deleteCtegory({
+              variables: {
 
-            input: {
-              categoriaBlogId: id
-            }
+                input: {
+                  categoriaBlogId: id
+                }
 
+              }
+            })
+            swal({
+              title: 'ELIMINADO',
+              text: 'Se elimino correctamente la categoria',
+              icon: 'success',
+              button: 'Aceptar',
+              timer: 2000
+            })
+            dataBody.filter(category => category.id !== id)
+            setDataBody(dataBody)
           }
         })
       } catch (error) { console.log(error) }
@@ -68,7 +88,7 @@ export const useGestionarCategoriasBlog = () => {
           }
         ])
       )
-    }, [loading])
+    }, [loading, deleteCtegory])
 
     return [dataBody, setDataBody, data]
   }
