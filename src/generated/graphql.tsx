@@ -823,6 +823,13 @@ export type DeleteCategoriaBlogMutationVariables = Exact<{
 
 export type DeleteCategoriaBlogMutation = { __typename?: 'Mutation', DeleteCategoriaBlog?: string | null | undefined };
 
+export type DeleteTourMutationVariables = Exact<{
+  input?: Maybe<TourInput>;
+}>;
+
+
+export type DeleteTourMutation = { __typename?: 'Mutation', DeleteTour?: string | null | undefined };
+
 export type GetAllBlogQueryVariables = Exact<{
   page?: Maybe<Scalars['Int']>;
   numberPaginate?: Maybe<Scalars['Int']>;
@@ -845,6 +852,15 @@ export type GetAllCategoriaBlogQueryVariables = Exact<{
 
 
 export type GetAllCategoriaBlogQuery = { __typename?: 'Query', GetAllCategoriaBlog?: Array<{ __typename?: 'CategoriaBlog', categoriaBlogId?: number | null | undefined, slugCategoriaBlog?: string | null | undefined, tituloCategoriaBlog?: string | null | undefined, estadoCategoriaBlog?: string | null | undefined, descripcionCategoriaBlog?: string | null | undefined, keywordsCategoriaBlog?: string | null | undefined, imagenPrincipalCategoriaBlog?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined, imagenSecundariaCategoriaBlog?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined } | null | undefined> | null | undefined };
+
+export type GetAllTourQueryVariables = Exact<{
+  estadoTour?: Maybe<Scalars['String']>;
+  page?: Maybe<Scalars['Int']>;
+  numberPaginate?: Maybe<Scalars['Int']>;
+}>;
+
+
+export type GetAllTourQuery = { __typename?: 'Query', GetAllTour?: { __typename?: 'GetAllTour', nroTotalItems?: number | null | undefined, data?: Array<{ __typename?: 'Tour', touId?: number | null | undefined, tituloTour?: string | null | undefined, slugTour?: string | null | undefined, regionTour?: string | null | undefined, ciudadTour?: string | null | undefined, estadoTour?: string | null | undefined, destacadoTour?: string | null | undefined, descripcionCortaTour?: string | null | undefined, descripcionLargaTour?: string | null | undefined, itinerarioTour?: string | null | undefined, puntoPartidaTour?: string | null | undefined, incluyeTour?: string | null | undefined, noIncluyeTour?: string | null | undefined, actividadesTour?: string | null | undefined, notasTour?: string | null | undefined, politicasTour?: string | null | undefined, videoPresentacionTour?: string | null | undefined, slugCategoria?: string | null | undefined, categoriaId?: string | null | undefined, imagenPrincipalTour?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined, imagenSecundariaTour?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined, galeriaTour?: Array<{ __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined> | null | undefined, Categoria?: { __typename?: 'Categoria', categoriaId?: number | null | undefined, slugCategoria?: string | null | undefined, tituloCategoria?: string | null | undefined, descripcion?: string | null | undefined, estadoCategoria?: string | null | undefined, keywordsCategoria?: string | null | undefined, imagenPrincipalCategoria?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined, imagenSecundariaCategoria?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined } | null | undefined }> | null | undefined } | null | undefined };
 
 export type GetAllUsersQueryVariables = Exact<{
   page?: Maybe<Scalars['Int']>;
@@ -986,6 +1002,37 @@ export function useDeleteCategoriaBlogMutation(baseOptions?: Apollo.MutationHook
 export type DeleteCategoriaBlogMutationHookResult = ReturnType<typeof useDeleteCategoriaBlogMutation>;
 export type DeleteCategoriaBlogMutationResult = Apollo.MutationResult<DeleteCategoriaBlogMutation>;
 export type DeleteCategoriaBlogMutationOptions = Apollo.BaseMutationOptions<DeleteCategoriaBlogMutation, DeleteCategoriaBlogMutationVariables>;
+export const DeleteTourDocument = gql`
+    mutation DeleteTour($input: TourInput) {
+  DeleteTour(input: $input)
+}
+    `;
+export type DeleteTourMutationFn = Apollo.MutationFunction<DeleteTourMutation, DeleteTourMutationVariables>;
+
+/**
+ * __useDeleteTourMutation__
+ *
+ * To run a mutation, you first call `useDeleteTourMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteTourMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteTourMutation, { data, loading, error }] = useDeleteTourMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useDeleteTourMutation(baseOptions?: Apollo.MutationHookOptions<DeleteTourMutation, DeleteTourMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteTourMutation, DeleteTourMutationVariables>(DeleteTourDocument, options);
+      }
+export type DeleteTourMutationHookResult = ReturnType<typeof useDeleteTourMutation>;
+export type DeleteTourMutationResult = Apollo.MutationResult<DeleteTourMutation>;
+export type DeleteTourMutationOptions = Apollo.BaseMutationOptions<DeleteTourMutation, DeleteTourMutationVariables>;
 export const GetAllBlogDocument = gql`
     query GetAllBlog($page: Int, $numberPaginate: Int, $estadoBlog: String) {
   GetAllBlog(
@@ -1171,6 +1218,101 @@ export function useGetAllCategoriaBlogLazyQuery(baseOptions?: Apollo.LazyQueryHo
 export type GetAllCategoriaBlogQueryHookResult = ReturnType<typeof useGetAllCategoriaBlogQuery>;
 export type GetAllCategoriaBlogLazyQueryHookResult = ReturnType<typeof useGetAllCategoriaBlogLazyQuery>;
 export type GetAllCategoriaBlogQueryResult = Apollo.QueryResult<GetAllCategoriaBlogQuery, GetAllCategoriaBlogQueryVariables>;
+export const GetAllTourDocument = gql`
+    query GetAllTour($estadoTour: String, $page: Int, $numberPaginate: Int) {
+  GetAllTour(
+    estadoTour: $estadoTour
+    page: $page
+    numberPaginate: $numberPaginate
+  ) {
+    nroTotalItems
+    data {
+      touId
+      tituloTour
+      slugTour
+      regionTour
+      ciudadTour
+      estadoTour
+      destacadoTour
+      descripcionCortaTour
+      descripcionLargaTour
+      itinerarioTour
+      puntoPartidaTour
+      incluyeTour
+      noIncluyeTour
+      actividadesTour
+      notasTour
+      politicasTour
+      videoPresentacionTour
+      imagenPrincipalTour {
+        id
+        descripcion
+        url
+      }
+      imagenSecundariaTour {
+        id
+        descripcion
+        url
+      }
+      galeriaTour {
+        id
+        descripcion
+        url
+      }
+      slugCategoria
+      categoriaId
+      Categoria {
+        categoriaId
+        slugCategoria
+        tituloCategoria
+        descripcion
+        estadoCategoria
+        keywordsCategoria
+        imagenPrincipalCategoria {
+          id
+          descripcion
+          url
+        }
+        imagenSecundariaCategoria {
+          id
+          descripcion
+          url
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetAllTourQuery__
+ *
+ * To run a query within a React component, call `useGetAllTourQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAllTourQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAllTourQuery({
+ *   variables: {
+ *      estadoTour: // value for 'estadoTour'
+ *      page: // value for 'page'
+ *      numberPaginate: // value for 'numberPaginate'
+ *   },
+ * });
+ */
+export function useGetAllTourQuery(baseOptions?: Apollo.QueryHookOptions<GetAllTourQuery, GetAllTourQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetAllTourQuery, GetAllTourQueryVariables>(GetAllTourDocument, options);
+      }
+export function useGetAllTourLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAllTourQuery, GetAllTourQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetAllTourQuery, GetAllTourQueryVariables>(GetAllTourDocument, options);
+        }
+export type GetAllTourQueryHookResult = ReturnType<typeof useGetAllTourQuery>;
+export type GetAllTourLazyQueryHookResult = ReturnType<typeof useGetAllTourLazyQuery>;
+export type GetAllTourQueryResult = Apollo.QueryResult<GetAllTourQuery, GetAllTourQueryVariables>;
 export const GetAllUsersDocument = gql`
     query GetAllUsers($page: Int, $numberPaginate: Int, $tipoUsuario: String, $estado: String) {
   GetAllUsers(
