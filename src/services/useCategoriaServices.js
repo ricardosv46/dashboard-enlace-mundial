@@ -32,7 +32,7 @@ export const useCategoriasServices = () => {
       title: `Desea eliminar la categoria ${categoria?.tituloCategoria}?`,
       text: 'Una vez eliminada, no podrás recuperar la categoria!',
       icon: 'warning',
-      buttons: true,
+      buttons: ['SI', 'NO'],
       dangerMode: true
     }).then(async (rpta) => {
       if (rpta) {

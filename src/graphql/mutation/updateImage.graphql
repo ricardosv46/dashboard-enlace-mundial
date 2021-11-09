@@ -1,0 +1,7 @@
+mutation UpdateImage($input:ImagenesInput){
+  UpdateImage(input:$input){
+    id
+    descripcion
+    url
+  }
+}

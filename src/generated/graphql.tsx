@@ -823,6 +823,20 @@ export type DeleteCategoriaBlogMutationVariables = Exact<{
 
 export type DeleteCategoriaBlogMutation = { __typename?: 'Mutation', DeleteCategoriaBlog?: string | null | undefined };
 
+export type DeleteImageMutationVariables = Exact<{
+  input: ImagenesInput;
+}>;
+
+
+export type DeleteImageMutation = { __typename?: 'Mutation', DeleteImage?: string | null | undefined };
+
+export type UpdateImageMutationVariables = Exact<{
+  input?: Maybe<ImagenesInput>;
+}>;
+
+
+export type UpdateImageMutation = { __typename?: 'Mutation', UpdateImage?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined };
+
 export type GetAllBlogQueryVariables = Exact<{
   page?: Maybe<Scalars['Int']>;
   numberPaginate?: Maybe<Scalars['Int']>;
@@ -855,6 +869,11 @@ export type GetAllUsersQueryVariables = Exact<{
 
 
 export type GetAllUsersQuery = { __typename?: 'Query', GetAllUsers?: { __typename?: 'GetAllUsers', nroTotalItems?: number | null | undefined, data?: Array<{ __typename?: 'User', userId?: string | null | undefined, nombre?: string | null | undefined, apellidos?: string | null | undefined, email?: string | null | undefined, estado?: string | null | undefined, apiToken?: string | null | undefined }> | null | undefined } | null | undefined };
+
+export type GetImagenesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetImagenesQuery = { __typename?: 'Query', GetImagenes?: Array<{ __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined }> | null | undefined };
 
 
 export const CreateImageDocument = gql`
@@ -986,6 +1005,72 @@ export function useDeleteCategoriaBlogMutation(baseOptions?: Apollo.MutationHook
 export type DeleteCategoriaBlogMutationHookResult = ReturnType<typeof useDeleteCategoriaBlogMutation>;
 export type DeleteCategoriaBlogMutationResult = Apollo.MutationResult<DeleteCategoriaBlogMutation>;
 export type DeleteCategoriaBlogMutationOptions = Apollo.BaseMutationOptions<DeleteCategoriaBlogMutation, DeleteCategoriaBlogMutationVariables>;
+export const DeleteImageDocument = gql`
+    mutation DeleteImage($input: ImagenesInput!) {
+  DeleteImage(input: $input)
+}
+    `;
+export type DeleteImageMutationFn = Apollo.MutationFunction<DeleteImageMutation, DeleteImageMutationVariables>;
+
+/**
+ * __useDeleteImageMutation__
+ *
+ * To run a mutation, you first call `useDeleteImageMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteImageMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteImageMutation, { data, loading, error }] = useDeleteImageMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useDeleteImageMutation(baseOptions?: Apollo.MutationHookOptions<DeleteImageMutation, DeleteImageMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteImageMutation, DeleteImageMutationVariables>(DeleteImageDocument, options);
+      }
+export type DeleteImageMutationHookResult = ReturnType<typeof useDeleteImageMutation>;
+export type DeleteImageMutationResult = Apollo.MutationResult<DeleteImageMutation>;
+export type DeleteImageMutationOptions = Apollo.BaseMutationOptions<DeleteImageMutation, DeleteImageMutationVariables>;
+export const UpdateImageDocument = gql`
+    mutation UpdateImage($input: ImagenesInput) {
+  UpdateImage(input: $input) {
+    id
+    descripcion
+    url
+  }
+}
+    `;
+export type UpdateImageMutationFn = Apollo.MutationFunction<UpdateImageMutation, UpdateImageMutationVariables>;
+
+/**
+ * __useUpdateImageMutation__
+ *
+ * To run a mutation, you first call `useUpdateImageMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateImageMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateImageMutation, { data, loading, error }] = useUpdateImageMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpdateImageMutation(baseOptions?: Apollo.MutationHookOptions<UpdateImageMutation, UpdateImageMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateImageMutation, UpdateImageMutationVariables>(UpdateImageDocument, options);
+      }
+export type UpdateImageMutationHookResult = ReturnType<typeof useUpdateImageMutation>;
+export type UpdateImageMutationResult = Apollo.MutationResult<UpdateImageMutation>;
+export type UpdateImageMutationOptions = Apollo.BaseMutationOptions<UpdateImageMutation, UpdateImageMutationVariables>;
 export const GetAllBlogDocument = gql`
     query GetAllBlog($page: Int, $numberPaginate: Int, $estadoBlog: String) {
   GetAllBlog(
@@ -1222,3 +1307,39 @@ export function useGetAllUsersLazyQuery(baseOptions?: Apollo.LazyQueryHookOption
 export type GetAllUsersQueryHookResult = ReturnType<typeof useGetAllUsersQuery>;
 export type GetAllUsersLazyQueryHookResult = ReturnType<typeof useGetAllUsersLazyQuery>;
 export type GetAllUsersQueryResult = Apollo.QueryResult<GetAllUsersQuery, GetAllUsersQueryVariables>;
+export const GetImagenesDocument = gql`
+    query GetImagenes {
+  GetImagenes {
+    id
+    descripcion
+    url
+  }
+}
+    `;
+
+/**
+ * __useGetImagenesQuery__
+ *
+ * To run a query within a React component, call `useGetImagenesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetImagenesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetImagenesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetImagenesQuery(baseOptions?: Apollo.QueryHookOptions<GetImagenesQuery, GetImagenesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetImagenesQuery, GetImagenesQueryVariables>(GetImagenesDocument, options);
+      }
+export function useGetImagenesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetImagenesQuery, GetImagenesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetImagenesQuery, GetImagenesQueryVariables>(GetImagenesDocument, options);
+        }
+export type GetImagenesQueryHookResult = ReturnType<typeof useGetImagenesQuery>;
+export type GetImagenesLazyQueryHookResult = ReturnType<typeof useGetImagenesLazyQuery>;
+export type GetImagenesQueryResult = Apollo.QueryResult<GetImagenesQuery, GetImagenesQueryVariables>;
