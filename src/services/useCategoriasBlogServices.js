@@ -47,13 +47,10 @@ export const useCategoriasBlogServices = () => {
             input: {
               categoriaBlogId: categoriaBlog.categoriaBlogId
             }
-          }
+          },
+          refetchQueries: [{ query: useGetAllCategoriaBlogQuery }]
         }).catch((error) => console.log('error', error))
 
-        const newData = db.filter(
-          (el) => el.categoriaBlogId !== categoriaBlog.categoriaBlogId
-        )
-        setDb(newData)
         swal({
           title: 'Eliminado',
           text: 'Se elimino correctamente la Categoria',
