@@ -29,6 +29,7 @@ import Login from '../views/auth/Login'
 import ListarCategoriasBlog from '../views/admin/09-blogs/categorias/ListaCategoriasBlog'
 import CrearCategoriaBlog from '../views/admin/09-blogs/categorias/CrearCategoria'
 import EditarCategoriaBlog from '../views/admin/09-blogs/categorias/editarCategoria'
+import PaginSinConexion from '../views/admin/Page Error/PaginSinConexion'
 
 const HomeRoutes = () => {
   return (
@@ -106,12 +107,31 @@ const HomeRoutes = () => {
           path="/blogs/editar-publiacion"
           component={EditarPublicacion}
         />
-        <Route exact path="/blogs/categorias" component={ListarCategoriasBlog} />
-        <Route exact path="/blogs/categorias/crear-categoria" component={CrearCategoriaBlog} />
-        <Route exact path="/blogs/categorias/editar-categoria" component={EditarCategoriaBlog} />
-
+        <Route
+          exact
+          path="/blogs/categorias"
+          component={ListarCategoriasBlog}
+        />
+        <Route
+          exact
+          path="/blogs/categorias/crear-categoria"
+          component={CrearCategoriaBlog}
+        />
+        <Route
+          exact
+          path="/blogs/categorias/editar-categoria"
+          component={EditarCategoriaBlog}
+        />
       </Switch>
     </Layout>
+  )
+}
+
+const EstadoConexionRoutes = () => {
+  return (
+    <Switch>
+      <Route path="/pagina-sin-conexion" exact component={PaginSinConexion} />
+    </Switch>
   )
 }
 
@@ -122,7 +142,8 @@ const AuthRoutes = (setIsAuth) => {
         path="/auth/login"
         exact
         // eslint-disable-next-line react/no-children-prop
-        children={<Login setIsAuth={setIsAuth} />} />
+        children={<Login setIsAuth={setIsAuth} />}
+      />
     </Switch>
   )
 }
@@ -130,16 +151,38 @@ const AuthRoutes = (setIsAuth) => {
 const RootRouter = () => {
   const history = useHistory()
   const [isAuth, setIsAuth] = useState(false)
+  const [conexion, setConexion] = useState(navigator.onLine)
 
   useEffect(() => {
-    if (isAuth) {
-      history.push('/')
-    } else {
-      history.push('/auth/login')
+    const isOnline = () => {
+      if (navigator.onLine) {
+        setConexion(true)
+      } else {
+        setConexion(false)
+      }
     }
-  }, [isAuth])
+    window.addEventListener('online', () => isOnline())
+    window.addEventListener('offline', () => isOnline())
+    if (conexion) {
+      if (isAuth) {
+        history.push('/')
+      } else {
+        history.push('/auth/login')
+      }
+    } else {
+      history.push('/pagina-sin-conexion')
+    }
+  }, [isAuth, conexion])
 
-  return <div>{isAuth ? HomeRoutes() : AuthRoutes(setIsAuth)}</div>
+  return (
+    <div>
+      {conexion
+        ? isAuth
+          ? HomeRoutes()
+          : AuthRoutes(setIsAuth)
+        : EstadoConexionRoutes()}
+    </div>
+  )
 }
 
 export default RootRouter
