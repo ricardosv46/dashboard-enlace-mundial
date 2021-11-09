@@ -4,7 +4,10 @@ import Heading from '../../../components/Heading'
 import Modal from '../../../components/Modales/Modal'
 import Spinner from '../../../components/Spinner/Spinner'
 // import Spinner from '../../../components/Spinner/Spinner'
-import { useGetImagenesQuery } from '../../../generated/graphql'
+import {
+  useGetImagenesQuery,
+  useDeleteImageMutation
+} from '../../../generated/graphql'
 import { useModal } from '../../../hooks/useModal'
 import EditarFoto from './EditarFoto'
 import './index.css'
@@ -13,16 +16,22 @@ const Galerias = ({
   opcion,
   handleEdit,
   handleDelete,
-  closeModalGaleria = () => { }
+  closeModalGaleria = () => {}
 }) => {
-  const [imagenes, setImagenes] = useState([])
-  const { loading } = useGetImagenesQuery({
-    fetchPolicy: 'network-only',
-    onCompleted: (imagenes) => { setImagenes(imagenes.GetImagenes) }
+  // const [imagenes, setImagenes] = useState([])
+  const { loading, data, refetch } = useGetImagenesQuery({
+    fetchPolicy: 'network-only'
+    // onCompleted: (imagenes) => {
+    //   setImagenes(imagenes.GetImagenes)
+    // }
   })
 
-  const inputFile = useRef()
+  const imagenes = data ? data.GetImagenes : []
+
+  const [deleteImg] = useDeleteImageMutation()
+
   const dropArea = useRef()
+  const inputFile = useRef()
   const [url, setUrl] = useState('')
   const [alt, setAlt] = useState('')
   const [id, setId] = useState(null)
@@ -30,6 +39,17 @@ const Galerias = ({
   const [isOpenModal, openModal, closeModal] = useModal(false)
   const [dataFiles, setDataFiles] = useState([])
   const [value, setValue] = useState('')
+
+  const handleDelete2 = async () => {
+    const res = await deleteImg({
+      variables: {
+        input: { id: 7 }
+      }
+    }).catch(console.log)
+
+    console.log(res)
+    refetch()
+  }
 
   const dataNames = [{}]
   // console.log(dataFiles, inputFile.current)
@@ -74,28 +94,32 @@ const Galerias = ({
           {' '}
           {selectView ? 'Subir Imágenes' : 'Ver Galeria'}
         </Button>
+        <Button size="md" onClick={handleDelete2}>
+          ELIMINAR IMAGEN
+        </Button>
       </div>
-      {/* eslint-disable-next-line multiline-ternary */}
+      {/* eslint-disable */}
       {selectView ? (
         <div className="gap-4 contenedor-imagenes">
-          {
-            loading
-              ? <Spinner />
-              : imagenes.map((image) => (
-                <div
-                  key={image.id}
-                  className="contenedor-imagen rounded flex  justify-center overflow-hidden shadow-lg "
-                >
-                  <img
-                    className="w-full"
-                    src={image.url}
-                    alt={image.descripcion}
-                    onClick={() => handleOpenModal(image.url, image.descripcion, image.id)}
-                  />
-                </div>
-              ))
-
-          }
+          {loading ? (
+            <Spinner />
+          ) : (
+            imagenes.map((image) => (
+              <div
+                key={image.id}
+                className="contenedor-imagen rounded flex  justify-center overflow-hidden shadow-lg "
+              >
+                <img
+                  className="w-full"
+                  src={image.url}
+                  alt={image.descripcion}
+                  onClick={() =>
+                    handleOpenModal(image.url, image.descripcion, image.id)
+                  }
+                />
+              </div>
+            ))
+          )}
         </div>
       ) : (
         <div
@@ -125,6 +149,7 @@ const Galerias = ({
           </div>
 
           <input
+            // id="input_id"
             type="file"
             ref={inputFile}
             className="hidden"
@@ -132,6 +157,7 @@ const Galerias = ({
             value={value}
             accept="image/*"
           />
+          {/* <label htmlFor="input_id">CLICK FILE INPUT</label> */}
         </div>
       )}
       <Modal isOpen={isOpenModal} closeModal={closeModal}>

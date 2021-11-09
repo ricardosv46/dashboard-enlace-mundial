@@ -151,6 +151,7 @@ const AuthRoutes = (setIsAuth) => {
 const RootRouter = () => {
   const history = useHistory()
   const [isAuth, setIsAuth] = useState(false)
+  // const { isAur } = useContext(AuthContext)
   const [conexion, setConexion] = useState(navigator.onLine)
 
   useEffect(() => {
