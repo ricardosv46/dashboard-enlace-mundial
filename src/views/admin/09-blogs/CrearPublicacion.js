@@ -10,10 +10,26 @@ import { useModal } from '../../../hooks/useModal'
 import Modal from '../../../components/Modales/Modal'
 import Galerias from '../08-galerias'
 import EditorText from '../../../components/EditorText/EditorText'
+import { useCreateImageMutation } from '../../../generated/graphql'
 const CrearPublicacion = () => {
   const [destacado, setDestacado] = useState(false)
   // console.log(destacado)
   const [isOpenModal, openModal, closeModal] = useModal(false)
+  const [createImge] = useCreateImageMutation({ onError: (err) => { console.log(err.graphQLErrors) } })
+  console.log(createImge)
+  const handleFile = async ({ target }) => {
+    const file = target.files[0]
+    console.log(file)
+    const foto = await createImge({
+      variables: {
+        input: {
+          descripcion: 'des'
+        },
+        imagen: file
+      }
+    })
+    console.log(foto)
+  }
   return (
     <div className="shadow md:rounded bg-white p-5 py-10 md:p-10">
       <div className="flex justify-center pt-3 relative">
@@ -77,9 +93,7 @@ const CrearPublicacion = () => {
             </div>
           </div>
         </div>
-        <div
-          className="flex flex-col lg:flex-row lg:space-x-4 items-center my-10 border shadow-lg "
-        >
+        <div className="flex flex-col lg:flex-row lg:space-x-4 items-center my-10 border shadow-lg ">
           <EditorText />
         </div>
 
@@ -126,6 +140,9 @@ const CrearPublicacion = () => {
           </Button>
         </div>
       </form>
+      <div>
+        <input type="file" onChange={handleFile} />
+      </div>
       <Modal closeModal={closeModal} isOpen={isOpenModal}>
         <Galerias opcion={true} />
       </Modal>

@@ -11,6 +11,7 @@ import Modal from '../../../components/Modales/Modal'
 import Galerias from '../08-galerias'
 import { ImgContext } from '../../../context/auth/ImgContext'
 import MostrarGaleria from '../08-galerias/MostrarGaleria'
+import peru from '../../../data/peru.json'
 const CrearTour = () => {
   const [destacado, setDestacado] = useState(false)
   const [isOpenModalGalria, openModalGaleria, closeModalGaleria] = useModal(false)
@@ -34,7 +35,7 @@ const CrearTour = () => {
     }
   }, [img, state, img1, img2])
   useEffect(() => { setImg({}) }, [])
-
+  console.log((peru.Amazonas.Bagua.Imaza))
   return (
     <div className="shadow md:rounded bg-white p-5 py-10 md:p-10">
       <div className="flex justify-center pt-3 relative">

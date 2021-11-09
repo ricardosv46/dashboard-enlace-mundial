@@ -27,6 +27,7 @@ export type Blog = {
   CategoriaBlog?: Maybe<CategoriaBlog>;
   blogId?: Maybe<Scalars['Int']>;
   categoriaBlogId?: Maybe<Scalars['String']>;
+  created_at?: Maybe<Scalars['DateTime']>;
   descripcionCortaBlog?: Maybe<Scalars['String']>;
   descripcionLargaBlog?: Maybe<Scalars['String']>;
   destacadoBlog?: Maybe<Scalars['String']>;
@@ -37,6 +38,7 @@ export type Blog = {
   keywordsBlog?: Maybe<Scalars['String']>;
   slugCategoriaBlog?: Maybe<Scalars['String']>;
   tituloBlog?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['DateTime']>;
 };
 
 export type BlogInput = {
@@ -62,6 +64,7 @@ export type CambiarContrasenaInput = {
 export type Categoria = {
   __typename?: 'Categoria';
   categoriaId?: Maybe<Scalars['Int']>;
+  created_at?: Maybe<Scalars['DateTime']>;
   descripcion?: Maybe<Scalars['String']>;
   estadoCategoria?: Maybe<Scalars['String']>;
   imagenPrincipalCategoria?: Maybe<Imagenes>;
@@ -69,11 +72,13 @@ export type Categoria = {
   keywordsCategoria?: Maybe<Scalars['String']>;
   slugCategoria?: Maybe<Scalars['String']>;
   tituloCategoria?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['DateTime']>;
 };
 
 export type CategoriaBlog = {
   __typename?: 'CategoriaBlog';
   categoriaBlogId?: Maybe<Scalars['Int']>;
+  created_at?: Maybe<Scalars['DateTime']>;
   descripcionCategoriaBlog?: Maybe<Scalars['String']>;
   estadoCategoriaBlog?: Maybe<Scalars['String']>;
   imagenPrincipalCategoriaBlog?: Maybe<Imagenes>;
@@ -81,6 +86,7 @@ export type CategoriaBlog = {
   keywordsCategoriaBlog?: Maybe<Scalars['String']>;
   slugCategoriaBlog?: Maybe<Scalars['String']>;
   tituloCategoriaBlog?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['DateTime']>;
 };
 
 export type CategoriaBlogInput = {
@@ -111,6 +117,7 @@ export type Crucero = {
   actividadesCrucero?: Maybe<Scalars['String']>;
   categoriaId?: Maybe<Scalars['String']>;
   ciudadCrucero?: Maybe<Scalars['String']>;
+  created_at?: Maybe<Scalars['DateTime']>;
   cruceroId?: Maybe<Scalars['Int']>;
   descripcionCortaCrucero?: Maybe<Scalars['String']>;
   descripcionLargaCrucero?: Maybe<Scalars['String']>;
@@ -130,6 +137,7 @@ export type Crucero = {
   slugCategoria?: Maybe<Scalars['String']>;
   slugCrucero?: Maybe<Scalars['String']>;
   tituloCrucero?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['DateTime']>;
   videoPresentacionCrucero?: Maybe<Scalars['String']>;
 };
 
@@ -194,6 +202,29 @@ export type GetAllUsers = {
   nroTotalItems?: Maybe<Scalars['Int']>;
 };
 
+export type HorarioTour = {
+  __typename?: 'HorarioTour';
+  created_at?: Maybe<Scalars['DateTime']>;
+  cupos?: Maybe<Scalars['Int']>;
+  estado?: Maybe<Scalars['String']>;
+  fecha?: Maybe<Scalars['String']>;
+  hora?: Maybe<Scalars['String']>;
+  horarioTourId?: Maybe<Scalars['Int']>;
+  precio?: Maybe<Scalars['Float']>;
+  tourId?: Maybe<Scalars['Int']>;
+  updated_at?: Maybe<Scalars['DateTime']>;
+};
+
+export type HorarioTourInput = {
+  cupos?: Maybe<Scalars['Int']>;
+  estado?: Maybe<Scalars['String']>;
+  fecha?: Maybe<Scalars['String']>;
+  hora?: Maybe<Scalars['String']>;
+  horarioTourId?: Maybe<Scalars['Int']>;
+  precio?: Maybe<Scalars['Float']>;
+  tourId?: Maybe<Scalars['Int']>;
+};
+
 export type Imagenes = {
   __typename?: 'Imagenes';
   descripcion?: Maybe<Scalars['String']>;
@@ -202,8 +233,10 @@ export type Imagenes = {
 };
 
 export type ImagenesInput = {
+  created_at?: Maybe<Scalars['DateTime']>;
   descripcion?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['ID']>;
+  updated_at?: Maybe<Scalars['DateTime']>;
   url?: Maybe<Scalars['String']>;
 };
 
@@ -213,6 +246,7 @@ export type LunaMiel = {
   actividadesLuna?: Maybe<Scalars['String']>;
   categoriaId?: Maybe<Scalars['String']>;
   ciudadLuna?: Maybe<Scalars['String']>;
+  created_at?: Maybe<Scalars['DateTime']>;
   descripcionCortaLuna?: Maybe<Scalars['String']>;
   descripcionLargaLuna?: Maybe<Scalars['String']>;
   destacadoLuna?: Maybe<Scalars['String']>;
@@ -232,6 +266,7 @@ export type LunaMiel = {
   slugCategoria?: Maybe<Scalars['String']>;
   slugLuna?: Maybe<Scalars['String']>;
   tituloLuna?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['DateTime']>;
   videoPresentacionLuna?: Maybe<Scalars['String']>;
 };
 
@@ -269,6 +304,7 @@ export type Mutation = {
   CreateCategoria?: Maybe<Categoria>;
   CreateCategoriaBlog?: Maybe<CategoriaBlog>;
   CreateCrucero?: Maybe<Crucero>;
+  CreateHorarioTour?: Maybe<HorarioTour>;
   CreateImage?: Maybe<Imagenes>;
   CreateLunaMiel?: Maybe<LunaMiel>;
   CreateTour?: Maybe<Tour>;
@@ -276,6 +312,7 @@ export type Mutation = {
   DeleteCategoria?: Maybe<Scalars['String']>;
   DeleteCategoriaBlog?: Maybe<Scalars['String']>;
   DeleteCrucero?: Maybe<Scalars['String']>;
+  DeleteHorarioTour?: Maybe<Scalars['String']>;
   DeleteImage?: Maybe<Scalars['String']>;
   DeleteLunaMiel?: Maybe<Scalars['String']>;
   DeleteSuscripcion?: Maybe<Scalars['String']>;
@@ -286,6 +323,7 @@ export type Mutation = {
   UpdateCategoria?: Maybe<Categoria>;
   UpdateCategoriaBlog?: Maybe<CategoriaBlog>;
   UpdateCrucero?: Maybe<Crucero>;
+  UpdateHorarioTour?: Maybe<HorarioTour>;
   UpdateImage?: Maybe<Imagenes>;
   UpdateLunaMiel?: Maybe<LunaMiel>;
   UpdateTour?: Maybe<Tour>;
@@ -329,6 +367,11 @@ export type MutationCreateCruceroArgs = {
 };
 
 
+export type MutationCreateHorarioTourArgs = {
+  input?: Maybe<HorarioTourInput>;
+};
+
+
 export type MutationCreateImageArgs = {
   imagen: Scalars['Upload'];
   input?: Maybe<ImagenesInput>;
@@ -362,6 +405,11 @@ export type MutationDeleteCategoriaBlogArgs = {
 
 export type MutationDeleteCruceroArgs = {
   input?: Maybe<CruceroInput>;
+};
+
+
+export type MutationDeleteHorarioTourArgs = {
+  input?: Maybe<HorarioTourInput>;
 };
 
 
@@ -412,6 +460,11 @@ export type MutationUpdateCategoriaBlogArgs = {
 
 export type MutationUpdateCruceroArgs = {
   input?: Maybe<CruceroInput>;
+};
+
+
+export type MutationUpdateHorarioTourArgs = {
+  input?: Maybe<HorarioTourInput>;
 };
 
 
@@ -503,6 +556,7 @@ export type Query = {
   GetCategoriaCrucero?: Maybe<GetAllCrucero>;
   GetCategoriaLunaMiel?: Maybe<GetAllLunaMiel>;
   GetCategoriaTour?: Maybe<GetAllTour>;
+  GetHorariosTour?: Maybe<Array<Maybe<HorarioTour>>>;
   GetImagenes?: Maybe<Array<Imagenes>>;
   GetSlugCategoria?: Maybe<Categoria>;
   GetSlugCategoriaBlog?: Maybe<CategoriaBlog>;
@@ -596,6 +650,13 @@ export type QueryGetCategoriaTourArgs = {
 };
 
 
+export type QueryGetHorariosTourArgs = {
+  anio?: Maybe<Scalars['String']>;
+  mes?: Maybe<Scalars['String']>;
+  touId?: Maybe<Scalars['Int']>;
+};
+
+
 export type QueryGetSlugCategoriaArgs = {
   slugCategoria?: Maybe<Scalars['String']>;
 };
@@ -634,6 +695,7 @@ export type Tour = {
   actividadesTour?: Maybe<Scalars['String']>;
   categoriaId?: Maybe<Scalars['String']>;
   ciudadTour?: Maybe<Scalars['String']>;
+  created_at?: Maybe<Scalars['DateTime']>;
   descripcionCortaTour?: Maybe<Scalars['String']>;
   descripcionLargaTour?: Maybe<Scalars['String']>;
   destacadoTour?: Maybe<Scalars['String']>;
@@ -652,6 +714,7 @@ export type Tour = {
   slugTour?: Maybe<Scalars['String']>;
   tituloTour?: Maybe<Scalars['String']>;
   touId?: Maybe<Scalars['Int']>;
+  updated_at?: Maybe<Scalars['DateTime']>;
   videoPresentacionTour?: Maybe<Scalars['String']>;
 };
 
@@ -693,10 +756,12 @@ export type User = {
   __typename?: 'User';
   apellidos?: Maybe<Scalars['String']>;
   apiToken?: Maybe<Scalars['String']>;
+  created_at?: Maybe<Scalars['DateTime']>;
   email?: Maybe<Scalars['String']>;
-  estado?: Maybe<Scalars['Int']>;
+  estado?: Maybe<Scalars['String']>;
   nombre?: Maybe<Scalars['String']>;
   tipoUsuario?: Maybe<Scalars['Int']>;
+  updated_at?: Maybe<Scalars['DateTime']>;
   userId?: Maybe<Scalars['ID']>;
 };
 
@@ -704,7 +769,7 @@ export type UserInput = {
   apellidos?: Maybe<Scalars['String']>;
   apiToken?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
-  estado?: Maybe<Scalars['Int']>;
+  estado?: Maybe<Scalars['String']>;
   nombre?: Maybe<Scalars['String']>;
   password?: Maybe<Scalars['String']>;
   tipoUsuario?: Maybe<Scalars['Int']>;
@@ -718,14 +783,24 @@ export type LoginInput = {
 
 export type Suscripcion = {
   __typename?: 'suscripcion';
+  created_at?: Maybe<Scalars['DateTime']>;
   email?: Maybe<Scalars['String']>;
   suscripcionId?: Maybe<Scalars['Int']>;
+  updated_at?: Maybe<Scalars['DateTime']>;
 };
 
 export type SuscripcionInput = {
   email?: Maybe<Scalars['String']>;
   suscripcionId?: Maybe<Scalars['Int']>;
 };
+
+export type CreateImageMutationVariables = Exact<{
+  input?: Maybe<ImagenesInput>;
+  imagen: Scalars['Upload'];
+}>;
+
+
+export type CreateImageMutation = { __typename?: 'Mutation', CreateImage?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined };
 
 export type DeleteBlogMutationVariables = Exact<{
   input?: Maybe<BlogInput>;
@@ -779,9 +854,45 @@ export type GetAllUsersQueryVariables = Exact<{
 }>;
 
 
-export type GetAllUsersQuery = { __typename?: 'Query', GetAllUsers?: { __typename?: 'GetAllUsers', nroTotalItems?: number | null | undefined, data?: Array<{ __typename?: 'User', userId?: string | null | undefined, nombre?: string | null | undefined, apellidos?: string | null | undefined, email?: string | null | undefined, estado?: number | null | undefined, apiToken?: string | null | undefined }> | null | undefined } | null | undefined };
+export type GetAllUsersQuery = { __typename?: 'Query', GetAllUsers?: { __typename?: 'GetAllUsers', nroTotalItems?: number | null | undefined, data?: Array<{ __typename?: 'User', userId?: string | null | undefined, nombre?: string | null | undefined, apellidos?: string | null | undefined, email?: string | null | undefined, estado?: string | null | undefined, apiToken?: string | null | undefined }> | null | undefined } | null | undefined };
 
 
+export const CreateImageDocument = gql`
+    mutation CreateImage($input: ImagenesInput, $imagen: Upload!) {
+  CreateImage(input: $input, imagen: $imagen) {
+    id
+    descripcion
+    url
+  }
+}
+    `;
+export type CreateImageMutationFn = Apollo.MutationFunction<CreateImageMutation, CreateImageMutationVariables>;
+
+/**
+ * __useCreateImageMutation__
+ *
+ * To run a mutation, you first call `useCreateImageMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateImageMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createImageMutation, { data, loading, error }] = useCreateImageMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *      imagen: // value for 'imagen'
+ *   },
+ * });
+ */
+export function useCreateImageMutation(baseOptions?: Apollo.MutationHookOptions<CreateImageMutation, CreateImageMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateImageMutation, CreateImageMutationVariables>(CreateImageDocument, options);
+      }
+export type CreateImageMutationHookResult = ReturnType<typeof useCreateImageMutation>;
+export type CreateImageMutationResult = Apollo.MutationResult<CreateImageMutation>;
+export type CreateImageMutationOptions = Apollo.BaseMutationOptions<CreateImageMutation, CreateImageMutationVariables>;
 export const DeleteBlogDocument = gql`
     mutation DeleteBlog($input: BlogInput) {
   DeleteBlog(input: $input)
