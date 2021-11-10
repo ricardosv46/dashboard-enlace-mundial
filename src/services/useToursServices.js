@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import swal from 'sweetalert'
 import {
   useDeleteTourMutation,
@@ -6,27 +5,20 @@ import {
 } from '../generated/graphql'
 
 export const useToursServices = () => {
-  const [data, setData] = useState([])
-
-  const { loading } = useGetAllTourQuery({
+  const { loading, data, refetch } = useGetAllTourQuery({
     fetchPolicy: 'network-only',
     variables: {
       numberPaginate: 10,
       page: 1,
       estadoTour: ''
-    },
-    onCompleted: (tours) => {
-      if (tours.GetAllTour.data) {
-        setData(tours.GetAllTour.data)
-      }
     }
-
   })
-
+  const db = data ? data?.GetAllTour?.data : []
   const [deleteTourMutation] = useDeleteTourMutation({
     onError: (err) => {
       // validar errores
       console.log('onError delete', err?.graphQLErrors[0]?.debugMessage)
+      swal('Error', 'Hubo un error en el servidor', 'error')
     }
   })
 
@@ -39,16 +31,24 @@ export const useToursServices = () => {
       dangerMode: true
     }).then(async (rpta) => {
       if (rpta) {
-        deleteTourMutation({
+        await deleteTourMutation({
           variables: {
             input: {
               touId: tour.touId
             }
           }
         }).catch((error) => console.log('error', error))
+        refetch()
+        swal({
+          title: 'Eliminado',
+          text: 'Se elimino correctamente el tour',
+          icon: 'success',
+          button: 'Aceptar',
+          timer: 5000
+        })
       }
     })
   }
 
-  return { data, loading, deleteTour }
+  return { db, loading, deleteTour }
 }
