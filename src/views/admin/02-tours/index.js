@@ -13,7 +13,7 @@ const dataHead = [
   ['Id', 'min-w-4', 'left'],
   ['Foto', 'min-w-30 ', 'left'],
   ['Titulo', 'min-w-50', 'left'],
-  ['Tour', 'min-w-50', 'left'],
+  ['Categoria', 'min-w-50', 'left'],
   ['Estado', '', 'center'],
   ['Destacado', '', 'center'],
   ['Acciones', '', 'left']
@@ -22,16 +22,17 @@ const dataHead = [
 const Tours = () => {
   const history = useHistory()
   const [dataBody, setDataBody] = useState([])
-  const { data, loading, deleteTour } = useToursServices()
+  const { db, loading, deleteTour } = useToursServices()
 
-  console.log('data vista ', data)
+  console.log('data vista ', db)
 
   const armarFilasTours = (
-    tours,
+    data,
     setDataBody,
     handleDeleteTour
   ) => {
-    const filasTours = tours.map((tour) => ({
+    const filasTours = data.map((tour) => ({
+      id: tour?.touId,
       imagen: (
         <img
           src={tour?.imagenPrincipalTour?.url}
@@ -39,6 +40,7 @@ const Tours = () => {
         />
       ),
       nombre: tour?.tituloTour,
+      categoria: tour?.Categoria?.tituloCategoria,
       estado: <BtnEstado estado={tour?.estadoTour} />,
       descatar: <BtnDestacado estado={false} />,
       acciones: (
@@ -54,14 +56,14 @@ const Tours = () => {
       )
     }))
 
-    if (filasTours.length > 0) {
+    if (filasTours.length >= 0) {
       setDataBody(filasTours)
     }
   }
 
   useEffect(() => {
-    armarFilasTours(data, setDataBody, deleteTour)
-  }, [data])
+    armarFilasTours(db, setDataBody, deleteTour)
+  }, [db, loading])
   return (
     <div className="shadow  md:rounded bg-white p-5 py-10 md:p-10">
       <div className="flex-col gap-y-9  flex items-center  sm:flex-row sm:justify-between mb-5">

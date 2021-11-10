@@ -1,0 +1,3 @@
+mutation DeleteCrucero($input:CruceroInput){
+  DeleteCrucero(input:$input)
+}

@@ -1,0 +1,3 @@
+mutation DeleteLunaMiel($input:LunaMielInput){
+  DeleteLunaMiel(input:$input) 
+}

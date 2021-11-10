@@ -1,15 +1,15 @@
-import React from 'react'
+import { useEffect, useState } from 'react'
 import { useHistory } from 'react-router'
 import BtnAccionesCalendary from '../../../components/btnAcciones/BtnAccionesCalendary'
 import BtnDestacado from '../../../components/BtnDestacado/BtnDestacado'
 import BtnEstado from '../../../components/BtnEstado/BtnEstado'
 import Button from '../../../components/Buttons/Button'
 import Heading from '../../../components/Heading'
+import Spinner from '../../../components/Spinner/Spinner'
 import TableGeneral from '../../../components/Tables/TableGeneral'
+import { useLunaMielServices } from '../../../services/useLunaMielServices'
 
 const LunaDeMiel = () => {
-  const history = useHistory()
-
   const dataHead = [
     ['Id', 'min-w-4', 'left'],
     ['Foto', 'min-w-30', 'left'],
@@ -20,64 +20,50 @@ const LunaDeMiel = () => {
     ['Acciones', '', 'left']
   ]
 
-  const dataBody = [
-    {
-      id: '001',
-      foto: (
+  const history = useHistory()
+  const [dataBody, setDataBody] = useState([null])
+  const { db, loading, deleteLunaMiel } = useLunaMielServices()
+
+  console.log('data vista ', db)
+
+  const armarFilasLunaMiel = (
+    data,
+    setDataBody,
+    handleDeleteLunaMiel
+  ) => {
+    const filasLunaMiel = data.map((lunaMiel) => ({
+      id: lunaMiel?.lunaMielId,
+      imagen: (
         <img
+          src={lunaMiel?.imagenPrincipalLuna?.url}
           className="w-26 h-22"
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvql9ZV79RAaLOnuWpywB4xeIwCRC83usl7w&usqp=CAU"
         />
       ),
-      titulo: 'Paquete Turístico 1',
-      categoria: 'Rutas y Recorridos',
-      estado: <BtnEstado estado={true} />,
-      destacado: <BtnDestacado estado={true} disabled={false} />,
-      detalle: <BtnAccionesCalendary handleEdit={() => history.push('/luna-de-miel/editar-luna-de-miel')} handleCalendary={() => history.push('/calendario')} />
-    },
-    {
-      id: '002',
-      foto: (
-        <img
-          className="w-26 h-22"
-          src="https://www.nupciasmagazine.com/wp-content/uploads/2020/04/nupcias-maldivas.jpg"
+      nombre: lunaMiel?.tituloLuna,
+      categoria: lunaMiel?.Categoria?.tituloCategoria,
+      estado: <BtnEstado estado={lunaMiel?.estadoLuna} />,
+      descatar: <BtnDestacado estado={false} />,
+      acciones: (
+        <BtnAccionesCalendary
+          handleEdit={() =>
+            history.push(
+              `/tour/editar-tour/${lunaMiel.lunaMielId}`,
+              lunaMiel
+            )
+          }
+          handleDelete={() => handleDeleteLunaMiel(lunaMiel)}
         />
-      ),
-      titulo: 'Paquete Turístico 2',
-      categoria: 'Rutas y Recorridos',
-      estado: <BtnEstado estado={false} />,
-      destacado: <BtnDestacado estado={true} disabled={false} />,
-      detalle: <BtnAccionesCalendary handleEdit={() => history.push('/luna-de-miel/editar-luna-de-miel')} handleCalendary={() => history.push('/calendario')} />
-    },
-    {
-      id: '003',
-      foto: (
-        <img
-          className="w-26 h-22"
-          src="https://www.nupciasmagazine.com/wp-content/uploads/2020/07/Azulik.jpg"
-        />
-      ),
-      titulo: 'Paquete Turístico 3',
-      categoria: 'Rutas y Recorridos',
-      estado: <BtnEstado estado={false} />,
-      destacado: <BtnDestacado estado={true} disabled={false} />,
-      detalle: <BtnAccionesCalendary handleEdit={() => history.push('/luna-de-miel/editar-luna-de-miel')} handleCalendary={() => history.push('/calendario')}/>
-    },
-    {
-      id: '004',
-      foto: (
-        <img
-          className="w-26 h-22"
-          src="https://www.evento.love/blog/wp-content/uploads/2018/06/Origen-de-la-luna-de-miel-pareja-marido-mujer-atardecer-1200x720.png"
-        />
-      ),
-      titulo: 'Paquete Turístico 4',
-      categoria: 'Rutas y Recorridos',
-      estado: <BtnEstado estado={true} />,
-      destacado: <BtnDestacado estado={true} disabled={false} />,
-      detalle: <BtnAccionesCalendary handleEdit={() => history.push('/luna-de-miel/editar-luna-de-miel')} handleCalendary={() => history.push('/calendario')}/>
+      )
+    }))
+
+    if (filasLunaMiel.length >= 0) {
+      setDataBody(filasLunaMiel)
     }
-  ]
+  }
+
+  useEffect(() => {
+    armarFilasLunaMiel(db, setDataBody, deleteLunaMiel)
+  }, [db, loading])
   return (
     <div className="shadow md:rounded bg-white p-5 py-10 md:p-10">
       <div className="flex justify-between mb-5">
@@ -89,7 +75,12 @@ const LunaDeMiel = () => {
           + Agregar Luna de Miel
         </Button>
       </div>
-      <TableGeneral dataBody={dataBody} dataHead={dataHead} />
+      {/* eslint-disable  */}
+      {loading ? (
+        <Spinner />
+      ) : (
+        <TableGeneral dataBody={dataBody} dataHead={dataHead} />
+      )}
     </div>
   )
 }
