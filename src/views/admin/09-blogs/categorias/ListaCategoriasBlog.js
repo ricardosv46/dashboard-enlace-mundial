@@ -22,11 +22,7 @@ const ListarCategoriasBlog = () => {
   const [dataBody, setDataBody] = useState(null)
   const { db, loading, deleteCategoria } = useCategoriasBlogServices()
 
-  const armarFilasCategorias = (
-    data,
-    setDataBody,
-    deleteCategoria
-  ) => {
+  const armarFilasCategorias = (data, setDataBody, deleteCategoria) => {
     const filasCategorias = data.map((categoria) => ({
       id: categoria.categoriaBlogId,
       imagen: (
@@ -40,15 +36,13 @@ const ListarCategoriasBlog = () => {
       descatar: <BtnDestacado estado={false} />,
       acciones: (
         <BtnAcciones
-          handleEdit={() =>
-            history.push('/')
-          }
+          handleEdit={() => history.push('/')}
           handleDelete={() => deleteCategoria(categoria)}
         />
       )
     }))
 
-    if (filasCategorias.length > 0) {
+    if (filasCategorias.length >= 0) {
       setDataBody(filasCategorias)
     }
   }
