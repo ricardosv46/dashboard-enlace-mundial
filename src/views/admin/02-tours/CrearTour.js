@@ -14,11 +14,14 @@ import MostrarGaleria from '../08-galerias/MostrarGaleria'
 import peru from '../../../data/peru.json'
 const CrearTour = () => {
   const [destacado, setDestacado] = useState(false)
-  const [isOpenModalGalria, openModalGaleria, closeModalGaleria] = useModal(false)
+  const [isOpenModalGalria, openModalGaleria, closeModalGaleria] =
+    useModal(false)
   const [img1, setImge1] = useState({})
   const [img2, setImge2] = useState({})
   const [state, setState] = useState(true)
   const { img, setImg } = useContext(ImgContext)
+  const [incluye, setIncluye] = useState([])
+  const [text, setText] = useState('')
   const handleImg1 = () => {
     openModalGaleria()
     setState(true)
@@ -34,8 +37,10 @@ const CrearTour = () => {
       setImge2(img)
     }
   }, [img, state, img1, img2])
-  useEffect(() => { setImg({}) }, [])
-  console.log((peru.Amazonas.Bagua.Imaza))
+  useEffect(() => {
+    setImg({})
+  }, [])
+  console.log(peru.Amazonas.Bagua.Imaza)
   return (
     <div className="shadow md:rounded bg-white p-5 py-10 md:p-10">
       <div className="flex justify-center pt-3 relative">
@@ -103,7 +108,7 @@ const CrearTour = () => {
               <option value="">TUMBES</option>
               <option value="">CAJAMARCA</option>
               <option value="">LIMA</option>
-              <option value="" >ÁNCASH</option>
+              <option value="">ÁNCASH</option>
             </select>
           </div>
           <div className="flex flex-col w-full mb-4 lg:mb-0">
@@ -127,7 +132,7 @@ const CrearTour = () => {
               <option value="">AREQUIPA</option>
               <option value="">LIMA</option>
               <option value="">PASCO</option>
-              <option value="" >TRUJILLO</option>
+              <option value="">TRUJILLO</option>
             </select>
           </div>
         </div>
@@ -194,12 +199,25 @@ const CrearTour = () => {
           />
         </div>
 
-        <div className="flex flex-col lg:flex-row lg:space-x-4 items-center mb-5">
-          <InputText
-            name="incluye"
-            label="Incluye"
-            placeholder="Ingresar lo que incluye"
-          />
+        <div className="flex flex-col lg:flex-row lg:space-x-4 items-start mb-5">
+          <div className="w-full">
+            <InputText
+              name="incluye"
+              label="Incluye"
+              placeholder="Ingresar lo que incluye"
+              onChange={(e) => {
+                setText(e.target.value)
+              }}
+              onKeyDown={({ code }) => {
+                if (code === 'Enter') {
+                  setIncluye((estado) => [...estado, text])
+                  setText('')
+                }
+              }}
+              value={text}
+            />
+            {incluye.map(item => <p key={item}>{item}</p>)}
+          </div>
 
           <InputText
             name="noIncluye"
@@ -256,10 +274,7 @@ const CrearTour = () => {
                 className="text-gray-500 text-md text-center w-full h-full object-cover "
               />
             </div>
-            <Button
-              onClick={handleImg1}
-              className="btn1"
-            >
+            <Button onClick={handleImg1} className="btn1">
               Imágen Principal
             </Button>
           </div>
@@ -276,7 +291,6 @@ const CrearTour = () => {
         </div>
 
         <div className="flex flex-col gap-y-5 sm:flex-row lg:space-x-4 items-center mb-5 ">
-
           <MostrarGaleria />
         </div>
 
@@ -286,12 +300,8 @@ const CrearTour = () => {
           </Button>
         </div>
       </form>
-      <Modal
-        closeModal={closeModalGaleria}
-        isOpen={isOpenModalGalria}>
-        <Galerias opcion={true}
-          closeModalGaleria={closeModalGaleria}
-        />
+      <Modal closeModal={closeModalGaleria} isOpen={isOpenModalGalria}>
+        <Galerias opcion={true} closeModalGaleria={closeModalGaleria} />
       </Modal>
     </div>
   )

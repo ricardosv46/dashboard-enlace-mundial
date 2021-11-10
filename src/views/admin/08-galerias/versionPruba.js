@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Button from '../../../components/Buttons/Button'
 import Heading from '../../../components/Heading'
 import Modal from '../../../components/Modales/Modal'
@@ -8,28 +8,59 @@ import Spinner from '../../../components/Spinner/Spinner'
 import { useModal } from '../../../hooks/useModal'
 import useGaleriaServices from '../../../services/useGaleriaServices'
 import EditarFoto from './EditarFoto'
-import Drag from './ejemplo'
 import './index.css'
 
 const Galerias = ({
   opcion,
   handleEdit,
   handleDelete,
-  closeModalGaleria = () => { }
+  closeModalGaleria = () => {}
 }) => {
   const { imagenes, loading } = useGaleriaServices()
+  const dropArea = useRef()
+  const inputFile = useRef()
   const [url, setUrl] = useState('')
   const [alt, setAlt] = useState('')
   const [id, setId] = useState(null)
   const [selectView, setSelectView] = useState(true)
   const [isOpenModal, openModal, closeModal] = useModal(false)
+  const [dataFiles, setDataFiles] = useState([])
+  const [value, setValue] = useState('')
 
+  const dataNames = [{}]
+  // console.log(dataFiles, inputFile.current)
+  for (let index = 0; index < dataFiles.length; index++) {
+    dataNames.push({
+      name: dataFiles[index].name,
+      url: URL.createObjectURL(dataFiles[index])
+    })
+  }
+
+  // console.log(dataNames)
   const handleOpenModal = (url, alt, id) => {
     openModal()
     setUrl(url)
     setAlt(alt)
     setId(id)
   }
+  const handleSubmitImg = () => {
+    inputFile.current.click()
+  }
+
+  useEffect(() => {
+    const handleChangue = (e) => {
+      setDataFiles(e.target.files)
+      // console.log('url', URL.createObjectURL(e.target.files[0]))
+      setValue(e.target.value)
+    }
+
+    if (selectView === false) {
+      inputFile.current.addEventListener('change', handleChangue)
+    } else {
+      setDataFiles([])
+      setValue('')
+    }
+  }, [selectView])
 
   return (
     <div className="shadow md:rounded bg-white p-5 py-10 md:p-10">
@@ -64,7 +95,43 @@ const Galerias = ({
           )}
         </div>
       ) : (
-        <Drag />
+        <div
+          className="w-full min-h-40 text-gray-600  border-2 border-primary border-dashed cursor-pointer flex flex-col justify-center items-center px-4 text-center lg:px-50 py-10"
+          onClick={handleSubmitImg}
+          ref={dropArea}
+        >
+          <p className="text-xl">
+            Arrastre imagenes o haga click aquí para seleccionar.Archivos
+            permitidos: .jpg, .jpeg, .png
+          </p>
+          <div className="flex flex-wrap gap-4 text-sm mt-5">
+            {dataNames.map(
+              (dataImg, index) =>
+                index > 0 && (
+                  <>
+                    <p
+                      key={index}
+                      className="py-1 px-2  text-gray-500 border rounded-lg flex gap-x-2"
+                    >
+                      {dataImg.name}
+                      <img src={dataImg.url} alt="" className="w-5" />
+                    </p>
+                  </>
+                )
+            )}
+          </div>
+
+          <input
+            // id="input_id"
+            type="file"
+            ref={inputFile}
+            className="hidden"
+            multiple
+            value={value}
+            accept="image/*"
+          />
+          {/* <label htmlFor="input_id">CLICK FILE INPUT</label> */}
+        </div>
       )}
       <Modal isOpen={isOpenModal} closeModal={closeModal}>
         <EditarFoto
