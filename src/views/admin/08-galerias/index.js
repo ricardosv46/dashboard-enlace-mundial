@@ -4,11 +4,9 @@ import Heading from '../../../components/Heading'
 import Modal from '../../../components/Modales/Modal'
 import Spinner from '../../../components/Spinner/Spinner'
 // import Spinner from '../../../components/Spinner/Spinner'
-import {
-  useGetImagenesQuery,
-  useDeleteImageMutation
-} from '../../../generated/graphql'
+
 import { useModal } from '../../../hooks/useModal'
+import useGaleriaServices from '../../../services/useGaleriaServices'
 import EditarFoto from './EditarFoto'
 import './index.css'
 
@@ -18,18 +16,7 @@ const Galerias = ({
   handleDelete,
   closeModalGaleria = () => {}
 }) => {
-  // const [imagenes, setImagenes] = useState([])
-  const { loading, data, refetch } = useGetImagenesQuery({
-    fetchPolicy: 'network-only'
-    // onCompleted: (imagenes) => {
-    //   setImagenes(imagenes.GetImagenes)
-    // }
-  })
-
-  const imagenes = data ? data.GetImagenes : []
-
-  const [deleteImg] = useDeleteImageMutation()
-
+  const { imagenes, loading } = useGaleriaServices()
   const dropArea = useRef()
   const inputFile = useRef()
   const [url, setUrl] = useState('')
@@ -39,17 +26,6 @@ const Galerias = ({
   const [isOpenModal, openModal, closeModal] = useModal(false)
   const [dataFiles, setDataFiles] = useState([])
   const [value, setValue] = useState('')
-
-  const handleDelete2 = async () => {
-    const res = await deleteImg({
-      variables: {
-        input: { id: 7 }
-      }
-    }).catch(console.log)
-
-    console.log(res)
-    refetch()
-  }
 
   const dataNames = [{}]
   // console.log(dataFiles, inputFile.current)
@@ -93,9 +69,6 @@ const Galerias = ({
         <Button size="md" onClick={() => setSelectView(!selectView)}>
           {' '}
           {selectView ? 'Subir Imágenes' : 'Ver Galeria'}
-        </Button>
-        <Button size="md" onClick={handleDelete2}>
-          ELIMINAR IMAGEN
         </Button>
       </div>
       {/* eslint-disable */}
