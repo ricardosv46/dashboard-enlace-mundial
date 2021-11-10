@@ -48,7 +48,7 @@ const ListarCategoriasBlog = () => {
       )
     }))
 
-    if (filasCategorias.length > 0) {
+    if (filasCategorias.length >= 0) {
       setDataBody(filasCategorias)
     }
   }

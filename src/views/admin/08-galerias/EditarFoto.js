@@ -4,10 +4,7 @@ import InputText from '../../../components/Forms/InputText/InputText'
 import UseForm from '../../../hooks/UseForm'
 import swal from 'sweetalert'
 import { ImgContext } from '../../../context/auth/ImgContext'
-import {
-  useDeleteImageMutation,
-  useUpdateImageMutation
-} from '../../../generated/graphql'
+import useGaleriaServices from '../../../services/useGaleriaServices'
 const EditarFoto = ({
   url,
   alt,
@@ -19,18 +16,7 @@ const EditarFoto = ({
 // opcion sirve para saber si voy a usar la galeria para escoger una imagen o para actualizarla, si opcion=true se muestra el btn escoger si no se muestar el btn actualizar
 // eslint-disable-next-line brace-style
 {
-  const [deleteImage, { loading }] = useDeleteImageMutation({
-    onError: (err) => {
-      // validar errores
-      console.log('onError delete', err?.graphQLErrors[0]?.debugMessage)
-    }
-  })
-  const [updateImage, { loading: loadingUpadate }] = useUpdateImageMutation({
-    onError: (err) => {
-      // validar errores
-      console.log('onError update', err?.graphQLErrors[0]?.debugMessage)
-    }
-  })
+  const { deleteImagen, updateImagen } = useGaleriaServices()
   const { form, handleInputChange, resetForm } = UseForm({ descripcion: alt })
   const { img, setImg } = useContext(ImgContext)
   const [disabled, setDisabled] = useState(true)
@@ -49,57 +35,14 @@ const EditarFoto = ({
   }
 
   const handleUpdate = () => {
-    if (loadingUpadate === false) {
-      updateImage({
-        variables: {
-          input: {
-            id: id,
-            descripcion: form.descripcion
-          }
-        }
-      })
-    }
-    swal({
-      title: 'Actualizar',
-      text: 'Se Actualizo correctamente el atributo Alt',
-      icon: 'success',
-      button: 'Aceptar',
-      timer: 2000
-    })
+    updateImagen(id, form.descripcion)
     resetForm()
     closeModal()
   }
 
   const handleDelete = () => {
-    swal({
-      title: 'Eliminar',
-      text: '¿Esta seguro que desea eliminar este archivo?',
-      icon: 'warning',
-      buttons: ['NO', 'SI'],
-      timer: 5000
-    }).then((respuesta) => {
-      if (respuesta) {
-        if (loading === false) {
-          deleteImage({
-            variables: {
-              input: {
-                id: id
-              }
-            }
-          })
-        }
-
-        swal({
-          title: 'Eliminado',
-          text: 'Se elimino correctamente el archivo',
-          icon: 'success',
-          button: 'Aceptar',
-          timer: 2000
-        })
-        resetForm()
-        closeModal()
-      }
-    })
+    deleteImagen(id)
+    closeModal()
   }
 
   const handleChoose = () => {

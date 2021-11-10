@@ -49,7 +49,7 @@ export const useCategoriasBlogServices = () => {
           text: 'Se elimino correctamente la Categoria',
           icon: 'success',
           button: 'Aceptar',
-          timer: 5000
+          timer: 2000
         })
       }
     })
