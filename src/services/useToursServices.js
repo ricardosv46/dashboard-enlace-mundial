@@ -11,7 +11,7 @@ export const useToursServices = () => {
   const { loading } = useGetAllTourQuery({
     fetchPolicy: 'network-only',
     variables: {
-      numberPaginate: 12,
+      numberPaginate: 10,
       page: 1,
       estadoTour: ''
     },

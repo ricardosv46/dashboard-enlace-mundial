@@ -13,7 +13,7 @@ const dataHead = [
   ['Id', 'min-w-4', 'left'],
   ['Foto', 'min-w-30 ', 'left'],
   ['Titulo', 'min-w-50', 'left'],
-  ['Tour', 'min-w-50', 'left'],
+  ['Categoria', 'min-w-50', 'left'],
   ['Estado', '', 'center'],
   ['Destacado', '', 'center'],
   ['Acciones', '', 'left']
@@ -32,6 +32,7 @@ const Tours = () => {
     handleDeleteTour
   ) => {
     const filasTours = tours.map((tour) => ({
+      id: tour?.touId,
       imagen: (
         <img
           src={tour?.imagenPrincipalTour?.url}
@@ -39,6 +40,7 @@ const Tours = () => {
         />
       ),
       nombre: tour?.tituloTour,
+      categoria: tour?.Categoria?.tituloCategoria,
       estado: <BtnEstado estado={tour?.estadoTour} />,
       descatar: <BtnDestacado estado={false} />,
       acciones: (
