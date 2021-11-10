@@ -55,7 +55,7 @@ const ListarCategoriasBlog = () => {
 
   useEffect(() => {
     armarFilasCategorias(db, setDataBody, deleteCategoria)
-  }, [db])
+  }, [db, loading])
 
   return (
     <div className="shadow md:rounded bg-white p-5 py-10 md:p-10 mb-20 min-h-screen ">

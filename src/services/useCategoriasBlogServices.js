@@ -1,4 +1,3 @@
-import { useState } from 'react'
 // import { useHistory } from 'react-router'
 import swal from 'sweetalert'
 import {
@@ -8,27 +7,21 @@ import {
 
 export const useCategoriasBlogServices = () => {
   // const history = useHistory()
-  const [db, setDb] = useState([])
   // const [confirmacion, setConfirmacion] = useState(false)
   // history.push('/blogs/categorias/editar-categoria')
-  const { loading } = useGetAllCategoriaBlogQuery({
+  const { loading, data, refetch } = useGetAllCategoriaBlogQuery({
     fetchPolicy: 'network-only',
     variables: {
       estadoCategoriaBlog: ''
-    },
-    onCompleted: (categoriasBlog) => {
-      if (categoriasBlog.GetAllCategoriaBlog) {
-        setDb(categoriasBlog.GetAllCategoriaBlog)
-      }
     }
   })
-
+  const db = data ? data?.GetAllCategoriaBlog : []
   const [deleteCategoriaBlog] = useDeleteCategoriaBlogMutation({
     onError: (err) => {
       // validar errores
       // eslint-disable-next-line eqeqeq
       console.log(err?.graphQLErrors)
-      // swal('Error', 'Hubo un error en el servidor', 'error')
+      swal('Error', 'Hubo un error en el servidor', 'error')
     }
   })
 
@@ -40,17 +33,17 @@ export const useCategoriasBlogServices = () => {
       buttons: ['NO', 'SI'],
       timer: 5000,
       dangerMode: true
-    }).then((respuesta) => {
+    }).then(async (respuesta) => {
       if (respuesta) {
-        deleteCategoriaBlog({
+        const res = await deleteCategoriaBlog({
           variables: {
             input: {
               categoriaBlogId: categoriaBlog.categoriaBlogId
             }
-          },
-          refetchQueries: [{ query: useGetAllCategoriaBlogQuery }]
+          }
         }).catch((error) => console.log('error', error))
-
+        console.log(res)
+        refetch()
         swal({
           title: 'Eliminado',
           text: 'Se elimino correctamente la Categoria',
