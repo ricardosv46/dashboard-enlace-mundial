@@ -22,11 +22,7 @@ const ListarCategoriasBlog = () => {
   const [dataBody, setDataBody] = useState(null)
   const { db, loading, deleteCategoria } = useCategoriasBlogServices()
 
-  const armarFilasCategorias = (
-    data,
-    setDataBody,
-    deleteCategoria
-  ) => {
+  const armarFilasCategorias = (data, setDataBody, deleteCategoria) => {
     const filasCategorias = data.map((categoria) => ({
       id: categoria.categoriaBlogId,
       imagen: (
@@ -40,22 +36,20 @@ const ListarCategoriasBlog = () => {
       descatar: <BtnDestacado estado={false} />,
       acciones: (
         <BtnAcciones
-          handleEdit={() =>
-            history.push('/')
-          }
+          handleEdit={() => history.push('/')}
           handleDelete={() => deleteCategoria(categoria)}
         />
       )
     }))
 
-    if (filasCategorias.length > 0) {
+    if (filasCategorias.length >= 0) {
       setDataBody(filasCategorias)
     }
   }
 
   useEffect(() => {
     armarFilasCategorias(db, setDataBody, deleteCategoria)
-  }, [db])
+  }, [db, loading])
 
   return (
     <div className="shadow md:rounded bg-white p-5 py-10 md:p-10 mb-20 min-h-screen ">

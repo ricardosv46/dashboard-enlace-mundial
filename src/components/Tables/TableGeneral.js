@@ -16,11 +16,11 @@ const TableGeneral = ({
     }
     return arreyNew
   }
-  const textColorH = `text-${headerTextColor}`
-  const textColorB = `text-${bodyTextColor}`
   const bodyBg = `bg-${bodyBGColor}`
   const headBg = `bg-${headerBgColor}`
   const borderC = `border-${borderColor}`
+  const textColorB = `text-${bodyTextColor}`
+  const textColorH = `text-${headerTextColor}`
 
   return (
     <div className="w-full mb-8 overflow-hidden rounded-md md:shadow-xl max-h-screen overflow-y-auto tableGeneral ">
@@ -34,8 +34,8 @@ const TableGeneral = ({
               >
                 {dataHead.map((th, index) => (
                   <th
-                    className={`px-4 py-6 ${th[1]} text-gray-600 text-${th[2]} `}
                     key={index}
+                    className={`px-4 py-6 ${th[1]} text-gray-600 text-${th[2]} `}
                   >
                     {th[0]}
                   </th>
