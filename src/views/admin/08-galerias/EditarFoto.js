@@ -4,16 +4,33 @@ import InputText from '../../../components/Forms/InputText/InputText'
 import UseForm from '../../../hooks/UseForm'
 import swal from 'sweetalert'
 import { ImgContext } from '../../../context/auth/ImgContext'
-const EditarFoto = (
-  {
-    url,
-    alt,
-    closeModal,
-    opcion = false,
-    closeModalGaleria = () => { }
-  }
-  // opcion sirve para saber si voy a usar la galeria para escoger una imagen o para actualizarla, si opcion=true se muestra el btn escoger si no se muestar el btn actualizar
-) => {
+import {
+  useDeleteImageMutation,
+  useUpdateImageMutation
+} from '../../../generated/graphql'
+const EditarFoto = ({
+  url,
+  alt,
+  id,
+  closeModal,
+  opcion = false,
+  closeModalGaleria = () => { }
+}) =>
+// opcion sirve para saber si voy a usar la galeria para escoger una imagen o para actualizarla, si opcion=true se muestra el btn escoger si no se muestar el btn actualizar
+// eslint-disable-next-line brace-style
+{
+  const [deleteImage, { loading }] = useDeleteImageMutation({
+    onError: (err) => {
+      // validar errores
+      console.log('onError delete', err?.graphQLErrors[0]?.debugMessage)
+    }
+  })
+  const [updateImage, { loading: loadingUpadate }] = useUpdateImageMutation({
+    onError: (err) => {
+      // validar errores
+      console.log('onError update', err?.graphQLErrors[0]?.debugMessage)
+    }
+  })
   const { form, handleInputChange, resetForm } = UseForm({ descripcion: alt })
   const { img, setImg } = useContext(ImgContext)
   const [disabled, setDisabled] = useState(true)
@@ -32,6 +49,16 @@ const EditarFoto = (
   }
 
   const handleUpdate = () => {
+    if (loadingUpadate === false) {
+      updateImage({
+        variables: {
+          input: {
+            id: id,
+            descripcion: form.descripcion
+          }
+        }
+      })
+    }
     swal({
       title: 'Actualizar',
       text: 'Se Actualizo correctamente el atributo Alt',
@@ -50,8 +77,18 @@ const EditarFoto = (
       icon: 'warning',
       buttons: ['NO', 'SI'],
       timer: 5000
-    }).then(respuesta => {
+    }).then((respuesta) => {
       if (respuesta) {
+        if (loading === false) {
+          deleteImage({
+            variables: {
+              input: {
+                id: id
+              }
+            }
+          })
+        }
+
         swal({
           title: 'Eliminado',
           text: 'Se elimino correctamente el archivo',
@@ -113,28 +150,29 @@ const EditarFoto = (
             className={`transition-all duration-300 ${disabled
               ? 'bg-gray-300  '
               : 'bg-transparent text-primary border-primary hover:bg-primary hover:text-white hover:border-transparent '
-              }  h-11 w-80 font-semibold border-2 rounded-lg`} >
+              }  h-11 w-80 font-semibold border-2 rounded-lg`}
+          >
             Actualiazar
           </button>
 
-          {opcion
-            ? <button
+          {/* eslint-disable-next-line multiline-ternary */}
+          {opcion ? (
+            <button
               type="button"
               onClick={handleChoose}
               className="transition-all duration-300 bg-transparent text-blue-600 border-blue-600 hover:bg-blue-600 hover:text-white hover:border-transparent h-11 w-80 font-semibold border-2 rounded-lg"
             >
               Escoger
             </button>
-
-            : <button
+          ) : (
+            <button
               type="button"
               className="transition-all duration-300 bg-transparent text-red-500 border-red-500 hover:bg-red-500 hover:text-white hover:border-transparent h-11 w-80 font-semibold border-2 rounded-lg"
               onClick={handleDelete}
             >
               Eliminar
             </button>
-
-          }
+          )}
         </div>
       </form>
     </div>
