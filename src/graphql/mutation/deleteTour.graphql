@@ -1,0 +1,3 @@
+mutation DeleteTour($input:TourInput){
+  DeleteTour(input:$input) 
+}

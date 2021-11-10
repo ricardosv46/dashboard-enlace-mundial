@@ -1,4 +1,4 @@
-import React from 'react'
+import { useEffect, useState } from 'react'
 import { useHistory } from 'react-router'
 import BtnAccionesCalendary from '../../../components/btnAcciones/BtnAccionesCalendary'
 import BtnDestacado from '../../../components/BtnDestacado/BtnDestacado'
@@ -6,12 +6,14 @@ import BtnEstado from '../../../components/BtnEstado/BtnEstado'
 import Button from '../../../components/Buttons/Button'
 import Heading from '../../../components/Heading'
 import TableGeneral from '../../../components/Tables/TableGeneral'
+import { useToursServices } from '../../../services/useToursServices'
+import Spinner from '../../../components/Spinner/Spinner'
 
 const dataHead = [
   ['Id', 'min-w-4', 'left'],
   ['Foto', 'min-w-30 ', 'left'],
   ['Titulo', 'min-w-50', 'left'],
-  ['Categoria', 'min-w-50', 'left'],
+  ['Tour', 'min-w-50', 'left'],
   ['Estado', '', 'center'],
   ['Destacado', '', 'center'],
   ['Acciones', '', 'left']
@@ -19,68 +21,47 @@ const dataHead = [
 
 const Tours = () => {
   const history = useHistory()
-  const dataBody = [
-    {
-      id: '001',
-      foto: (
-        <img
-          className="w-26 h-22"
-          src="https://media.tacdn.com/media/attractions-splice-spp-674x446/0a/93/05/49.jpg"
-        />
-      ),
-      titulo: 'Ica y Paracas',
-      categoria: 'Rutas y Recorridos',
-      estado: <BtnEstado estado={false} />,
-      destacado: <BtnDestacado estado={true} disabled={false} />,
-      detalle: <BtnAccionesCalendary
-        handleEdit={() => history.push('/tours/editar-tour')}
-        handleCalendary={() => history.push('/calendario')}
-      />
-    },
+  const [dataBody, setDataBody] = useState([])
+  const { data, loading, deleteTour } = useToursServices()
 
-    {
-      id: '002',
-      foto: (
+  console.log('data vista ', data)
+
+  const armarFilasTours = (
+    tours,
+    setDataBody,
+    handleDeleteTour
+  ) => {
+    const filasTours = tours.map((tour) => ({
+      imagen: (
         <img
-          className="w-26 h-22 "
-          src="https://turismoi.pe/uploads/photo/version2/photo_file/54018/optimized_2187-1.jpg"
-        />
-      ),
-      titulo: 'Marcapomacocha',
-      categoria: 'Turismos Ecológico',
-      estado: <BtnEstado estado={true} />,
-      destacado: <BtnDestacado disabled={false} />,
-      detalle: <BtnAccionesCalendary handleEdit={() => history.push('/tours/editar-tour')} handleCalendary={() => history.push('/calendario')} />
-    },
-    {
-      id: '003',
-      foto: (
-        <img
+          src={tour?.imagenPrincipalTour?.url}
           className="w-26 h-22"
-          src="https://cde.peru.com//ima/0/1/9/4/6/1946830/924x530/laguna-azulcocha.jpg"
         />
       ),
-      titulo: 'Cordillera La Viuda',
-      categoria: 'Naturaleza y paisajes',
-      estado: <BtnEstado estado={true} />,
-      destacado: <BtnDestacado estado={true} disabled={false} />,
-      detalle: <BtnAccionesCalendary handleEdit={() => history.push('/tours/editar-tour')} handleCalendary={() => history.push('/calendario')}/>
-    },
-    {
-      id: '004',
-      foto: (
-        <img
-          className="w-26 h-22"
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Valdivia-Antioquia.jpg/1200px-Valdivia-Antioquia.jpg"
+      nombre: tour?.tituloTour,
+      estado: <BtnEstado estado={tour?.estadoTour} />,
+      descatar: <BtnDestacado estado={false} />,
+      acciones: (
+        <BtnAccionesCalendary
+          handleEdit={() =>
+            history.push(
+              `/tour/editar-tour/${tour.touId}`,
+              tour
+            )
+          }
+          handleDelete={() => handleDeleteTour(tour)}
         />
-      ),
-      titulo: 'Antioquía',
-      categoria: 'Rutas y Recorridos',
-      estado: <BtnEstado estado={false} />,
-      destacado: <BtnDestacado estado={true} disabled={false} />,
-      detalle: <BtnAccionesCalendary handleEdit={() => history.push('/tours/editar-tour')} handleCalendary={() => history.push('/calendario')} />
+      )
+    }))
+
+    if (filasTours.length > 0) {
+      setDataBody(filasTours)
     }
-  ]
+  }
+
+  useEffect(() => {
+    armarFilasTours(data, setDataBody, deleteTour)
+  }, [data])
   return (
     <div className="shadow  md:rounded bg-white p-5 py-10 md:p-10">
       <div className="flex-col gap-y-9  flex items-center  sm:flex-row sm:justify-between mb-5">
@@ -89,8 +70,12 @@ const Tours = () => {
           + Agregar Tour
         </Button>
       </div>
-      <TableGeneral dataBody={dataBody} dataHead={dataHead} />
-
+      {/* eslint-disable  */}
+      {loading ? (
+        <Spinner />
+      ) : (
+        <TableGeneral dataBody={dataBody} dataHead={dataHead} />
+      )}
     </div>
   )
 }
