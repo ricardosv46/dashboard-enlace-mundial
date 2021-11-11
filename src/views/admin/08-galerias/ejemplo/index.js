@@ -15,7 +15,7 @@ const Drogo = () => {
         .use(Webcam) // `id` defaults to "Webcam". Note: no `target` option!
         // or
         .use(Webcam, { id: 'MyWebcam' })
-    ) // `id` is… "MyWebcam"
+    )
   }, [])
   React.useEffect(() => {
     return () => uppy.close()
