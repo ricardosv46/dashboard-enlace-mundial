@@ -1,9 +1,6 @@
-import React from 'react'
 import Button from '../../../components/Buttons/Button'
 import Heading from '../../../components/Heading'
 import Foto from './Foto'
-
-import './index.css'
 const imgsList = [
   {
     url: 'https://media.tacdn.com/media/attractions-splice-spp-674x446/0a/93/05/49.jpg',

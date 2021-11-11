@@ -1,6 +1,4 @@
-import React, { useEffect, useState } from 'react'
-
-import './index.css'
+import { useEffect, useState } from 'react'
 
 const Foto = ({ url, alt, id, galeria, dispatch }) => {
   const [select, setSelect] = useState(false)
@@ -13,7 +11,7 @@ const Foto = ({ url, alt, id, galeria, dispatch }) => {
       alt,
       marcado: !select
     }
-    setSelect(select => !select)
+    setSelect((select) => !select)
     const action = {
       type: 'addImage',
       payload: newImage
@@ -27,8 +25,9 @@ const Foto = ({ url, alt, id, galeria, dispatch }) => {
   }, [])
   return (
     <div
-      className={` ${select && 'border-primary border'
-        } cursor-pointer  rounded flex  justify-center overflow-hidden p-2`}
+      className={` ${
+        select && 'border-primary border'
+      } cursor-pointer  rounded flex  justify-center overflow-hidden p-2`}
       onClick={handleClick}
     >
       <img className="w-full" src={url} alt={alt} />

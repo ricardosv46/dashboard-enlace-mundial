@@ -25,16 +25,16 @@ const Button = ({
 
   const applySize = (size) => {
     if (size === 'sm') {
-      return 'h-10 w-32 font-medium border-2 rounded-lg'
+      return 'px-5 py-2.5 shadow rounded-lg'
     }
     if (size === 'md') {
-      return 'h-10 w-52 font-semibold border-2 rounded-lg'
+      return 'px-5 py-2.5 shadow rounded-lg'
     }
     if (size === 'lg') {
-      return 'h-11 w-80 font-semibold border-2 rounded-lg'
+      return 'h-11 w-80 shadow rounded-lg'
     }
     if (size === 'full') {
-      return 'w-full h-11 font-semibold border-2 rounded-lg'
+      return 'w-full h-11 shadow rounded-lg'
     }
   }
 

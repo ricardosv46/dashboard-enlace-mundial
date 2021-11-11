@@ -8,7 +8,6 @@ import Spinner from '../../../components/Spinner/Spinner'
 import { useModal } from '../../../hooks/useModal'
 import useGaleriaServices from '../../../services/useGaleriaServices'
 import EditarFoto from './EditarFoto'
-import './index.css'
 
 const Galerias = ({
   opcion,

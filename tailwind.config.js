@@ -133,6 +133,7 @@ const config = {
       gridTemplateColumns: {
         // Simple 16 column grid
 
+        auto: 'repeat(auto-fit, minmax(300px, 1fr))',
         16: 'repeat(16, minmax(0, 1fr))',
 
         // Complex site-specific column configuration
@@ -162,7 +163,8 @@ const config = {
         270: '270deg'
       },
       scale: {
-        '-1': '-1'
+        '-1': '-1',
+        110: '1.1'
       },
       zIndex: {
         '-1': -1,
@@ -419,7 +421,7 @@ const config = {
     ringOpacity: [],
     ringWidth: [],
     rotate: [],
-    scale: [],
+    scale: ['group-hover'],
     skew: [],
     space: ['responsive'],
     stroke: ['responsive'],
@@ -431,7 +433,7 @@ const config = {
     textOpacity: ['group-hover', 'hover'],
     textOverflow: ['responsive'],
     textTransform: [],
-    transform: [],
+    transform: ['group-hover'],
     transformOrigin: [],
     transitionDelay: [],
     transitionDuration: [],

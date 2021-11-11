@@ -60,8 +60,8 @@ const Sidebar = () => {
             <li>
               <SidebarLink
                 icon={Home}
-                label="Luna De Miel"
                 to="/luna-de-miel"
+                label="Luna De Miel"
               />
             </li>
             <li>

@@ -1,78 +1,50 @@
-import React, { useContext, useEffect, useState } from 'react'
-// import { useEffect } from 'react'
-import InputText from '../../../components/Forms/InputText/InputText'
-import UseForm from '../../../hooks/UseForm'
+import { useEffect, useState } from 'react'
 import swal from 'sweetalert'
-import { ImgContext } from '../../../context/auth/ImgContext'
+import InputText from '../../../components/Forms/InputText/InputText'
 import useGaleriaServices from '../../../services/useGaleriaServices'
-const EditarFoto = ({
-  url,
-  alt,
-  id,
-  closeModal,
-  opcion = false,
-  closeModalGaleria = () => { }
-}) =>
-// opcion sirve para saber si voy a usar la galeria para escoger una imagen o para actualizarla, si opcion=true se muestra el btn escoger si no se muestar el btn actualizar
-// eslint-disable-next-line brace-style
-{
+
+const EditarFoto = ({ image, opcion = false, closeModal = () => {} }) => {
+  const [text, setText] = useState('')
   const { deleteImagen, updateImagen } = useGaleriaServices()
-  const { form, handleInputChange, resetForm } = UseForm({ descripcion: alt })
-  const { img, setImg } = useContext(ImgContext)
-  const [disabled, setDisabled] = useState(true)
+
+  useEffect(() => {
+    setText(image.descripcion)
+  }, [image.descripcion])
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    resetForm()
-  }
-
-  const validationDisabled = () => {
-    if (form.descripcion.trim() === '' || form.descripcion.trim() === alt) {
-      setDisabled(true)
-    } else {
-      setDisabled(false)
-    }
   }
 
   const handleUpdate = () => {
-    updateImagen(id, form.descripcion)
-    resetForm()
+    updateImagen(image.id, text)
     closeModal()
   }
 
   const handleDelete = () => {
-    deleteImagen(id)
+    deleteImagen(image.id)
     closeModal()
   }
 
   const handleChoose = () => {
-    setImg({ ...img, url, alt })
     swal({
-      title: 'SELECCIONADA',
-      text: 'Imágen Seleccionada',
       icon: 'success',
       button: 'Aceptar',
+      title: 'SELECCIONADA',
+      text: 'Imágen Seleccionada',
       timer: 2000
     })
     closeModal()
-    closeModalGaleria()
   }
 
-  useEffect(() => {
-    resetForm()
-  }, [url, alt])
-
-  useEffect(() => {
-    validationDisabled()
-  }, [form])
+  const btnDisabled = text.trim() === ''
 
   return (
-    <div className="w-full md:w-100 flex flex-col ">
+    <div className="w-full md:w-100 flex flex-col">
       <h1 className="md:text-2xl font-semibold tracking-wide mb-5 flex items-center mx-auto">
         Información de la Imágen
       </h1>
       <div className="w-full md:w-60  mx-auto">
-        <img src={url} alt={alt} className="h-50" />
+        <img src={image.url} alt={image.descripcion} className="h-50" />
       </div>
       <form onSubmit={handleSubmit}>
         <div className="flex flex-col lg:flex-row lg:space-x-4 my-5">
@@ -80,42 +52,27 @@ const EditarFoto = ({
             name="descripcion"
             label="Descripción"
             placeholder="Ingrese una descripción para la imagén"
-            onChange={handleInputChange}
-            value={form.descripcion}
+            value={text}
+            onChange={(e) => setText(e.target.value)}
           />
         </div>
 
         <div className="flex flex-col lg:flex-row lg:space-x-4 my-5 gap-y-4">
           <button
             type="button"
-            disabled={disabled}
-            onClick={handleUpdate}
-            className={`transition-all duration-300 ${disabled
-              ? 'bg-gray-300  '
-              : 'bg-transparent text-primary border-primary hover:bg-primary hover:text-white hover:border-transparent '
-              }  h-11 w-80 font-semibold border-2 rounded-lg`}
+            onClick={opcion ? handleChoose : handleDelete}
+            className={opcion ? 'btn btn-outline-blue' : 'btn btn-outline-red'}
           >
-            Actualiazar
+            {opcion ? 'Escoger' : 'Eliminar'}
           </button>
-
-          {/* eslint-disable-next-line multiline-ternary */}
-          {opcion ? (
-            <button
-              type="button"
-              onClick={handleChoose}
-              className="transition-all duration-300 bg-transparent text-blue-600 border-blue-600 hover:bg-blue-600 hover:text-white hover:border-transparent h-11 w-80 font-semibold border-2 rounded-lg"
-            >
-              Escoger
-            </button>
-          ) : (
-            <button
-              type="button"
-              className="transition-all duration-300 bg-transparent text-red-500 border-red-500 hover:bg-red-500 hover:text-white hover:border-transparent h-11 w-80 font-semibold border-2 rounded-lg"
-              onClick={handleDelete}
-            >
-              Eliminar
-            </button>
-          )}
+          <button
+            type="button"
+            disabled={btnDisabled}
+            onClick={handleUpdate}
+            className="btn btn-green"
+          >
+            Actualizar
+          </button>
         </div>
       </form>
     </div>

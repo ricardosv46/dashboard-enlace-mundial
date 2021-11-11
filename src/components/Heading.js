@@ -18,7 +18,7 @@ const Heading = ({ size = 'md', children, ...props }) => {
 
   return (
     <p
-      className={`flex items-center ${applySize()} md:text-2xl font-semibold tracking-wide mb-5`}
+      className={`flex items-center ${applySize()} md:text-2xl font-semibold tracking-wide`}
       {...props}
     >
       {children}
