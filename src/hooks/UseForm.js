@@ -17,7 +17,8 @@ const UseForm = (initialForm = {}) => {
   return {
     form,
     handleInputChange,
-    resetForm
+    resetForm,
+    setForm
   }
 }
 

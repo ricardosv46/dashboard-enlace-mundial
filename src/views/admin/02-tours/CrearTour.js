@@ -11,9 +11,32 @@ import Modal from '../../../components/Modales/Modal'
 import Galerias from '../08-galerias'
 import { ImgContext } from '../../../context/auth/ImgContext'
 import MostrarGaleria from '../08-galerias/MostrarGaleria'
-import peru from '../../../data/peru.json'
+// import peru from '../../../data/peru.json'
+import { useCategoriasServices } from '../../../services/useCategoriaServices'
+// import UseForm from '../../../hooks/UseForm'
+// const initialForm = {
+//   titulo: '',
+//   categorias: '',
+//   region: '',
+//   ciudad: '',
+//   horaios: '',
+//   descripcionCorta: '',
+//   descripcionLara: '',
+//   itinerario: '',
+//   puntoPartida: '',
+//   incluye: '',
+//   noIncluye: '',
+//   actividades: '',
+//   notas: '',
+//   politicasCancelacion: '',
+//   keywords: '',
+//   video: ''
+// }
 const CrearTour = () => {
+  const { data } = useCategoriasServices()
+  // console.log(data)
   const [destacado, setDestacado] = useState(false)
+  // const { form, handleInputChange } = UseForm(initialForm)
   const [isOpenModalGalria, openModalGaleria, closeModalGaleria] =
     useModal(false)
   const [img1, setImge1] = useState({})
@@ -21,7 +44,24 @@ const CrearTour = () => {
   const [state, setState] = useState(true)
   const { img, setImg } = useContext(ImgContext)
   const [incluye, setIncluye] = useState([])
-  const [text, setText] = useState('')
+  const [textIncluye, setTextIncluye] = useState('')
+  const [Noincluye, setNoIncluye] = useState([])
+  const [textNoIncluye, setTextNoIncluye] = useState('')
+  const [actividades, setActividades] = useState([])
+  const [textAactividades, setTextActividaes] = useState('')
+  const [textItinerario, setTextItinerario] = useState('')
+  const [itinerario, setItinerario] = useState([])
+  const [textNotas, setTextNotas] = useState('')
+  const [keywords, setKeywords] = useState([])
+  const [textKeywords, setTextKeywords] = useState('')
+  const [politicas, setPoliticas] = useState([])
+  const [textPoliticas, setTextPoliticas] = useState('')
+  const [notas, setNotas] = useState([])
+  const eliminarItem = (value, data, setData) => {
+    const newData = data.filter((item) => item !== value)
+    setData(newData)
+  }
+  // console.log(incluye.join(','))
   const handleImg1 = () => {
     openModalGaleria()
     setState(true)
@@ -40,7 +80,7 @@ const CrearTour = () => {
   useEffect(() => {
     setImg({})
   }, [])
-  console.log(peru.Amazonas.Bagua.Imaza)
+  // console.log(peru.Amazonas.Bagua.Imaza)
   return (
     <div className="shadow md:rounded bg-white p-5 py-10 md:p-10">
       <div className="flex justify-center pt-3 relative">
@@ -49,7 +89,7 @@ const CrearTour = () => {
         <Heading>Crear Nuevo Tour</Heading>
       </div>
       <form
-        onSubmit={() => { }}
+        onSubmit={() => {}}
         className="w-full lg:shadow-md lg:px-4 px-0 mx-auto py-10"
       >
         <div className="flex flex-col lg:flex-row lg:space-x-4 mb-5">
@@ -74,14 +114,9 @@ const CrearTour = () => {
               <option defaultValue className="cursor-pointer">
                 Selecciona
               </option>
-              <option>CATA DE VINO Y LICORES</option>
-              <option>NATURALEZA Y PAISAJES</option>
-              <option value="">RUTAS Y RECORRIDOS</option>
-              <option value="">TURISMO ECOLÓGICO</option>
-              <option value="">TURISMOS GASTRONÓMICO</option>
-              <option value="" className="cursor-pointer">
-                TURISMO DE SOL Y PLAYA
-              </option>
+              {data.map((item) => (
+                <option key={item.categoriaId}>{item.tituloCategoria}</option>
+              ))}
             </select>
           </div>
         </div>
@@ -163,14 +198,6 @@ const CrearTour = () => {
         </div>
 
         <div className="flex flex-col lg:flex-row lg:space-x-4 items-center mb-5">
-          <InputText
-            name="horarios"
-            label="Horarios"
-            placeholder="Ingrese algunos horarios"
-          />
-        </div>
-
-        <div className="flex flex-col lg:flex-row lg:space-x-4 items-center mb-5">
           <TextArea
             label="Descripción Corta"
             name="DescripcionCorta"
@@ -186,12 +213,45 @@ const CrearTour = () => {
           />
         </div>
 
-        <div className="flex flex-col lg:flex-row lg:space-x-4 items-center mb-5">
-          <InputText
-            name="itinerario"
-            label="Itinerario"
-            placeholder="Itinerario"
-          />
+        <div className="flex flex-col lg:flex-row lg:space-x-4 items-start mb-5">
+          <div className="w-full">
+            <InputText
+              name="itinerario"
+              label="Itinerario"
+              placeholder="Ingrese el Itinerario"
+              onChange={(e) => {
+                setTextItinerario(e.target.value)
+              }}
+              onKeyDown={({ code }) => {
+                if (code === 'Enter') {
+                  if (textItinerario.trim() !== '') {
+                    setItinerario((estado) => [...estado, textItinerario])
+                    setTextItinerario('')
+                  }
+                }
+              }}
+              onBlur={() => {
+                if (itinerario.length > 0) {
+                  setTextItinerario('Campo LLeno')
+                } else {
+                  setTextItinerario('')
+                }
+              }}
+              value={textItinerario}
+            />
+            <div className="flex flex-col gap-5 my-5">
+              {itinerario.map((item) => (
+                <div
+                  key={item}
+                  className="flex  items-center  gap-x-3 px-2 cursor-pointer "
+                  onClick={() => eliminarItem(item, itinerario, setItinerario)}
+                >
+                  <span className="text-sm text-red-600">X</span>
+                  <p className="text-sm  inline-block text-gra">{item}</p>
+                </div>
+              ))}
+            </div>
+          </div>
           <InputText
             name="puntoPartida"
             label="Punto de partida"
@@ -206,56 +266,242 @@ const CrearTour = () => {
               label="Incluye"
               placeholder="Ingresar lo que incluye"
               onChange={(e) => {
-                setText(e.target.value)
+                setTextIncluye(e.target.value)
               }}
               onKeyDown={({ code }) => {
                 if (code === 'Enter') {
-                  setIncluye((estado) => [...estado, text])
-                  setText('')
+                  if (textIncluye.trim() !== '') {
+                    setIncluye((estado) => [...estado, textIncluye])
+                    setTextIncluye('')
+                  }
                 }
               }}
-              value={text}
+              onBlur={() => {
+                if (incluye.length > 0) {
+                  setTextIncluye('Campo LLeno')
+                } else {
+                  setTextIncluye('')
+                }
+              }}
+              value={textIncluye}
             />
-            {incluye.map(item => <p key={item}>{item}</p>)}
+            <div className="flex flex-col gap-5 my-5">
+              {incluye.map((item) => (
+                <div
+                  key={item}
+                  className="flex  items-center  gap-x-3 px-2 cursor-pointer "
+                  onClick={() => eliminarItem(item, incluye, setIncluye)}
+                >
+                  <span className="text-sm text-red-600">X</span>
+                  <p className="text-sm  inline-block text-gra">{item}</p>
+                </div>
+              ))}
+            </div>
           </div>
 
-          <InputText
-            name="noIncluye"
-            label="No Incluye"
-            placeholder="Ingresar lo que no incluye"
-          />
+          <div className="w-full">
+            <InputText
+              name="noIncluye"
+              label="No Incluye"
+              placeholder="Ingresar lo que no incluye"
+              onChange={(e) => {
+                setTextNoIncluye(e.target.value)
+              }}
+              onKeyDown={({ code }) => {
+                if (code === 'Enter') {
+                  if (textNoIncluye.trim() !== '') {
+                    setNoIncluye((estado) => [...estado, textNoIncluye])
+                    setTextNoIncluye('')
+                  }
+                }
+              }}
+              onBlur={() => {
+                if (Noincluye.length > 0) {
+                  setTextNoIncluye('Campo LLeno')
+                } else {
+                  setTextNoIncluye('')
+                }
+              }}
+              value={textNoIncluye}
+            />
+            <div className="flex flex-col gap-5 my-5 ">
+              {Noincluye.map((item) => (
+                <div
+                  key={item}
+                  className="flex  items-center  gap-x-3 px-2 cursor-pointer "
+                  onClick={() => eliminarItem(item, Noincluye, setNoIncluye)}
+                >
+                  <span className="text-sm text-red-600">X</span>
+                  <p className="text-sm  inline-block text-gra">{item}</p>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
 
-        <div className="flex flex-col lg:flex-row lg:space-x-4 items-center mb-5">
-          <InputText
-            name="actividades"
-            label="Actividades"
-            placeholder="Ingresa las actividades"
-          />
-          <InputText
-            name="notas"
-            label="Notas"
-            placeholder="Ingresa algunas notas"
-          />
+        <div className="flex flex-col lg:flex-row lg:space-x-4 items-start mb-5">
+          <div className="w-full">
+            <InputText
+              name="actividades"
+              label="Actividaes"
+              placeholder="Ingrese las Actividades"
+              onChange={(e) => {
+                setTextActividaes(e.target.value)
+              }}
+              onKeyDown={({ code }) => {
+                if (code === 'Enter') {
+                  if (textAactividades.trim() !== '') {
+                    setActividades((estado) => [...estado, textAactividades])
+                    setTextActividaes('')
+                  }
+                }
+              }}
+              onBlur={() => {
+                if (actividades.length > 0) {
+                  setTextActividaes('Campo LLeno')
+                } else {
+                  setTextActividaes('')
+                }
+              }}
+              value={textAactividades}
+            />
+            <div className="flex flex-col gap-5 my-5">
+              {actividades.map((item) => (
+                <div
+                  key={item}
+                  className="flex  items-center  gap-x-3 px-2 cursor-pointer "
+                  onClick={() =>
+                    eliminarItem(item, actividades, setActividades)
+                  }
+                >
+                  <span className="text-sm text-red-600">X</span>
+                  <p className="text-sm  inline-block text-gra">{item}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="w-full">
+            <InputText
+              name="notas"
+              label="Notas"
+              placeholder="Ingrese algunas notas"
+              onChange={(e) => {
+                setTextNotas(e.target.value)
+              }}
+              onKeyDown={({ code }) => {
+                if (code === 'Enter') {
+                  if (textNotas.trim() !== '') {
+                    setNotas((estado) => [...estado, textNotas])
+                    setTextNotas('')
+                  }
+                }
+              }}
+              onBlur={() => {
+                if (notas.length > 0) {
+                  setTextNotas('Campo LLeno')
+                } else {
+                  setTextNotas('')
+                }
+              }}
+              value={textNotas}
+            />
+
+            <div className="flex flex-col gap-5 my-5">
+              {notas.map((item) => (
+                <div
+                  key={item}
+                  className="flex  items-center  gap-x-3 px-2 cursor-pointer "
+                  onClick={() => eliminarItem(item, notas, setNotas)}
+                >
+                  <span className="text-sm text-red-600">X</span>
+                  <p className="text-sm  inline-block text-gra">{item}</p>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
 
-        <div className="flex flex-col lg:flex-row lg:space-x-4 items-center mb-5">
-          <TextArea
-            label="Politicas de cancelación"
-            name="politicas"
-            placeholder="Politicas de cancelación"
-            rows="1"
-          />
-        </div>
-        <div className="flex flex-col lg:flex-row lg:space-x-4 items-center mb-5">
-          <InputText
-            name="keywords"
-            label="Keywords"
-            placeholder="ingrese las plabras claves separadas con comas"
-            type="text"
-          />
-        </div>
+        <div className="flex flex-col lg:flex-row lg:space-x-4 items-start mb-5">
+          <div className="w-full">
+            <InputText
+              name="keywords"
+              label="Keywords"
+              placeholder="Ingrese las Keywords"
+              onChange={(e) => {
+                setTextKeywords(e.target.value)
+              }}
+              onKeyDown={({ code }) => {
+                if (code === 'Enter') {
+                  if (textKeywords.trim() !== '') {
+                    setKeywords((estado) => [...estado, textKeywords])
+                    setTextKeywords('')
+                  }
+                }
+              }}
+              onBlur={() => {
+                if (keywords.length > 0) {
+                  setTextKeywords('Campo LLeno')
+                } else {
+                  setTextKeywords('')
+                }
+              }}
+              value={textKeywords}
+            />
+            <div className="flex flex-col gap-5 my-5">
+              {keywords.map((item) => (
+                <div
+                  key={item}
+                  className="flex  items-center  gap-x-3 px-2 cursor-pointer "
+                  onClick={() =>
+                    eliminarItem(item, keywords, setKeywords)
+                  }
+                >
+                  <span className="text-sm text-red-600">X</span>
+                  <p className="text-sm  inline-block text-gra">{item}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="w-full">
+            <InputText
+              name="politicasCancelacion"
+              label="Políticas de Cancelación"
+              placeholder="Ingrese algunas notas"
+              onChange={(e) => {
+                setTextPoliticas(e.target.value)
+              }}
+              onKeyDown={({ code }) => {
+                if (code === 'Enter') {
+                  if (textPoliticas.trim() !== '') {
+                    setPoliticas((estado) => [...estado, textPoliticas])
+                    setTextPoliticas('')
+                  }
+                }
+              }}
+              onBlur={() => {
+                if (politicas.length > 0) {
+                  setTextPoliticas('Campo LLeno')
+                } else {
+                  setTextPoliticas('')
+                }
+              }}
+              value={textPoliticas}
+            />
 
+            <div className="flex flex-col gap-5 my-5">
+              {politicas.map((item) => (
+                <div
+                  key={item}
+                  className="flex  items-center  gap-x-3 px-2 cursor-pointer "
+                  onClick={() => eliminarItem(item, politicas, setPoliticas)}
+                >
+                  <span className="text-sm text-red-600">X</span>
+                  <p className="text-sm  inline-block text-gra">{item}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
         <div className="flex flex-col lg:flex-row lg:space-x-4 items-center mb-5">
           <InputText
             name="videoPresentacion"

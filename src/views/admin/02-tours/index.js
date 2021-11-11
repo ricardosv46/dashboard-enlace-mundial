@@ -24,7 +24,7 @@ const Tours = () => {
   const [dataBody, setDataBody] = useState([])
   const { db, loading, deleteTour } = useToursServices()
 
-  console.log('data vista ', db)
+  // console.log('data vista ', db)
 
   const armarFilasTours = (
     data,
@@ -63,7 +63,7 @@ const Tours = () => {
 
   useEffect(() => {
     armarFilasTours(db, setDataBody, deleteTour)
-  }, [db, loading])
+  }, [db])
   return (
     <div className="shadow  md:rounded bg-white p-5 py-10 md:p-10">
       <div className="flex-col gap-y-9  flex items-center  sm:flex-row sm:justify-between mb-5">
