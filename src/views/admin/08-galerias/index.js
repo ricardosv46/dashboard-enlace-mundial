@@ -8,7 +8,7 @@ import Spinner from '../../../components/Spinner/Spinner'
 import { useModal } from '../../../hooks/useModal'
 import useGaleriaServices from '../../../services/useGaleriaServices'
 import EditarFoto from './EditarFoto'
-import Drag from './ejemplo'
+import Drogo from './ejemplo'
 import './index.css'
 
 const Galerias = ({
@@ -64,7 +64,7 @@ const Galerias = ({
           )}
         </div>
       ) : (
-        <Drag />
+        <Drogo />
       )}
       <Modal isOpen={isOpenModal} closeModal={closeModal}>
         <EditarFoto
