@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 // import iconEditar from '../../assets/imgs/icon_editar.svg'
 import { IconCalendar, IconDelete, IconEdit } from '../../assets/icons/icons'
 const BtnAccionesCalendary = ({
@@ -10,6 +10,7 @@ const BtnAccionesCalendary = ({
   const handleClick = () => {
     setShow(!show)
   }
+  useEffect(() => { setShow(false) }, [handleDelete])
   return (
     <div className="mx-auto w-8 flex flex-col  items-center  text-center  ">
       <p

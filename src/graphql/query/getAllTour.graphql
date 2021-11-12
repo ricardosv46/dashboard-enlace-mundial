@@ -2,7 +2,7 @@ query GetAllTour($estadoTour:String,$page:Int,$numberPaginate:Int){
   GetAllTour(estadoTour:$estadoTour,page:$page,numberPaginate:$numberPaginate){
     nroTotalItems
     data{
-      touId
+      tourId
       tituloTour
       slugTour
       regionTour
