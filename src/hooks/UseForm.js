@@ -5,7 +5,7 @@ const UseForm = (initialForm = {}, validateForm) => {
   const [errors, setErrors] = useState({})
   const [loading, setLoading] = useState(false)
   const [response, setResponse] = useState(null)
-  console.log(setLoading, setResponse, errors)
+  console.log(setLoading, setResponse)
   const handleInputChange = (e) => {
     setForm({
       ...form,

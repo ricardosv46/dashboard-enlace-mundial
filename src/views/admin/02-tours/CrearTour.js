@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import iconoAdd from '../../../assets/imgs/add.png'
 import BtnDestacado from '../../../components/BtnDestacado/BtnDestacado'
 import Button from '../../../components/Buttons/Button'
@@ -16,7 +16,6 @@ import { useCategoriasServices } from '../../../services/useCategoriaServices'
 import UseForm from '../../../hooks/UseForm'
 import { Ciudades, Regiones } from '../../../data/dataPeru'
 import { useToursServices } from '../../../services/useToursServices'
-import { validacionesParaCreacionDeTours } from '../../../validateFields/valeidatefields'
 const initialForm = {
   titulo: '',
   categorias: '',
@@ -60,7 +59,7 @@ const CrearTour = () => {
     initialForm,
     validationsForm
   )
-  const errores = validacionesParaCreacionDeTours(form.categorias)
+
   const [isOpenModalGalria, openModalGaleria, closeModalGaleria] =
     useModal(false)
 
@@ -79,6 +78,7 @@ const CrearTour = () => {
   const [textAactividades, setTextActividaes] = useState('')
   const [textItinerario, setTextItinerario] = useState('')
   const [itinerario, setItinerario] = useState([])
+  console.log('itinerario es ', itinerario)
   const [textNotas, setTextNotas] = useState('')
   const [keywords, setKeywords] = useState([])
   const [textKeywords, setTextKeywords] = useState('')
@@ -103,10 +103,41 @@ const CrearTour = () => {
     setSeleccionarImagen(2)
     openModalGaleria()
   }
+  useEffect(() => {
+    if (itinerario.length === 0) {
+      otherErrors.itinerario = '( Ingrese al menos un Itinerario )'
+    }
+    if (incluye.length === 0) {
+      otherErrors.incluye = '( Ingrese al menos una opcion que incluya )'
+    }
+    if (noIncluye.length === 0) {
+      otherErrors.noIncluye = '( Ingrese una opcion que no incluya )'
+    }
+    if (actividades.length === 0) {
+      otherErrors.actividades = '( Ingrese al menos una actividas )'
+    }
+    if (notas.length === 0) {
+      otherErrors.notas = '( Ingrese al menos una nota )'
+    }
+    if (keywords.length === 0) {
+      otherErrors.keywords = '( Ingrese al menos una keyword )'
+    }
+    if (politicas.length === 0) {
+      otherErrors.politicas = '( Ingrese una política )'
+    }
+  }, [])
   const handleSubmit = (e) => {
     e.preventDefault()
-    console.log(errores)
-    if (errores.categorias === 'correcto') {
+
+    if (
+      itinerario.length > 0 &&
+      incluye.length > 0 &&
+      noIncluye.length > 0 &&
+      actividades.length > 0 &&
+      notas.length > 0 &&
+      keywords.length > 0 &&
+      politicas.length > 0
+    ) {
       createTour({
         titulo: form.titulo,
         slugCategoria: form.categorias,
@@ -128,6 +159,8 @@ const CrearTour = () => {
         idImgSecundaria: 3,
         galeria: []
       })
+    } else {
+      otherErrors.submit = 'Complete los datos requeridos'
     }
   }
 
@@ -345,10 +378,11 @@ const CrearTour = () => {
                 }
               }}
               onBlur={() => {
-                if (itinerario.length > 0) {
-                  otherErrors.itinerario = ''
-                } else {
+                console.log(itinerario.length)
+                if (itinerario.length === 0) {
                   otherErrors.itinerario = '( Ingrese al menos un Itinerario )'
+                } else {
+                  otherErrors.itinerario = false
                 }
               }}
               value={textItinerario}
@@ -477,8 +511,7 @@ const CrearTour = () => {
                 if (noIncluye.length > 0) {
                   otherErrors.noIncluye = ''
                 } else {
-                  otherErrors.noIncluye =
-                    '(Ingrese una opcion que no incluya)'
+                  otherErrors.noIncluye = '(Ingrese una opcion que no incluya)'
                 }
               }}
               value={textNoIncluye}
@@ -709,8 +742,7 @@ const CrearTour = () => {
                 if (politicas.length > 0) {
                   otherErrors.politicas = ''
                 } else {
-                  otherErrors.politicas =
-                    '( Ingrese una política )'
+                  otherErrors.politicas = '( Ingrese una política )'
                 }
               }}
               value={textPoliticas}
@@ -737,7 +769,6 @@ const CrearTour = () => {
             placeholder="Ingresa la URL del video"
             type="text"
             onChange={handleInputChange}
-            required
           />
         </div>
 
@@ -774,6 +805,11 @@ const CrearTour = () => {
           <Button variant="primary" size="lg" type="submit">
             CREAR
           </Button>
+          {otherErrors.submit && (
+            <p className="text-lg text-red-500 font-medium mt-2 ml-1">
+              {otherErrors.submit}
+            </p>
+          )}
         </div>
       </form>
       <Modal closeModal={closeModalGaleria} isOpen={isOpenModalGalria}>
