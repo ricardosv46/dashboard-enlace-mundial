@@ -24,42 +24,41 @@ const Categorias = () => {
     ['Acciones', 24, 'center']
   ]
 
-  const armarFilasCategorias = (
-    categorias,
-    setDataBody,
-    handleDeleteCategoria
-  ) => {
-    const filasCategorias = categorias.map((categoria) => ({
-      imagen: (
-        <img
-          src={categoria?.imagenPrincipalCategoria?.url}
-          className="w-26 h-22"
-        />
-      ),
-      nombre: categoria?.tituloCategoria,
-      estado: <BtnEstado estado={categoria?.estadoCategoria} />,
-      descatar: <BtnDestacado estado={false} />,
-      acciones: (
-        <BtnAcciones
-          handleEdit={() =>
-            history.push(
-              `/categorias/editar-categoria/${categoria.categoriaId}`,
-              categoria
-            )
-          }
-          handleDelete={() => handleDeleteCategoria(categoria)}
-        />
-      )
-    }))
-
-    if (filasCategorias.length > 0) {
-      setDataBody(filasCategorias)
-    }
-  }
-
   useEffect(() => {
+    const armarFilasCategorias = (
+      categorias,
+      setDataBody,
+      handleDeleteCategoria
+    ) => {
+      const filasCategorias = categorias.map((categoria) => ({
+        imagen: (
+          <img
+            src={categoria?.imagenPrincipalCategoria?.url}
+            className="w-26 h-22"
+          />
+        ),
+        nombre: categoria?.tituloCategoria,
+        estado: <BtnEstado estado={categoria?.estadoCategoria} />,
+        descatar: <BtnDestacado estado={false} />,
+        acciones: (
+          <BtnAcciones
+            handleEdit={() =>
+              history.push(
+                `/categorias/editar-categoria/${categoria.categoriaId}`,
+                categoria
+              )
+            }
+            handleDelete={() => handleDeleteCategoria(categoria)}
+          />
+        )
+      }))
+
+      if (filasCategorias.length >= 0) {
+        setDataBody(filasCategorias)
+      }
+    }
     armarFilasCategorias(data, setDataBody, deleteCategoria)
-  }, [data])
+  }, [data, loading])
 
   return (
     <div className="shadow md:rounded bg-white p-5 py-10 md:p-10 mb-20 min-h-screen ">

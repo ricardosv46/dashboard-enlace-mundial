@@ -879,6 +879,13 @@ export type UpdateImageMutationVariables = Exact<{
 
 export type UpdateImageMutation = { __typename?: 'Mutation', UpdateImage?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined };
 
+export type UpdateTourMutationVariables = Exact<{
+  input?: Maybe<TourInput>;
+}>;
+
+
+export type UpdateTourMutation = { __typename?: 'Mutation', UpdateTour?: { __typename?: 'Tour', tourId?: number | null | undefined, tituloTour?: string | null | undefined, slugTour?: string | null | undefined, regionTour?: string | null | undefined, ciudadTour?: string | null | undefined, estadoTour?: string | null | undefined, destacadoTour?: string | null | undefined, descripcionCortaTour?: string | null | undefined, descripcionLargaTour?: string | null | undefined, itinerarioTour?: string | null | undefined, puntoPartidaTour?: string | null | undefined, incluyeTour?: string | null | undefined, noIncluyeTour?: string | null | undefined, actividadesTour?: string | null | undefined, notasTour?: string | null | undefined, politicasTour?: string | null | undefined, videoPresentacionTour?: string | null | undefined, slugCategoria?: string | null | undefined, categoriaId?: string | null | undefined, imagenPrincipalTour?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined, imagenSecundariaTour?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined, galeriaTour?: Array<{ __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined> | null | undefined, Categoria?: { __typename?: 'Categoria', categoriaId?: number | null | undefined, slugCategoria?: string | null | undefined, tituloCategoria?: string | null | undefined, descripcion?: string | null | undefined, estadoCategoria?: string | null | undefined, keywordsCategoria?: string | null | undefined, imagenPrincipalCategoria?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined, imagenSecundariaCategoria?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined } | null | undefined } | null | undefined };
+
 export type GetAllBlogQueryVariables = Exact<{
   page?: Maybe<Scalars['Int']>;
   numberPaginate?: Maybe<Scalars['Int']>;
@@ -1487,6 +1494,90 @@ export function useUpdateImageMutation(baseOptions?: Apollo.MutationHookOptions<
 export type UpdateImageMutationHookResult = ReturnType<typeof useUpdateImageMutation>;
 export type UpdateImageMutationResult = Apollo.MutationResult<UpdateImageMutation>;
 export type UpdateImageMutationOptions = Apollo.BaseMutationOptions<UpdateImageMutation, UpdateImageMutationVariables>;
+export const UpdateTourDocument = gql`
+    mutation UpdateTour($input: TourInput) {
+  UpdateTour(input: $input) {
+    tourId
+    tituloTour
+    slugTour
+    regionTour
+    ciudadTour
+    estadoTour
+    destacadoTour
+    descripcionCortaTour
+    descripcionLargaTour
+    itinerarioTour
+    puntoPartidaTour
+    incluyeTour
+    noIncluyeTour
+    actividadesTour
+    notasTour
+    politicasTour
+    videoPresentacionTour
+    imagenPrincipalTour {
+      id
+      descripcion
+      url
+    }
+    imagenSecundariaTour {
+      id
+      descripcion
+      url
+    }
+    galeriaTour {
+      id
+      descripcion
+      url
+    }
+    slugCategoria
+    categoriaId
+    Categoria {
+      categoriaId
+      slugCategoria
+      tituloCategoria
+      descripcion
+      estadoCategoria
+      keywordsCategoria
+      imagenPrincipalCategoria {
+        id
+        descripcion
+        url
+      }
+      imagenSecundariaCategoria {
+        id
+        descripcion
+        url
+      }
+    }
+  }
+}
+    `;
+export type UpdateTourMutationFn = Apollo.MutationFunction<UpdateTourMutation, UpdateTourMutationVariables>;
+
+/**
+ * __useUpdateTourMutation__
+ *
+ * To run a mutation, you first call `useUpdateTourMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateTourMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateTourMutation, { data, loading, error }] = useUpdateTourMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpdateTourMutation(baseOptions?: Apollo.MutationHookOptions<UpdateTourMutation, UpdateTourMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateTourMutation, UpdateTourMutationVariables>(UpdateTourDocument, options);
+      }
+export type UpdateTourMutationHookResult = ReturnType<typeof useUpdateTourMutation>;
+export type UpdateTourMutationResult = Apollo.MutationResult<UpdateTourMutation>;
+export type UpdateTourMutationOptions = Apollo.BaseMutationOptions<UpdateTourMutation, UpdateTourMutationVariables>;
 export const GetAllBlogDocument = gql`
     query GetAllBlog($page: Int, $numberPaginate: Int, $estadoBlog: String) {
   GetAllBlog(

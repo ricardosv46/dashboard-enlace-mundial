@@ -16,7 +16,7 @@ import { useCategoriasServices } from '../../../services/useCategoriaServices'
 import UseForm from '../../../hooks/UseForm'
 import { Ciudades, Regiones } from '../../../data/dataPeru'
 import swal from 'sweetalert'
-import { useCruceroServices } from '../../../services/useCruceroServices'
+import { useLunaMielServices } from '../../../services/useLunaMielServices'
 const initialForm = {
   titulo: '',
   categorias: '',
@@ -53,7 +53,7 @@ const validationsForm = (form) => {
 const otherErrors = {}
 const CrearLunaDeMiel = () => {
   const { data: dataCategoria } = useCategoriasServices()
-  const { createCrucero } = useCruceroServices()
+  const { createLunaMiel } = useLunaMielServices()
   // console.log(createTour)
   const { form, handleInputChange, handleBlur, errors, resetForm } = UseForm(
     initialForm,
@@ -116,7 +116,7 @@ const CrearLunaDeMiel = () => {
       keywords.length > 0 &&
       politicas.length > 0
     ) {
-      createCrucero({
+      createLunaMiel({
         titulo: form.titulo,
         slugCategoria: form.categorias,
         region: form.region,
