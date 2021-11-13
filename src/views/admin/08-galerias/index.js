@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import Heading from '../../../components/Heading'
 import Modal from '../../../components/Modales/Modal'
 import Button from '../../../components/Buttons/Button'
 
 import EditarFoto from './EditarFoto'
+import Imagen from '../../../components/Image'
 import { useModal } from '../../../hooks/useModal'
 import DragAndDrop from '../../../components/DragAndDrop'
 import useGaleriaServices from '../../../services/useGaleriaServices'
@@ -21,10 +22,6 @@ const Galerias = () => {
 
   const { imagenes, loading, ...actions } = useGaleriaServices()
 
-  useEffect(() => {
-    console.log('NEW_FETCH')
-  }, [imagenes])
-
   const handleOpenModal = (image) => {
     setImgSelected(image)
     openModal()
@@ -37,9 +34,7 @@ const Galerias = () => {
     console.log('CLEAR')
   }
 
-  const handleUpload = async (images) => {
-    await actions.uploadImages(images)
-  }
+  const handleUpload = async (images) => await actions.uploadImages(images)
 
   const Images = () => (
     <div className="grid grid-cols-auto gap-4">
@@ -48,7 +43,7 @@ const Galerias = () => {
           key={`image-${image.id}`}
           className="rounded flex justify-center overflow-hidden shadow-lg transition-all group"
         >
-          <img
+          <Imagen
             src={image.url}
             alt={image.descripcion}
             onClick={() => handleOpenModal(image)}
