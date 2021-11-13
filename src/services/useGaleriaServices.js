@@ -1,36 +1,65 @@
 import swal from 'sweetalert'
 import {
+  useCreateImageMutation,
   useDeleteImageMutation,
   useGetImagenesQuery,
   useUpdateImageMutation
 } from '../generated/graphql'
 
+const handleError = (err) => {
+  // validar errores
+  // eslint-disable-next-line eqeqeq
+  console.log(err?.graphQLErrors)
+  swal('Error', 'Hubo un error en el servidor', 'error')
+}
+
 const useGaleriaServices = () => {
   const { loading, data, refetch } = useGetImagenesQuery({
     fetchPolicy: 'network-only'
   })
+
+  const [uploadImagesMutation] = useCreateImageMutation({
+    onError: handleError
+  })
+
   const [deleteImagenMutation, { loading: loadingDelete }] =
     useDeleteImageMutation({
-      onError: (err) => {
-        // validar errores
-        // eslint-disable-next-line eqeqeq
-        console.log(err?.graphQLErrors)
-        swal('Error', 'Hubo un error en el servidor', 'error')
-      }
+      onError: handleError
     })
+
   const [updateImagenMutation, { loading: loadingUpadate }] =
     useUpdateImageMutation({
-      onError: (err) => {
-        // validar errores
-        // eslint-disable-next-line eqeqeq
-        console.log(err?.graphQLErrors)
-        swal('Error', 'Hubo un error en el servidor', 'error')
-      }
+      onError: handleError
     })
   // Retorno la data en la variable imagenes
   const imagenes = data ? data?.GetImagenes : []
 
   // Funciones para manejar la galeria
+
+  const uploadImages = async (images) => {
+    if (Array.isArray(images)) {
+      const promises = images.map((image) => {
+        return uploadImagesMutation({
+          variables: {
+            imagen: image,
+            input: { descripcion: 'Test' }
+          }
+        })
+      })
+      const data = await Promise.all([...promises])
+      console.log('ARRAY', data)
+    } else {
+      const res = await uploadImagesMutation({
+        variables: {
+          imagen: images,
+          input: { descripcion: 'Test' }
+        }
+      })
+      console.log('OBJECT', res)
+    }
+
+    refetch()
+  }
 
   const deleteImagen = (id) => {
     swal({
@@ -85,7 +114,7 @@ const useGaleriaServices = () => {
       })
     }
   }
-  return { imagenes, loading, deleteImagen, updateImagen }
+  return { imagenes, loading, deleteImagen, updateImagen, uploadImages }
 }
 
 export default useGaleriaServices

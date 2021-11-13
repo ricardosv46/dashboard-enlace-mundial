@@ -1,10 +1,11 @@
+import { useEffect, useMemo } from 'react'
+
 import Uppy from '@uppy/core'
 import { Dashboard } from '@uppy/react'
 import thumbnailGenerator from '@uppy/thumbnail-generator'
 
 import '@uppy/core/dist/style.css'
 import '@uppy/dashboard/dist/style.css'
-import { useEffect, useMemo } from 'react'
 
 const DragAndDrop = ({ onUpload = () => {} }) => {
   const uppy = useMemo(() => new Uppy(), [])
@@ -27,6 +28,8 @@ const DragAndDrop = ({ onUpload = () => {} }) => {
   useEffect(() => {
     uppy.on('upload', () => {
       onUpload([...images])
+      images.clear()
+      console.log('CLEAR', images)
     })
   }, [])
 
