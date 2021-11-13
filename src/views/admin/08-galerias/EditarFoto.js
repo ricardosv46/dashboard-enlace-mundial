@@ -3,7 +3,7 @@ import swal from 'sweetalert'
 import InputText from '../../../components/Forms/InputText/InputText'
 import useGaleriaServices from '../../../services/useGaleriaServices'
 
-const EditarFoto = ({ image, opcion = false, closeModal = () => {} }) => {
+const EditarFoto = ({ image, isUpdate, closeModal = () => {} }) => {
   const [text, setText] = useState('')
   const { deleteImagen, updateImagen } = useGaleriaServices()
 
@@ -60,10 +60,12 @@ const EditarFoto = ({ image, opcion = false, closeModal = () => {} }) => {
         <div className="flex flex-col lg:flex-row lg:space-x-4 my-5 gap-y-4">
           <button
             type="button"
-            onClick={opcion ? handleChoose : handleDelete}
-            className={opcion ? 'btn btn-outline-blue' : 'btn btn-outline-red'}
+            onClick={isUpdate ? handleChoose : handleDelete}
+            className={
+              isUpdate ? 'btn btn-outline-blue' : 'btn btn-outline-red'
+            }
           >
-            {opcion ? 'Escoger' : 'Eliminar'}
+            {isUpdate ? 'Escoger' : 'Eliminar'}
           </button>
           <button
             type="button"

@@ -3,25 +3,29 @@ import Heading from '../../../components/Heading'
 import Modal from '../../../components/Modales/Modal'
 import Button from '../../../components/Buttons/Button'
 
-import Drogo from './ejemplo'
 import EditarFoto from './EditarFoto'
 import { useModal } from '../../../hooks/useModal'
+import DragAndDrop from '../../../components/DragAndDrop'
 import useGaleriaServices from '../../../services/useGaleriaServices'
 
 const Galerias = () => {
-  const [imgSelected, setImgSelected] = useState({
-    id: null,
-    url: '',
-    descripcion: ''
-  })
+  const { imagenes, uploadImages } = useGaleriaServices()
 
-  const { imagenes } = useGaleriaServices()
   const [isGalery, setIsGalery] = useState(true)
   const [isOpenModal, openModal, closeModal] = useModal(false)
+  const [imgSelected, setImgSelected] = useState({
+    url: '',
+    id: null,
+    descripcion: ''
+  })
 
   const handleOpenModal = (image) => {
     openModal()
     setImgSelected(image)
+  }
+
+  const handleUpload = async (images) => {
+    await uploadImages(images)
   }
 
   const renderImages = () => (
@@ -50,7 +54,7 @@ const Galerias = () => {
           {isGalery ? 'Subir Imágenes' : 'Ver Galeria'}
         </Button>
       </div>
-      {isGalery ? renderImages() : <Drogo />}
+      {isGalery ? renderImages() : <DragAndDrop onUpload={handleUpload} />}
       <Modal isOpen={isOpenModal} closeModal={closeModal}>
         <EditarFoto image={imgSelected} closeModal={closeModal} />
       </Modal>
