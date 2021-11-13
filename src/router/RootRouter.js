@@ -40,8 +40,9 @@ const HomeRoutes = () => {
         {/* VISTAS DE TOURS */}
         <Route exact path="/tours" component={Tours} />
         <Route exact path="/tours/crear-tour" component={CrearTour} />
-        <Route exact path="/tours/editar-tour" component={EditarTour} />
-        <Route exact path="/calendario" component={CalendarioTour} />
+        <Route exact path="/tours/editar-tour/:id" component={EditarTour} />
+        <Route exact path="/tour/calendario/:id" component={CalendarioTour} />
+        <Route exact path="/tour/calendario/:id" component={CalendarioTour} />
 
         {/* VISTAS DE LUNA DE MIEL */}
         <Route exact path="/luna-de-miel" component={LunaDeMiel} />

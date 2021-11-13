@@ -1,0 +1,11 @@
+query GetHorariosTour($anio:String,$mes:String,$tourId:Int){
+  GetHorariosTour(anio:$anio,mes:$mes,tourId:$tourId){
+    horarioTourId
+    hora
+    fecha
+    cupos
+    precio
+    estado
+    tourId
+  }
+}
