@@ -471,12 +471,10 @@ const config = {
     //     __dirname,
     //     'src/@fuse/tailwind/plugins/icon-size'
     // )),
-    require('./src/@tailwind/plugins/theming')({
-      themes
-    })
+    require('./src/@tailwind/plugins/theming')({ themes }),
     // // Other third party and/or custom plugins
     // require('@tailwindcss/typography')({ modifiers: ['sm', 'lg'] }),
-    // require('@tailwindcss/aspect-ratio'),
+    require('@tailwindcss/aspect-ratio')
     // require('@tailwindcss/line-clamp'),
     // custom plugin
     // require(path.resolve(__dirname, 'src/plugins/titles')),

@@ -35,31 +35,28 @@ const DragAndDrop = ({ onUpload = () => {} }) => {
   }, [])
 
   return (
-    <div>
-      <h1>Uppy Demo</h1>
-      <Dashboard
-        width="100%"
-        // note="Images up to 200×200px"
-        uppy={uppy}
-        locale={{
-          strings: {
-            addMore: 'Añadir',
-            cancel: 'Cancelar',
-            xFilesSelected: {
-              0: '%{smart_count} archivo seleccionado',
-              1: '%{smart_count} archivos seleccionados'
-            },
-            uploadXFiles: {
-              0: 'Subiendo %{smart_count} archivo',
-              1: 'Subiendo %{smart_count} archivos'
-            },
-            browseFiles: 'seleccionalas',
-            dropPasteFiles: 'Deja caer tus imagenes o %{browseFiles}',
-            dropPasteFolders: 'Deja caer tus imagenes o %{browseFolders}'
-          }
-        }}
-      />
-    </div>
+    <Dashboard
+      width="100%"
+      // note="Images up to 200×200px"
+      uppy={uppy}
+      locale={{
+        strings: {
+          addMore: 'Añadir',
+          cancel: 'Cancelar',
+          xFilesSelected: {
+            0: '%{smart_count} archivo seleccionado',
+            1: '%{smart_count} archivos seleccionados'
+          },
+          uploadXFiles: {
+            0: 'Subiendo %{smart_count} archivo',
+            1: 'Subiendo %{smart_count} archivos'
+          },
+          browseFiles: 'seleccionalas',
+          dropPasteFiles: 'Deja caer tus imagenes o %{browseFiles}',
+          dropPasteFolders: 'Deja caer tus imagenes o %{browseFolders}'
+        }
+      }}
+    />
   )
 }
 

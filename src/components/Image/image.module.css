@@ -1,0 +1,25 @@
+.image_container {
+  @apply w-full h-full min-h-full min-w-full bg-gray-300 relative overflow-hidden;
+}
+.image {
+  @apply w-full h-full min-h-full min-w-full absolute opacity-0 object-fill;
+}
+
+.thumb {
+  filter: blur(10px);
+  transition: opacity 1s ease-in-out;
+
+  @apply w-full h-full min-h-full min-w-full absolute opacity-100 object-fill;
+}
+
+.thumb_hidden {
+  opacity: 0;
+
+  @apply opacity-0;
+}
+
+.image_loaded {
+  transition: opacity 1s ease-in-out;
+
+  @apply opacity-100;
+}
