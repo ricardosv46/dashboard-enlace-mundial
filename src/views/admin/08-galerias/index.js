@@ -1,30 +1,47 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Heading from '../../../components/Heading'
 import Modal from '../../../components/Modales/Modal'
 import Button from '../../../components/Buttons/Button'
 
-import Drogo from './ejemplo'
 import EditarFoto from './EditarFoto'
 import { useModal } from '../../../hooks/useModal'
+import DragAndDrop from '../../../components/DragAndDrop'
 import useGaleriaServices from '../../../services/useGaleriaServices'
 
-const Galerias = () => {
-  const [imgSelected, setImgSelected] = useState({
-    id: null,
-    url: '',
-    descripcion: ''
-  })
+const initialState = {
+  url: '',
+  id: null,
+  descripcion: ''
+}
 
-  const { imagenes } = useGaleriaServices()
+const Galerias = () => {
   const [isGalery, setIsGalery] = useState(true)
   const [isOpenModal, openModal, closeModal] = useModal(false)
+  const [imgSelected, setImgSelected] = useState(initialState)
+
+  const { imagenes, loading, ...actions } = useGaleriaServices()
+
+  useEffect(() => {
+    console.log('NEW_FETCH')
+  }, [imagenes])
 
   const handleOpenModal = (image) => {
-    openModal()
     setImgSelected(image)
+    openModal()
+    console.log('SELECT', image)
   }
 
-  const renderImages = () => (
+  const handleCloseModal = () => {
+    setImgSelected(initialState)
+    closeModal()
+    console.log('CLEAR')
+  }
+
+  const handleUpload = async (images) => {
+    await actions.uploadImages(images)
+  }
+
+  const Images = () => (
     <div className="grid grid-cols-auto gap-4">
       {imagenes.map((image) => (
         <div
@@ -42,19 +59,28 @@ const Galerias = () => {
     </div>
   )
 
+  const reload = loading || isGalery
+
   return (
-    <div className="shadow md:rounded bg-white p-5 py-10 md:p-10">
-      <div className="flex justify-between mb-8">
-        <Heading>Galeria</Heading>
-        <Button size="md" onClick={() => setIsGalery((s) => !s)}>
-          {isGalery ? 'Subir Imágenes' : 'Ver Galeria'}
-        </Button>
+    <>
+      <div className="shadow md:rounded bg-white p-5 py-10 md:p-10">
+        <div className="flex justify-between mb-8">
+          <Heading>Galeria</Heading>
+          <Button size="md" onClick={() => setIsGalery((s) => !s)}>
+            {isGalery ? 'Subir Imágenes' : 'Ver Galeria'}
+          </Button>
+        </div>
+        {reload ? <Images /> : <DragAndDrop onUpload={handleUpload} />}
       </div>
-      {isGalery ? renderImages() : <Drogo />}
-      <Modal isOpen={isOpenModal} closeModal={closeModal}>
-        <EditarFoto image={imgSelected} closeModal={closeModal} />
+      <Modal isOpen={isOpenModal} closeModal={handleCloseModal}>
+        <EditarFoto
+          image={imgSelected}
+          closeModal={handleCloseModal}
+          onDelete={actions.deleteImagen}
+          onUpdate={actions.updateImagen}
+        />
       </Modal>
-    </div>
+    </>
   )
 }
 

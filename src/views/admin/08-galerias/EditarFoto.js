@@ -1,11 +1,15 @@
 import { useEffect, useState } from 'react'
 import swal from 'sweetalert'
 import InputText from '../../../components/Forms/InputText/InputText'
-import useGaleriaServices from '../../../services/useGaleriaServices'
 
-const EditarFoto = ({ image, opcion = false, closeModal = () => {} }) => {
+const EditarFoto = ({
+  image,
+  isUpdate,
+  onDelete = () => {},
+  onUpdate = () => {},
+  closeModal = () => {}
+}) => {
   const [text, setText] = useState('')
-  const { deleteImagen, updateImagen } = useGaleriaServices()
 
   useEffect(() => {
     setText(image.descripcion)
@@ -16,12 +20,12 @@ const EditarFoto = ({ image, opcion = false, closeModal = () => {} }) => {
   }
 
   const handleUpdate = () => {
-    updateImagen(image.id, text)
+    onUpdate(image.id, text)
     closeModal()
   }
 
   const handleDelete = () => {
-    deleteImagen(image.id)
+    onDelete(image.id)
     closeModal()
   }
 
@@ -39,10 +43,10 @@ const EditarFoto = ({ image, opcion = false, closeModal = () => {} }) => {
   const btnDisabled = text.trim() === ''
 
   return (
-    <div className="w-full md:w-100 flex flex-col">
-      <h1 className="md:text-2xl font-semibold tracking-wide mb-5 flex items-center mx-auto">
+    <div className="w-full md:w-100 flex flex-col bg-white p-5 shadow rounded z-9999">
+      <h2 className="mt-10 md:text-2xl font-semibold tracking-wide mb-5 flex items-center mx-auto">
         Información de la Imágen
-      </h1>
+      </h2>
       <div className="w-full md:w-60  mx-auto">
         <img src={image.url} alt={image.descripcion} className="h-50" />
       </div>
@@ -60,16 +64,20 @@ const EditarFoto = ({ image, opcion = false, closeModal = () => {} }) => {
         <div className="flex flex-col lg:flex-row lg:space-x-4 my-5 gap-y-4">
           <button
             type="button"
-            onClick={opcion ? handleChoose : handleDelete}
-            className={opcion ? 'btn btn-outline-blue' : 'btn btn-outline-red'}
+            onClick={isUpdate ? handleChoose : handleDelete}
+            className={
+              isUpdate
+                ? 'btn btn-outline-blue w-full'
+                : 'btn btn-outline-red w-full'
+            }
           >
-            {opcion ? 'Escoger' : 'Eliminar'}
+            {isUpdate ? 'Escoger' : 'Eliminar'}
           </button>
           <button
             type="button"
             disabled={btnDisabled}
             onClick={handleUpdate}
-            className="btn btn-green"
+            className="btn btn-green w-full"
           >
             Actualizar
           </button>
