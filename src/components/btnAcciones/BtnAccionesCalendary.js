@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState, useEffect } from 'react'
 // import iconEditar from '../../assets/imgs/icon_editar.svg'
 import { IconCalendar, IconDelete, IconEdit } from '../../assets/icons/icons'
 const BtnAccionesCalendary = ({
@@ -10,11 +10,15 @@ const BtnAccionesCalendary = ({
   const handleClick = () => {
     setShow(!show)
   }
+  useEffect(() => {
+    setShow(false)
+  }, [handleDelete])
   return (
     <div className="mx-auto w-8 flex flex-col  items-center  text-center  ">
       <p
-        className={`${show ? 'text-black' : 'text-gray-500'
-          } text-4xl w-5 text-center  flex flex-col cursor-pointer justify-center z-80 relative`}
+        className={`${
+          show ? 'text-black' : 'text-gray-500'
+        } text-4xl w-5 text-center  flex flex-col cursor-pointer justify-center z-80 relative`}
         onClick={handleClick}
       >
         <span className="-mt-4 ">.</span>

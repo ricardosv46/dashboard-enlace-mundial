@@ -653,7 +653,7 @@ export type QueryGetCategoriaTourArgs = {
 export type QueryGetHorariosTourArgs = {
   anio?: Maybe<Scalars['String']>;
   mes?: Maybe<Scalars['String']>;
-  touId?: Maybe<Scalars['Int']>;
+  tourId?: Maybe<Scalars['Int']>;
 };
 
 
@@ -713,7 +713,7 @@ export type Tour = {
   slugCategoria?: Maybe<Scalars['String']>;
   slugTour?: Maybe<Scalars['String']>;
   tituloTour?: Maybe<Scalars['String']>;
-  touId?: Maybe<Scalars['Int']>;
+  tourId?: Maybe<Scalars['Int']>;
   updated_at?: Maybe<Scalars['DateTime']>;
   videoPresentacionTour?: Maybe<Scalars['String']>;
 };
@@ -738,7 +738,7 @@ export type TourInput = {
   slugCategoria?: Maybe<Scalars['String']>;
   slugTour?: Maybe<Scalars['String']>;
   tituloTour?: Maybe<Scalars['String']>;
-  touId?: Maybe<Scalars['Int']>;
+  tourId?: Maybe<Scalars['Int']>;
   videoPresentacionTour?: Maybe<Scalars['String']>;
 };
 
@@ -794,6 +794,13 @@ export type SuscripcionInput = {
   suscripcionId?: Maybe<Scalars['Int']>;
 };
 
+export type CreateCruceroMutationVariables = Exact<{
+  input?: Maybe<CruceroInput>;
+}>;
+
+
+export type CreateCruceroMutation = { __typename?: 'Mutation', CreateCrucero?: { __typename?: 'Crucero', cruceroId?: number | null | undefined, tituloCrucero?: string | null | undefined, slugCrucero?: string | null | undefined, estadoCrucero?: string | null | undefined, destacadoCrucero?: string | null | undefined, keywordsCrucero?: string | null | undefined, regionCrucero?: string | null | undefined, ciudadCrucero?: string | null | undefined, descripcionCortaCrucero?: string | null | undefined, descripcionLargaCrucero?: string | null | undefined, itinerarioCrucero?: string | null | undefined, puntoPartidaCrucero?: string | null | undefined, incluyeCrucero?: string | null | undefined, noIncluyeCrucero?: string | null | undefined, actividadesCrucero?: string | null | undefined, notasCrucero?: string | null | undefined, politicasCrucero?: string | null | undefined, videoPresentacionCrucero?: string | null | undefined, slugCategoria?: string | null | undefined, categoriaId?: string | null | undefined, imagenPrincipalCrucero?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined, imagenSecundariaCrucero?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined, galeriaCrucero?: Array<{ __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined> | null | undefined, Categoria?: { __typename?: 'Categoria', categoriaId?: number | null | undefined, slugCategoria?: string | null | undefined, tituloCategoria?: string | null | undefined, descripcion?: string | null | undefined, estadoCategoria?: string | null | undefined, keywordsCategoria?: string | null | undefined, imagenPrincipalCategoria?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined, imagenSecundariaCategoria?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined } | null | undefined } | null | undefined };
+
 export type CreateImageMutationVariables = Exact<{
   input?: Maybe<ImagenesInput>;
   imagen: Scalars['Upload'];
@@ -801,6 +808,20 @@ export type CreateImageMutationVariables = Exact<{
 
 
 export type CreateImageMutation = { __typename?: 'Mutation', CreateImage?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined };
+
+export type CreateLunaMielMutationVariables = Exact<{
+  input?: Maybe<LunaMielInput>;
+}>;
+
+
+export type CreateLunaMielMutation = { __typename?: 'Mutation', CreateLunaMiel?: { __typename?: 'LunaMiel', lunaMielId?: number | null | undefined, tituloLuna?: string | null | undefined, slugLuna?: string | null | undefined, estadoLuna?: string | null | undefined, destacadoLuna?: string | null | undefined, keywordsLuna?: string | null | undefined, regionLuna?: string | null | undefined, ciudadLuna?: string | null | undefined, descripcionCortaLuna?: string | null | undefined, descripcionLargaLuna?: string | null | undefined, itinerarioLuna?: string | null | undefined, puntoPartidaLuna?: string | null | undefined, incluyeLuna?: string | null | undefined, noIncluyeLuna?: string | null | undefined, actividadesLuna?: string | null | undefined, notasLuna?: string | null | undefined, politicasLuna?: string | null | undefined, videoPresentacionLuna?: string | null | undefined, slugCategoria?: string | null | undefined, categoriaId?: string | null | undefined, imagenPrincipalLuna?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined, imagenSecundariaLuna?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined, galeriaLuna?: Array<{ __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined> | null | undefined, Categoria?: { __typename?: 'Categoria', categoriaId?: number | null | undefined, slugCategoria?: string | null | undefined, tituloCategoria?: string | null | undefined, descripcion?: string | null | undefined, estadoCategoria?: string | null | undefined, keywordsCategoria?: string | null | undefined, imagenPrincipalCategoria?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined, imagenSecundariaCategoria?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined } | null | undefined } | null | undefined };
+
+export type CreateTourMutationVariables = Exact<{
+  input?: Maybe<TourInput>;
+}>;
+
+
+export type CreateTourMutation = { __typename?: 'Mutation', CreateTour?: { __typename?: 'Tour', tourId?: number | null | undefined, tituloTour?: string | null | undefined, slugTour?: string | null | undefined, regionTour?: string | null | undefined, ciudadTour?: string | null | undefined, estadoTour?: string | null | undefined, destacadoTour?: string | null | undefined, descripcionCortaTour?: string | null | undefined, descripcionLargaTour?: string | null | undefined, itinerarioTour?: string | null | undefined, puntoPartidaTour?: string | null | undefined, incluyeTour?: string | null | undefined, noIncluyeTour?: string | null | undefined, actividadesTour?: string | null | undefined, notasTour?: string | null | undefined, politicasTour?: string | null | undefined, videoPresentacionTour?: string | null | undefined, slugCategoria?: string | null | undefined, categoriaId?: string | null | undefined, imagenPrincipalTour?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined, imagenSecundariaTour?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined, galeriaTour?: Array<{ __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined> | null | undefined, Categoria?: { __typename?: 'Categoria', categoriaId?: number | null | undefined, slugCategoria?: string | null | undefined, tituloCategoria?: string | null | undefined, descripcion?: string | null | undefined, estadoCategoria?: string | null | undefined, keywordsCategoria?: string | null | undefined, imagenPrincipalCategoria?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined, imagenSecundariaCategoria?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined } | null | undefined } | null | undefined };
 
 export type DeleteBlogMutationVariables = Exact<{
   input?: Maybe<BlogInput>;
@@ -906,7 +927,7 @@ export type GetAllTourQueryVariables = Exact<{
 }>;
 
 
-export type GetAllTourQuery = { __typename?: 'Query', GetAllTour?: { __typename?: 'GetAllTour', nroTotalItems?: number | null | undefined, data?: Array<{ __typename?: 'Tour', touId?: number | null | undefined, tituloTour?: string | null | undefined, slugTour?: string | null | undefined, regionTour?: string | null | undefined, ciudadTour?: string | null | undefined, estadoTour?: string | null | undefined, destacadoTour?: string | null | undefined, descripcionCortaTour?: string | null | undefined, descripcionLargaTour?: string | null | undefined, itinerarioTour?: string | null | undefined, puntoPartidaTour?: string | null | undefined, incluyeTour?: string | null | undefined, noIncluyeTour?: string | null | undefined, actividadesTour?: string | null | undefined, notasTour?: string | null | undefined, politicasTour?: string | null | undefined, videoPresentacionTour?: string | null | undefined, slugCategoria?: string | null | undefined, categoriaId?: string | null | undefined, imagenPrincipalTour?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined, imagenSecundariaTour?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined, galeriaTour?: Array<{ __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined> | null | undefined, Categoria?: { __typename?: 'Categoria', categoriaId?: number | null | undefined, slugCategoria?: string | null | undefined, tituloCategoria?: string | null | undefined, descripcion?: string | null | undefined, estadoCategoria?: string | null | undefined, keywordsCategoria?: string | null | undefined, imagenPrincipalCategoria?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined, imagenSecundariaCategoria?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined } | null | undefined }> | null | undefined } | null | undefined };
+export type GetAllTourQuery = { __typename?: 'Query', GetAllTour?: { __typename?: 'GetAllTour', nroTotalItems?: number | null | undefined, data?: Array<{ __typename?: 'Tour', tourId?: number | null | undefined, tituloTour?: string | null | undefined, slugTour?: string | null | undefined, regionTour?: string | null | undefined, ciudadTour?: string | null | undefined, estadoTour?: string | null | undefined, destacadoTour?: string | null | undefined, descripcionCortaTour?: string | null | undefined, descripcionLargaTour?: string | null | undefined, itinerarioTour?: string | null | undefined, puntoPartidaTour?: string | null | undefined, incluyeTour?: string | null | undefined, noIncluyeTour?: string | null | undefined, actividadesTour?: string | null | undefined, notasTour?: string | null | undefined, politicasTour?: string | null | undefined, videoPresentacionTour?: string | null | undefined, slugCategoria?: string | null | undefined, categoriaId?: string | null | undefined, imagenPrincipalTour?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined, imagenSecundariaTour?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined, galeriaTour?: Array<{ __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined> | null | undefined, Categoria?: { __typename?: 'Categoria', categoriaId?: number | null | undefined, slugCategoria?: string | null | undefined, tituloCategoria?: string | null | undefined, descripcion?: string | null | undefined, estadoCategoria?: string | null | undefined, keywordsCategoria?: string | null | undefined, imagenPrincipalCategoria?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined, imagenSecundariaCategoria?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined } | null | undefined }> | null | undefined } | null | undefined };
 
 export type GetAllUsersQueryVariables = Exact<{
   page?: Maybe<Scalars['Int']>;
@@ -924,6 +945,91 @@ export type GetImagenesQueryVariables = Exact<{ [key: string]: never; }>;
 export type GetImagenesQuery = { __typename?: 'Query', GetImagenes?: Array<{ __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined }> | null | undefined };
 
 
+export const CreateCruceroDocument = gql`
+    mutation CreateCrucero($input: CruceroInput) {
+  CreateCrucero(input: $input) {
+    cruceroId
+    tituloCrucero
+    slugCrucero
+    estadoCrucero
+    destacadoCrucero
+    keywordsCrucero
+    regionCrucero
+    ciudadCrucero
+    descripcionCortaCrucero
+    descripcionLargaCrucero
+    itinerarioCrucero
+    puntoPartidaCrucero
+    incluyeCrucero
+    noIncluyeCrucero
+    actividadesCrucero
+    notasCrucero
+    politicasCrucero
+    videoPresentacionCrucero
+    imagenPrincipalCrucero {
+      id
+      descripcion
+      url
+    }
+    imagenSecundariaCrucero {
+      id
+      descripcion
+      url
+    }
+    galeriaCrucero {
+      id
+      descripcion
+      url
+    }
+    slugCategoria
+    categoriaId
+    Categoria {
+      categoriaId
+      slugCategoria
+      tituloCategoria
+      descripcion
+      estadoCategoria
+      keywordsCategoria
+      imagenPrincipalCategoria {
+        id
+        descripcion
+        url
+      }
+      imagenSecundariaCategoria {
+        id
+        descripcion
+        url
+      }
+    }
+  }
+}
+    `;
+export type CreateCruceroMutationFn = Apollo.MutationFunction<CreateCruceroMutation, CreateCruceroMutationVariables>;
+
+/**
+ * __useCreateCruceroMutation__
+ *
+ * To run a mutation, you first call `useCreateCruceroMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateCruceroMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createCruceroMutation, { data, loading, error }] = useCreateCruceroMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateCruceroMutation(baseOptions?: Apollo.MutationHookOptions<CreateCruceroMutation, CreateCruceroMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateCruceroMutation, CreateCruceroMutationVariables>(CreateCruceroDocument, options);
+      }
+export type CreateCruceroMutationHookResult = ReturnType<typeof useCreateCruceroMutation>;
+export type CreateCruceroMutationResult = Apollo.MutationResult<CreateCruceroMutation>;
+export type CreateCruceroMutationOptions = Apollo.BaseMutationOptions<CreateCruceroMutation, CreateCruceroMutationVariables>;
 export const CreateImageDocument = gql`
     mutation CreateImage($input: ImagenesInput, $imagen: Upload!) {
   CreateImage(input: $input, imagen: $imagen) {
@@ -960,6 +1066,175 @@ export function useCreateImageMutation(baseOptions?: Apollo.MutationHookOptions<
 export type CreateImageMutationHookResult = ReturnType<typeof useCreateImageMutation>;
 export type CreateImageMutationResult = Apollo.MutationResult<CreateImageMutation>;
 export type CreateImageMutationOptions = Apollo.BaseMutationOptions<CreateImageMutation, CreateImageMutationVariables>;
+export const CreateLunaMielDocument = gql`
+    mutation CreateLunaMiel($input: LunaMielInput) {
+  CreateLunaMiel(input: $input) {
+    lunaMielId
+    tituloLuna
+    slugLuna
+    estadoLuna
+    destacadoLuna
+    keywordsLuna
+    regionLuna
+    ciudadLuna
+    descripcionCortaLuna
+    descripcionLargaLuna
+    itinerarioLuna
+    puntoPartidaLuna
+    incluyeLuna
+    noIncluyeLuna
+    actividadesLuna
+    notasLuna
+    politicasLuna
+    videoPresentacionLuna
+    imagenPrincipalLuna {
+      id
+      descripcion
+      url
+    }
+    imagenSecundariaLuna {
+      id
+      descripcion
+      url
+    }
+    galeriaLuna {
+      id
+      descripcion
+      url
+    }
+    slugCategoria
+    categoriaId
+    Categoria {
+      categoriaId
+      slugCategoria
+      tituloCategoria
+      descripcion
+      estadoCategoria
+      keywordsCategoria
+      imagenPrincipalCategoria {
+        id
+        descripcion
+        url
+      }
+      imagenSecundariaCategoria {
+        id
+        descripcion
+        url
+      }
+    }
+  }
+}
+    `;
+export type CreateLunaMielMutationFn = Apollo.MutationFunction<CreateLunaMielMutation, CreateLunaMielMutationVariables>;
+
+/**
+ * __useCreateLunaMielMutation__
+ *
+ * To run a mutation, you first call `useCreateLunaMielMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateLunaMielMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createLunaMielMutation, { data, loading, error }] = useCreateLunaMielMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateLunaMielMutation(baseOptions?: Apollo.MutationHookOptions<CreateLunaMielMutation, CreateLunaMielMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateLunaMielMutation, CreateLunaMielMutationVariables>(CreateLunaMielDocument, options);
+      }
+export type CreateLunaMielMutationHookResult = ReturnType<typeof useCreateLunaMielMutation>;
+export type CreateLunaMielMutationResult = Apollo.MutationResult<CreateLunaMielMutation>;
+export type CreateLunaMielMutationOptions = Apollo.BaseMutationOptions<CreateLunaMielMutation, CreateLunaMielMutationVariables>;
+export const CreateTourDocument = gql`
+    mutation CreateTour($input: TourInput) {
+  CreateTour(input: $input) {
+    tourId
+    tituloTour
+    slugTour
+    regionTour
+    ciudadTour
+    estadoTour
+    destacadoTour
+    descripcionCortaTour
+    descripcionLargaTour
+    itinerarioTour
+    puntoPartidaTour
+    incluyeTour
+    noIncluyeTour
+    actividadesTour
+    notasTour
+    politicasTour
+    videoPresentacionTour
+    imagenPrincipalTour {
+      id
+      descripcion
+      url
+    }
+    imagenSecundariaTour {
+      id
+      descripcion
+      url
+    }
+    galeriaTour {
+      id
+      descripcion
+      url
+    }
+    slugCategoria
+    categoriaId
+    Categoria {
+      categoriaId
+      slugCategoria
+      tituloCategoria
+      descripcion
+      estadoCategoria
+      keywordsCategoria
+      imagenPrincipalCategoria {
+        id
+        descripcion
+        url
+      }
+      imagenSecundariaCategoria {
+        id
+        descripcion
+        url
+      }
+    }
+  }
+}
+    `;
+export type CreateTourMutationFn = Apollo.MutationFunction<CreateTourMutation, CreateTourMutationVariables>;
+
+/**
+ * __useCreateTourMutation__
+ *
+ * To run a mutation, you first call `useCreateTourMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateTourMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createTourMutation, { data, loading, error }] = useCreateTourMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateTourMutation(baseOptions?: Apollo.MutationHookOptions<CreateTourMutation, CreateTourMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateTourMutation, CreateTourMutationVariables>(CreateTourDocument, options);
+      }
+export type CreateTourMutationHookResult = ReturnType<typeof useCreateTourMutation>;
+export type CreateTourMutationResult = Apollo.MutationResult<CreateTourMutation>;
+export type CreateTourMutationOptions = Apollo.BaseMutationOptions<CreateTourMutation, CreateTourMutationVariables>;
 export const DeleteBlogDocument = gql`
     mutation DeleteBlog($input: BlogInput) {
   DeleteBlog(input: $input)
@@ -1598,7 +1873,7 @@ export const GetAllTourDocument = gql`
   ) {
     nroTotalItems
     data {
-      touId
+      tourId
       tituloTour
       slugTour
       regionTour

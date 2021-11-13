@@ -1,5 +1,9 @@
 import swal from 'sweetalert'
-import { useDeleteLunaMielMutation, useGetAllLunaMielQuery } from '../generated/graphql'
+import {
+  useCreateLunaMielMutation,
+  useDeleteLunaMielMutation,
+  useGetAllLunaMielQuery
+} from '../generated/graphql'
 
 export const useLunaMielServices = () => {
   const { loading, data, refetch } = useGetAllLunaMielQuery({
@@ -19,6 +23,17 @@ export const useLunaMielServices = () => {
       swal('Error', 'Hubo un error en el servidor', 'error')
     }
   })
+
+  const [createLunaMielMutation, { loading: loadingUpadate }] =
+    useCreateLunaMielMutation({
+      onError: (err) => {
+        // validar errores
+        console.log(
+          'onError creacion Luna Miel',
+          err?.graphQLErrors[0]?.debugMessage
+        )
+      }
+    })
 
   const deleteLunaMiel = (lunaMiel) => {
     swal({
@@ -48,5 +63,66 @@ export const useLunaMielServices = () => {
     })
   }
 
-  return { db, loading, deleteLunaMiel }
+  const createLunaMiel = async ({
+    titulo,
+    region,
+    ciudad,
+    estado,
+    destacado,
+    descripcionCorta,
+    descripcionLarga,
+    itinerario,
+    puntoPartida,
+    incluye,
+    noIncluye,
+    actividades,
+    notas,
+    politicas,
+    video,
+    idImgPrincipal,
+    idImgSecundaria,
+    slugCategoria,
+    galeria,
+    keywords
+  }) => {
+    if (loadingUpadate === false) {
+      const res = await createLunaMielMutation({
+        variables: {
+          input: {
+            tituloLuna: titulo,
+            estadoLuna: estado,
+            destacadoLuna: destacado,
+            keywordsLuna: keywords.join(','),
+            regionLuna: region,
+            ciudadLuna: ciudad,
+            descripcionCortaLuna: descripcionCorta,
+            descripcionLargaLuna: descripcionLarga,
+            itinerarioLuna: itinerario.join(','),
+            puntoPartidaLuna: puntoPartida,
+            incluyeLuna: incluye.join(','),
+            noIncluyeLuna: noIncluye.join(','),
+            actividadesLuna: actividades.join(','),
+            notasLuna: notas.join(','),
+            politicasLuna: politicas.join(','),
+            videoPresentacionLuna: video,
+            imagenPrincipalLuna: idImgPrincipal,
+            imagenSecundariaLuna: idImgSecundaria,
+            galeriaLuna: galeria,
+            slugCategoria: slugCategoria
+          }
+        }
+      }).catch((error) => console.error(' error', error))
+      console.log(res)
+      refetch()
+      swal({
+        title: 'CREAR',
+        text: 'Se creo correctamente la Luna Miel',
+        icon: 'success',
+        button: 'Aceptar',
+        timer: 2000
+      })
+    }
+  }
+
+  return { db, loading, deleteLunaMiel, createLunaMiel }
 }

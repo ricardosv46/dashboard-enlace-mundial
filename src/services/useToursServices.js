@@ -1,5 +1,6 @@
 import swal from 'sweetalert'
 import {
+  useCreateTourMutation,
   useDeleteTourMutation,
   useGetAllTourQuery
 } from '../generated/graphql'
@@ -17,11 +18,17 @@ export const useToursServices = () => {
   const [deleteTourMutation] = useDeleteTourMutation({
     onError: (err) => {
       // validar errores
-      console.log('onError delete', err?.graphQLErrors[0]?.debugMessage)
-      swal('Error', 'Hubo un error en el servidor', 'error')
+      console.log('', err?.graphQLErrors[0]?.debugMessage)
     }
   })
 
+  const [createTourMutation, { loading: loadingUpadate }] =
+    useCreateTourMutation({
+      onError: (err) => {
+        // validar errores
+        console.log('onError creacion Tour', err?.graphQLErrors[0]?.debugMessage)
+      }
+    })
   const deleteTour = (tour) => {
     swal({
       title: `Desea eliminar el tour ${tour?.tituloTour}?`,
@@ -34,7 +41,7 @@ export const useToursServices = () => {
         await deleteTourMutation({
           variables: {
             input: {
-              touId: tour.touId
+              tourId: tour.tourId
             }
           }
         }).catch((error) => console.log('error', error))
@@ -50,5 +57,63 @@ export const useToursServices = () => {
     })
   }
 
-  return { db, loading, deleteTour }
+  const createTour = async ({
+    titulo,
+    region,
+    ciudad,
+    estado,
+    destacado,
+    descripcionCorta,
+    descripcionLarga,
+    itinerario,
+    puntoPartida,
+    incluye,
+    noIncluye,
+    actividades,
+    notas,
+    politicas,
+    video,
+    idImgPrincipal,
+    idImgSecundaria,
+    slugCategoria,
+    galeria
+  }) => {
+    if (loadingUpadate === false) {
+      const res = await createTourMutation({
+        variables: {
+          input: {
+            tituloTour: titulo,
+            regionTour: region,
+            ciudadTour: ciudad,
+            estadoTour: estado,
+            destacadoTour: destacado,
+            descripcionCortaTour: descripcionCorta,
+            descripcionLargaTour: descripcionLarga,
+            itinerarioTour: itinerario.join(','),
+            puntoPartidaTour: puntoPartida,
+            incluyeTour: incluye.join(','),
+            noIncluyeTour: noIncluye.join(','),
+            actividadesTour: actividades.join(','),
+            notasTour: notas.join(','),
+            politicasTour: politicas.join(','),
+            videoPresentacionTour: video,
+            imagenPrincipalTour: idImgPrincipal,
+            imagenSecundariaTour: idImgSecundaria,
+            galeriaTour: galeria,
+            slugCategoria: slugCategoria
+          }
+        }
+      }).catch((error) => console.error('que error', error))
+      console.log(res)
+      refetch()
+      swal({
+        title: 'CREAR',
+        text: 'Se creo correctamente el Tour',
+        icon: 'success',
+        button: 'Aceptar',
+        timer: 2000
+      })
+    }
+  }
+  return { db, loading, deleteTour, createTour }
 }

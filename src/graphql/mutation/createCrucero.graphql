@@ -1,0 +1,57 @@
+mutation CreateCrucero($input:CruceroInput){
+  CreateCrucero(input:$input) {
+    cruceroId
+    tituloCrucero
+    slugCrucero
+    estadoCrucero
+    destacadoCrucero
+    keywordsCrucero
+    regionCrucero
+    ciudadCrucero
+    descripcionCortaCrucero
+    descripcionLargaCrucero
+    itinerarioCrucero
+    puntoPartidaCrucero
+    incluyeCrucero
+    noIncluyeCrucero
+    actividadesCrucero
+    notasCrucero
+    politicasCrucero
+    videoPresentacionCrucero
+    imagenPrincipalCrucero {
+      id
+      descripcion
+      url
+    }
+    imagenSecundariaCrucero {
+      id
+      descripcion
+      url
+    }
+    galeriaCrucero {
+      id
+      descripcion
+      url
+    }
+    slugCategoria
+    categoriaId
+    Categoria {
+      categoriaId
+      slugCategoria
+      tituloCategoria
+      descripcion
+      estadoCategoria
+      keywordsCategoria
+      imagenPrincipalCategoria {
+        id
+        descripcion
+        url
+      }
+      imagenSecundariaCategoria {
+        id
+        descripcion
+        url
+      }
+    }
+  }
+}

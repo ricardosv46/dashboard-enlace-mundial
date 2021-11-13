@@ -32,7 +32,7 @@ const Tours = () => {
     handleDeleteTour
   ) => {
     const filasTours = data.map((tour) => ({
-      id: tour?.touId,
+      id: tour?.tourId,
       imagen: (
         <img
           src={tour?.imagenPrincipalTour?.url}

@@ -8,7 +8,6 @@ const InputText = ({ name = '', label = '', ...props }) => {
       </label>
       <input
         className="w-full text-sm text-black transition ease-in duration-150 px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
-        required
         id={name}
         name={name}
         type="text"
