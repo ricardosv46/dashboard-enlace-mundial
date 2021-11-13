@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-const InputToggle = ({ status = 'true', ...props }) => {
+const InputToggle = ({ status = false, ...props }) => {
   const [state, setState] = useState(status)
 
   const handleChange = () => setState((prev) => !prev)

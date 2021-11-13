@@ -167,7 +167,7 @@ export const useToursServices = () => {
       const res = await updateTourMutation({
         variables: {
           input: {
-            touId: id,
+            tourId: id,
             tituloTour: titulo,
             regionTour: region,
             ciudadTour: ciudad,

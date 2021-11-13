@@ -4,7 +4,6 @@ import BtnDestacado from '../../../components/BtnDestacado/BtnDestacado'
 import Button from '../../../components/Buttons/Button'
 import ButtonBack from '../../../components/Buttons/ButtonBack'
 import InputText from '../../../components/Forms/InputText/InputText'
-import InputToggle from '../../../components/Forms/InputToggle/InputToggle'
 import TextArea from '../../../components/Forms/TextArea'
 import Heading from '../../../components/Heading'
 import { useModal } from '../../../hooks/useModal'
@@ -17,7 +16,8 @@ import UseForm from '../../../hooks/UseForm'
 import { Ciudades, Regiones } from '../../../data/dataPeru'
 import { useToursServices } from '../../../services/useToursServices'
 import swal from 'sweetalert'
-import { useLocation, useParams } from 'react-router'
+import { useHistory, useLocation } from 'react-router'
+import BtnEstado from '../../../components/BtnEstado/BtnEstado'
 const initialForm = {
   titulo: '',
   categorias: '',
@@ -52,20 +52,23 @@ const validationsForm = (form) => {
   return errors
 }
 const otherErrors = {}
+
 const EditarTour = () => {
-  const path = useParams()
-  const location = useLocation()
-  console.log('location', location.state)
-  console.log('que fue path', path)
+  const history = useHistory()
+
+  const { state: objetoTour } = useLocation()
+
+  console.log('location', objetoTour)
+
   // console.log('othe', otherErrors)
   const { data: dataCategoria } = useCategoriasServices()
-  const { createTour } = useToursServices()
+  const { updateTour } = useToursServices()
   // console.log(createTour)
-  const { form, handleInputChange, handleBlur, errors, resetForm } = UseForm(
+  const { form, handleInputChange, handleBlur, errors } = UseForm(
     initialForm,
     validationsForm
   )
-
+  console.log(form)
   const [isOpenModalGalria, openModalGaleria, closeModalGaleria] =
     useModal(false)
 
@@ -121,7 +124,8 @@ const EditarTour = () => {
       keywords.length > 0 &&
       politicas.length > 0
     ) {
-      createTour({
+      updateTour({
+        id: objetoTour.tourId,
         titulo: form.titulo,
         slugCategoria: form.categorias,
         region: form.region,
@@ -142,15 +146,7 @@ const EditarTour = () => {
         idImgSecundaria: 3,
         galeria: []
       })
-      resetForm()
-      setActividades([])
-      setIncluye([])
-      setNoIncluye([])
-      setItinerario([])
-      setActividades([])
-      setNotas([])
-      setPoliticas([])
-      setKeywords([])
+      history.push('/tours')
     } else {
       swal({
         title: 'DATOS INCOMPLETOS',
@@ -163,7 +159,22 @@ const EditarTour = () => {
   }
 
   useEffect(() => {
-
+    form.titulo = objetoTour.tituloTour
+    form.categorias = objetoTour.slugCategoria
+    form.region = objetoTour.regionTour
+    form.descripcionLarga = objetoTour.descripcionLargaTour
+    form.descripcionCorta = objetoTour.descripcionCortaTour
+    form.puntoPartida = objetoTour.puntoPartidaTour
+    form.video = objetoTour.videoPresentacionTour
+    setDestacado(objetoTour.destacadoTour === 'Activo' && true)
+    setEstado(objetoTour.estadoTour === 'Activo' && true)
+    setItinerario(objetoTour.itinerarioTour.split(','))
+    setIncluye(objetoTour.incluyeTour.split(','))
+    setNoIncluye(objetoTour.noIncluyeTour.split(','))
+    setActividades(objetoTour.actividadesTour.split(','))
+    setNotas(objetoTour.notasTour.split(','))
+    // setKeywords((objetoTour.notasTour).split(','))
+    setPoliticas(objetoTour.politicasTour.split(','))
   }, [])
 
   return (
@@ -171,7 +182,7 @@ const EditarTour = () => {
       <div className="flex justify-center pt-3 relative">
         <ButtonBack />
 
-        <Heading>Crear Nuevo Tour</Heading>
+        <Heading>Editar Tour</Heading>
       </div>
       <form
         onSubmit={handleSubmit}
@@ -206,7 +217,7 @@ const EditarTour = () => {
               className="cursor-pointer w-full text-sm text-black transition ease-in duration-150 px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
               id="categorias"
               name="categorias"
-              autoComplete="off"
+              autoComplete="on"
               onChange={handleInputChange}
               onBlur={handleBlur}
               required
@@ -215,7 +226,11 @@ const EditarTour = () => {
                 Selecciona una Categoria
               </option>
               {dataCategoria.map((item) => (
-                <option key={item.categoriaId} value={item.slugCategoria}>
+                <option
+                  key={item.categoriaId}
+                  value={item.slugCategoria}
+                  selected={objetoTour.slugCategoria === item.slugCategoria}
+                >
                   {item.tituloCategoria}
                 </option>
               ))}
@@ -249,7 +264,11 @@ const EditarTour = () => {
                 Selecciona una Region
               </option>
               {Regiones.map((region) => (
-                <option key={region} value={region}>
+                <option
+                  key={region}
+                  value={region}
+                  selected={region === objetoTour.regionTour}
+                >
                   {region}
                 </option>
               ))}
@@ -280,7 +299,11 @@ const EditarTour = () => {
                 Selecciona una Ciudad
               </option>
               {Ciudades(form.region).map((ciudad) => (
-                <option key={ciudad} value={ciudad}>
+                <option
+                  key={ciudad}
+                  value={ciudad}
+                  selected={ciudad === objetoTour.ciudadTour}
+                >
                   {ciudad}
                 </option>
               ))}
@@ -301,8 +324,11 @@ const EditarTour = () => {
             >
               Estados
             </label>
-            <div onClick={() => setEstado(!estado)} className="ml-7">
-              <InputToggle />
+            <div
+              onClick={() => setEstado(!estado)}
+              className="ml-7 cursor-pointer"
+            >
+              <BtnEstado estado={estado} />
             </div>
           </div>
           <div className="flex  items-center lg:w-full ml-4">
@@ -312,8 +338,11 @@ const EditarTour = () => {
             >
               Destacado
             </label>
-            <div onClick={() => setDestacado(!destacado)} className="ml-7">
-              <BtnDestacado disabled={false} />
+            <div
+              onClick={() => setDestacado(!destacado)}
+              className="ml-7 cursor-pointer"
+            >
+              <BtnDestacado estado={destacado} />
             </div>
           </div>
         </div>
@@ -324,6 +353,7 @@ const EditarTour = () => {
             name="descripcionLarga"
             rows="2"
             onChange={handleInputChange}
+            value={form.descripcionLarga}
             onBlur={handleBlur}
             required
           />
@@ -339,6 +369,7 @@ const EditarTour = () => {
             name="descripcionCorta"
             rows="1"
             onChange={handleInputChange}
+            value={form.descripcionCorta}
           />
         </div>
 
@@ -406,6 +437,7 @@ const EditarTour = () => {
             <InputText
               name="puntoPartida"
               onChange={handleInputChange}
+              value={form.puntoPartida}
               label="Punto de partida"
               placeholder="Punto de Partida"
               onBlur={handleBlur}
@@ -771,6 +803,7 @@ const EditarTour = () => {
             placeholder="Ingresa la URL del video"
             type="text"
             onChange={handleInputChange}
+            required
           />
         </div>
 
@@ -805,7 +838,7 @@ const EditarTour = () => {
 
         <div className="my-10 text-center">
           <Button variant="primary" size="lg" type="submit">
-            CREAR
+            EDITAR TOUR
           </Button>
         </div>
       </form>

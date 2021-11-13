@@ -4,7 +4,6 @@ import BtnDestacado from '../../../components/BtnDestacado/BtnDestacado'
 import Button from '../../../components/Buttons/Button'
 import ButtonBack from '../../../components/Buttons/ButtonBack'
 import InputText from '../../../components/Forms/InputText/InputText'
-import InputToggle from '../../../components/Forms/InputToggle/InputToggle'
 import TextArea from '../../../components/Forms/TextArea'
 import Heading from '../../../components/Heading'
 import { useModal } from '../../../hooks/useModal'
@@ -17,6 +16,7 @@ import UseForm from '../../../hooks/UseForm'
 import { Ciudades, Regiones } from '../../../data/dataPeru'
 import { useToursServices } from '../../../services/useToursServices'
 import swal from 'sweetalert'
+import BtnEstado from '../../../components/BtnEstado/BtnEstado'
 const initialForm = {
   titulo: '',
   categorias: '',
@@ -52,7 +52,7 @@ const validationsForm = (form) => {
 }
 const otherErrors = {}
 const CrearTour = () => {
-  console.log('othe', otherErrors)
+  // console.log('othe', otherErrors)
   const { data: dataCategoria } = useCategoriasServices()
   const { createTour } = useToursServices()
   // console.log(createTour)
@@ -85,7 +85,7 @@ const CrearTour = () => {
   const [politicas, setPoliticas] = useState([])
   const [textPoliticas, setTextPoliticas] = useState('')
   const [notas, setNotas] = useState([])
-  // console.log(form)
+  console.log('estado', estado, 'destacado', destacado)
   const eliminarItem = (value, data, setData) => {
     const newData = data.filter((item) => item !== value)
     setData(newData)
@@ -226,7 +226,7 @@ const CrearTour = () => {
               onBlur={handleBlur}
               required
             >
-              <option className="cursor-pointer" value="">
+              <option className="cursor-pointer" value="" selected>
                 Selecciona una Categoria
               </option>
               {dataCategoria.map((item) => (
@@ -260,7 +260,7 @@ const CrearTour = () => {
               onChange={handleInputChange}
               onBlur={handleBlur}
             >
-              <option value="" className="cursor-pointer">
+              <option value="" className="cursor-pointer" selected>
                 Selecciona una Region
               </option>
               {Regiones.map((region) => (
@@ -291,7 +291,7 @@ const CrearTour = () => {
               onBlur={handleBlur}
               required
             >
-              <option value="" className="cursor-pointer">
+              <option value="" className="cursor-pointer" selected>
                 Selecciona una Ciudad
               </option>
               {Ciudades(form.region).map((ciudad) => (
@@ -316,8 +316,8 @@ const CrearTour = () => {
             >
               Estados
             </label>
-            <div onClick={() => setEstado(!estado)} className="ml-7">
-              <InputToggle />
+            <div onClick={() => setEstado(!estado)} className="ml-7  cursor-pointer">
+              <BtnEstado estado={estado} />
             </div>
           </div>
           <div className="flex  items-center lg:w-full ml-4">
@@ -327,8 +327,8 @@ const CrearTour = () => {
             >
               Destacado
             </label>
-            <div onClick={() => setDestacado(!destacado)} className="ml-7">
-              <BtnDestacado disabled={false} />
+            <div onClick={() => setDestacado(!destacado)} className="ml-7 cursor-pointer">
+              <BtnDestacado estado={destacado} />
             </div>
           </div>
         </div>
@@ -340,6 +340,7 @@ const CrearTour = () => {
             rows="2"
             onChange={handleInputChange}
             onBlur={handleBlur}
+            value={form.descripcionLarga}
             required
           />
           {errors.descripcionLarga && (
@@ -354,6 +355,7 @@ const CrearTour = () => {
             name="descripcionCorta"
             rows="1"
             onChange={handleInputChange}
+            value={form.descripcionCorta}
           />
         </div>
 
@@ -425,6 +427,7 @@ const CrearTour = () => {
               placeholder="Punto de Partida"
               onBlur={handleBlur}
               required
+              value={form.puntoPartida}
             />
 
             {errors.puntoPartida && (
@@ -786,6 +789,8 @@ const CrearTour = () => {
             placeholder="Ingresa la URL del video"
             type="text"
             onChange={handleInputChange}
+            required
+            value={form.video}
           />
         </div>
 
