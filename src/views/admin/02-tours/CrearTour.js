@@ -16,6 +16,7 @@ import { useCategoriasServices } from '../../../services/useCategoriaServices'
 import UseForm from '../../../hooks/UseForm'
 import { Ciudades, Regiones } from '../../../data/dataPeru'
 import { useToursServices } from '../../../services/useToursServices'
+import swal from 'sweetalert'
 const initialForm = {
   titulo: '',
   categorias: '',
@@ -55,7 +56,7 @@ const CrearTour = () => {
   const { data: dataCategoria } = useCategoriasServices()
   const { createTour } = useToursServices()
   // console.log(createTour)
-  const { form, handleInputChange, handleBlur, errors } = UseForm(
+  const { form, handleInputChange, handleBlur, errors, resetForm } = UseForm(
     initialForm,
     validationsForm
   )
@@ -78,7 +79,6 @@ const CrearTour = () => {
   const [textAactividades, setTextActividaes] = useState('')
   const [textItinerario, setTextItinerario] = useState('')
   const [itinerario, setItinerario] = useState([])
-  console.log('itinerario es ', itinerario)
   const [textNotas, setTextNotas] = useState('')
   const [keywords, setKeywords] = useState([])
   const [textKeywords, setTextKeywords] = useState('')
@@ -103,29 +103,7 @@ const CrearTour = () => {
     setSeleccionarImagen(2)
     openModalGaleria()
   }
-  useEffect(() => {
-    if (itinerario.length === 0) {
-      otherErrors.itinerario = '( Ingrese al menos un Itinerario )'
-    }
-    if (incluye.length === 0) {
-      otherErrors.incluye = '( Ingrese al menos una opcion que incluya )'
-    }
-    if (noIncluye.length === 0) {
-      otherErrors.noIncluye = '( Ingrese una opcion que no incluya )'
-    }
-    if (actividades.length === 0) {
-      otherErrors.actividades = '( Ingrese al menos una actividas )'
-    }
-    if (notas.length === 0) {
-      otherErrors.notas = '( Ingrese al menos una nota )'
-    }
-    if (keywords.length === 0) {
-      otherErrors.keywords = '( Ingrese al menos una keyword )'
-    }
-    if (politicas.length === 0) {
-      otherErrors.politicas = '( Ingrese una política )'
-    }
-  }, [])
+
   const handleSubmit = (e) => {
     e.preventDefault()
 
@@ -146,7 +124,7 @@ const CrearTour = () => {
         estado: estado ? 'Activo' : 'Inactivo',
         destacado: destacado ? 'Activo' : 'Inactivo',
         descripcionCorta: form.descripcionCorta,
-        descripcionLarga: form.descripcionLara,
+        descripcionLarga: form.descripcionLarga,
         itinerario: eliminarDuplicado(itinerario),
         puntoPartida: form.puntoPartida,
         incluye: eliminarDuplicado(incluye),
@@ -159,10 +137,49 @@ const CrearTour = () => {
         idImgSecundaria: 3,
         galeria: []
       })
+      resetForm()
+      setActividades([])
+      setIncluye([])
+      setNoIncluye([])
+      setItinerario([])
+      setActividades([])
+      setNotas([])
+      setPoliticas([])
+      setKeywords([])
     } else {
-      otherErrors.submit = 'Complete los datos requeridos'
+      swal({
+        title: 'DATOS INCOMPLETOS',
+        text: 'Complete todos los datos requeridos',
+        icon: 'warning',
+        button: 'Aceptar',
+        timer: 2000
+      })
     }
   }
+
+  useEffect(() => {
+    if (itinerario.length === 0) {
+      otherErrors.itinerario = '( Ingrese al menos un Itinerario )'
+    }
+    if (incluye.length === 0) {
+      otherErrors.incluye = '( Ingrese al menos una opcion que incluya )'
+    }
+    if (noIncluye.length === 0) {
+      otherErrors.noIncluye = '( Ingrese una opcion que no incluya )'
+    }
+    if (actividades.length === 0) {
+      otherErrors.actividades = '( Ingrese al menos una actividad )'
+    }
+    if (notas.length === 0) {
+      otherErrors.notas = '( Ingrese al menos una nota )'
+    }
+    if (keywords.length === 0) {
+      otherErrors.keywords = '( Ingrese al menos una keyword )'
+    }
+    if (politicas.length === 0) {
+      otherErrors.politicas = '( Ingrese una política )'
+    }
+  }, [handleSubmit])
 
   return (
     <div className="shadow md:rounded bg-white p-5 py-10 md:p-10">
@@ -805,11 +822,6 @@ const CrearTour = () => {
           <Button variant="primary" size="lg" type="submit">
             CREAR
           </Button>
-          {otherErrors.submit && (
-            <p className="text-lg text-red-500 font-medium mt-2 ml-1">
-              {otherErrors.submit}
-            </p>
-          )}
         </div>
       </form>
       <Modal closeModal={closeModalGaleria} isOpen={isOpenModalGalria}>

@@ -26,7 +26,7 @@ export const useToursServices = () => {
     useCreateTourMutation({
       onError: (err) => {
         // validar errores
-        console.log('onError creacion', err?.graphQLErrors[0]?.debugMessage)
+        console.log('onError creacion Tour', err?.graphQLErrors[0]?.debugMessage)
       }
     })
   const deleteTour = (tour) => {
