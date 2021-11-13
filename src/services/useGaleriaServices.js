@@ -1,3 +1,4 @@
+import { useMemo } from 'react'
 import swal from 'sweetalert'
 import {
   useCreateImageMutation,
@@ -114,7 +115,17 @@ const useGaleriaServices = () => {
       })
     }
   }
-  return { imagenes, loading, deleteImagen, updateImagen, uploadImages }
+
+  return useMemo(() => {
+    return {
+      loading,
+      imagenes,
+      refetch,
+      deleteImagen,
+      updateImagen,
+      uploadImages
+    }
+  }, [imagenes, loading])
 }
 
 export default useGaleriaServices

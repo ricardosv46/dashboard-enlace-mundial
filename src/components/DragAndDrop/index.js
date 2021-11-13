@@ -29,6 +29,7 @@ const DragAndDrop = ({ onUpload = () => {} }) => {
     uppy.on('upload', () => {
       onUpload([...images])
       images.clear()
+      uppy.reset()
       console.log('CLEAR', images)
     })
   }, [])
