@@ -7,14 +7,22 @@ export const validateFields = ({ user, password }) => {
   // }
   if (!user.trim()) {
     errores.user = 'Por favor ingrese un correo de usuario'
-  } else if (
-    !/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(user)
-  ) {
+  } else if (!/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(user)) {
     errores.user = 'Ingrese un correo válido'
   }
 
   if (!password.trim()) {
     errores.password = 'Por favor ingrese su contraseña'
+  }
+  return errores
+}
+
+export const validacionesParaCreacionDeTours = ({ categorias }) => {
+  const errores = {}
+  if (categorias === '') {
+    errores.categorias = 'debe de seleccionar una categoria'
+  } else {
+    errores.categorias = 'correcto'
   }
   return errores
 }

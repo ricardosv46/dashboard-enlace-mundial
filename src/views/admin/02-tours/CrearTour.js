@@ -16,24 +16,54 @@ import { useCategoriasServices } from '../../../services/useCategoriaServices'
 import UseForm from '../../../hooks/UseForm'
 import { Ciudades, Regiones } from '../../../data/dataPeru'
 import { useToursServices } from '../../../services/useToursServices'
+import { validacionesParaCreacionDeTours } from '../../../validateFields/valeidatefields'
 const initialForm = {
   titulo: '',
   categorias: '',
   region: '',
   ciudad: '',
   descripcionCorta: '',
-  descripcionLara: '',
+  descripcionLarga: '',
   puntoPartida: '',
   video: ''
 }
+const validationsForm = (form) => {
+  // eslint-disable-next-line prefer-const
+  let errors = {}
+  if (!form.titulo.trim()) {
+    errors.titulo = 'El campo Título es requerido'
+  }
+  if (!form.categorias.trim()) {
+    errors.categoria = 'Debe de Seleccionar una Categoria'
+  }
+  if (!form.region.trim()) {
+    errors.region = 'Debe de Seleccionar una Region'
+  }
+  if (!form.ciudad.trim()) {
+    errors.ciudad = 'Debe de Seleccionar una Ciudad'
+  }
+  if (!form.descripcionLarga.trim()) {
+    errors.descripcionLarga = 'Debe de poner alguna descripcion para el Tour'
+  }
+  if (!form.puntoPartida.trim()) {
+    errors.puntoPartida = 'Debe de Ingresar un punto de partida'
+  }
+  return errors
+}
+const otherErrors = {}
 const CrearTour = () => {
+  console.log('othe', otherErrors)
   const { data: dataCategoria } = useCategoriasServices()
   const { createTour } = useToursServices()
   // console.log(createTour)
-  const { form, handleInputChange } = UseForm(initialForm)
-  // console.log(form)
+  const { form, handleInputChange, handleBlur, errors } = UseForm(
+    initialForm,
+    validationsForm
+  )
+  const errores = validacionesParaCreacionDeTours(form.categorias)
   const [isOpenModalGalria, openModalGaleria, closeModalGaleria] =
     useModal(false)
+
   // const { imgPrincipal, setImgPrincipal, imgSecundaria, setImgSecundaria, galeria } =
   //   useContext(ImgContext)
   // console.log(imgPrincipal, imgSecundaria)
@@ -43,7 +73,7 @@ const CrearTour = () => {
   const [destacado, setDestacado] = useState(false)
   const [incluye, setIncluye] = useState([])
   const [textIncluye, setTextIncluye] = useState('')
-  const [Noincluye, setNoIncluye] = useState([])
+  const [noIncluye, setNoIncluye] = useState([])
   const [textNoIncluye, setTextNoIncluye] = useState('')
   const [actividades, setActividades] = useState([])
   const [textAactividades, setTextActividaes] = useState('')
@@ -55,7 +85,7 @@ const CrearTour = () => {
   const [politicas, setPoliticas] = useState([])
   const [textPoliticas, setTextPoliticas] = useState('')
   const [notas, setNotas] = useState([])
-  console.log(Noincluye)
+  // console.log(form)
   const eliminarItem = (value, data, setData) => {
     const newData = data.filter((item) => item !== value)
     setData(newData)
@@ -75,27 +105,30 @@ const CrearTour = () => {
   }
   const handleSubmit = (e) => {
     e.preventDefault()
-    createTour({
-      titulo: form.titulo,
-      slugCategoria: form.categorias,
-      region: form.region,
-      ciudad: form.ciudad,
-      estado: estado ? 'Activo' : 'Inactivo',
-      destacado: destacado ? 'Activo' : 'Inactivo',
-      descripcionCorta: form.descripcionCorta,
-      descripcionLarga: form.descripcionLara,
-      itinerario: eliminarDuplicado(itinerario),
-      puntoPartida: form.puntoPartida,
-      incluye: eliminarDuplicado(incluye),
-      noIncluye: eliminarDuplicado(Noincluye),
-      actividades: eliminarDuplicado(actividades),
-      notas: eliminarDuplicado(notas),
-      politicas: eliminarDuplicado(politicas),
-      video: form.video,
-      idImgPrincipal: 3,
-      idImgSecundaria: 3,
-      galeria: []
-    })
+    console.log(errores)
+    if (errores.categorias === 'correcto') {
+      createTour({
+        titulo: form.titulo,
+        slugCategoria: form.categorias,
+        region: form.region,
+        ciudad: form.ciudad,
+        estado: estado ? 'Activo' : 'Inactivo',
+        destacado: destacado ? 'Activo' : 'Inactivo',
+        descripcionCorta: form.descripcionCorta,
+        descripcionLarga: form.descripcionLara,
+        itinerario: eliminarDuplicado(itinerario),
+        puntoPartida: form.puntoPartida,
+        incluye: eliminarDuplicado(incluye),
+        noIncluye: eliminarDuplicado(noIncluye),
+        actividades: eliminarDuplicado(actividades),
+        notas: eliminarDuplicado(notas),
+        politicas: eliminarDuplicado(politicas),
+        video: form.video,
+        idImgPrincipal: 3,
+        idImgSecundaria: 3,
+        galeria: []
+      })
+    }
   }
 
   return (
@@ -109,15 +142,24 @@ const CrearTour = () => {
         onSubmit={handleSubmit}
         className="w-full lg:shadow-md lg:px-4 px-0 mx-auto py-10"
       >
-        <div className="flex flex-col lg:flex-row lg:space-x-4 mb-5">
-          <InputText
-            name="titulo"
-            label="Titulo"
-            placeholder="Ingrese un título para el tour"
-            onChange={handleInputChange}
-            value={form.titulo}
-            required
-          />
+        <div className="flex flex-col lg:flex-row lg:space-x-4 mb-5 gap-y-5">
+          <div className="w-full">
+            <InputText
+              name="titulo"
+              label="Titulo"
+              placeholder="Ingrese un título para el tour"
+              onChange={handleInputChange}
+              onBlur={handleBlur}
+              value={form.titulo}
+              required
+            />
+            {errors.titulo && (
+              <p className="text-sm text-red-500 font-medium mt-2 ml-1">
+                {errors.titulo}
+              </p>
+            )}
+          </div>
+
           <div className="flex flex-col w-full mb-4 lg:mb-0">
             <label
               htmlFor="categorias"
@@ -131,8 +173,10 @@ const CrearTour = () => {
               name="categorias"
               autoComplete="off"
               onChange={handleInputChange}
+              onBlur={handleBlur}
+              required
             >
-              <option defaultValue className="cursor-pointer">
+              <option className="cursor-pointer" value="">
                 Selecciona una Categoria
               </option>
               {dataCategoria.map((item) => (
@@ -141,6 +185,11 @@ const CrearTour = () => {
                 </option>
               ))}
             </select>
+            {errors.categoria && (
+              <p className="text-sm text-red-500 font-medium mt-2 ml-1">
+                {errors.categoria}
+              </p>
+            )}
           </div>
         </div>
 
@@ -153,13 +202,15 @@ const CrearTour = () => {
               Región
             </label>
             <select
+              required
               className="cursor-pointer w-full text-sm text-black transition ease-in duration-150 px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
               id="region"
               name="region"
               autoComplete="off"
               onChange={handleInputChange}
+              onBlur={handleBlur}
             >
-              <option defaultValue className="cursor-pointer">
+              <option value="" className="cursor-pointer">
                 Selecciona una Region
               </option>
               {Regiones.map((region) => (
@@ -168,6 +219,11 @@ const CrearTour = () => {
                 </option>
               ))}
             </select>
+            {errors.region && (
+              <p className="text-sm text-red-500 font-medium mt-2 ml-1">
+                {errors.region}
+              </p>
+            )}
           </div>
           <div className="flex flex-col w-full mb-4 lg:mb-0">
             <label
@@ -182,8 +238,10 @@ const CrearTour = () => {
               name="ciudad"
               autoComplete="off"
               onChange={handleInputChange}
+              onBlur={handleBlur}
+              required
             >
-              <option defaultValue className="cursor-pointer">
+              <option value="" className="cursor-pointer">
                 Selecciona una Ciudad
               </option>
               {Ciudades(form.region).map((ciudad) => (
@@ -192,6 +250,11 @@ const CrearTour = () => {
                 </option>
               ))}
             </select>
+            {errors.ciudad && (
+              <p className="text-sm text-red-500 font-medium mt-2 ml-1">
+                {errors.ciudad}
+              </p>
+            )}
           </div>
         </div>
 
@@ -220,14 +283,20 @@ const CrearTour = () => {
           </div>
         </div>
 
-        <div className="flex flex-col lg:flex-row lg:space-x-4 items-center mb-5">
+        <div className="flex flex-col  lg:space-x-4  mb-5">
           <TextArea
             label="Descripción Larga"
             name="descripcionLarga"
             rows="2"
             onChange={handleInputChange}
+            onBlur={handleBlur}
             required
           />
+          {errors.descripcionLarga && (
+            <p className="text-sm text-red-500 font-medium mt-2 ml-1">
+              {errors.descripcionLarga}
+            </p>
+          )}
         </div>
         <div className="flex flex-col lg:flex-row lg:space-x-4 items-center mb-5">
           <TextArea
@@ -252,6 +321,11 @@ const CrearTour = () => {
                 }
               }}
             />
+            {otherErrors.itinerario && (
+              <p className="text-sm text-red-500 font-medium mt-2 ml-1 absolute -top-2 left-15">
+                {otherErrors.itinerario}
+              </p>
+            )}
             <InputText
               name="itinerario"
               label="Itinerario"
@@ -270,6 +344,13 @@ const CrearTour = () => {
                   }
                 }
               }}
+              onBlur={() => {
+                if (itinerario.length > 0) {
+                  otherErrors.itinerario = ''
+                } else {
+                  otherErrors.itinerario = '( Ingrese al menos un Itinerario )'
+                }
+              }}
               value={textItinerario}
             />
             <div className="flex flex-col gap-5 my-5">
@@ -285,17 +366,31 @@ const CrearTour = () => {
               ))}
             </div>
           </div>
-          <InputText
-            name="puntoPartida"
-            onChange={handleInputChange}
-            label="Punto de partida"
-            placeholder="Punto de Partida"
-            required
-          />
+          <div className="w-full">
+            <InputText
+              name="puntoPartida"
+              onChange={handleInputChange}
+              label="Punto de partida"
+              placeholder="Punto de Partida"
+              onBlur={handleBlur}
+              required
+            />
+
+            {errors.puntoPartida && (
+              <p className="text-sm text-red-500 font-medium mt-2 ml-1">
+                {errors.puntoPartida}
+              </p>
+            )}
+          </div>
         </div>
 
         <div className="flex flex-col lg:flex-row lg:space-x-4 items-start mb-5">
           <div className="w-full relative">
+            {otherErrors.incluye && (
+              <p className="text-sm text-red-500 font-medium mt-2 ml-1 absolute -top-2 left-12">
+                {otherErrors.incluye}
+              </p>
+            )}
             <img
               src={iconoAdd}
               alt=""
@@ -322,6 +417,14 @@ const CrearTour = () => {
                   }
                 }
               }}
+              onBlur={() => {
+                if (incluye.length > 0) {
+                  otherErrors.incluye = ''
+                } else {
+                  otherErrors.incluye =
+                    '( Ingrese al menos una opcion que incluya )'
+                }
+              }}
               value={textIncluye}
             />
             <div className="flex flex-col gap-5 my-5">
@@ -339,6 +442,11 @@ const CrearTour = () => {
           </div>
 
           <div className="w-full relative">
+            {otherErrors.noIncluye && (
+              <p className="text-sm text-red-500 font-medium mt-2 ml-1 absolute -top-2 left-15">
+                {otherErrors.noIncluye}
+              </p>
+            )}
             <img
               src={iconoAdd}
               alt=""
@@ -365,14 +473,22 @@ const CrearTour = () => {
                   }
                 }
               }}
+              onBlur={() => {
+                if (noIncluye.length > 0) {
+                  otherErrors.noIncluye = ''
+                } else {
+                  otherErrors.noIncluye =
+                    '(Ingrese una opcion que no incluya)'
+                }
+              }}
               value={textNoIncluye}
             />
             <div className="flex flex-col gap-5 my-5 ">
-              {eliminarDuplicado(Noincluye).map((item) => (
+              {eliminarDuplicado(noIncluye).map((item) => (
                 <div
                   key={item}
                   className="flex  items-center  gap-x-3 px-2 cursor-pointer "
-                  onClick={() => eliminarItem(item, Noincluye, setNoIncluye)}
+                  onClick={() => eliminarItem(item, noIncluye, setNoIncluye)}
                 >
                   <span className="text-sm text-red-600">X</span>
                   <p className="text-sm  inline-block text-gra">{item}</p>
@@ -384,6 +500,11 @@ const CrearTour = () => {
 
         <div className="flex flex-col lg:flex-row lg:space-x-4 items-start mb-5">
           <div className="w-full relative">
+            {otherErrors.actividades && (
+              <p className="text-sm text-red-500 font-medium mt-2 ml-1 absolute -top-2 left-20">
+                {otherErrors.actividades}
+              </p>
+            )}
             <img
               src={iconoAdd}
               alt=""
@@ -400,7 +521,7 @@ const CrearTour = () => {
             />
             <InputText
               name="actividades"
-              label="Actividaes"
+              label="Actividades"
               placeholder="Ingrese las Actividades"
               onChange={(e) => {
                 setTextActividaes(e.target.value)
@@ -414,6 +535,13 @@ const CrearTour = () => {
                     ])
                     setTextActividaes('')
                   }
+                }
+              }}
+              onBlur={() => {
+                if (actividades.length > 0) {
+                  otherErrors.actividades = ''
+                } else {
+                  otherErrors.actividades = '(Ingrese al menos una actividad)'
                 }
               }}
               value={textAactividades}
@@ -434,6 +562,11 @@ const CrearTour = () => {
             </div>
           </div>
           <div className="w-full relative">
+            {otherErrors.notas && (
+              <p className="text-sm text-red-500 font-medium mt-2 ml-1 absolute -top-2 left-15">
+                {otherErrors.notas}
+              </p>
+            )}
             <img
               src={iconoAdd}
               alt=""
@@ -460,6 +593,13 @@ const CrearTour = () => {
                   }
                 }
               }}
+              onBlur={() => {
+                if (notas.length > 0) {
+                  otherErrors.notas = ''
+                } else {
+                  otherErrors.notas = '(Ingrese al menos una nota)'
+                }
+              }}
               value={textNotas}
             />
 
@@ -480,6 +620,11 @@ const CrearTour = () => {
 
         <div className="flex flex-col lg:flex-row lg:space-x-4 items-start mb-5">
           <div className="w-full relative">
+            {otherErrors.keywords && (
+              <p className="text-sm text-red-500 font-medium mt-2 ml-1 absolute -top-2 left-15">
+                {otherErrors.keywords}
+              </p>
+            )}
             <img
               src={iconoAdd}
               alt=""
@@ -506,6 +651,13 @@ const CrearTour = () => {
                   }
                 }
               }}
+              onBlur={() => {
+                if (keywords.length > 0) {
+                  otherErrors.keywords = ''
+                } else {
+                  otherErrors.keywords = '(Ingrese al menos una Keyword)'
+                }
+              }}
               value={textKeywords}
             />
             <div className="flex flex-col gap-5 my-5">
@@ -522,6 +674,11 @@ const CrearTour = () => {
             </div>
           </div>
           <div className="w-full relative">
+            {otherErrors.politicas && (
+              <p className="text-sm text-red-500 font-medium mt-2 ml-1 absolute -top-2 left-40">
+                {otherErrors.politicas}
+              </p>
+            )}
             <img
               src={iconoAdd}
               alt=""
@@ -546,6 +703,14 @@ const CrearTour = () => {
                     setPoliticas((estado) => [...estado, textPoliticas.trim()])
                     setTextPoliticas('')
                   }
+                }
+              }}
+              onBlur={() => {
+                if (politicas.length > 0) {
+                  otherErrors.politicas = ''
+                } else {
+                  otherErrors.politicas =
+                    '( Ingrese una política )'
                 }
               }}
               value={textPoliticas}

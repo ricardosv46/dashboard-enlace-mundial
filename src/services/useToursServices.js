@@ -18,8 +18,7 @@ export const useToursServices = () => {
   const [deleteTourMutation] = useDeleteTourMutation({
     onError: (err) => {
       // validar errores
-      console.log('onError delete', err?.graphQLErrors[0]?.debugMessage)
-      swal('Error', 'Hubo un error en el servidor', 'error')
+      console.log('', err?.graphQLErrors[0]?.debugMessage)
     }
   })
 
@@ -27,8 +26,7 @@ export const useToursServices = () => {
     useCreateTourMutation({
       onError: (err) => {
         // validar errores
-        console.log('onError delete', err?.graphQLErrors[0]?.debugMessage)
-        swal('Error', 'Hubo un error en el servidor', 'error')
+        console.log('onError creacion', err?.graphQLErrors[0]?.debugMessage)
       }
     })
   const deleteTour = (tour) => {
@@ -105,7 +103,7 @@ export const useToursServices = () => {
             slugCategoria: slugCategoria
           }
         }
-      }).catch((error) => console.error(error))
+      }).catch((error) => console.error('que error', error))
       console.log(res)
       refetch()
       swal({
