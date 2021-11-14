@@ -26,24 +26,29 @@ const Tours = () => {
   // console.log('data vista ', db)
 
   const armarFilasTours = (data, setDataBody, handleDeleteTour) => {
-    const filasTours = data.map((tour) => ({
-      id: tour?.tourId,
-      imagen: (
-        <img src={tour?.imagenPrincipalTour?.url} className="w-26 h-22" />
-      ),
-      nombre: tour?.tituloTour,
-      categoria: tour?.Categoria?.tituloCategoria,
-      estado: <BtnEstado estado={tour?.estadoTour} />,
-      descatar: <BtnDestacado estado={false} />,
-      acciones: (
-        <BtnAccionesCalendary
-          handleEdit={() =>
-            history.push(`/tours/editar-tour/${tour.slugTour}`, tour)
-          }
-          handleDelete={() => handleDeleteTour(tour)}
-        />
-      )
-    }))
+    const filasTours = data.map((tour) => {
+      return {
+        id: tour?.tourId,
+        imagen: (
+          <img src={tour?.imagenPrincipalTour?.url} className="w-26 h-22" />
+        ),
+        nombre: tour?.tituloTour,
+        categoria: tour?.Categoria?.tituloCategoria,
+        estado: <BtnEstado estado={tour?.estadoTour} />,
+        descatar: <BtnDestacado estado={false} />,
+        acciones: (
+          <BtnAccionesCalendary
+            handleEdit={() =>
+              history.push(`/tours/editar-tour/${tour?.tourId}`, tour)
+            }
+            handleDelete={() => handleDeleteTour(tour)}
+            handleCalendary={() =>
+              history.push(`/tour/calendario/${tour?.tourId}`)
+            }
+          />
+        )
+      }
+    })
 
     if (filasTours.length > 0) {
       setDataBody(filasTours)
@@ -51,8 +56,11 @@ const Tours = () => {
   }
 
   useEffect(() => {
-    armarFilasTours(db, setDataBody, deleteTour)
+    if (db.length > 0) {
+      armarFilasTours(db, setDataBody, deleteTour)
+    }
   }, [db])
+
   return (
     <div className="shadow  md:rounded bg-white p-5 py-10 md:p-10">
       <div className="flex-col gap-y-9  flex items-center  sm:flex-row sm:justify-between mb-5">

@@ -1,20 +1,20 @@
-import React from 'react'
-import './Modal.css'
-const Modal = ({ children, isOpen, closeModal }) => {
-  const handleModalClick = (e) => {
-    e.stopPropagation()
-  }
+import ReactDOM from 'react-dom'
+import styles from './modal.module.css'
 
-  return (
-    <article className={`modal ${isOpen && 'isOpen'} `} onClick={closeModal}>
-      <div className="modalContainer  shadow-lg rounded" onClick={handleModalClick}>
-        <button className="modalClose bg-primary text-white  w-10 h-10 rounded-full text-3xl font-bold"
-          onClick={closeModal}>
+const Modal = ({ children, isOpen, closeModal }) => {
+  if (!isOpen) return <div />
+
+  return ReactDOM.createPortal(
+    <article className={styles.modal}>
+      <div className={styles.modal_overlay} onClick={closeModal} />
+      <div className={styles.modal_content}>
+        <button className={styles.modal_closeBtn} onClick={closeModal}>
           X
         </button>
         {children}
       </div>
-    </article>
+    </article>,
+    document.getElementById('portales')
   )
 }
 

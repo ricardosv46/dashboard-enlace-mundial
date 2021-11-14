@@ -9,7 +9,6 @@
 }
 
 .modal_overlay {
-  z-index: 1201;
   position: absolute;
   inset: 0;
   width: 100%;
@@ -18,5 +17,9 @@
 }
 
 .modal_content {
-  @apply z-9999 shadow-lg rounded relative;
+  @apply z-9999 relative;
+}
+
+.modal_closeBtn {
+  @apply absolute top-4 right-4 bg-primary text-white w-10 h-10 rounded-full text-3xl font-bold;
 }

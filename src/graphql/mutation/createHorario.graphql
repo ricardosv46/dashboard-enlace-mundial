@@ -1,0 +1,10 @@
+mutation CreateHorarioTour($input:HorarioTourInput){
+  CreateHorarioTour(input:$input){
+    horarioTourId
+    hora
+    cupos
+    precio
+    estado
+    tourId
+  }
+}

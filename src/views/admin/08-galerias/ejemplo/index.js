@@ -27,6 +27,7 @@ const DragAndDrop = ({ onUpload = () => {} }) => {
   useEffect(() => {
     uppy.on('upload', () => {
       onUpload([...images])
+      images.clear()
     })
   }, [])
 

@@ -801,6 +801,13 @@ export type CreateCruceroMutationVariables = Exact<{
 
 export type CreateCruceroMutation = { __typename?: 'Mutation', CreateCrucero?: { __typename?: 'Crucero', cruceroId?: number | null | undefined, tituloCrucero?: string | null | undefined, slugCrucero?: string | null | undefined, estadoCrucero?: string | null | undefined, destacadoCrucero?: string | null | undefined, keywordsCrucero?: string | null | undefined, regionCrucero?: string | null | undefined, ciudadCrucero?: string | null | undefined, descripcionCortaCrucero?: string | null | undefined, descripcionLargaCrucero?: string | null | undefined, itinerarioCrucero?: string | null | undefined, puntoPartidaCrucero?: string | null | undefined, incluyeCrucero?: string | null | undefined, noIncluyeCrucero?: string | null | undefined, actividadesCrucero?: string | null | undefined, notasCrucero?: string | null | undefined, politicasCrucero?: string | null | undefined, videoPresentacionCrucero?: string | null | undefined, slugCategoria?: string | null | undefined, categoriaId?: string | null | undefined, imagenPrincipalCrucero?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined, imagenSecundariaCrucero?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined, galeriaCrucero?: Array<{ __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined> | null | undefined, Categoria?: { __typename?: 'Categoria', categoriaId?: number | null | undefined, slugCategoria?: string | null | undefined, tituloCategoria?: string | null | undefined, descripcion?: string | null | undefined, estadoCategoria?: string | null | undefined, keywordsCategoria?: string | null | undefined, imagenPrincipalCategoria?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined, imagenSecundariaCategoria?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined } | null | undefined } | null | undefined };
 
+export type CreateHorarioTourMutationVariables = Exact<{
+  input?: Maybe<HorarioTourInput>;
+}>;
+
+
+export type CreateHorarioTourMutation = { __typename?: 'Mutation', CreateHorarioTour?: { __typename?: 'HorarioTour', horarioTourId?: number | null | undefined, hora?: string | null | undefined, cupos?: number | null | undefined, precio?: number | null | undefined, estado?: string | null | undefined, tourId?: number | null | undefined } | null | undefined };
+
 export type CreateImageMutationVariables = Exact<{
   input?: Maybe<ImagenesInput>;
   imagen: Scalars['Upload'];
@@ -946,6 +953,15 @@ export type GetAllUsersQueryVariables = Exact<{
 
 export type GetAllUsersQuery = { __typename?: 'Query', GetAllUsers?: { __typename?: 'GetAllUsers', nroTotalItems?: number | null | undefined, data?: Array<{ __typename?: 'User', userId?: string | null | undefined, nombre?: string | null | undefined, apellidos?: string | null | undefined, email?: string | null | undefined, estado?: string | null | undefined, apiToken?: string | null | undefined }> | null | undefined } | null | undefined };
 
+export type GetHorariosTourQueryVariables = Exact<{
+  anio?: Maybe<Scalars['String']>;
+  mes?: Maybe<Scalars['String']>;
+  tourId?: Maybe<Scalars['Int']>;
+}>;
+
+
+export type GetHorariosTourQuery = { __typename?: 'Query', GetHorariosTour?: Array<{ __typename?: 'HorarioTour', horarioTourId?: number | null | undefined, hora?: string | null | undefined, fecha?: string | null | undefined, cupos?: number | null | undefined, precio?: number | null | undefined, estado?: string | null | undefined, tourId?: number | null | undefined } | null | undefined> | null | undefined };
+
 export type GetImagenesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -1037,6 +1053,44 @@ export function useCreateCruceroMutation(baseOptions?: Apollo.MutationHookOption
 export type CreateCruceroMutationHookResult = ReturnType<typeof useCreateCruceroMutation>;
 export type CreateCruceroMutationResult = Apollo.MutationResult<CreateCruceroMutation>;
 export type CreateCruceroMutationOptions = Apollo.BaseMutationOptions<CreateCruceroMutation, CreateCruceroMutationVariables>;
+export const CreateHorarioTourDocument = gql`
+    mutation CreateHorarioTour($input: HorarioTourInput) {
+  CreateHorarioTour(input: $input) {
+    horarioTourId
+    hora
+    cupos
+    precio
+    estado
+    tourId
+  }
+}
+    `;
+export type CreateHorarioTourMutationFn = Apollo.MutationFunction<CreateHorarioTourMutation, CreateHorarioTourMutationVariables>;
+
+/**
+ * __useCreateHorarioTourMutation__
+ *
+ * To run a mutation, you first call `useCreateHorarioTourMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateHorarioTourMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createHorarioTourMutation, { data, loading, error }] = useCreateHorarioTourMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateHorarioTourMutation(baseOptions?: Apollo.MutationHookOptions<CreateHorarioTourMutation, CreateHorarioTourMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateHorarioTourMutation, CreateHorarioTourMutationVariables>(CreateHorarioTourDocument, options);
+      }
+export type CreateHorarioTourMutationHookResult = ReturnType<typeof useCreateHorarioTourMutation>;
+export type CreateHorarioTourMutationResult = Apollo.MutationResult<CreateHorarioTourMutation>;
+export type CreateHorarioTourMutationOptions = Apollo.BaseMutationOptions<CreateHorarioTourMutation, CreateHorarioTourMutationVariables>;
 export const CreateImageDocument = gql`
     mutation CreateImage($input: ImagenesInput, $imagen: Upload!) {
   CreateImage(input: $input, imagen: $imagen) {
@@ -2101,6 +2155,49 @@ export function useGetAllUsersLazyQuery(baseOptions?: Apollo.LazyQueryHookOption
 export type GetAllUsersQueryHookResult = ReturnType<typeof useGetAllUsersQuery>;
 export type GetAllUsersLazyQueryHookResult = ReturnType<typeof useGetAllUsersLazyQuery>;
 export type GetAllUsersQueryResult = Apollo.QueryResult<GetAllUsersQuery, GetAllUsersQueryVariables>;
+export const GetHorariosTourDocument = gql`
+    query GetHorariosTour($anio: String, $mes: String, $tourId: Int) {
+  GetHorariosTour(anio: $anio, mes: $mes, tourId: $tourId) {
+    horarioTourId
+    hora
+    fecha
+    cupos
+    precio
+    estado
+    tourId
+  }
+}
+    `;
+
+/**
+ * __useGetHorariosTourQuery__
+ *
+ * To run a query within a React component, call `useGetHorariosTourQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetHorariosTourQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetHorariosTourQuery({
+ *   variables: {
+ *      anio: // value for 'anio'
+ *      mes: // value for 'mes'
+ *      tourId: // value for 'tourId'
+ *   },
+ * });
+ */
+export function useGetHorariosTourQuery(baseOptions?: Apollo.QueryHookOptions<GetHorariosTourQuery, GetHorariosTourQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetHorariosTourQuery, GetHorariosTourQueryVariables>(GetHorariosTourDocument, options);
+      }
+export function useGetHorariosTourLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetHorariosTourQuery, GetHorariosTourQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetHorariosTourQuery, GetHorariosTourQueryVariables>(GetHorariosTourDocument, options);
+        }
+export type GetHorariosTourQueryHookResult = ReturnType<typeof useGetHorariosTourQuery>;
+export type GetHorariosTourLazyQueryHookResult = ReturnType<typeof useGetHorariosTourLazyQuery>;
+export type GetHorariosTourQueryResult = Apollo.QueryResult<GetHorariosTourQuery, GetHorariosTourQueryVariables>;
 export const GetImagenesDocument = gql`
     query GetImagenes {
   GetImagenes {
