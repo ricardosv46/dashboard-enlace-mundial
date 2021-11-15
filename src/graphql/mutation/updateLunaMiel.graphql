@@ -1,34 +1,34 @@
-mutation UpdateTour($input:TourInput){
-  UpdateTour(input:$input) {
-    tourId
-    tituloTour
-    slugTour
-    regionTour
-    ciudadTour
-    estadoTour
-    destacadoTour
-    keywordsTour
-    descripcionCortaTour
-    descripcionLargaTour
-    itinerarioTour
-    puntoPartidaTour
-    incluyeTour
-    noIncluyeTour
-    actividadesTour
-    notasTour
-    politicasTour
-    videoPresentacionTour
-    imagenPrincipalTour {
+mutation UpdateLunaMiel($input:LunaMielInput){
+  UpdateLunaMiel(input:$input) {
+    lunaMielId
+    tituloLuna
+    slugLuna
+    estadoLuna
+    destacadoLuna
+    keywordsLuna
+    regionLuna
+    ciudadLuna
+    descripcionCortaLuna
+    descripcionLargaLuna
+    itinerarioLuna
+    puntoPartidaLuna
+    incluyeLuna
+    noIncluyeLuna
+    actividadesLuna
+    notasLuna
+    politicasLuna
+    videoPresentacionLuna
+    imagenPrincipalLuna {
       id
       descripcion
       url
     }
-    imagenSecundariaTour {
+    imagenSecundariaLuna {
       id
       descripcion
       url
     }
-    galeriaTour {
+    galeriaLuna {
       id
       descripcion
       url

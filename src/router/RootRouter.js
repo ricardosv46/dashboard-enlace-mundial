@@ -52,7 +52,7 @@ const HomeRoutes = () => {
         />
         <Route
           exact
-          path="/luna-de-miel/editar-luna-de-miel"
+          path="/luna-de-miel/editar-luna-de-miel/:id"
           component={EditarLunaDeMiel}
         />
 

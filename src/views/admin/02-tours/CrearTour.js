@@ -54,7 +54,7 @@ const otherErrors = {}
 const CrearTour = () => {
   // console.log('othe', otherErrors)
   const { data: dataCategoria } = useCategoriasServices()
-  const { createTour } = useToursServices()
+  const { createTour, errorCreate } = useToursServices()
   // console.log(createTour)
   const { form, handleInputChange, handleBlur, errors, resetForm } = UseForm(
     initialForm,
@@ -125,6 +125,7 @@ const CrearTour = () => {
         slugCategoria: form.categorias,
         region: form.region,
         ciudad: form.ciudad,
+        keywords: eliminarDuplicado(keywords),
         estado: estado ? 'Activo' : 'Inactivo',
         destacado: destacado ? 'Activo' : 'Inactivo',
         descripcionCorta: form.descripcionCorta,
@@ -141,15 +142,28 @@ const CrearTour = () => {
         idImgSecundaria: 3,
         galeria: []
       })
-      resetForm()
-      setActividades([])
-      setIncluye([])
-      setNoIncluye([])
-      setItinerario([])
-      setActividades([])
-      setNotas([])
-      setPoliticas([])
-      setKeywords([])
+      console.log(errorCreate)
+      if (errorCreate) {
+        swal({
+          title: 'ERROR',
+          text: 'OACURRIO UN ERROR EN EL SERVIDOR',
+          icon: 'error',
+          button: 'Aceptar',
+          timer: 2000
+        })
+      } else {
+        resetForm()
+        setActividades([])
+        setIncluye([])
+        setNoIncluye([])
+        setItinerario([])
+        setActividades([])
+        setNotas([])
+        setPoliticas([])
+        setKeywords([])
+        setDestacado(false)
+        setEstado(false)
+      }
     } else {
       swal({
         title: 'DATOS INCOMPLETOS',
@@ -183,7 +197,7 @@ const CrearTour = () => {
     if (politicas.length === 0) {
       otherErrors.politicas = '( Ingrese una política )'
     }
-  }, [])
+  }, [handleSubmit])
 
   return (
     <div className="shadow md:rounded bg-white p-5 py-10 md:p-10">
@@ -225,7 +239,6 @@ const CrearTour = () => {
               className="cursor-pointer w-full text-sm text-black transition ease-in duration-150 px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
               id="categorias"
               name="categorias"
-              autoComplete="off"
               onChange={handleInputChange}
               onBlur={handleBlur}
               required
@@ -260,7 +273,6 @@ const CrearTour = () => {
               className="cursor-pointer w-full text-sm text-black transition ease-in duration-150 px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
               id="region"
               name="region"
-              autoComplete="off"
               onChange={handleInputChange}
               onBlur={handleBlur}
             >
@@ -290,7 +302,6 @@ const CrearTour = () => {
               className="cursor-pointer w-full text-sm text-black transition ease-in duration-150 px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
               id="ciudad"
               name="ciudad"
-              autoComplete="off"
               onChange={handleInputChange}
               onBlur={handleBlur}
               required

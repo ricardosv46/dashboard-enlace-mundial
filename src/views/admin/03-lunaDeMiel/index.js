@@ -47,7 +47,7 @@ const LunaDeMiel = () => {
         <BtnAccionesCalendary
           handleEdit={() =>
             history.push(
-              `/tour/editar-tour/${lunaMiel.lunaMielId}`,
+              `/luna-de-miel/editar-luna-de-miel/${lunaMiel?.slugLuna}`,
               lunaMiel
             )
           }

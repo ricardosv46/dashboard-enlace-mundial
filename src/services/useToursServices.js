@@ -63,7 +63,8 @@ export const useToursServices = () => {
     idImgPrincipal,
     idImgSecundaria,
     slugCategoria,
-    galeria
+    galeria,
+    keywords
   }) => {
     if (loadingCreate === false) {
       const res = await createTourMutation({
@@ -74,6 +75,7 @@ export const useToursServices = () => {
             ciudadTour: ciudad,
             estadoTour: estado,
             destacadoTour: destacado,
+            keywordsTour: keywords.join(','),
             descripcionCortaTour: descripcionCorta,
             descripcionLargaTour: descripcionLarga,
             itinerarioTour: itinerario.join(','),
@@ -91,17 +93,10 @@ export const useToursServices = () => {
           }
         }
       }).catch((error) => console.error('que error', error))
-      console.log(res)
+      console.log(res, errorCreate)
       refetch()
-      if (errorCreate) {
-        swal({
-          title: 'ERROR',
-          text: 'Surgio un Error, vuelva a intentarlo',
-          icon: 'warning',
-          button: 'Aceptar',
-          timer: 2000
-        })
-      } else {
+
+      if (!errorCreate) {
         swal({
           title: 'CREAR',
           text: 'Se creo correctamente el Tour',
@@ -161,7 +156,8 @@ export const useToursServices = () => {
     idImgPrincipal,
     idImgSecundaria,
     slugCategoria,
-    galeria
+    galeria,
+    keywords
   }) => {
     if (loadingUpdate === false) {
       const res = await updateTourMutation({
@@ -173,6 +169,7 @@ export const useToursServices = () => {
             ciudadTour: ciudad,
             estadoTour: estado,
             destacadoTour: destacado,
+            keywordsTour: keywords.join(','),
             descripcionCortaTour: descripcionCorta,
             descripcionLargaTour: descripcionLarga,
             itinerarioTour: itinerario.join(','),
@@ -190,20 +187,12 @@ export const useToursServices = () => {
           }
         }
       }).catch((error) => console.error('que error', error))
-      console.log(res)
       refetch()
-      if (errorUpdate) {
-        swal({
-          title: 'ERROR',
-          text: 'Surgio un Error, vuelva a intentarlo',
-          icon: 'warning',
-          button: 'Aceptar',
-          timer: 2000
-        })
-      } else {
+      console.log(res)
+      if (!errorUpdate) {
         swal({
           title: 'ACTUALIZAR',
-          text: 'Se creo correctamente el Tour',
+          text: 'Se actualizo correctamente el Tour',
           icon: 'success',
           button: 'Aceptar',
           timer: 2000
@@ -211,5 +200,15 @@ export const useToursServices = () => {
       }
     }
   }
-  return { db, loading, deleteTour, createTour, updateTour }
+  return {
+    db,
+    loading,
+    deleteTour,
+    createTour,
+    updateTour,
+    errorCreate,
+    errorUpdate,
+    loadingCreate,
+    loadingUpdate
+  }
 }
