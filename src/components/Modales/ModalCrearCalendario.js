@@ -24,6 +24,12 @@ const ModalCrearCalendario = ({ isOpen, closeModal, tourId }) => {
   const { loading, createHorario } = useHorariosServices()
 
   const handleChangeForm = (e) => {
+    if (e.target.name === 'cupos' || e.target.name === 'precio') {
+      if (e.target.value < 0) {
+        return
+      }
+    }
+
     setFormFecha((prev) => ({
       ...prev,
       [e.target.name]: e.target.value
@@ -72,9 +78,7 @@ const ModalCrearCalendario = ({ isOpen, closeModal, tourId }) => {
         <form onSubmit={handleSubmit} className="w-full mt-4 max-w-80">
           <p className="text-center font-semibold text-xl text-gray-600">
             Fecha:{' '}
-            {`${selectedDay.day} - ${selectedDay.month} - ${
-              selectedDay.year
-            }`}
+            {`${selectedDay.day} - ${selectedDay.month} - ${selectedDay.year}`}
           </p>
           {/* Inputs  */}
           <div className="w-full  grid grid-cols-2 gap-3 mt-5">
@@ -143,8 +147,8 @@ const ModalCrearCalendario = ({ isOpen, closeModal, tourId }) => {
                 value={formFecha.estado}
                 onChange={handleChangeForm}
               >
-                <option value="activo">Activo</option>
-                <option value="inactivo">Inactivo</option>
+                <option value="1">Activo</option>
+                <option value="0">Inactivo</option>
               </select>
             </div>
           </div>

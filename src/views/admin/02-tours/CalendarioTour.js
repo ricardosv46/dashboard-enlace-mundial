@@ -23,6 +23,7 @@ const CalendarioTour = () => {
   const { data, loading } = useHorariosServices(id)
 
   const armarFilas = (data) => {
+    console.log('data horarios ', data)
     const filas = data.map((horario) => ({
       fecha: horario.fecha,
       horario: horario.hora,
