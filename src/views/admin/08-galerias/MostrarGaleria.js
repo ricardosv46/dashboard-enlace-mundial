@@ -24,7 +24,7 @@ const MostrarGaleria = () => {
     console.log(galeria)
   }, [])
   return (
-    <div className=" flex flex-col gap-y-6 items-center gap-x-3 w-full shadow-lg sm:py-4 py-4 px-2">
+    <div className=" flex flex-col gap-y-6 items-center gap-x-3 w-full sm:py-4 py-4 px-2">
       <div className="   flex gap-2 flex-wrap">
         {galeria.map(
           (imagen, index) =>
