@@ -9,6 +9,7 @@ query GetAllTour($estadoTour:String,$page:Int,$numberPaginate:Int){
       ciudadTour
       estadoTour
       destacadoTour
+      keywordsTour
       descripcionCortaTour
       descripcionLargaTour
       itinerarioTour

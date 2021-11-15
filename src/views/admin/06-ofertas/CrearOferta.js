@@ -6,9 +6,14 @@ import { useHistory } from 'react-router'
 import { useModal } from '../../../hooks/useModal'
 import Galerias from '../08-galerias'
 import Modal from '../../../components/Modales/Modal'
+import { useState } from 'react'
 const CrearOferta = () => {
   const history = useHistory()
   const [isOpenModal, openModal, closeModal] = useModal(false)
+  const [incrementar, setIncrementar] = useState([])
+  const [text, setText] = useState('')
+  console.log(incrementar)
+
   return (
     <div className=" md:rounded bg-white px-4 md:px-10 py-10">
       <div className="flex justify-center pt-3 relative">
@@ -34,6 +39,8 @@ const CrearOferta = () => {
             name="titulo"
             label="Titulo"
             placeholder="Ingrese el Titulo"
+            onChange={(e) => setText(e.target.value)}
+            value={text}
           />
         </div>
         <div className="flex flex-col lg:flex-row lg:space-x-4 mb-5 gap-y-5">
@@ -77,6 +84,30 @@ const CrearOferta = () => {
           </Button>
         </div>
       </form>
+      <div className=" w-full mt-14 ">
+        <button className="" type="button" onClick={
+          () => {
+            setIncrementar([...incrementar, text])
+            setText('')
+          }
+        }>
+          agregar
+        </button>
+        <button className="m-2 p-3 bg-primary-50 " type="button" onClick={
+          () => {
+            incrementar.pop()
+            if (incrementar.length === 0) {
+              setIncrementar([])
+            }
+            console.log(incrementar.length)
+          }
+        }>
+          eliminar
+        </button>
+        <div className="block ">
+          {incrementar.length === 0 && 'hola'}
+        </div>
+      </div>
       <Modal closeModal={closeModal} isOpen={isOpenModal}>
         <Galerias opcion={true} />
       </Modal>

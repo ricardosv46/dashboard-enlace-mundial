@@ -57,18 +57,13 @@ const EditarTour = () => {
   const history = useHistory()
 
   const { state: objetoTour } = useLocation()
-
-  console.log('location', objetoTour)
-
-  // console.log('othe', otherErrors)
   const { data: dataCategoria } = useCategoriasServices()
-  const { updateTour } = useToursServices()
-  // console.log(createTour)
+  const { updateTour, errorUpdate } = useToursServices()
   const { form, handleInputChange, handleBlur, errors } = UseForm(
     initialForm,
     validationsForm
   )
-  console.log(form)
+
   const [isOpenModalGalria, openModalGaleria, closeModalGaleria] =
     useModal(false)
 
@@ -93,10 +88,14 @@ const EditarTour = () => {
   const [politicas, setPoliticas] = useState([])
   const [textPoliticas, setTextPoliticas] = useState('')
   const [notas, setNotas] = useState([])
-  // console.log(form)
+
   const eliminarItem = (value, data, setData) => {
-    const newData = data.filter((item) => item !== value)
-    setData(newData)
+    if (data.length === 0) {
+      setData([])
+    } else {
+      const newData = data.filter((item) => item !== value)
+      setData(newData)
+    }
   }
   const eliminarDuplicado = (data) => {
     const newData = new Set(data)
@@ -112,7 +111,7 @@ const EditarTour = () => {
     openModalGaleria()
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
 
     if (
@@ -124,7 +123,7 @@ const EditarTour = () => {
       keywords.length > 0 &&
       politicas.length > 0
     ) {
-      updateTour({
+      await updateTour({
         id: objetoTour.tourId,
         titulo: form.titulo,
         slugCategoria: form.categorias,
@@ -144,9 +143,22 @@ const EditarTour = () => {
         video: form.video,
         idImgPrincipal: 3,
         idImgSecundaria: 3,
+        keywords: eliminarDuplicado(keywords),
         galeria: []
       })
-      history.push('/tours')
+      console.log(errorUpdate)
+
+      if (errorUpdate) {
+        swal({
+          title: 'ERROR',
+          text: 'OACURRIO UN ERROR EN EL SERVIDOR',
+          icon: 'error',
+          button: 'Aceptar',
+          timer: 2000
+        })
+      } else {
+        history.push('/tours')
+      }
     } else {
       swal({
         title: 'DATOS INCOMPLETOS',
@@ -159,22 +171,43 @@ const EditarTour = () => {
   }
 
   useEffect(() => {
-    form.titulo = objetoTour.tituloTour
-    form.categorias = objetoTour.slugCategoria
-    form.region = objetoTour.regionTour
-    form.descripcionLarga = objetoTour.descripcionLargaTour
-    form.descripcionCorta = objetoTour.descripcionCortaTour
-    form.puntoPartida = objetoTour.puntoPartidaTour
-    form.video = objetoTour.videoPresentacionTour
-    setDestacado(objetoTour.destacadoTour === 'Activo' && true)
-    setEstado(objetoTour.estadoTour === 'Activo' && true)
-    setItinerario(objetoTour.itinerarioTour.split(','))
-    setIncluye(objetoTour.incluyeTour.split(','))
-    setNoIncluye(objetoTour.noIncluyeTour.split(','))
-    setActividades(objetoTour.actividadesTour.split(','))
-    setNotas(objetoTour.notasTour.split(','))
-    // setKeywords((objetoTour.notasTour).split(','))
-    setPoliticas(objetoTour.politicasTour.split(','))
+    form.titulo = objetoTour?.tituloTour
+    form.categorias = objetoTour?.slugCategoria
+    form.region = objetoTour?.regionTour
+    form.descripcionLarga = objetoTour?.descripcionLargaTour
+    form.descripcionCorta = objetoTour?.descripcionCortaTour
+    form.puntoPartida = objetoTour?.puntoPartidaTour
+    form.video = objetoTour?.videoPresentacionTour
+    setDestacado(objetoTour?.destacadoTour === 'Activo' && true)
+    setEstado(objetoTour?.estadoTour === 'Activo' && true)
+    setItinerario(objetoTour?.itinerarioTour.split(','))
+    setIncluye(objetoTour?.incluyeTour.split(','))
+    setNoIncluye(objetoTour?.noIncluyeTour.split(','))
+    setActividades(objetoTour?.actividadesTour.split(','))
+    setNotas(objetoTour?.notasTour.split(','))
+    setKeywords(objetoTour?.keywordsTour.split(','))
+    setPoliticas(objetoTour?.politicasTour.split(','))
+    if (itinerario.length === 0) {
+      otherErrors.itinerario = '( Ingrese al menos un Itinerario )'
+    }
+    if (incluye.length === 0) {
+      otherErrors.incluye = '( Ingrese al menos una opcion que incluya )'
+    }
+    if (noIncluye.length === 0) {
+      otherErrors.noIncluye = '( Ingrese una opcion que no incluya )'
+    }
+    if (actividades.length === 0) {
+      otherErrors.actividades = '( Ingrese al menos una actividad )'
+    }
+    if (notas.length === 0) {
+      otherErrors.notas = '( Ingrese al menos una nota )'
+    }
+    if (keywords.length === 0) {
+      otherErrors.keywords = '( Ingrese al menos una keyword )'
+    }
+    if (politicas.length === 0) {
+      otherErrors.politicas = '( Ingrese una política )'
+    }
   }, [])
 
   return (
@@ -217,7 +250,6 @@ const EditarTour = () => {
               className="cursor-pointer w-full text-sm text-black transition ease-in duration-150 px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
               id="categorias"
               name="categorias"
-              autoComplete="on"
               onChange={handleInputChange}
               onBlur={handleBlur}
               required
@@ -256,7 +288,6 @@ const EditarTour = () => {
               className="cursor-pointer w-full text-sm text-black transition ease-in duration-150 px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
               id="region"
               name="region"
-              autoComplete="off"
               onChange={handleInputChange}
               onBlur={handleBlur}
             >
@@ -290,7 +321,6 @@ const EditarTour = () => {
               className="cursor-pointer w-full text-sm text-black transition ease-in duration-150 px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
               id="ciudad"
               name="ciudad"
-              autoComplete="off"
               onChange={handleInputChange}
               onBlur={handleBlur}
               required
@@ -387,7 +417,7 @@ const EditarTour = () => {
                 }
               }}
             />
-            {otherErrors.itinerario && (
+            {itinerario.length === 0 && (
               <p className="text-sm text-red-500 font-medium mt-2 ml-1 absolute -top-2 left-15">
                 {otherErrors.itinerario}
               </p>
@@ -408,14 +438,6 @@ const EditarTour = () => {
                     ])
                     setTextItinerario('')
                   }
-                }
-              }}
-              onBlur={() => {
-                console.log(itinerario.length)
-                if (itinerario.length === 0) {
-                  otherErrors.itinerario = '( Ingrese al menos un Itinerario )'
-                } else {
-                  otherErrors.itinerario = false
                 }
               }}
               value={textItinerario}
@@ -454,7 +476,7 @@ const EditarTour = () => {
 
         <div className="flex flex-col lg:flex-row lg:space-x-4 items-start mb-5">
           <div className="w-full relative">
-            {otherErrors.incluye && (
+            {incluye.length === 0 && (
               <p className="text-sm text-red-500 font-medium mt-2 ml-1 absolute -top-2 left-12">
                 {otherErrors.incluye}
               </p>
@@ -485,14 +507,6 @@ const EditarTour = () => {
                   }
                 }
               }}
-              onBlur={() => {
-                if (incluye.length > 0) {
-                  otherErrors.incluye = ''
-                } else {
-                  otherErrors.incluye =
-                    '( Ingrese al menos una opcion que incluya )'
-                }
-              }}
               value={textIncluye}
             />
             <div className="flex flex-col gap-5 my-5">
@@ -510,7 +524,7 @@ const EditarTour = () => {
           </div>
 
           <div className="w-full relative">
-            {otherErrors.noIncluye && (
+            {noIncluye.length === 0 && (
               <p className="text-sm text-red-500 font-medium mt-2 ml-1 absolute -top-2 left-15">
                 {otherErrors.noIncluye}
               </p>
@@ -541,13 +555,6 @@ const EditarTour = () => {
                   }
                 }
               }}
-              onBlur={() => {
-                if (noIncluye.length > 0) {
-                  otherErrors.noIncluye = ''
-                } else {
-                  otherErrors.noIncluye = '(Ingrese una opcion que no incluya)'
-                }
-              }}
               value={textNoIncluye}
             />
             <div className="flex flex-col gap-5 my-5 ">
@@ -567,7 +574,7 @@ const EditarTour = () => {
 
         <div className="flex flex-col lg:flex-row lg:space-x-4 items-start mb-5">
           <div className="w-full relative">
-            {otherErrors.actividades && (
+            {actividades.length === 0 && (
               <p className="text-sm text-red-500 font-medium mt-2 ml-1 absolute -top-2 left-20">
                 {otherErrors.actividades}
               </p>
@@ -604,13 +611,6 @@ const EditarTour = () => {
                   }
                 }
               }}
-              onBlur={() => {
-                if (actividades.length > 0) {
-                  otherErrors.actividades = ''
-                } else {
-                  otherErrors.actividades = '(Ingrese al menos una actividad)'
-                }
-              }}
               value={textAactividades}
             />
             <div className="flex flex-col gap-5 my-5">
@@ -629,7 +629,7 @@ const EditarTour = () => {
             </div>
           </div>
           <div className="w-full relative">
-            {otherErrors.notas && (
+            {notas.length === 0 && (
               <p className="text-sm text-red-500 font-medium mt-2 ml-1 absolute -top-2 left-15">
                 {otherErrors.notas}
               </p>
@@ -660,13 +660,6 @@ const EditarTour = () => {
                   }
                 }
               }}
-              onBlur={() => {
-                if (notas.length > 0) {
-                  otherErrors.notas = ''
-                } else {
-                  otherErrors.notas = '(Ingrese al menos una nota)'
-                }
-              }}
               value={textNotas}
             />
 
@@ -687,7 +680,7 @@ const EditarTour = () => {
 
         <div className="flex flex-col lg:flex-row lg:space-x-4 items-start mb-5">
           <div className="w-full relative">
-            {otherErrors.keywords && (
+            {keywords.length === 0 && (
               <p className="text-sm text-red-500 font-medium mt-2 ml-1 absolute -top-2 left-15">
                 {otherErrors.keywords}
               </p>
@@ -718,13 +711,6 @@ const EditarTour = () => {
                   }
                 }
               }}
-              onBlur={() => {
-                if (keywords.length > 0) {
-                  otherErrors.keywords = ''
-                } else {
-                  otherErrors.keywords = '(Ingrese al menos una Keyword)'
-                }
-              }}
               value={textKeywords}
             />
             <div className="flex flex-col gap-5 my-5">
@@ -741,7 +727,7 @@ const EditarTour = () => {
             </div>
           </div>
           <div className="w-full relative">
-            {otherErrors.politicas && (
+            {politicas.length === 0 && (
               <p className="text-sm text-red-500 font-medium mt-2 ml-1 absolute -top-2 left-40">
                 {otherErrors.politicas}
               </p>
@@ -772,13 +758,6 @@ const EditarTour = () => {
                   }
                 }
               }}
-              onBlur={() => {
-                if (politicas.length > 0) {
-                  otherErrors.politicas = ''
-                } else {
-                  otherErrors.politicas = '( Ingrese una política )'
-                }
-              }}
               value={textPoliticas}
             />
 
@@ -804,6 +783,7 @@ const EditarTour = () => {
             type="text"
             onChange={handleInputChange}
             required
+            value={form.video}
           />
         </div>
 
@@ -838,7 +818,7 @@ const EditarTour = () => {
 
         <div className="my-10 text-center">
           <Button variant="primary" size="lg" type="submit">
-            EDITAR TOUR
+            ACTUALIZAR
           </Button>
         </div>
       </form>

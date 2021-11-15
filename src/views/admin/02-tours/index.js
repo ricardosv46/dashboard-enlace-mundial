@@ -13,6 +13,7 @@ const Tours = () => {
   const history = useHistory()
   const [dataBody, setDataBody] = useState([])
   const { db, loading, deleteTour } = useToursServices()
+  console.log('puto tour', db)
   const dataHead = [
     ['Id', 'min-w-4', 'left'],
     ['Foto', 'min-w-30 ', 'left'],
@@ -39,7 +40,7 @@ const Tours = () => {
         acciones: (
           <BtnAccionesCalendary
             handleEdit={() =>
-              history.push(`/tours/editar-tour/${tour?.tourId}`, tour)
+              history.push(`/tours/editar-tour/${tour?.slugTour}`, tour)
             }
             handleDelete={() => handleDeleteTour(tour)}
             handleCalendary={() =>

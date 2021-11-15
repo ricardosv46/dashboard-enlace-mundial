@@ -705,6 +705,7 @@ export type Tour = {
   imagenSecundariaTour?: Maybe<Imagenes>;
   incluyeTour?: Maybe<Scalars['String']>;
   itinerarioTour?: Maybe<Scalars['String']>;
+  keywordsTour?: Maybe<Scalars['String']>;
   noIncluyeTour?: Maybe<Scalars['String']>;
   notasTour?: Maybe<Scalars['String']>;
   politicasTour?: Maybe<Scalars['String']>;
@@ -730,6 +731,7 @@ export type TourInput = {
   imagenSecundariaTour?: Maybe<Scalars['Int']>;
   incluyeTour?: Maybe<Scalars['String']>;
   itinerarioTour?: Maybe<Scalars['String']>;
+  keywordsTour?: Maybe<Scalars['String']>;
   noIncluyeTour?: Maybe<Scalars['String']>;
   notasTour?: Maybe<Scalars['String']>;
   politicasTour?: Maybe<Scalars['String']>;
@@ -828,7 +830,7 @@ export type CreateTourMutationVariables = Exact<{
 }>;
 
 
-export type CreateTourMutation = { __typename?: 'Mutation', CreateTour?: { __typename?: 'Tour', tourId?: number | null | undefined, tituloTour?: string | null | undefined, slugTour?: string | null | undefined, regionTour?: string | null | undefined, ciudadTour?: string | null | undefined, estadoTour?: string | null | undefined, destacadoTour?: string | null | undefined, descripcionCortaTour?: string | null | undefined, descripcionLargaTour?: string | null | undefined, itinerarioTour?: string | null | undefined, puntoPartidaTour?: string | null | undefined, incluyeTour?: string | null | undefined, noIncluyeTour?: string | null | undefined, actividadesTour?: string | null | undefined, notasTour?: string | null | undefined, politicasTour?: string | null | undefined, videoPresentacionTour?: string | null | undefined, slugCategoria?: string | null | undefined, categoriaId?: string | null | undefined, imagenPrincipalTour?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined, imagenSecundariaTour?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined, galeriaTour?: Array<{ __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined> | null | undefined, Categoria?: { __typename?: 'Categoria', categoriaId?: number | null | undefined, slugCategoria?: string | null | undefined, tituloCategoria?: string | null | undefined, descripcion?: string | null | undefined, estadoCategoria?: string | null | undefined, keywordsCategoria?: string | null | undefined, imagenPrincipalCategoria?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined, imagenSecundariaCategoria?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined } | null | undefined } | null | undefined };
+export type CreateTourMutation = { __typename?: 'Mutation', CreateTour?: { __typename?: 'Tour', tourId?: number | null | undefined, tituloTour?: string | null | undefined, slugTour?: string | null | undefined, regionTour?: string | null | undefined, ciudadTour?: string | null | undefined, estadoTour?: string | null | undefined, destacadoTour?: string | null | undefined, keywordsTour?: string | null | undefined, descripcionCortaTour?: string | null | undefined, descripcionLargaTour?: string | null | undefined, itinerarioTour?: string | null | undefined, puntoPartidaTour?: string | null | undefined, incluyeTour?: string | null | undefined, noIncluyeTour?: string | null | undefined, actividadesTour?: string | null | undefined, notasTour?: string | null | undefined, politicasTour?: string | null | undefined, videoPresentacionTour?: string | null | undefined, slugCategoria?: string | null | undefined, categoriaId?: string | null | undefined, imagenPrincipalTour?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined, imagenSecundariaTour?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined, galeriaTour?: Array<{ __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined> | null | undefined, Categoria?: { __typename?: 'Categoria', categoriaId?: number | null | undefined, slugCategoria?: string | null | undefined, tituloCategoria?: string | null | undefined, descripcion?: string | null | undefined, estadoCategoria?: string | null | undefined, keywordsCategoria?: string | null | undefined, imagenPrincipalCategoria?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined, imagenSecundariaCategoria?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined } | null | undefined } | null | undefined };
 
 export type DeleteBlogMutationVariables = Exact<{
   input?: Maybe<BlogInput>;
@@ -879,6 +881,13 @@ export type DeleteTourMutationVariables = Exact<{
 
 export type DeleteTourMutation = { __typename?: 'Mutation', DeleteTour?: string | null | undefined };
 
+export type UpdateCruceroMutationVariables = Exact<{
+  input?: Maybe<CruceroInput>;
+}>;
+
+
+export type UpdateCruceroMutation = { __typename?: 'Mutation', UpdateCrucero?: { __typename?: 'Crucero', cruceroId?: number | null | undefined, tituloCrucero?: string | null | undefined, slugCrucero?: string | null | undefined, estadoCrucero?: string | null | undefined, destacadoCrucero?: string | null | undefined, keywordsCrucero?: string | null | undefined, regionCrucero?: string | null | undefined, ciudadCrucero?: string | null | undefined, descripcionCortaCrucero?: string | null | undefined, descripcionLargaCrucero?: string | null | undefined, itinerarioCrucero?: string | null | undefined, puntoPartidaCrucero?: string | null | undefined, incluyeCrucero?: string | null | undefined, noIncluyeCrucero?: string | null | undefined, actividadesCrucero?: string | null | undefined, notasCrucero?: string | null | undefined, politicasCrucero?: string | null | undefined, videoPresentacionCrucero?: string | null | undefined, slugCategoria?: string | null | undefined, categoriaId?: string | null | undefined, imagenPrincipalCrucero?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined, imagenSecundariaCrucero?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined, galeriaCrucero?: Array<{ __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined> | null | undefined, Categoria?: { __typename?: 'Categoria', categoriaId?: number | null | undefined, slugCategoria?: string | null | undefined, tituloCategoria?: string | null | undefined, descripcion?: string | null | undefined, estadoCategoria?: string | null | undefined, keywordsCategoria?: string | null | undefined, imagenPrincipalCategoria?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined, imagenSecundariaCategoria?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined } | null | undefined } | null | undefined };
+
 export type UpdateImageMutationVariables = Exact<{
   input?: Maybe<ImagenesInput>;
 }>;
@@ -886,12 +895,19 @@ export type UpdateImageMutationVariables = Exact<{
 
 export type UpdateImageMutation = { __typename?: 'Mutation', UpdateImage?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined };
 
+export type UpdateLunaMielMutationVariables = Exact<{
+  input?: Maybe<LunaMielInput>;
+}>;
+
+
+export type UpdateLunaMielMutation = { __typename?: 'Mutation', UpdateLunaMiel?: { __typename?: 'LunaMiel', lunaMielId?: number | null | undefined, tituloLuna?: string | null | undefined, slugLuna?: string | null | undefined, estadoLuna?: string | null | undefined, destacadoLuna?: string | null | undefined, keywordsLuna?: string | null | undefined, regionLuna?: string | null | undefined, ciudadLuna?: string | null | undefined, descripcionCortaLuna?: string | null | undefined, descripcionLargaLuna?: string | null | undefined, itinerarioLuna?: string | null | undefined, puntoPartidaLuna?: string | null | undefined, incluyeLuna?: string | null | undefined, noIncluyeLuna?: string | null | undefined, actividadesLuna?: string | null | undefined, notasLuna?: string | null | undefined, politicasLuna?: string | null | undefined, videoPresentacionLuna?: string | null | undefined, slugCategoria?: string | null | undefined, categoriaId?: string | null | undefined, imagenPrincipalLuna?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined, imagenSecundariaLuna?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined, galeriaLuna?: Array<{ __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined> | null | undefined, Categoria?: { __typename?: 'Categoria', categoriaId?: number | null | undefined, slugCategoria?: string | null | undefined, tituloCategoria?: string | null | undefined, descripcion?: string | null | undefined, estadoCategoria?: string | null | undefined, keywordsCategoria?: string | null | undefined, imagenPrincipalCategoria?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined, imagenSecundariaCategoria?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined } | null | undefined } | null | undefined };
+
 export type UpdateTourMutationVariables = Exact<{
   input?: Maybe<TourInput>;
 }>;
 
 
-export type UpdateTourMutation = { __typename?: 'Mutation', UpdateTour?: { __typename?: 'Tour', tourId?: number | null | undefined, tituloTour?: string | null | undefined, slugTour?: string | null | undefined, regionTour?: string | null | undefined, ciudadTour?: string | null | undefined, estadoTour?: string | null | undefined, destacadoTour?: string | null | undefined, descripcionCortaTour?: string | null | undefined, descripcionLargaTour?: string | null | undefined, itinerarioTour?: string | null | undefined, puntoPartidaTour?: string | null | undefined, incluyeTour?: string | null | undefined, noIncluyeTour?: string | null | undefined, actividadesTour?: string | null | undefined, notasTour?: string | null | undefined, politicasTour?: string | null | undefined, videoPresentacionTour?: string | null | undefined, slugCategoria?: string | null | undefined, categoriaId?: string | null | undefined, imagenPrincipalTour?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined, imagenSecundariaTour?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined, galeriaTour?: Array<{ __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined> | null | undefined, Categoria?: { __typename?: 'Categoria', categoriaId?: number | null | undefined, slugCategoria?: string | null | undefined, tituloCategoria?: string | null | undefined, descripcion?: string | null | undefined, estadoCategoria?: string | null | undefined, keywordsCategoria?: string | null | undefined, imagenPrincipalCategoria?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined, imagenSecundariaCategoria?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined } | null | undefined } | null | undefined };
+export type UpdateTourMutation = { __typename?: 'Mutation', UpdateTour?: { __typename?: 'Tour', tourId?: number | null | undefined, tituloTour?: string | null | undefined, slugTour?: string | null | undefined, regionTour?: string | null | undefined, ciudadTour?: string | null | undefined, estadoTour?: string | null | undefined, destacadoTour?: string | null | undefined, keywordsTour?: string | null | undefined, descripcionCortaTour?: string | null | undefined, descripcionLargaTour?: string | null | undefined, itinerarioTour?: string | null | undefined, puntoPartidaTour?: string | null | undefined, incluyeTour?: string | null | undefined, noIncluyeTour?: string | null | undefined, actividadesTour?: string | null | undefined, notasTour?: string | null | undefined, politicasTour?: string | null | undefined, videoPresentacionTour?: string | null | undefined, slugCategoria?: string | null | undefined, categoriaId?: string | null | undefined, imagenPrincipalTour?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined, imagenSecundariaTour?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined, galeriaTour?: Array<{ __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined> | null | undefined, Categoria?: { __typename?: 'Categoria', categoriaId?: number | null | undefined, slugCategoria?: string | null | undefined, tituloCategoria?: string | null | undefined, descripcion?: string | null | undefined, estadoCategoria?: string | null | undefined, keywordsCategoria?: string | null | undefined, imagenPrincipalCategoria?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined, imagenSecundariaCategoria?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined } | null | undefined } | null | undefined };
 
 export type GetAllBlogQueryVariables = Exact<{
   page?: Maybe<Scalars['Int']>;
@@ -941,7 +957,7 @@ export type GetAllTourQueryVariables = Exact<{
 }>;
 
 
-export type GetAllTourQuery = { __typename?: 'Query', GetAllTour?: { __typename?: 'GetAllTour', nroTotalItems?: number | null | undefined, data?: Array<{ __typename?: 'Tour', tourId?: number | null | undefined, tituloTour?: string | null | undefined, slugTour?: string | null | undefined, regionTour?: string | null | undefined, ciudadTour?: string | null | undefined, estadoTour?: string | null | undefined, destacadoTour?: string | null | undefined, descripcionCortaTour?: string | null | undefined, descripcionLargaTour?: string | null | undefined, itinerarioTour?: string | null | undefined, puntoPartidaTour?: string | null | undefined, incluyeTour?: string | null | undefined, noIncluyeTour?: string | null | undefined, actividadesTour?: string | null | undefined, notasTour?: string | null | undefined, politicasTour?: string | null | undefined, videoPresentacionTour?: string | null | undefined, slugCategoria?: string | null | undefined, categoriaId?: string | null | undefined, imagenPrincipalTour?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined, imagenSecundariaTour?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined, galeriaTour?: Array<{ __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined> | null | undefined, Categoria?: { __typename?: 'Categoria', categoriaId?: number | null | undefined, slugCategoria?: string | null | undefined, tituloCategoria?: string | null | undefined, descripcion?: string | null | undefined, estadoCategoria?: string | null | undefined, keywordsCategoria?: string | null | undefined, imagenPrincipalCategoria?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined, imagenSecundariaCategoria?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined } | null | undefined }> | null | undefined } | null | undefined };
+export type GetAllTourQuery = { __typename?: 'Query', GetAllTour?: { __typename?: 'GetAllTour', nroTotalItems?: number | null | undefined, data?: Array<{ __typename?: 'Tour', tourId?: number | null | undefined, tituloTour?: string | null | undefined, slugTour?: string | null | undefined, regionTour?: string | null | undefined, ciudadTour?: string | null | undefined, estadoTour?: string | null | undefined, destacadoTour?: string | null | undefined, keywordsTour?: string | null | undefined, descripcionCortaTour?: string | null | undefined, descripcionLargaTour?: string | null | undefined, itinerarioTour?: string | null | undefined, puntoPartidaTour?: string | null | undefined, incluyeTour?: string | null | undefined, noIncluyeTour?: string | null | undefined, actividadesTour?: string | null | undefined, notasTour?: string | null | undefined, politicasTour?: string | null | undefined, videoPresentacionTour?: string | null | undefined, slugCategoria?: string | null | undefined, categoriaId?: string | null | undefined, imagenPrincipalTour?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined, imagenSecundariaTour?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined, galeriaTour?: Array<{ __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined> | null | undefined, Categoria?: { __typename?: 'Categoria', categoriaId?: number | null | undefined, slugCategoria?: string | null | undefined, tituloCategoria?: string | null | undefined, descripcion?: string | null | undefined, estadoCategoria?: string | null | undefined, keywordsCategoria?: string | null | undefined, imagenPrincipalCategoria?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined, imagenSecundariaCategoria?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined } | null | undefined }> | null | undefined } | null | undefined };
 
 export type GetAllUsersQueryVariables = Exact<{
   page?: Maybe<Scalars['Int']>;
@@ -1222,6 +1238,7 @@ export const CreateTourDocument = gql`
     ciudadTour
     estadoTour
     destacadoTour
+    keywordsTour
     descripcionCortaTour
     descripcionLargaTour
     itinerarioTour
@@ -1513,6 +1530,91 @@ export function useDeleteTourMutation(baseOptions?: Apollo.MutationHookOptions<D
 export type DeleteTourMutationHookResult = ReturnType<typeof useDeleteTourMutation>;
 export type DeleteTourMutationResult = Apollo.MutationResult<DeleteTourMutation>;
 export type DeleteTourMutationOptions = Apollo.BaseMutationOptions<DeleteTourMutation, DeleteTourMutationVariables>;
+export const UpdateCruceroDocument = gql`
+    mutation UpdateCrucero($input: CruceroInput) {
+  UpdateCrucero(input: $input) {
+    cruceroId
+    tituloCrucero
+    slugCrucero
+    estadoCrucero
+    destacadoCrucero
+    keywordsCrucero
+    regionCrucero
+    ciudadCrucero
+    descripcionCortaCrucero
+    descripcionLargaCrucero
+    itinerarioCrucero
+    puntoPartidaCrucero
+    incluyeCrucero
+    noIncluyeCrucero
+    actividadesCrucero
+    notasCrucero
+    politicasCrucero
+    videoPresentacionCrucero
+    imagenPrincipalCrucero {
+      id
+      descripcion
+      url
+    }
+    imagenSecundariaCrucero {
+      id
+      descripcion
+      url
+    }
+    galeriaCrucero {
+      id
+      descripcion
+      url
+    }
+    slugCategoria
+    categoriaId
+    Categoria {
+      categoriaId
+      slugCategoria
+      tituloCategoria
+      descripcion
+      estadoCategoria
+      keywordsCategoria
+      imagenPrincipalCategoria {
+        id
+        descripcion
+        url
+      }
+      imagenSecundariaCategoria {
+        id
+        descripcion
+        url
+      }
+    }
+  }
+}
+    `;
+export type UpdateCruceroMutationFn = Apollo.MutationFunction<UpdateCruceroMutation, UpdateCruceroMutationVariables>;
+
+/**
+ * __useUpdateCruceroMutation__
+ *
+ * To run a mutation, you first call `useUpdateCruceroMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateCruceroMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateCruceroMutation, { data, loading, error }] = useUpdateCruceroMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpdateCruceroMutation(baseOptions?: Apollo.MutationHookOptions<UpdateCruceroMutation, UpdateCruceroMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateCruceroMutation, UpdateCruceroMutationVariables>(UpdateCruceroDocument, options);
+      }
+export type UpdateCruceroMutationHookResult = ReturnType<typeof useUpdateCruceroMutation>;
+export type UpdateCruceroMutationResult = Apollo.MutationResult<UpdateCruceroMutation>;
+export type UpdateCruceroMutationOptions = Apollo.BaseMutationOptions<UpdateCruceroMutation, UpdateCruceroMutationVariables>;
 export const UpdateImageDocument = gql`
     mutation UpdateImage($input: ImagenesInput) {
   UpdateImage(input: $input) {
@@ -1548,6 +1650,91 @@ export function useUpdateImageMutation(baseOptions?: Apollo.MutationHookOptions<
 export type UpdateImageMutationHookResult = ReturnType<typeof useUpdateImageMutation>;
 export type UpdateImageMutationResult = Apollo.MutationResult<UpdateImageMutation>;
 export type UpdateImageMutationOptions = Apollo.BaseMutationOptions<UpdateImageMutation, UpdateImageMutationVariables>;
+export const UpdateLunaMielDocument = gql`
+    mutation UpdateLunaMiel($input: LunaMielInput) {
+  UpdateLunaMiel(input: $input) {
+    lunaMielId
+    tituloLuna
+    slugLuna
+    estadoLuna
+    destacadoLuna
+    keywordsLuna
+    regionLuna
+    ciudadLuna
+    descripcionCortaLuna
+    descripcionLargaLuna
+    itinerarioLuna
+    puntoPartidaLuna
+    incluyeLuna
+    noIncluyeLuna
+    actividadesLuna
+    notasLuna
+    politicasLuna
+    videoPresentacionLuna
+    imagenPrincipalLuna {
+      id
+      descripcion
+      url
+    }
+    imagenSecundariaLuna {
+      id
+      descripcion
+      url
+    }
+    galeriaLuna {
+      id
+      descripcion
+      url
+    }
+    slugCategoria
+    categoriaId
+    Categoria {
+      categoriaId
+      slugCategoria
+      tituloCategoria
+      descripcion
+      estadoCategoria
+      keywordsCategoria
+      imagenPrincipalCategoria {
+        id
+        descripcion
+        url
+      }
+      imagenSecundariaCategoria {
+        id
+        descripcion
+        url
+      }
+    }
+  }
+}
+    `;
+export type UpdateLunaMielMutationFn = Apollo.MutationFunction<UpdateLunaMielMutation, UpdateLunaMielMutationVariables>;
+
+/**
+ * __useUpdateLunaMielMutation__
+ *
+ * To run a mutation, you first call `useUpdateLunaMielMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateLunaMielMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateLunaMielMutation, { data, loading, error }] = useUpdateLunaMielMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpdateLunaMielMutation(baseOptions?: Apollo.MutationHookOptions<UpdateLunaMielMutation, UpdateLunaMielMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateLunaMielMutation, UpdateLunaMielMutationVariables>(UpdateLunaMielDocument, options);
+      }
+export type UpdateLunaMielMutationHookResult = ReturnType<typeof useUpdateLunaMielMutation>;
+export type UpdateLunaMielMutationResult = Apollo.MutationResult<UpdateLunaMielMutation>;
+export type UpdateLunaMielMutationOptions = Apollo.BaseMutationOptions<UpdateLunaMielMutation, UpdateLunaMielMutationVariables>;
 export const UpdateTourDocument = gql`
     mutation UpdateTour($input: TourInput) {
   UpdateTour(input: $input) {
@@ -1558,6 +1745,7 @@ export const UpdateTourDocument = gql`
     ciudadTour
     estadoTour
     destacadoTour
+    keywordsTour
     descripcionCortaTour
     descripcionLargaTour
     itinerarioTour
@@ -2025,6 +2213,7 @@ export const GetAllTourDocument = gql`
       ciudadTour
       estadoTour
       destacadoTour
+      keywordsTour
       descripcionCortaTour
       descripcionLargaTour
       itinerarioTour

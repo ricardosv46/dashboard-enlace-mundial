@@ -2,7 +2,8 @@ import swal from 'sweetalert'
 import {
   useCreateLunaMielMutation,
   useDeleteLunaMielMutation,
-  useGetAllLunaMielQuery
+  useGetAllLunaMielQuery,
+  useUpdateLunaMielMutation
 } from '../generated/graphql'
 
 export const useLunaMielServices = () => {
@@ -24,16 +25,19 @@ export const useLunaMielServices = () => {
     }
   })
 
-  const [createLunaMielMutation, { loading: loadingUpadate }] =
-    useCreateLunaMielMutation({
-      onError: (err) => {
-        // validar errores
-        console.log(
-          'onError creacion Luna Miel',
-          err?.graphQLErrors[0]?.debugMessage
-        )
-      }
-    })
+  const [
+    createLunaMielMutation,
+    { loading: loadingUpadate, error: errorCreate }
+  ] = useCreateLunaMielMutation({
+    onError: (err) => {
+      // validar errores
+      console.log(
+        'onError creacion Luna Miel',
+        err?.graphQLErrors[0]?.debugMessage
+      )
+    }
+  })
+  // llamando al metodo updateTour
 
   const deleteLunaMiel = (lunaMiel) => {
     swal({
@@ -62,7 +66,18 @@ export const useLunaMielServices = () => {
       }
     })
   }
-
+  const [
+    updateLunaMielMutation,
+    { loading: loadingUpdate, error: errorUpdate }
+  ] = useUpdateLunaMielMutation({
+    onError: (err) => {
+      // validar errores
+      console.log(
+        'onError Update Luna Miel',
+        err?.graphQLErrors[0]?.debugMessage
+      )
+    }
+  })
   const createLunaMiel = async ({
     titulo,
     region,
@@ -114,15 +129,90 @@ export const useLunaMielServices = () => {
       }).catch((error) => console.error(' error', error))
       console.log(res)
       refetch()
-      swal({
-        title: 'CREAR',
-        text: 'Se creo correctamente la Luna Miel',
-        icon: 'success',
-        button: 'Aceptar',
-        timer: 2000
-      })
+      if (!errorCreate) {
+        swal({
+          title: 'CREAR',
+          text: 'Se creo correctamente la Luna Miel',
+          icon: 'success',
+          button: 'Aceptar',
+          timer: 2000
+        })
+      }
     }
   }
 
-  return { db, loading, deleteLunaMiel, createLunaMiel }
+  const updateLunaMiel = async ({
+    id,
+    titulo,
+    region,
+    ciudad,
+    estado,
+    destacado,
+    descripcionCorta,
+    descripcionLarga,
+    itinerario,
+    puntoPartida,
+    incluye,
+    noIncluye,
+    actividades,
+    notas,
+    politicas,
+    video,
+    idImgPrincipal,
+    idImgSecundaria,
+    slugCategoria,
+    galeria,
+    keywords
+  }) => {
+    if (loadingUpdate === false) {
+      const res = await updateLunaMielMutation({
+        variables: {
+          input: {
+            cruceroId: id,
+            tituloCrucero: titulo,
+            estadoCrucero: estado,
+            destacadoCrucero: destacado,
+            keywordsCrucero: keywords.join(','),
+            regionCrucero: region,
+            ciudadCrucero: ciudad,
+            descripcionCortaCrucero: descripcionCorta,
+            descripcionLargaCrucero: descripcionLarga,
+            itinerarioCrucero: itinerario.join(','),
+            puntoPartidaCrucero: puntoPartida,
+            incluyeCrucero: incluye.join(','),
+            noIncluyeCrucero: noIncluye.join(','),
+            actividadesCrucero: actividades.join(','),
+            notasCrucero: notas.join(','),
+            politicasCrucero: politicas.join(','),
+            videoPresentacionCrucero: video,
+            imagenPrincipalCrucero: idImgPrincipal,
+            imagenSecundariaCrucero: idImgSecundaria,
+            galeriaCrucero: galeria,
+            slugCategoria: slugCategoria
+          }
+        }
+      }).catch((error) => console.error('que error', error))
+      refetch()
+      console.log(res)
+      console.log(errorUpdate)
+      if (!errorUpdate) {
+        swal({
+          title: 'ACTUALIZAR',
+          text: 'Se actualizo correctamente la Luna Miel',
+          icon: 'success',
+          button: 'Aceptar',
+          timer: 2000
+        })
+      }
+    }
+  }
+  return {
+    db,
+    loading,
+    deleteLunaMiel,
+    createLunaMiel,
+    updateLunaMiel,
+    loadingUpdate,
+    errorUpdate
+  }
 }
