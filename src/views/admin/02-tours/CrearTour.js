@@ -85,10 +85,14 @@ const CrearTour = () => {
   const [politicas, setPoliticas] = useState([])
   const [textPoliticas, setTextPoliticas] = useState('')
   const [notas, setNotas] = useState([])
-  console.log('estado', estado, 'destacado', destacado)
+
   const eliminarItem = (value, data, setData) => {
-    const newData = data.filter((item) => item !== value)
-    setData(newData)
+    if (data.length === 0) {
+      setData([])
+    } else {
+      const newData = data.filter((item) => item !== value)
+      setData(newData)
+    }
   }
   const eliminarDuplicado = (data) => {
     const newData = new Set(data)
@@ -179,7 +183,7 @@ const CrearTour = () => {
     if (politicas.length === 0) {
       otherErrors.politicas = '( Ingrese una política )'
     }
-  }, [handleSubmit])
+  }, [])
 
   return (
     <div className="shadow md:rounded bg-white p-5 py-10 md:p-10">
@@ -316,7 +320,10 @@ const CrearTour = () => {
             >
               Estados
             </label>
-            <div onClick={() => setEstado(!estado)} className="ml-7  cursor-pointer">
+            <div
+              onClick={() => setEstado(!estado)}
+              className="ml-7  cursor-pointer"
+            >
               <BtnEstado estado={estado} />
             </div>
           </div>
@@ -327,7 +334,10 @@ const CrearTour = () => {
             >
               Destacado
             </label>
-            <div onClick={() => setDestacado(!destacado)} className="ml-7 cursor-pointer">
+            <div
+              onClick={() => setDestacado(!destacado)}
+              className="ml-7 cursor-pointer"
+            >
               <BtnDestacado estado={destacado} />
             </div>
           </div>
@@ -373,7 +383,7 @@ const CrearTour = () => {
                 }
               }}
             />
-            {otherErrors.itinerario && (
+            {itinerario.length === 0 && (
               <p className="text-sm text-red-500 font-medium mt-2 ml-1 absolute -top-2 left-15">
                 {otherErrors.itinerario}
               </p>
@@ -394,14 +404,6 @@ const CrearTour = () => {
                     ])
                     setTextItinerario('')
                   }
-                }
-              }}
-              onBlur={() => {
-                console.log(itinerario.length)
-                if (itinerario.length === 0) {
-                  otherErrors.itinerario = '( Ingrese al menos un Itinerario )'
-                } else {
-                  otherErrors.itinerario = false
                 }
               }}
               value={textItinerario}
@@ -440,7 +442,7 @@ const CrearTour = () => {
 
         <div className="flex flex-col lg:flex-row lg:space-x-4 items-start mb-5">
           <div className="w-full relative">
-            {otherErrors.incluye && (
+            {incluye.length === 0 && (
               <p className="text-sm text-red-500 font-medium mt-2 ml-1 absolute -top-2 left-12">
                 {otherErrors.incluye}
               </p>
@@ -471,14 +473,6 @@ const CrearTour = () => {
                   }
                 }
               }}
-              onBlur={() => {
-                if (incluye.length > 0) {
-                  otherErrors.incluye = ''
-                } else {
-                  otherErrors.incluye =
-                    '( Ingrese al menos una opcion que incluya )'
-                }
-              }}
               value={textIncluye}
             />
             <div className="flex flex-col gap-5 my-5">
@@ -496,7 +490,7 @@ const CrearTour = () => {
           </div>
 
           <div className="w-full relative">
-            {otherErrors.noIncluye && (
+            {noIncluye.length === 0 && (
               <p className="text-sm text-red-500 font-medium mt-2 ml-1 absolute -top-2 left-15">
                 {otherErrors.noIncluye}
               </p>
@@ -527,13 +521,6 @@ const CrearTour = () => {
                   }
                 }
               }}
-              onBlur={() => {
-                if (noIncluye.length > 0) {
-                  otherErrors.noIncluye = ''
-                } else {
-                  otherErrors.noIncluye = '(Ingrese una opcion que no incluya)'
-                }
-              }}
               value={textNoIncluye}
             />
             <div className="flex flex-col gap-5 my-5 ">
@@ -553,7 +540,7 @@ const CrearTour = () => {
 
         <div className="flex flex-col lg:flex-row lg:space-x-4 items-start mb-5">
           <div className="w-full relative">
-            {otherErrors.actividades && (
+            {actividades.length === 0 && (
               <p className="text-sm text-red-500 font-medium mt-2 ml-1 absolute -top-2 left-20">
                 {otherErrors.actividades}
               </p>
@@ -590,13 +577,6 @@ const CrearTour = () => {
                   }
                 }
               }}
-              onBlur={() => {
-                if (actividades.length > 0) {
-                  otherErrors.actividades = ''
-                } else {
-                  otherErrors.actividades = '(Ingrese al menos una actividad)'
-                }
-              }}
               value={textAactividades}
             />
             <div className="flex flex-col gap-5 my-5">
@@ -615,7 +595,7 @@ const CrearTour = () => {
             </div>
           </div>
           <div className="w-full relative">
-            {otherErrors.notas && (
+            {notas.length === 0 && (
               <p className="text-sm text-red-500 font-medium mt-2 ml-1 absolute -top-2 left-15">
                 {otherErrors.notas}
               </p>
@@ -646,13 +626,6 @@ const CrearTour = () => {
                   }
                 }
               }}
-              onBlur={() => {
-                if (notas.length > 0) {
-                  otherErrors.notas = ''
-                } else {
-                  otherErrors.notas = '(Ingrese al menos una nota)'
-                }
-              }}
               value={textNotas}
             />
 
@@ -673,7 +646,7 @@ const CrearTour = () => {
 
         <div className="flex flex-col lg:flex-row lg:space-x-4 items-start mb-5">
           <div className="w-full relative">
-            {otherErrors.keywords && (
+            {keywords.length === 0 && (
               <p className="text-sm text-red-500 font-medium mt-2 ml-1 absolute -top-2 left-15">
                 {otherErrors.keywords}
               </p>
@@ -704,13 +677,6 @@ const CrearTour = () => {
                   }
                 }
               }}
-              onBlur={() => {
-                if (keywords.length > 0) {
-                  otherErrors.keywords = ''
-                } else {
-                  otherErrors.keywords = '(Ingrese al menos una Keyword)'
-                }
-              }}
               value={textKeywords}
             />
             <div className="flex flex-col gap-5 my-5">
@@ -727,7 +693,7 @@ const CrearTour = () => {
             </div>
           </div>
           <div className="w-full relative">
-            {otherErrors.politicas && (
+            {politicas.length === 0 && (
               <p className="text-sm text-red-500 font-medium mt-2 ml-1 absolute -top-2 left-40">
                 {otherErrors.politicas}
               </p>
@@ -756,13 +722,6 @@ const CrearTour = () => {
                     setPoliticas((estado) => [...estado, textPoliticas.trim()])
                     setTextPoliticas('')
                   }
-                }
-              }}
-              onBlur={() => {
-                if (politicas.length > 0) {
-                  otherErrors.politicas = ''
-                } else {
-                  otherErrors.politicas = '( Ingrese una política )'
                 }
               }}
               value={textPoliticas}

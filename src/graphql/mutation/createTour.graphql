@@ -7,6 +7,7 @@ mutation CreateTour($input:TourInput){
     ciudadTour
     estadoTour
     destacadoTour
+    keywordsTour
     descripcionCortaTour
     descripcionLargaTour
     itinerarioTour
