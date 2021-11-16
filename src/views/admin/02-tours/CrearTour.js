@@ -751,9 +751,13 @@ const CrearTour = () => {
           />
         </div>
 
-        <div className="grid grid-cols-auto gap-4">
-          <SelectImage />
-          <SelectImage />
+        <div className="grid grid-cols-auto gap-4 max-w-4xl mx-auto">
+          <div className="aspect-w-16 aspect-h-9">
+            <SelectImage label="Agregar imagen principal" />
+          </div>
+          <div className="aspect-w-16 aspect-h-9">
+            <SelectImage label="Agregar imagen secundaria" />
+          </div>
         </div>
 
         <div className="flex flex-col gap-y-5 sm:flex-row lg:space-x-4 items-center mb-5 ">
