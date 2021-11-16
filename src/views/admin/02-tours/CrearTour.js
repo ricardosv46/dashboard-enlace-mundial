@@ -6,9 +6,6 @@ import ButtonBack from '../../../components/Buttons/ButtonBack'
 import InputText from '../../../components/Forms/InputText/InputText'
 import TextArea from '../../../components/Forms/TextArea'
 import Heading from '../../../components/Heading'
-// import Modal from '../../../components/Modales/Modal'
-// import Galerias from '../08-galerias'
-// import { ImgContext } from '../../../context/auth/ImgContext'
 import { useCategoriasServices } from '../../../services/useCategoriaServices'
 import UseForm from '../../../hooks/UseForm'
 import { Ciudades, Regiones } from '../../../data/dataPeru'
@@ -53,18 +50,12 @@ const validationsForm = (form) => {
 const otherErrors = {}
 
 const CrearTour = () => {
-  // console.log('othe', otherErrors)
   const { db: dataCategoria } = useCategoriasServices()
   const { createTour, errorCreate } = useToursServices()
-  // console.log(createTour)
   const { form, handleInputChange, handleBlur, errors, resetForm } = UseForm(
     initialForm,
     validationsForm
   )
-
-  // const { imgPrincipal, setImgPrincipal, imgSecundaria, setImgSecundaria, galeria } =
-  //   useContext(ImgContext)
-  // console.log(imgPrincipal, imgSecundaria)
 
   const [estado, setEstado] = useState(false)
   const [destacado, setDestacado] = useState(false)
@@ -82,7 +73,10 @@ const CrearTour = () => {
   const [politicas, setPoliticas] = useState([])
   const [textPoliticas, setTextPoliticas] = useState('')
   const [notas, setNotas] = useState([])
-
+  const [mainImage, setMainImage] = useState(null)
+  const [secondaryImage, setSecondaryImage] = useState(null)
+  const [galery, setGalery] = useState([])
+  // console.log(mainImage)
   const eliminarItem = (value, data, setData) => {
     if (data.length === 0) {
       setData([])
@@ -95,7 +89,7 @@ const CrearTour = () => {
     const newData = new Set(data)
     return [...newData]
   }
-
+  // console.log('la galeria es', eliminarDuplicado(galery))
   const handleSubmit = (e) => {
     e.preventDefault()
 
@@ -106,7 +100,10 @@ const CrearTour = () => {
       actividades.length > 0 &&
       notas.length > 0 &&
       keywords.length > 0 &&
-      politicas.length > 0
+      politicas.length > 0 &&
+      mainImage &&
+      secondaryImage &&
+      galery.length > 0
     ) {
       createTour({
         titulo: form.titulo,
@@ -126,11 +123,11 @@ const CrearTour = () => {
         notas: eliminarDuplicado(notas),
         politicas: eliminarDuplicado(politicas),
         video: form.video,
-        idImgPrincipal: 3,
-        idImgSecundaria: 3,
-        galeria: []
+        idImgPrincipal: mainImage,
+        idImgSecundaria: secondaryImage,
+        galeria: eliminarDuplicado(galery)
       })
-      console.log(errorCreate)
+      // console.log(errorCreate)
       if (errorCreate) {
         swal({
           title: 'ERROR',
@@ -151,6 +148,9 @@ const CrearTour = () => {
         setKeywords([])
         setDestacado(false)
         setEstado(false)
+        setMainImage(null)
+        setSecondaryImage(null)
+        setGalery([])
       }
     } else {
       swal({
@@ -764,13 +764,13 @@ const CrearTour = () => {
             {/* La propiedad onChange devuelve un objecto con id, url y descripcion */}
             <SelectImage
               label="Agregar imagen principal"
-              onChange={(img) => console.log(img)}
+              onChange={(img) => setMainImage(img.id)}
             />
           </div>
           <div className="aspect-w-16 aspect-h-9">
             <SelectImage
               label="Agregar imagen secundaria"
-              onChange={(img) => console.log(img)}
+              onChange={(img) => setSecondaryImage(img.id)}
             />
           </div>
         </div>
@@ -780,7 +780,13 @@ const CrearTour = () => {
         </p>
         {/* La propiedad value recibe un Array de objetos con id, url y descripcion */}
         {/* La propiedad onChange devuelve un Array de objetos con id, url y descripcion */}
-        <SelectMultiImages onChange={(imgs) => console.log(imgs)} />
+        <SelectMultiImages
+          onChange={(imgs) => {
+            setGalery([])
+            imgs.map((image) => setGalery([...galery, image.id]))
+            // console.log(imgs)
+          }}
+        />
 
         <div className="my-10 text-center">
           <Button variant="primary" size="lg" type="submit">

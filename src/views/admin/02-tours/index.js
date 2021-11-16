@@ -16,7 +16,7 @@ const Tours = () => {
 
   const dataHead = [
     ['Id', 'min-w-4', 'left'],
-    ['Foto', 'min-w-30 ', 'left'],
+    ['Foto', 'min-w-20 ', 'left'],
     ['Titulo', 'min-w-50', 'left'],
     ['Categoria', 'min-w-50', 'left'],
     ['Estado', '', 'center'],
@@ -31,7 +31,7 @@ const Tours = () => {
       return {
         id: tour?.tourId,
         imagen: (
-          <img src={tour?.imagenPrincipalTour?.url} className="w-26 h-22" />
+          <img src={tour?.imagenPrincipalTour?.url} className="w-16 h-10 object-cover" />
         ),
         nombre: tour?.tituloTour,
         categoria: tour?.Categoria?.tituloCategoria,
