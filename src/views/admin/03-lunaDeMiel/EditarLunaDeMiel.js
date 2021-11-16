@@ -15,7 +15,7 @@ import { useCategoriasServices } from '../../../services/useCategoriaServices'
 import UseForm from '../../../hooks/UseForm'
 import { Ciudades, Regiones } from '../../../data/dataPeru'
 import swal from 'sweetalert'
-import { useLocation } from 'react-router'
+import { useHistory, useLocation } from 'react-router'
 import BtnEstado from '../../../components/BtnEstado/BtnEstado'
 import { useLunaMielServices } from '../../../services/useLunaMielServices'
 const initialForm = {
@@ -54,16 +54,17 @@ const validationsForm = (form) => {
 const otherErrors = {}
 
 const EditarLunaDeMiel = () => {
-  // const history = useHistory()
+  const history = useHistory()
 
   const { state: objetoLuna } = useLocation()
   console.log(objetoLuna)
-  const { data: dataCategoria } = useCategoriasServices()
+  const { db: dataCategoria } = useCategoriasServices()
   const { updateLunaMiel, errorUpdate } = useLunaMielServices()
   const { form, handleInputChange, handleBlur, errors } = UseForm(
     initialForm,
     validationsForm
   )
+  console.log('objeto fomr', form)
 
   const [isOpenModalGalria, openModalGaleria, closeModalGaleria] =
     useModal(false)
@@ -158,7 +159,7 @@ const EditarLunaDeMiel = () => {
           timer: 2000
         })
       } else {
-        console.log('exito')
+        history.push('/luna-de-miel')
       }
     } else {
       swal({
@@ -175,6 +176,7 @@ const EditarLunaDeMiel = () => {
     form.titulo = objetoLuna?.tituloLuna
     form.categorias = objetoLuna?.slugCategoria
     form.region = objetoLuna?.regionLuna
+    form.ciudad = objetoLuna?.ciudadLuna
     form.descripcionLarga = objetoLuna?.descripcionLargaLuna
     form.descripcionCorta = objetoLuna?.descripcionCortaLuna
     form.puntoPartida = objetoLuna?.puntoPartidaLuna
@@ -253,6 +255,7 @@ const EditarLunaDeMiel = () => {
               name="categorias"
               onChange={handleInputChange}
               onBlur={handleBlur}
+              value={form.categorias}
               required
             >
               <option className="cursor-pointer" value="">
@@ -291,6 +294,7 @@ const EditarLunaDeMiel = () => {
               name="region"
               onChange={handleInputChange}
               onBlur={handleBlur}
+              value={form.region}
             >
               <option value="" className="cursor-pointer">
                 Selecciona una Region
@@ -299,7 +303,7 @@ const EditarLunaDeMiel = () => {
                 <option
                   key={region}
                   value={region}
-                  selected={region === objetoLuna.regionTour}
+                  selected={region === objetoLuna.regionLuna}
                 >
                   {region}
                 </option>
@@ -324,6 +328,7 @@ const EditarLunaDeMiel = () => {
               name="ciudad"
               onChange={handleInputChange}
               onBlur={handleBlur}
+              value={form.ciudad}
               required
             >
               <option value="" className="cursor-pointer">
@@ -333,7 +338,7 @@ const EditarLunaDeMiel = () => {
                 <option
                   key={ciudad}
                   value={ciudad}
-                  selected={ciudad === objetoLuna.ciudadTour}
+                  selected={ciudad === objetoLuna.ciudadLuna}
                 >
                   {ciudad}
                 </option>

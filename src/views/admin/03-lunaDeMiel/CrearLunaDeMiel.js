@@ -53,7 +53,7 @@ const validationsForm = (form) => {
 const otherErrors = {}
 const CrearLunaDeMiel = () => {
   // console.log('othe', otherErrors)
-  const { data: dataCategoria } = useCategoriasServices()
+  const { db: dataCategoria } = useCategoriasServices()
   const { createLunaMiel, errorCreate } = useLunaMielServices()
   // console.log(createTour)
   const { form, handleInputChange, handleBlur, errors, resetForm } = UseForm(
@@ -241,9 +241,10 @@ const CrearLunaDeMiel = () => {
               name="categorias"
               onChange={handleInputChange}
               onBlur={handleBlur}
+              value={form.categorias}
               required
             >
-              <option className="cursor-pointer" value="" selected>
+              <option className="cursor-pointer" value="" defaultValue>
                 Selecciona una Categoria
               </option>
               {dataCategoria.map((item) => (
@@ -275,8 +276,9 @@ const CrearLunaDeMiel = () => {
               name="region"
               onChange={handleInputChange}
               onBlur={handleBlur}
+              value={form.region}
             >
-              <option value="" className="cursor-pointer" selected>
+              <option value="" className="cursor-pointer" defaultValue>
                 Selecciona una Region
               </option>
               {Regiones.map((region) => (
@@ -305,8 +307,9 @@ const CrearLunaDeMiel = () => {
               onChange={handleInputChange}
               onBlur={handleBlur}
               required
+              value={form.ciudad}
             >
-              <option value="" className="cursor-pointer" selected>
+              <option value="" className="cursor-pointer" defaultValue>
                 Selecciona una Ciudad
               </option>
               {Ciudades(form.region).map((ciudad) => (

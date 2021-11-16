@@ -796,6 +796,13 @@ export type SuscripcionInput = {
   suscripcionId?: Maybe<Scalars['Int']>;
 };
 
+export type CreateCategoriaMutationVariables = Exact<{
+  input?: Maybe<CategoriaInput>;
+}>;
+
+
+export type CreateCategoriaMutation = { __typename?: 'Mutation', CreateCategoria?: { __typename?: 'Categoria', categoriaId?: number | null | undefined, slugCategoria?: string | null | undefined, tituloCategoria?: string | null | undefined, descripcion?: string | null | undefined, estadoCategoria?: string | null | undefined, keywordsCategoria?: string | null | undefined, imagenPrincipalCategoria?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined, imagenSecundariaCategoria?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined } | null | undefined };
+
 export type CreateCruceroMutationVariables = Exact<{
   input?: Maybe<CruceroInput>;
 }>;
@@ -880,6 +887,13 @@ export type DeleteTourMutationVariables = Exact<{
 
 
 export type DeleteTourMutation = { __typename?: 'Mutation', DeleteTour?: string | null | undefined };
+
+export type UpdateCategoriaMutationVariables = Exact<{
+  input?: Maybe<CategoriaInput>;
+}>;
+
+
+export type UpdateCategoriaMutation = { __typename?: 'Mutation', UpdateCategoria?: { __typename?: 'Categoria', categoriaId?: number | null | undefined, slugCategoria?: string | null | undefined, tituloCategoria?: string | null | undefined, descripcion?: string | null | undefined, estadoCategoria?: string | null | undefined, keywordsCategoria?: string | null | undefined, imagenPrincipalCategoria?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined, imagenSecundariaCategoria?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined } | null | undefined };
 
 export type UpdateCruceroMutationVariables = Exact<{
   input?: Maybe<CruceroInput>;
@@ -984,6 +998,54 @@ export type GetImagenesQueryVariables = Exact<{ [key: string]: never; }>;
 export type GetImagenesQuery = { __typename?: 'Query', GetImagenes?: Array<{ __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined }> | null | undefined };
 
 
+export const CreateCategoriaDocument = gql`
+    mutation CreateCategoria($input: CategoriaInput) {
+  CreateCategoria(input: $input) {
+    categoriaId
+    slugCategoria
+    tituloCategoria
+    descripcion
+    estadoCategoria
+    keywordsCategoria
+    imagenPrincipalCategoria {
+      id
+      descripcion
+      url
+    }
+    imagenSecundariaCategoria {
+      id
+      descripcion
+      url
+    }
+  }
+}
+    `;
+export type CreateCategoriaMutationFn = Apollo.MutationFunction<CreateCategoriaMutation, CreateCategoriaMutationVariables>;
+
+/**
+ * __useCreateCategoriaMutation__
+ *
+ * To run a mutation, you first call `useCreateCategoriaMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateCategoriaMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createCategoriaMutation, { data, loading, error }] = useCreateCategoriaMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateCategoriaMutation(baseOptions?: Apollo.MutationHookOptions<CreateCategoriaMutation, CreateCategoriaMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateCategoriaMutation, CreateCategoriaMutationVariables>(CreateCategoriaDocument, options);
+      }
+export type CreateCategoriaMutationHookResult = ReturnType<typeof useCreateCategoriaMutation>;
+export type CreateCategoriaMutationResult = Apollo.MutationResult<CreateCategoriaMutation>;
+export type CreateCategoriaMutationOptions = Apollo.BaseMutationOptions<CreateCategoriaMutation, CreateCategoriaMutationVariables>;
 export const CreateCruceroDocument = gql`
     mutation CreateCrucero($input: CruceroInput) {
   CreateCrucero(input: $input) {
@@ -1530,6 +1592,54 @@ export function useDeleteTourMutation(baseOptions?: Apollo.MutationHookOptions<D
 export type DeleteTourMutationHookResult = ReturnType<typeof useDeleteTourMutation>;
 export type DeleteTourMutationResult = Apollo.MutationResult<DeleteTourMutation>;
 export type DeleteTourMutationOptions = Apollo.BaseMutationOptions<DeleteTourMutation, DeleteTourMutationVariables>;
+export const UpdateCategoriaDocument = gql`
+    mutation UpdateCategoria($input: CategoriaInput) {
+  UpdateCategoria(input: $input) {
+    categoriaId
+    slugCategoria
+    tituloCategoria
+    descripcion
+    estadoCategoria
+    keywordsCategoria
+    imagenPrincipalCategoria {
+      id
+      descripcion
+      url
+    }
+    imagenSecundariaCategoria {
+      id
+      descripcion
+      url
+    }
+  }
+}
+    `;
+export type UpdateCategoriaMutationFn = Apollo.MutationFunction<UpdateCategoriaMutation, UpdateCategoriaMutationVariables>;
+
+/**
+ * __useUpdateCategoriaMutation__
+ *
+ * To run a mutation, you first call `useUpdateCategoriaMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateCategoriaMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateCategoriaMutation, { data, loading, error }] = useUpdateCategoriaMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpdateCategoriaMutation(baseOptions?: Apollo.MutationHookOptions<UpdateCategoriaMutation, UpdateCategoriaMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateCategoriaMutation, UpdateCategoriaMutationVariables>(UpdateCategoriaDocument, options);
+      }
+export type UpdateCategoriaMutationHookResult = ReturnType<typeof useUpdateCategoriaMutation>;
+export type UpdateCategoriaMutationResult = Apollo.MutationResult<UpdateCategoriaMutation>;
+export type UpdateCategoriaMutationOptions = Apollo.BaseMutationOptions<UpdateCategoriaMutation, UpdateCategoriaMutationVariables>;
 export const UpdateCruceroDocument = gql`
     mutation UpdateCrucero($input: CruceroInput) {
   UpdateCrucero(input: $input) {

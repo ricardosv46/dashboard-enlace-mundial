@@ -130,7 +130,7 @@ export const useToursServices = () => {
           text: 'Se elimino correctamente el tour',
           icon: 'success',
           button: 'Aceptar',
-          timer: 5000
+          timer: 2000
         })
       }
     })

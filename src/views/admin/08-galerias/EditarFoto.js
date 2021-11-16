@@ -51,6 +51,15 @@ const EditarFoto = ({
         <img src={image.url} alt={image.descripcion} className="h-50" />
       </div>
       <form onSubmit={handleSubmit}>
+      <div className="flex flex-col lg:flex-row lg:space-x-4 my-5">
+          <InputText
+            name="id"
+            label="ID"
+            placeholder="Ingrese una descripción para la imagén"
+            value={image.id}
+            disabled={true}
+          />
+        </div>
         <div className="flex flex-col lg:flex-row lg:space-x-4 my-5">
           <InputText
             name="descripcion"

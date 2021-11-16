@@ -83,7 +83,7 @@ const HomeRoutes = () => {
         <Route exact path="/categorias" component={Categorias} />
         <Route
           exact
-          path="/categorias/editar-categoria"
+          path="/categorias/editar-categoria/:id"
           component={EditarCategoria}
         />
         <Route
