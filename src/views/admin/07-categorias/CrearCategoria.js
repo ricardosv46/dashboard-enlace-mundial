@@ -35,8 +35,8 @@ const CrearCategoria = () => {
     initialForm,
     validationsForm
   )
-  const [mainImage, setMainImage] = useState()
-  const [secondaryImage, setSecondaryImage] = useState()
+  const [mainImage, setMainImage] = useState(null)
+  const [secondaryImage, setSecondaryImage] = useState(null)
 
   const [estado, setEstado] = useState(false)
   const [destacado, setDestacado] = useState(false)
@@ -220,15 +220,15 @@ const CrearCategoria = () => {
             {/* La propiedad value recibe un objecto con id, url y descripcion */}
             {/* La propiedad onChange devuelve un objecto con id, url y descripcion */}
             <SelectImage
-              label="Agregar imagen principal"
-              onChange={(img) => setMainImage(img.id)}
               value={mainImage}
+              label="Agregar imagen principal"
+              onChange={(img) => setMainImage(img)}
             />
           </div>
           <div className="aspect-w-16 aspect-h-9">
             <SelectImage
               label="Agregar imagen secundaria"
-              onChange={(img) => setSecondaryImage(img.id)}
+              onChange={(img) => setSecondaryImage(img)}
             />
           </div>
         </div>
