@@ -42,7 +42,7 @@ const SelectImage = ({
         onChange={handleSelect}
         closeModal={() => setIsOpen(false)}
       />
-    </>
+    </div>
   )
 }
 
