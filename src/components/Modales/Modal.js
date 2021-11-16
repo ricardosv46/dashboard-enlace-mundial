@@ -2,6 +2,8 @@ import ReactDOM from 'react-dom'
 import styles from './modal.module.css'
 
 const Modal = ({ children, isOpen, closeModal }) => {
+  console.log('modal open 3 ', isOpen)
+
   if (!isOpen) return <div />
 
   return ReactDOM.createPortal(

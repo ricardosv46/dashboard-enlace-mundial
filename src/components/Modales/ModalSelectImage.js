@@ -7,6 +7,7 @@ const ModalSelectImage = ({
   onChange = () => {},
   closeModal = () => {}
 }) => {
+  console.log('modal open 2 ', isOpen)
   const { imagenes } = useGaleriaServices()
 
   return (

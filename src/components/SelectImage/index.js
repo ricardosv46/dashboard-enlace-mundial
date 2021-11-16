@@ -25,18 +25,19 @@ const SelectImage = () => {
   }
 
   return (
-    <div
-      onClick={() => setIsOpen(true)}
-      className="aspect-w-16 aspect-h-9 cursor-pointer"
-    >
-      <div>{image ? renderImage() : renderAddImage()}</div>
-
+    <>
+      <div
+        onClick={() => setIsOpen(true)}
+        className="aspect-w-16 aspect-h-9 cursor-pointer"
+      >
+        <div>{image ? renderImage() : renderAddImage()}</div>
+      </div>
       <ModalSelectImage
         isOpen={isOpen}
         onChange={handleSelectImage}
         closeModal={() => setIsOpen(false)}
       />
-    </div>
+    </>
   )
 }
 

@@ -17,10 +17,12 @@ const dataHead = [
 ]
 
 const CalendarioTour = () => {
-  const [dataBody, setDataBody] = useState([])
   const [isOpenModalCrear, setIsOpenModalCrear] = useState(false)
   const { id } = useParams()
-  const { data, loading } = useHorariosServices(id)
+  const { data, loading, fetchTourHorario, createHorario } =
+    useHorariosServices(id)
+
+  console.log('data vista ', data)
 
   const armarFilas = (data) => {
     console.log('data horarios ', data)
@@ -31,21 +33,20 @@ const CalendarioTour = () => {
       precio: horario.precio,
       estado: horario.estado
     }))
-
-    if (filas.length > 0) {
-      setDataBody(filas)
-    }
+    return filas
   }
 
   useEffect(() => {
-    if (data.length > 0) {
-      armarFilas(data)
+    if (id) {
+      fetchTourHorario(id)
     }
-  }, [data])
+  }, [id])
 
   return (
     <>
       <ModalCrearCalendario
+        onCreateHorario={createHorario}
+        loading={loading}
         tourId={id}
         isOpen={isOpenModalCrear}
         closeModal={() => setIsOpenModalCrear(false)}
@@ -67,7 +68,7 @@ const CalendarioTour = () => {
         {loading ? (
           <Spinner />
         ) : (
-          <TableGeneral dataBody={dataBody} dataHead={dataHead} />
+          <TableGeneral dataBody={armarFilas(data)} dataHead={dataHead} />
         )}
       </div>
     </>

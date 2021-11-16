@@ -1,18 +1,22 @@
 import React, { useState } from 'react'
 import { Calendar, utils } from 'react-modern-calendar-datepicker'
-import { useHorariosServices } from '../../services/useHorariosServices'
 import Button from '../Buttons/Button'
 import Spinner from '../Spinner/Spinner'
 import Modal from './Modal'
 
-const ModalCrearCalendario = ({ isOpen, closeModal, tourId }) => {
+const ModalCrearCalendario = ({
+  isOpen,
+  closeModal,
+  tourId,
+  onCreateHorario = () => {},
+  loading
+}) => {
   const today = new Date()
   const todayValue = {
     year: today.getFullYear(),
     month: today.getMonth() + 1,
     day: today.getDate()
   }
-  console.log('today value ', todayValue)
   const [selectedDay, setSelectedDay] = useState(todayValue)
   const [formFecha, setFormFecha] = useState({
     cupos: '',
@@ -20,8 +24,6 @@ const ModalCrearCalendario = ({ isOpen, closeModal, tourId }) => {
     estado: '',
     hora: ''
   })
-
-  const { loading, createHorario } = useHorariosServices()
 
   const handleChangeForm = (e) => {
     if (e.target.name === 'cupos' || e.target.name === 'precio') {
@@ -38,7 +40,7 @@ const ModalCrearCalendario = ({ isOpen, closeModal, tourId }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    createHorario({
+    onCreateHorario({
       hora: formFecha.hora,
       cupos: formFecha.cupos,
       precio: formFecha.precio,

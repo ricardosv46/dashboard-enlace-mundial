@@ -5,19 +5,28 @@ import {
   useGetHorariosTourQuery
 } from '../generated/graphql'
 
-export const useHorariosServices = (id) => {
-  const [loading, setLoading] = useState(false)
+export const useHorariosServices = () => {
+  const [tourId, setTourId] = useState(null)
 
-  const { loading: loadingGet, data: dataHorarios } = useGetHorariosTourQuery({
+  const {
+    loading: loadingGet,
+    data: dataHorarios,
+    refetch
+  } = useGetHorariosTourQuery({
     fetchPolicy: 'network-only',
     variables: {
-      tourId: id,
+      tourId: tourId,
       anio: null,
       mes: null
     }
+    // onCompleted: (data) => {
+    //   if (data.GetHorariosTour) {
+    //     setData(data?.GetHorariosTour)
+    //   }
+    // }
   })
 
-  const data = dataHorarios ? dataHorarios?.GetHorariosTour : []
+  const data = dataHorarios ? dataHorarios.GetHorariosTour : []
 
   // MUTATION PARA CREAR HORARIO
   const [createHorarioMutation, { loading: loadingCreate }] =
@@ -48,20 +57,22 @@ export const useHorariosServices = (id) => {
         icon: 'success',
         timer: 1200
       })
+      refetch({
+        tourId: response?.data?.CreateHorarioTour.tourId,
+        anio: null,
+        mes: null
+      })
       console.log('horario creado ', response.data?.CreateHorarioTour)
       return 'ok'
     }
   }
 
-  if (loadingGet === true || loadingCreate === true) {
-    if (loading === false) {
-      setLoading(true)
-    }
-  } else {
-    if (loading === true) {
-      setLoading(false)
-    }
+  const fetchTourHorario = (id) => {
+    setTourId(id)
   }
 
-  return { data, loading, createHorario }
+  // pipes
+  const loading = loadingGet || loadingCreate
+  console.log('data query ', data)
+  return { data, loading, createHorario, fetchTourHorario }
 }
