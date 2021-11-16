@@ -21,49 +21,45 @@ const LunaDeMiel = () => {
   ]
 
   const history = useHistory()
-  const [dataBody, setDataBody] = useState([null])
-  const { db, loading, deleteLunaMiel } = useLunaMielServices()
+  const { db, deleteLunaMiel, loading, loadingDelete } = useLunaMielServices()
+  console.log('valor de data luna miel', db.length)
+  const [dataBody, setDataBody] = useState([])
+  // console.log('valor de data luna miel', dataBody)
+  console.log('valor loadind delete', loadingDelete)
+  useEffect(() => {
+    if (db.length >= 0) {
+      db.map((lunaMiel) =>
+        setDataBody([
+          ...dataBody,
 
-  console.log('data vista ', db)
-
-  const armarFilasLunaMiel = (
-    data,
-    setDataBody,
-    handleDeleteLunaMiel
-  ) => {
-    const filasLunaMiel = data.map((lunaMiel) => ({
-      id: lunaMiel?.lunaMielId,
-      imagen: (
-        <img
-          src={lunaMiel?.imagenPrincipalLuna?.url}
-          className="w-26 h-22"
-        />
-      ),
-      nombre: lunaMiel?.tituloLuna,
-      categoria: lunaMiel?.Categoria?.tituloCategoria,
-      estado: <BtnEstado estado={lunaMiel?.estadoLuna} />,
-      descatar: <BtnDestacado estado={false} />,
-      acciones: (
-        <BtnAccionesCalendary
-          handleEdit={() =>
-            history.push(
-              `/luna-de-miel/editar-luna-de-miel/${lunaMiel?.slugLuna}`,
-              lunaMiel
+          {
+            id: lunaMiel?.lunaMielId,
+            imagen: (
+              <img
+                src={lunaMiel?.imagenPrincipalLuna?.url}
+                className="w-26 h-22"
+              />
+            ),
+            nombre: lunaMiel?.tituloLuna,
+            categoria: lunaMiel?.Categoria?.tituloCategoria,
+            estado: <BtnEstado estado={lunaMiel?.estadoLuna} />,
+            descatar: <BtnDestacado estado={false} />,
+            acciones: (
+              <BtnAccionesCalendary
+                handleEdit={() =>
+                  history.push(
+                    `/luna-de-miel/editar-luna-de-miel/${lunaMiel?.slugLuna}`,
+                    lunaMiel
+                  )
+                }
+                handleDelete={() => deleteLunaMiel(lunaMiel)}
+              />
             )
           }
-          handleDelete={() => handleDeleteLunaMiel(lunaMiel)}
-        />
+        ])
       )
-    }))
-
-    if (filasLunaMiel.length >= 0) {
-      setDataBody(filasLunaMiel)
     }
-  }
-
-  useEffect(() => {
-    armarFilasLunaMiel(db, setDataBody, deleteLunaMiel)
-  }, [db, loading])
+  }, [db])
   return (
     <div className="shadow md:rounded bg-white p-5 py-10 md:p-10">
       <div className="flex justify-between mb-5">

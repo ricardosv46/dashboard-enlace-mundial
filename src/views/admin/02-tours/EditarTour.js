@@ -57,7 +57,7 @@ const EditarTour = () => {
   const history = useHistory()
 
   const { state: objetoTour } = useLocation()
-  const { data: dataCategoria } = useCategoriasServices()
+  const { db: dataCategoria } = useCategoriasServices()
   const { updateTour, errorUpdate } = useToursServices()
   const { form, handleInputChange, handleBlur, errors } = UseForm(
     initialForm,

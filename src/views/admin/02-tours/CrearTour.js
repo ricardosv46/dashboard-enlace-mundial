@@ -51,9 +51,10 @@ const validationsForm = (form) => {
   return errors
 }
 const otherErrors = {}
+
 const CrearTour = () => {
   // console.log('othe', otherErrors)
-  const { data: dataCategoria } = useCategoriasServices()
+  const { db: dataCategoria } = useCategoriasServices()
   const { createTour, errorCreate } = useToursServices()
   // console.log(createTour)
   const { form, handleInputChange, handleBlur, errors, resetForm } = UseForm(
@@ -228,6 +229,7 @@ const CrearTour = () => {
               name="categorias"
               onChange={handleInputChange}
               onBlur={handleBlur}
+              value={form.categorias}
               required
             >
               <option className="cursor-pointer" value="" selected>
@@ -262,6 +264,7 @@ const CrearTour = () => {
               name="region"
               onChange={handleInputChange}
               onBlur={handleBlur}
+              value={form.region}
             >
               <option value="" className="cursor-pointer" selected>
                 Selecciona una Region
@@ -292,6 +295,7 @@ const CrearTour = () => {
               onChange={handleInputChange}
               onBlur={handleBlur}
               required
+              value={form.ciudad}
             >
               <option value="" className="cursor-pointer" selected>
                 Selecciona una Ciudad

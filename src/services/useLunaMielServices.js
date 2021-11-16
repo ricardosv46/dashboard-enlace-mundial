@@ -16,7 +16,7 @@ export const useLunaMielServices = () => {
     }
   })
   const db = data ? data?.GetAllLunaMiel?.data : []
-  const [deleteLunaMielMutation] = useDeleteLunaMielMutation({
+  const [deleteLunaMielMutation, { loading: loadingDelete }] = useDeleteLunaMielMutation({
     onError: (err) => {
       // validar errores
       // eslint-disable-next-line eqeqeq
@@ -168,26 +168,26 @@ export const useLunaMielServices = () => {
       const res = await updateLunaMielMutation({
         variables: {
           input: {
-            cruceroId: id,
-            tituloCrucero: titulo,
-            estadoCrucero: estado,
-            destacadoCrucero: destacado,
-            keywordsCrucero: keywords.join(','),
-            regionCrucero: region,
-            ciudadCrucero: ciudad,
-            descripcionCortaCrucero: descripcionCorta,
-            descripcionLargaCrucero: descripcionLarga,
-            itinerarioCrucero: itinerario.join(','),
-            puntoPartidaCrucero: puntoPartida,
-            incluyeCrucero: incluye.join(','),
-            noIncluyeCrucero: noIncluye.join(','),
-            actividadesCrucero: actividades.join(','),
-            notasCrucero: notas.join(','),
-            politicasCrucero: politicas.join(','),
-            videoPresentacionCrucero: video,
-            imagenPrincipalCrucero: idImgPrincipal,
-            imagenSecundariaCrucero: idImgSecundaria,
-            galeriaCrucero: galeria,
+            lunaMielId: id,
+            tituloLuna: titulo,
+            estadoLuna: estado,
+            destacadoLuna: destacado,
+            keywordsLuna: keywords.join(','),
+            regionLuna: region,
+            ciudadLuna: ciudad,
+            descripcionCortaLuna: descripcionCorta,
+            descripcionLargaLuna: descripcionLarga,
+            itinerarioLuna: itinerario.join(','),
+            puntoPartidaLuna: puntoPartida,
+            incluyeLuna: incluye.join(','),
+            noIncluyeLuna: noIncluye.join(','),
+            actividadesLuna: actividades.join(','),
+            notasLuna: notas.join(','),
+            politicasLuna: politicas.join(','),
+            videoPresentacionLuna: video,
+            imagenPrincipalLuna: idImgPrincipal,
+            imagenSecundariaLuna: idImgSecundaria,
+            galeriaLuna: galeria,
             slugCategoria: slugCategoria
           }
         }
@@ -213,6 +213,7 @@ export const useLunaMielServices = () => {
     createLunaMiel,
     updateLunaMiel,
     loadingUpdate,
-    errorUpdate
+    errorUpdate,
+    loadingDelete
   }
 }

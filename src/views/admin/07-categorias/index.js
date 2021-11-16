@@ -12,16 +12,17 @@ import { useCategoriasServices } from '../../../services/useCategoriaServices'
 const Categorias = () => {
   const history = useHistory()
   const [dataBody, setDataBody] = useState([])
-  const { data, loading, deleteCategoria } = useCategoriasServices()
+  const { db, loading, deleteCategoria } = useCategoriasServices()
 
-  // console.log('data vista ', data)
+  console.log('data vista ', db)
 
   const dataHead = [
+    ['Id', 5, 'left'],
     ['Imagen', 20, 'left'],
     ['Nombre', 52, 'left'],
-    ['Estado', 20, 'center'],
+    ['Estado', 10, 'center'],
     ['Destacar', 10, 'center'],
-    ['Acciones', 24, 'center']
+    ['Acciones', 16, 'center']
   ]
 
   useEffect(() => {
@@ -31,10 +32,11 @@ const Categorias = () => {
       handleDeleteCategoria
     ) => {
       const filasCategorias = categorias.map((categoria) => ({
+        id: categoria.categoriaId,
         imagen: (
           <img
             src={categoria?.imagenPrincipalCategoria?.url}
-            className="w-26 h-22"
+            className="w-16 h-10 object-cover"
           />
         ),
         nombre: categoria?.tituloCategoria,
@@ -44,7 +46,7 @@ const Categorias = () => {
           <BtnAcciones
             handleEdit={() =>
               history.push(
-                `/categorias/editar-categoria/${categoria.categoriaId}`,
+                `/categorias/editar-categoria/${categoria?.slugCategoria}`,
                 categoria
               )
             }
@@ -53,12 +55,12 @@ const Categorias = () => {
         )
       }))
 
-      if (filasCategorias.length >= 0) {
+      if (filasCategorias.length > 0) {
         setDataBody(filasCategorias)
       }
     }
-    armarFilasCategorias(data, setDataBody, deleteCategoria)
-  }, [data, loading])
+    armarFilasCategorias(db, setDataBody, deleteCategoria)
+  }, [db, loading])
 
   return (
     <div className="shadow md:rounded bg-white p-5 py-10 md:p-10 mb-20 min-h-screen ">
