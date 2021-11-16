@@ -7,7 +7,7 @@ const BtnDestacado = ({ estado = false }) => {
     // <>
     //   <img src={estado ? destacoTrue : destacoFalse} className="w-6" />
     // </>
-    <div className="mx-auto block " >
+    <div className="flex justify-center " >
       {estado ? <IconHeartSolid /> : <IconHeartEmpty />}
     </div>
   )
