@@ -47,8 +47,12 @@ const EditarFoto = ({
       <h2 className="mt-10 md:text-2xl font-semibold tracking-wide mb-5 flex items-center mx-auto">
         Información de la Imágen
       </h2>
-      <div className="w-full md:w-60  mx-auto">
-        <img src={image.url} alt={image.descripcion} className="h-50" />
+      <div className="aspect-w-16 aspect-h-9">
+        <img
+          src={image.url}
+          alt={image.descripcion}
+          className="w-full h-full mx-auto"
+        />
       </div>
       <form onSubmit={handleSubmit}>
       <div className="flex flex-col lg:flex-row lg:space-x-4 my-5">

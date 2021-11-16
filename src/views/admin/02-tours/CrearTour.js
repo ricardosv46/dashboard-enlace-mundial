@@ -6,9 +6,8 @@ import ButtonBack from '../../../components/Buttons/ButtonBack'
 import InputText from '../../../components/Forms/InputText/InputText'
 import TextArea from '../../../components/Forms/TextArea'
 import Heading from '../../../components/Heading'
-import { useModal } from '../../../hooks/useModal'
-import Modal from '../../../components/Modales/Modal'
-import Galerias from '../08-galerias'
+// import Modal from '../../../components/Modales/Modal'
+// import Galerias from '../08-galerias'
 // import { ImgContext } from '../../../context/auth/ImgContext'
 import MostrarGaleria from '../08-galerias/MostrarGaleria'
 import { useCategoriasServices } from '../../../services/useCategoriaServices'
@@ -16,6 +15,7 @@ import UseForm from '../../../hooks/UseForm'
 import { Ciudades, Regiones } from '../../../data/dataPeru'
 import { useToursServices } from '../../../services/useToursServices'
 import swal from 'sweetalert'
+import SelectImage from '../../../components/SelectImage'
 import BtnEstado from '../../../components/BtnEstado/BtnEstado'
 const initialForm = {
   titulo: '',
@@ -62,14 +62,10 @@ const CrearTour = () => {
     validationsForm
   )
 
-  const [isOpenModalGalria, openModalGaleria, closeModalGaleria] =
-    useModal(false)
-
   // const { imgPrincipal, setImgPrincipal, imgSecundaria, setImgSecundaria, galeria } =
   //   useContext(ImgContext)
   // console.log(imgPrincipal, imgSecundaria)
 
-  const [seleccionarImagen, setSeleccionarImagen] = useState(1)
   const [estado, setEstado] = useState(false)
   const [destacado, setDestacado] = useState(false)
   const [incluye, setIncluye] = useState([])
@@ -98,15 +94,6 @@ const CrearTour = () => {
   const eliminarDuplicado = (data) => {
     const newData = new Set(data)
     return [...newData]
-  }
-  // console.log(incluye.join(','))
-  const handleImg1 = () => {
-    setSeleccionarImagen(1)
-    openModalGaleria()
-  }
-  const handleImg2 = () => {
-    setSeleccionarImagen(2)
-    openModalGaleria()
   }
 
   const handleSubmit = (e) => {
@@ -768,29 +755,9 @@ const CrearTour = () => {
           />
         </div>
 
-        <div className="flex flex-col gap-y-5 sm:flex-row lg:space-x-4 items-center mb-5 ">
-          <div className="sm:w-1/2 flex flex-col items-center justify-evenly w-full py-4 gap-y-5 shadow-lg">
-            <div className="max-w-30 max-h-30">
-              <img
-                src=""
-                alt=""
-                className="text-gray-500 text-md text-center w-full h-full object-cover "
-              />
-            </div>
-            <Button onClick={handleImg1} className="btn1">
-              Imágen Principal
-            </Button>
-          </div>
-          <div className="sm:w-1/2 flex flex-col gap-y-5 items-center justify-evenly w-full shadow-lg py-4">
-            <div className=" max-w-30 max-h-30 ">
-              <img
-                src=""
-                alt=""
-                className="text-gray-500 text-md text-center w-full h-full object-cover"
-              />
-            </div>
-            <Button onClick={handleImg2}>Imágen Secundaria</Button>
-          </div>
+        <div className="grid grid-cols-auto gap-4">
+          <SelectImage />
+          <SelectImage />
         </div>
 
         <div className="flex flex-col gap-y-5 sm:flex-row lg:space-x-4 items-center mb-5 ">
@@ -803,13 +770,6 @@ const CrearTour = () => {
           </Button>
         </div>
       </form>
-      <Modal closeModal={closeModalGaleria} isOpen={isOpenModalGalria}>
-        <Galerias
-          opcion="botonEscoger"
-          seleccionarImagen={seleccionarImagen}
-          closeModalGaleria={closeModalGaleria}
-        />
-      </Modal>
     </div>
   )
 }

@@ -222,7 +222,8 @@ const config = {
         480: '120rem'
       },
       height: (theme) => ({
-        ...theme('extendedSpacing')
+        ...theme('extendedSpacing'),
+        'screen-9/10': '90vh'
       }),
       minHeight: (theme) => ({
         ...theme('spacing'),
@@ -233,12 +234,12 @@ const config = {
         none: 'none'
       }),
       width: (theme) => ({
-        ...theme('extendedSpacing')
+        ...theme('extendedSpacing'),
+        'screen-9/10': '90vw'
       }),
       minWidth: (theme) => ({
         ...theme('spacing'),
-        ...theme('extendedSpacing'),
-        screen: '100vw'
+        ...theme('extendedSpacing')
       }),
       maxWidth: (theme) => ({
         ...theme('spacing'),
@@ -421,7 +422,7 @@ const config = {
     ringOpacity: [],
     ringWidth: [],
     rotate: [],
-    scale: ['group-hover'],
+    scale: ['group-hover', 'hover'],
     skew: [],
     space: ['responsive'],
     stroke: ['responsive'],
