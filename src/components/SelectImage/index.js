@@ -18,8 +18,7 @@ const SelectImage = ({
   const handleSelect = (img) => {
     setImage(img)
     onChange(img)
-    console.log(img)
-    // setIsOpen(false)
+    setIsOpen(false)
   }
 
   return (
@@ -30,11 +29,15 @@ const SelectImage = ({
       >
         {/* eslint-disable */}
         {!image ? (
-          <div className="grid place-items-center border border-gray-400 w-full h-full">
+          <div className="grid place-items-center border border-gray-200 w-full h-full rounded">
             <p className="text-gray-400">{label}</p>
           </div>
         ) : (
-          <Imagen src={image.url} alt={image.descripcion} />
+          <Imagen
+            src={image.url}
+            alt={image.descripcion}
+            className="rounded hover:shadow-lg transition-shadow"
+          />
         )}
       </div>
       <ModalSelectImage

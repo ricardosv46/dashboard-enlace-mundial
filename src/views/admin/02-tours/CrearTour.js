@@ -9,7 +9,6 @@ import Heading from '../../../components/Heading'
 // import Modal from '../../../components/Modales/Modal'
 // import Galerias from '../08-galerias'
 // import { ImgContext } from '../../../context/auth/ImgContext'
-import MostrarGaleria from '../08-galerias/MostrarGaleria'
 import { useCategoriasServices } from '../../../services/useCategoriaServices'
 import UseForm from '../../../hooks/UseForm'
 import { Ciudades, Regiones } from '../../../data/dataPeru'
@@ -17,6 +16,7 @@ import { useToursServices } from '../../../services/useToursServices'
 import swal from 'sweetalert'
 import SelectImage from '../../../components/SelectImage'
 import BtnEstado from '../../../components/BtnEstado/BtnEstado'
+import SelectMultiImages from '../../../components/SelectMultiImages'
 const initialForm = {
   titulo: '',
   categorias: '',
@@ -188,7 +188,7 @@ const CrearTour = () => {
   }, [handleSubmit])
 
   return (
-    <div className="shadow md:rounded bg-white p-5 py-10 md:p-10">
+    <div className=" md:rounded bg-white p-5 py-10 md:p-10">
       <div className="flex justify-center pt-3 relative">
         <ButtonBack />
 
@@ -196,7 +196,7 @@ const CrearTour = () => {
       </div>
       <form
         onSubmit={handleSubmit}
-        className="w-full lg:shadow-md lg:px-4 px-0 mx-auto py-10"
+        className="w-full lg:px-4 px-0 mx-auto py-10"
       >
         <div className="flex flex-col lg:flex-row lg:space-x-4 mb-5 gap-y-5">
           <div className="w-full">
@@ -755,18 +755,32 @@ const CrearTour = () => {
           />
         </div>
 
-        <div className="grid grid-cols-auto gap-4 max-w-4xl mx-auto">
+        <p className="mb-3 text-gray-700 text-left text-sm">
+          Agregar imagen principal y secundaria
+        </p>
+        <div className="grid grid-cols-auto gap-4 max-w-4xl mx-auto mb-5">
           <div className="aspect-w-16 aspect-h-9">
-            <SelectImage label="Agregar imagen principal" />
+            {/* La propiedad value recibe un objecto con id, url y descripcion */}
+            {/* La propiedad onChange devuelve un objecto con id, url y descripcion */}
+            <SelectImage
+              label="Agregar imagen principal"
+              onChange={(img) => console.log(img)}
+            />
           </div>
           <div className="aspect-w-16 aspect-h-9">
-            <SelectImage label="Agregar imagen secundaria" />
+            <SelectImage
+              label="Agregar imagen secundaria"
+              onChange={(img) => console.log(img)}
+            />
           </div>
         </div>
 
-        <div className="flex flex-col gap-y-5 sm:flex-row lg:space-x-4 items-center mb-5 ">
-          <MostrarGaleria />
-        </div>
+        <p className="mb-3 text-gray-700 text-left text-sm">
+          Agregar imagen a la galeria
+        </p>
+        {/* La propiedad value recibe un Array de objetos con id, url y descripcion */}
+        {/* La propiedad onChange devuelve un Array de objetos con id, url y descripcion */}
+        <SelectMultiImages onChange={(imgs) => console.log(imgs)} />
 
         <div className="my-10 text-center">
           <Button variant="primary" size="lg" type="submit">

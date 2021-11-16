@@ -1,0 +1,4 @@
+.grid_images {
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  @apply grid w-full h-full gap-4;
+}

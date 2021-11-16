@@ -2,25 +2,13 @@ import { useMemo } from 'react'
 
 import Modal from './Modal'
 // import Imagen from '../Image'
+import Image from '../Image'
 import useGaleriaServices from '../../services/useGaleriaServices'
 import { IconCircleOutline, IconCircleSolid } from '../../assets/icons/icons'
-import Image from '../Image'
-
-const Circle = ({ value }) => {
-  const circleStyle =
-    'w-5 h-5 absolute top-2 left-2 z-9999 group-hover:scale-105'
-  /* eslint-disable */
-  return value ? (
-    <IconCircleSolid className={circleStyle} />
-  ) : (
-    <IconCircleOutline className={circleStyle} />
-  )
-}
-/* eslint-enable */
 
 const ModalSelectImage = ({
   isOpen,
-  isMultiple = true,
+  isMultiple,
   onChange = () => {},
   closeModal = () => {}
 }) => {
@@ -48,18 +36,28 @@ const ModalSelectImage = ({
           <h2 className="mb-5 w-max">Selecciona una imagen</h2>
 
           <div className="grid grid-cols-auto gap-3">
-            {imagenes.map((image) => (
-              <div key={`modal-image-${image.id}`} className="relative group">
-                <Circle value={imagesSelected.has(image)} />
-                <Image
-                  lazy={false}
-                  src={image.url}
-                  alt={image.descripcion}
-                  onClick={() => handleSelectImage(image)}
-                  className="rounded cursor-pointer"
-                />
-              </div>
-            ))}
+            {imagenes.map((image) => {
+              const has = imagesSelected.has(image)
+              return (
+                <div key={`modal-image-${image.id}`} className="relative group">
+                  {/* eslint-disable */}
+                  {isMultiple ? (
+                    has ? (
+                      <IconCircleSolid className="w-5 h-5 absolute top-2 left-2 z-9999" />
+                    ) : (
+                      <IconCircleOutline className="w-5 h-5 absolute top-2 left-2 z-9999 opacity-0 group-hover:opacity-100" />
+                    )
+                  ) : null}
+                  <Image
+                    lazy={false}
+                    src={image.url}
+                    alt={image.descripcion}
+                    onClick={() => handleSelectImage(image)}
+                    className="rounded cursor-pointer"
+                  />
+                </div>
+              )
+            })}
           </div>
         </div>
       </div>
