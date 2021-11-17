@@ -24,7 +24,7 @@ const Cruceros = () => {
   const [dataBody, setDataBody] = useState([])
   const { db, loading, deleteCrucero } = useCruceroServices()
 
-  console.log('data vista ', db)
+  // console.log('data vista ', db)
 
   const armarFilasCrucero = (
     data,
@@ -47,7 +47,7 @@ const Cruceros = () => {
         <BtnAccionesCalendary
           handleEdit={() =>
             history.push(
-              `/tour/editar-tour/${crucero.cruceroId}`,
+              `/cruceros/editar-crucero/${crucero.cruceroId}`,
               crucero
             )
           }
@@ -56,7 +56,7 @@ const Cruceros = () => {
       )
     }))
 
-    if (filasCrucero.length >= 0) {
+    if (filasCrucero.length > 0) {
       setDataBody(filasCrucero)
     }
   }

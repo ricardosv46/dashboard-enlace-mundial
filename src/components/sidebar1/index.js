@@ -12,18 +12,18 @@ const Sidebar1 = ({ handleShowBtn }) => {
 
   return (
     <div className="text-primary font-semibold top-0 bg-white w-64 pl-10 lg:w-80 z-90 h-screen sticky shadow-lg">
-      <div className="flex items-center gap-x-3 relative">
+      <div className="flex items-center md:gap-x-3 relative">
         <img src={logo} className="pt-7 mb-5 cursor-pointer pr-3 w-50  " />
         <img
           src={iconDesplegar}
           alt=""
-          className="w-10 h-10 cursor-pointer p-1"
+          className={`w-5 h-5 cursor-pointer  ${showLogout}  transform -ml-2 md:ml-0`}
           onClick={() => {
-            setShowLogout(state => !state)
+            setShowLogout((state) => !state)
           }}
         />
         {showLogout && (
-          <div className="w-full rounded-lg shadow-md h-30 right-1 top-24 z-30 absolute px-10 flex items-center bg-white animate__animated animate__bounceInDown">
+          <div className="w-full rounded-lg shadow-md h-30 right-2 top-24 z-30 absolute px-10 flex items-center bg-white animate__animated animate__bounceInDown">
             <button
               className="btn btn-outline-blue w-full"
               onClick={() => {
@@ -31,7 +31,10 @@ const Sidebar1 = ({ handleShowBtn }) => {
                   type: types.logout
                 })
               }}
-            > Salir </button>
+            >
+              {' '}
+              Salir{' '}
+            </button>
           </div>
         )}
       </div>

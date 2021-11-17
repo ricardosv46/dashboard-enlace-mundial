@@ -22,7 +22,7 @@ const LunaDeMiel = () => {
 
   const history = useHistory()
   const { db, deleteLunaMiel, loading } = useLunaMielServices()
-  console.log('valor de data luna miel', db.length)
+  // console.log('valor de data luna miel', db.length)
   const [dataBody, setDataBody] = useState([])
 
   const armarFilasLunaMiel = (data, setDataBody, handleDeleteTour) => {

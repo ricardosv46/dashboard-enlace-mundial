@@ -32,7 +32,7 @@ export const useToursServices = () => {
   const [deleteTourMutation] = useDeleteTourMutation({
     onError: (err) => {
       // validar errores
-      console.log('', err?.graphQLErrors[0]?.debugMessage)
+      console.log('Error delete Tour', err?.graphQLErrors[0]?.debugMessage)
     }
   })
   // llamando al metodo updateTour

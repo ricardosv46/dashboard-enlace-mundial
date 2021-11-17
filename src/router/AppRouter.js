@@ -9,6 +9,7 @@ const AppRouter = () => {
   const {
     user: { logged }
   } = useContext(AuthContext)
+
   const [conexion, setConexion] = useState(navigator.onLine)
   useEffect(() => {
     const isOnline = () => {

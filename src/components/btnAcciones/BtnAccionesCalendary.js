@@ -14,7 +14,7 @@ const BtnAccionesCalendary = ({
     setShow(false)
   }, [handleDelete])
   return (
-    <div className="mx-auto w-8 flex flex-col  items-center  text-center animate__fadeIn animate__animated ">
+    <div className="mx-auto w-8 flex flex-col  items-center  text-center ">
       <p
         className={`${
           show ? 'text-black' : 'text-gray-500'

@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import BtnDestacado from '../../../components/BtnDestacado/BtnDestacado'
 import Button from '../../../components/Buttons/Button'
 import ButtonBack from '../../../components/Buttons/ButtonBack'
 import InputText from '../../../components/Forms/InputText/InputText'
@@ -45,7 +44,6 @@ const EditarCategoria = () => {
   const [textKeywords, setTextKeywords] = useState('')
   const [mainImage, setMainImage] = useState(null)
   const [secondaryImage, setSecondaryImage] = useState(null)
-
   const eliminarItem = (value, data, setData) => {
     if (data.length === 0) {
       setData([])
@@ -61,8 +59,7 @@ const EditarCategoria = () => {
   const handleSubmit = (e) => {
     e.preventDefault()
 
-    if (keywords.length > 0 && mainImage &&
-      secondaryImage) {
+    if (keywords.length > 0 && mainImage && secondaryImage) {
       updateCategoria({
         id: objetoCategoria.categoriaId,
         titulo: form.titulo,
@@ -70,10 +67,10 @@ const EditarCategoria = () => {
         estado: estado ? 'Activo' : 'Inactivo',
         destacado: destacado ? 'Activo' : 'Inactivo',
         descripcion: form.descripcion,
-        idImgPrincipal: mainImage,
-        idImgSecundaria: secondaryImage
+        idImgPrincipal: mainImage.id,
+        idImgSecundaria: secondaryImage.id
       })
-      console.log(errorUpdate)
+      // console.log(errorUpdate)
       if (errorUpdate) {
         swal({
           title: 'ERROR',
@@ -102,6 +99,8 @@ const EditarCategoria = () => {
     setDestacado(objetoCategoria?.destacadoCategoria === 'Activo' && true)
     setEstado(objetoCategoria?.estadoCategoria === 'Activo' && true)
     setKeywords(objetoCategoria?.keywordsCategoria.split(','))
+    setMainImage(objetoCategoria.imagenPrincipalCategoria)
+    setSecondaryImage(objetoCategoria.imagenSecundariaCategoria)
     if (keywords.length === 0) {
       otherErrors.keywords = '( Ingrese al menos una keyword )'
     }
@@ -199,20 +198,6 @@ const EditarCategoria = () => {
               <BtnEstado estado={estado} />
             </div>
           </div>
-          <div className="flex  items-center lg:w-full ml-4">
-            <label
-              htmlFor="destacado"
-              className="block text-gray-700 text-left text-sm"
-            >
-              Destacado
-            </label>
-            <div
-              onClick={() => setDestacado(!destacado)}
-              className="ml-7 cursor-pointer"
-            >
-              <BtnDestacado estado={destacado} />
-            </div>
-          </div>
         </div>
 
         <div className="flex flex-col  lg:space-x-4  mb-5">
@@ -240,13 +225,15 @@ const EditarCategoria = () => {
             {/* La propiedad onChange devuelve un objecto con id, url y descripcion */}
             <SelectImage
               label="Agregar imagen principal"
-              onChange={(img) => setMainImage(img.id)}
+              onChange={(img) => setMainImage(img)}
+              value={mainImage}
             />
           </div>
           <div className="aspect-w-16 aspect-h-9">
             <SelectImage
               label="Agregar imagen secundaria"
-              onChange={(img) => setSecondaryImage(img.id)}
+              onChange={(img) => setSecondaryImage(img)}
+              value={secondaryImage}
             />
           </div>
         </div>

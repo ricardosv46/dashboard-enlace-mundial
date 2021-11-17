@@ -68,7 +68,7 @@ const CrearCategoria = () => {
         idImgPrincipal: mainImage.id,
         idImgSecundaria: secondaryImage.id
       })
-      console.log(errorCreate)
+      // console.log(errorCreate)
       if (errorCreate) {
         swal({
           title: 'ERROR',

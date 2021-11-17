@@ -4,18 +4,15 @@ import BtnDestacado from '../../../components/BtnDestacado/BtnDestacado'
 import Button from '../../../components/Buttons/Button'
 import ButtonBack from '../../../components/Buttons/ButtonBack'
 import InputText from '../../../components/Forms/InputText/InputText'
-import InputToggle from '../../../components/Forms/InputToggle/InputToggle'
 import TextArea from '../../../components/Forms/TextArea'
 import Heading from '../../../components/Heading'
-import { useModal } from '../../../hooks/useModal'
-import Modal from '../../../components/Modales/Modal'
-import Galerias from '../08-galerias'
-// import { ImgContext } from '../../../context/auth/ImgContext'
-import MostrarGaleria from '../08-galerias/MostrarGaleria'
 import { useCategoriasServices } from '../../../services/useCategoriaServices'
 import UseForm from '../../../hooks/UseForm'
 import { Ciudades, Regiones } from '../../../data/dataPeru'
 import swal from 'sweetalert'
+import SelectImage from '../../../components/SelectImage'
+import BtnEstado from '../../../components/BtnEstado/BtnEstado'
+import SelectMultiImages from '../../../components/SelectMultiImages'
 import { useCruceroServices } from '../../../services/useCruceroServices'
 const initialForm = {
   titulo: '',
@@ -51,23 +48,15 @@ const validationsForm = (form) => {
   return errors
 }
 const otherErrors = {}
+
 const CrearCrucero = () => {
-  const { data: dataCategoria } = useCategoriasServices()
-  const { createCrucero } = useCruceroServices()
-  // console.log(createTour)
+  const { db: dataCategoria } = useCategoriasServices()
+  const { createCrucero, errorCreate } = useCruceroServices()
   const { form, handleInputChange, handleBlur, errors, resetForm } = UseForm(
     initialForm,
     validationsForm
   )
 
-  const [isOpenModalGalria, openModalGaleria, closeModalGaleria] =
-    useModal(false)
-
-  // const { imgPrincipal, setImgPrincipal, imgSecundaria, setImgSecundaria, galeria } =
-  //   useContext(ImgContext)
-  // console.log(imgPrincipal, imgSecundaria)
-
-  const [seleccionarImagen, setSeleccionarImagen] = useState(1)
   const [estado, setEstado] = useState(false)
   const [destacado, setDestacado] = useState(false)
   const [incluye, setIncluye] = useState([])
@@ -78,32 +67,29 @@ const CrearCrucero = () => {
   const [textAactividades, setTextActividaes] = useState('')
   const [textItinerario, setTextItinerario] = useState('')
   const [itinerario, setItinerario] = useState([])
-  console.log('itinerario es ', itinerario)
   const [textNotas, setTextNotas] = useState('')
   const [keywords, setKeywords] = useState([])
   const [textKeywords, setTextKeywords] = useState('')
   const [politicas, setPoliticas] = useState([])
   const [textPoliticas, setTextPoliticas] = useState('')
   const [notas, setNotas] = useState([])
-  console.log(form.descripcionLarga)
+  const [mainImage, setMainImage] = useState(null)
+  const [secondaryImage, setSecondaryImage] = useState(null)
+  const [galery, setGalery] = useState([])
+  // console.log(mainImage)
   const eliminarItem = (value, data, setData) => {
-    const newData = data.filter((item) => item !== value)
-    setData(newData)
+    if (data.length === 0) {
+      setData([])
+    } else {
+      const newData = data.filter((item) => item !== value)
+      setData(newData)
+    }
   }
   const eliminarDuplicado = (data) => {
     const newData = new Set(data)
     return [...newData]
   }
-  // console.log(incluye.join(','))
-  const handleImg1 = () => {
-    setSeleccionarImagen(1)
-    openModalGaleria()
-  }
-  const handleImg2 = () => {
-    setSeleccionarImagen(2)
-    openModalGaleria()
-  }
-
+  // console.log('la galeria es', eliminarDuplicado(galery))
   const handleSubmit = (e) => {
     e.preventDefault()
 
@@ -114,13 +100,17 @@ const CrearCrucero = () => {
       actividades.length > 0 &&
       notas.length > 0 &&
       keywords.length > 0 &&
-      politicas.length > 0
+      politicas.length > 0 &&
+      mainImage &&
+      secondaryImage &&
+      galery.length > 0
     ) {
       createCrucero({
         titulo: form.titulo,
         slugCategoria: form.categorias,
         region: form.region,
         ciudad: form.ciudad,
+        keywords: eliminarDuplicado(keywords),
         estado: estado ? 'Activo' : 'Inactivo',
         destacado: destacado ? 'Activo' : 'Inactivo',
         descripcionCorta: form.descripcionCorta,
@@ -132,21 +122,36 @@ const CrearCrucero = () => {
         actividades: eliminarDuplicado(actividades),
         notas: eliminarDuplicado(notas),
         politicas: eliminarDuplicado(politicas),
-        keywords: eliminarDuplicado(keywords),
         video: form.video,
-        idImgPrincipal: 3,
-        idImgSecundaria: 3,
-        galeria: []
+        idImgPrincipal: mainImage.id,
+        idImgSecundaria: secondaryImage.id,
+        galeria: eliminarDuplicado(galery)
       })
-      resetForm()
-      setActividades([])
-      setIncluye([])
-      setNoIncluye([])
-      setItinerario([])
-      setActividades([])
-      setNotas([])
-      setPoliticas([])
-      setKeywords([])
+      // console.log(errorCreate)
+      if (errorCreate) {
+        swal({
+          title: 'ERROR',
+          text: 'OACURRIO UN ERROR EN EL SERVIDOR',
+          icon: 'error',
+          button: 'Aceptar',
+          timer: 2000
+        })
+      } else {
+        resetForm()
+        setActividades([])
+        setIncluye([])
+        setNoIncluye([])
+        setItinerario([])
+        setActividades([])
+        setNotas([])
+        setPoliticas([])
+        setKeywords([])
+        setDestacado(false)
+        setEstado(false)
+        setMainImage(null)
+        setSecondaryImage(null)
+        setGalery([])
+      }
     } else {
       swal({
         title: 'DATOS INCOMPLETOS',
@@ -183,7 +188,7 @@ const CrearCrucero = () => {
   }, [handleSubmit])
 
   return (
-    <div className="shadow md:rounded bg-white p-5 py-10 md:p-10 animate__fadeIn animate__animated">
+    <div className=" md:rounded bg-white p-5 py-10 md:p-10 animate__fadeIn animate__animated">
       <div className="flex justify-center pt-3 relative">
         <ButtonBack />
 
@@ -191,7 +196,7 @@ const CrearCrucero = () => {
       </div>
       <form
         onSubmit={handleSubmit}
-        className="w-full lg:shadow-md lg:px-4 px-0 mx-auto py-10"
+        className="w-full lg:px-4 px-0 mx-auto py-10"
       >
         <div className="flex flex-col lg:flex-row lg:space-x-4 mb-5 gap-y-5">
           <div className="w-full">
@@ -222,12 +227,12 @@ const CrearCrucero = () => {
               className="cursor-pointer w-full text-sm text-black transition ease-in duration-150 px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
               id="categorias"
               name="categorias"
-              autoComplete="off"
               onChange={handleInputChange}
               onBlur={handleBlur}
+              value={form.categorias}
               required
             >
-              <option className="cursor-pointer" value="">
+              <option className="cursor-pointer" value="" selected>
                 Selecciona una Categoria
               </option>
               {dataCategoria.map((item) => (
@@ -257,11 +262,11 @@ const CrearCrucero = () => {
               className="cursor-pointer w-full text-sm text-black transition ease-in duration-150 px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
               id="region"
               name="region"
-              autoComplete="off"
               onChange={handleInputChange}
               onBlur={handleBlur}
+              value={form.region}
             >
-              <option value="" className="cursor-pointer">
+              <option value="" className="cursor-pointer" selected>
                 Selecciona una Region
               </option>
               {Regiones.map((region) => (
@@ -287,12 +292,12 @@ const CrearCrucero = () => {
               className="cursor-pointer w-full text-sm text-black transition ease-in duration-150 px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
               id="ciudad"
               name="ciudad"
-              autoComplete="off"
               onChange={handleInputChange}
               onBlur={handleBlur}
               required
+              value={form.ciudad}
             >
-              <option value="" className="cursor-pointer">
+              <option value="" className="cursor-pointer" selected>
                 Selecciona una Ciudad
               </option>
               {Ciudades(form.region).map((ciudad) => (
@@ -317,8 +322,11 @@ const CrearCrucero = () => {
             >
               Estados
             </label>
-            <div onClick={() => setEstado(!estado)} className="ml-7">
-              <InputToggle />
+            <div
+              onClick={() => setEstado(!estado)}
+              className="ml-7  cursor-pointer"
+            >
+              <BtnEstado estado={estado} />
             </div>
           </div>
           <div className="flex  items-center lg:w-full ml-4">
@@ -328,8 +336,11 @@ const CrearCrucero = () => {
             >
               Destacado
             </label>
-            <div onClick={() => setDestacado(!destacado)} className="ml-7">
-              <BtnDestacado disabled={false} />
+            <div
+              onClick={() => setDestacado(!destacado)}
+              className="ml-7 cursor-pointer"
+            >
+              <BtnDestacado estado={destacado} />
             </div>
           </div>
         </div>
@@ -341,6 +352,7 @@ const CrearCrucero = () => {
             rows="2"
             onChange={handleInputChange}
             onBlur={handleBlur}
+            value={form.descripcionLarga}
             required
           />
           {errors.descripcionLarga && (
@@ -355,6 +367,7 @@ const CrearCrucero = () => {
             name="descripcionCorta"
             rows="1"
             onChange={handleInputChange}
+            value={form.descripcionCorta}
           />
         </div>
 
@@ -372,7 +385,7 @@ const CrearCrucero = () => {
                 }
               }}
             />
-            {otherErrors.itinerario && (
+            {itinerario.length === 0 && (
               <p className="text-sm text-red-500 font-medium mt-2 ml-1 absolute -top-2 left-15">
                 {otherErrors.itinerario}
               </p>
@@ -393,14 +406,6 @@ const CrearCrucero = () => {
                     ])
                     setTextItinerario('')
                   }
-                }
-              }}
-              onBlur={() => {
-                console.log(itinerario.length)
-                if (itinerario.length === 0) {
-                  otherErrors.itinerario = '( Ingrese al menos un Itinerario )'
-                } else {
-                  otherErrors.itinerario = false
                 }
               }}
               value={textItinerario}
@@ -426,6 +431,7 @@ const CrearCrucero = () => {
               placeholder="Punto de Partida"
               onBlur={handleBlur}
               required
+              value={form.puntoPartida}
             />
 
             {errors.puntoPartida && (
@@ -438,7 +444,7 @@ const CrearCrucero = () => {
 
         <div className="flex flex-col lg:flex-row lg:space-x-4 items-start mb-5">
           <div className="w-full relative">
-            {otherErrors.incluye && (
+            {incluye.length === 0 && (
               <p className="text-sm text-red-500 font-medium mt-2 ml-1 absolute -top-2 left-12">
                 {otherErrors.incluye}
               </p>
@@ -469,14 +475,6 @@ const CrearCrucero = () => {
                   }
                 }
               }}
-              onBlur={() => {
-                if (incluye.length > 0) {
-                  otherErrors.incluye = ''
-                } else {
-                  otherErrors.incluye =
-                    '( Ingrese al menos una opcion que incluya )'
-                }
-              }}
               value={textIncluye}
             />
             <div className="flex flex-col gap-5 my-5">
@@ -494,7 +492,7 @@ const CrearCrucero = () => {
           </div>
 
           <div className="w-full relative">
-            {otherErrors.noIncluye && (
+            {noIncluye.length === 0 && (
               <p className="text-sm text-red-500 font-medium mt-2 ml-1 absolute -top-2 left-15">
                 {otherErrors.noIncluye}
               </p>
@@ -525,13 +523,6 @@ const CrearCrucero = () => {
                   }
                 }
               }}
-              onBlur={() => {
-                if (noIncluye.length > 0) {
-                  otherErrors.noIncluye = ''
-                } else {
-                  otherErrors.noIncluye = '(Ingrese una opcion que no incluya)'
-                }
-              }}
               value={textNoIncluye}
             />
             <div className="flex flex-col gap-5 my-5 ">
@@ -551,7 +542,7 @@ const CrearCrucero = () => {
 
         <div className="flex flex-col lg:flex-row lg:space-x-4 items-start mb-5">
           <div className="w-full relative">
-            {otherErrors.actividades && (
+            {actividades.length === 0 && (
               <p className="text-sm text-red-500 font-medium mt-2 ml-1 absolute -top-2 left-20">
                 {otherErrors.actividades}
               </p>
@@ -588,13 +579,6 @@ const CrearCrucero = () => {
                   }
                 }
               }}
-              onBlur={() => {
-                if (actividades.length > 0) {
-                  otherErrors.actividades = ''
-                } else {
-                  otherErrors.actividades = '(Ingrese al menos una actividad)'
-                }
-              }}
               value={textAactividades}
             />
             <div className="flex flex-col gap-5 my-5">
@@ -613,7 +597,7 @@ const CrearCrucero = () => {
             </div>
           </div>
           <div className="w-full relative">
-            {otherErrors.notas && (
+            {notas.length === 0 && (
               <p className="text-sm text-red-500 font-medium mt-2 ml-1 absolute -top-2 left-15">
                 {otherErrors.notas}
               </p>
@@ -644,13 +628,6 @@ const CrearCrucero = () => {
                   }
                 }
               }}
-              onBlur={() => {
-                if (notas.length > 0) {
-                  otherErrors.notas = ''
-                } else {
-                  otherErrors.notas = '(Ingrese al menos una nota)'
-                }
-              }}
               value={textNotas}
             />
 
@@ -671,7 +648,7 @@ const CrearCrucero = () => {
 
         <div className="flex flex-col lg:flex-row lg:space-x-4 items-start mb-5">
           <div className="w-full relative">
-            {otherErrors.keywords && (
+            {keywords.length === 0 && (
               <p className="text-sm text-red-500 font-medium mt-2 ml-1 absolute -top-2 left-15">
                 {otherErrors.keywords}
               </p>
@@ -702,13 +679,6 @@ const CrearCrucero = () => {
                   }
                 }
               }}
-              onBlur={() => {
-                if (keywords.length > 0) {
-                  otherErrors.keywords = ''
-                } else {
-                  otherErrors.keywords = '(Ingrese al menos una Keyword)'
-                }
-              }}
               value={textKeywords}
             />
             <div className="flex flex-col gap-5 my-5">
@@ -725,7 +695,7 @@ const CrearCrucero = () => {
             </div>
           </div>
           <div className="w-full relative">
-            {otherErrors.politicas && (
+            {politicas.length === 0 && (
               <p className="text-sm text-red-500 font-medium mt-2 ml-1 absolute -top-2 left-40">
                 {otherErrors.politicas}
               </p>
@@ -756,13 +726,6 @@ const CrearCrucero = () => {
                   }
                 }
               }}
-              onBlur={() => {
-                if (politicas.length > 0) {
-                  otherErrors.politicas = ''
-                } else {
-                  otherErrors.politicas = '( Ingrese una política )'
-                }
-              }}
               value={textPoliticas}
             />
 
@@ -787,37 +750,45 @@ const CrearCrucero = () => {
             placeholder="Ingresa la URL del video"
             type="text"
             onChange={handleInputChange}
+            required
+            value={form.video}
           />
         </div>
 
-        <div className="flex flex-col gap-y-5 sm:flex-row lg:space-x-4 items-center mb-5 ">
-          <div className="sm:w-1/2 flex flex-col items-center justify-evenly w-full py-4 gap-y-5 shadow-lg">
-            <div className="max-w-30 max-h-30">
-              <img
-                src=""
-                alt=""
-                className="text-gray-500 text-md text-center w-full h-full object-cover "
-              />
-            </div>
-            <Button onClick={handleImg1} className="btn1">
-              Imágen Principal
-            </Button>
+        <p className="mb-3 text-gray-700 text-left text-sm">
+          Agregar imagen principal y secundaria
+        </p>
+        <div className="grid grid-cols-auto gap-4 max-w-4xl mx-auto mb-5">
+          <div className="aspect-w-16 aspect-h-9">
+            {/* La propiedad value recibe un objecto con id, url y descripcion */}
+            {/* La propiedad onChange devuelve un objecto con id, url y descripcion */}
+            <SelectImage
+              label="Agregar imagen principal"
+              onChange={(img) => setMainImage(img)}
+              value={mainImage}
+            />
           </div>
-          <div className="sm:w-1/2 flex flex-col gap-y-5 items-center justify-evenly w-full shadow-lg py-4">
-            <div className=" max-w-30 max-h-30 ">
-              <img
-                src=""
-                alt=""
-                className="text-gray-500 text-md text-center w-full h-full object-cover"
-              />
-            </div>
-            <Button onClick={handleImg2}>Imágen Secundaria</Button>
+          <div className="aspect-w-16 aspect-h-9">
+            <SelectImage
+              label="Agregar imagen secundaria"
+              onChange={(img) => setSecondaryImage(img)}
+              value={secondaryImage}
+            />
           </div>
         </div>
 
-        <div className="flex flex-col gap-y-5 sm:flex-row lg:space-x-4 items-center mb-5 ">
-          <MostrarGaleria />
-        </div>
+        <p className="mb-3 text-gray-700 text-left text-sm">
+          Agregar imagen a la galeria
+        </p>
+        {/* La propiedad value recibe un Array de objetos con id, url y descripcion */}
+        {/* La propiedad onChange devuelve un Array de objetos con id, url y descripcion */}
+        <SelectMultiImages
+          onChange={(imgs) => {
+            setGalery([])
+            imgs.map((image) => setGalery([...galery, image.id]))
+            // console.log(imgs)
+          }}
+        />
 
         <div className="my-10 text-center">
           <Button variant="primary" size="lg" type="submit">
@@ -825,13 +796,6 @@ const CrearCrucero = () => {
           </Button>
         </div>
       </form>
-      <Modal closeModal={closeModalGaleria} isOpen={isOpenModalGalria}>
-        <Galerias
-          opcion="botonEscoger"
-          seleccionarImagen={seleccionarImagen}
-          closeModalGaleria={closeModalGaleria}
-        />
-      </Modal>
     </div>
   )
 }

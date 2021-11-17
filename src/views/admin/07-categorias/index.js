@@ -24,43 +24,44 @@ const Categorias = () => {
     ['Destacar', 10, 'center'],
     ['Acciones', 16, 'center']
   ]
+  const armarFilasCategorias = (
+    categorias,
+    setDataBody,
+    handleDeleteCategoria
+  ) => {
+    const filasCategorias = categorias.map((categoria) => ({
+      id: categoria.categoriaId,
+      imagen: (
+        <img
+          src={categoria?.imagenPrincipalCategoria?.url}
+          className="w-16 h-10 object-cover"
+        />
+      ),
+      nombre: categoria?.tituloCategoria,
+      estado: <BtnEstado estado={categoria?.estadoCategoria} />,
+      descatar: <BtnDestacado estado={false} />,
+      acciones: (
+        <BtnAcciones
+          handleEdit={() =>
+            history.push(
+              `/categorias/editar-categoria/${categoria?.slugCategoria}`,
+              categoria
+            )
+          }
+          handleDelete={() => handleDeleteCategoria(categoria)}
+        />
+      )
+    }))
 
-  useEffect(() => {
-    const armarFilasCategorias = (
-      categorias,
-      setDataBody,
-      handleDeleteCategoria
-    ) => {
-      const filasCategorias = categorias.map((categoria) => ({
-        id: categoria.categoriaId,
-        imagen: (
-          <img
-            src={categoria?.imagenPrincipalCategoria?.url}
-            className="w-16 h-10 object-cover"
-          />
-        ),
-        nombre: categoria?.tituloCategoria,
-        estado: <BtnEstado estado={categoria?.estadoCategoria} />,
-        descatar: <BtnDestacado estado={false} />,
-        acciones: (
-          <BtnAcciones
-            handleEdit={() =>
-              history.push(
-                `/categorias/editar-categoria/${categoria?.slugCategoria}`,
-                categoria
-              )
-            }
-            handleDelete={() => handleDeleteCategoria(categoria)}
-          />
-        )
-      }))
-
-      if (filasCategorias.length > 0) {
-        setDataBody(filasCategorias)
-      }
+    if (filasCategorias.length > 0) {
+      setDataBody(filasCategorias)
     }
-    armarFilasCategorias(db, setDataBody, deleteCategoria)
-  }, [db, loading])
+  }
+  useEffect(() => {
+    if (db.length > 0) {
+      armarFilasCategorias(db, setDataBody, deleteCategoria)
+    }
+  }, [db])
 
   return (
     <div className="shadow md:rounded bg-white p-5 py-10 md:p-10 mb-20 min-h-screen animate__fadeIn animate__animated">

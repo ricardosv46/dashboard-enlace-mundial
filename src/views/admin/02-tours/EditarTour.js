@@ -52,7 +52,8 @@ const otherErrors = {}
 
 const EditarTour = () => {
   const history = useHistory()
-
+  const { state } = useLocation()
+  console.log(state.tourId)
   const { state: objetoTour } = useLocation()
   const { db: dataCategoria } = useCategoriasServices()
   const { updateTour, errorUpdate } = useToursServices()
@@ -132,7 +133,7 @@ const EditarTour = () => {
         keywords: eliminarDuplicado(keywords),
         galeria: eliminarDuplicado(galery)
       })
-      console.log(errorUpdate)
+      // console.log(errorUpdate)
 
       if (errorUpdate) {
         swal({
@@ -160,6 +161,7 @@ const EditarTour = () => {
     form.titulo = objetoTour?.tituloTour
     form.categorias = objetoTour?.slugCategoria
     form.region = objetoTour?.regionTour
+    form.ciudad = objetoTour?.ciudadTour
     form.descripcionLarga = objetoTour?.descripcionLargaTour
     form.descripcionCorta = objetoTour?.descripcionCortaTour
     form.puntoPartida = objetoTour?.puntoPartidaTour
@@ -173,6 +175,8 @@ const EditarTour = () => {
     setNotas(objetoTour?.notasTour.split(','))
     setKeywords(objetoTour?.keywordsTour.split(','))
     setPoliticas(objetoTour?.politicasTour.split(','))
+    setMainImage(objetoTour.imagenPrincipalTour)
+    setSecondaryImage(objetoTour.imagenSecundariaTour)
     if (itinerario.length === 0) {
       otherErrors.itinerario = '( Ingrese al menos un Itinerario )'
     }
@@ -238,6 +242,7 @@ const EditarTour = () => {
               name="categorias"
               onChange={handleInputChange}
               onBlur={handleBlur}
+              value={form.categorias}
               required
             >
               <option className="cursor-pointer" value="">
@@ -276,6 +281,7 @@ const EditarTour = () => {
               name="region"
               onChange={handleInputChange}
               onBlur={handleBlur}
+              value={form.region}
             >
               <option value="" className="cursor-pointer">
                 Selecciona una Region
@@ -310,6 +316,7 @@ const EditarTour = () => {
               onChange={handleInputChange}
               onBlur={handleBlur}
               required
+              value={form.ciudad}
             >
               <option value="" className="cursor-pointer">
                 Selecciona una Ciudad

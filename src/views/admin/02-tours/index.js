@@ -24,8 +24,6 @@ const Tours = () => {
     ['Acciones', '', 'left']
   ]
 
-  // console.log('data vista ', db)
-
   const armarFilasTours = (data, setDataBody, handleDeleteTour) => {
     const filasTours = data.map((tour) => {
       return {
@@ -40,7 +38,7 @@ const Tours = () => {
         acciones: (
           <BtnAccionesCalendary
             handleEdit={() =>
-              history.push(`/tours/editar-tour/${tour?.slugTour}`, tour)
+              history.push(`/tours/editar-tour/${tour?.tourId}`, tour)
             }
             handleDelete={() => handleDeleteTour(tour)}
             handleCalendary={() =>

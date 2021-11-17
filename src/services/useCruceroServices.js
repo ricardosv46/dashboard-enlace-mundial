@@ -2,7 +2,8 @@ import swal from 'sweetalert'
 import {
   useCreateCruceroMutation,
   useDeleteCruceroMutation,
-  useGetAllCruceroQuery
+  useGetAllCruceroQuery,
+  useUpdateCruceroMutation
 } from '../generated/graphql'
 export const useCruceroServices = () => {
   const { loading, data, refetch } = useGetAllCruceroQuery({
@@ -18,26 +19,37 @@ export const useCruceroServices = () => {
     onError: (err) => {
       // validar errores
       // eslint-disable-next-line eqeqeq
-      console.log(err?.graphQLErrors)
-      swal('Error', 'Hubo un error en el servidor', 'error')
+      console.log('Error Delete Crucero', err?.graphQLErrors[0]?.debugMessage)
     }
   })
 
-  const [createCruceroMutation, { loading: loadingUpadate }] =
-    useCreateCruceroMutation({
-      onError: (err) => {
-        // validar errores
-        console.log(
-          'onError creacion Crucero',
-          err?.graphQLErrors[0]?.debugMessage
-        )
-      }
-    })
+  const [
+    createCruceroMutation,
+    { loading: loadingCreate, error: errorCreate }
+  ] = useCreateCruceroMutation({
+    onError: (err) => {
+      // validar errores
+      console.log(
+        'onError creacion Crucero',
+        err?.graphQLErrors[0]?.debugMessage
+      )
+    }
+  })
+
+  const [
+    updateCruceroMutation,
+    { loading: loadingUpdate, error: errorUpdate }
+  ] = useUpdateCruceroMutation({
+    onError: (err) => {
+      // validar errores
+      console.log('onError Update Crucero', err?.graphQLErrors[0]?.debugMessage)
+    }
+  })
 
   const deleteCrucero = (crucero) => {
     swal({
       title: `Desea eliminar el crucero ${crucero?.tituloCrucero}?`,
-      text: 'Una vez eliminada, no podrás recuperar el Luna de Miel!',
+      text: 'Una vez eliminada, no podrás recuperar el Crucero!',
       icon: 'warning',
       buttons: true,
       dangerMode: true
@@ -53,10 +65,10 @@ export const useCruceroServices = () => {
         refetch()
         swal({
           title: 'Eliminado',
-          text: 'Se elimino correctamente el crucero',
+          text: 'Se elimino correctamente el Crucero',
           icon: 'success',
           button: 'Aceptar',
-          timer: 5000
+          timer: 2000
         })
       }
     })
@@ -84,7 +96,7 @@ export const useCruceroServices = () => {
     galeria,
     keywords
   }) => {
-    if (loadingUpadate === false) {
+    if (loadingCreate === false) {
       const res = await createCruceroMutation({
         variables: {
           input: {
@@ -122,6 +134,80 @@ export const useCruceroServices = () => {
       })
     }
   }
-
-  return { db, loading, deleteCrucero, createCrucero }
+  // funcion que me permite actualizar un tour
+  const updateCrucero = async ({
+    id,
+    titulo,
+    region,
+    ciudad,
+    estado,
+    destacado,
+    descripcionCorta,
+    descripcionLarga,
+    itinerario,
+    puntoPartida,
+    incluye,
+    noIncluye,
+    actividades,
+    notas,
+    politicas,
+    video,
+    idImgPrincipal,
+    idImgSecundaria,
+    slugCategoria,
+    galeria,
+    keywords
+  }) => {
+    if (loadingUpdate === false) {
+      const res = await updateCruceroMutation({
+        variables: {
+          input: {
+            cruceroId: id,
+            tituloCrucero: titulo,
+            estadoCrucero: estado,
+            destacadoCrucero: destacado,
+            keywordsCrucero: keywords.join(','),
+            regionCrucero: region,
+            ciudadCrucero: ciudad,
+            descripcionCortaCrucero: descripcionCorta,
+            descripcionLargaCrucero: descripcionLarga,
+            itinerarioCrucero: itinerario.join(','),
+            puntoPartidaCrucero: puntoPartida,
+            incluyeCrucero: incluye.join(','),
+            noIncluyeCrucero: noIncluye.join(','),
+            actividadesCrucero: actividades.join(','),
+            notasCrucero: notas.join(','),
+            politicasCrucero: politicas.join(','),
+            videoPresentacionCrucero: video,
+            imagenPrincipalCrucero: idImgPrincipal,
+            imagenSecundariaCrucero: idImgSecundaria,
+            galeriaCrucero: galeria,
+            slugCategoria: slugCategoria
+          }
+        }
+      }).catch((error) => console.error('que error', error))
+      refetch()
+      console.log(res)
+      if (!errorUpdate) {
+        swal({
+          title: 'ACTUALIZAR',
+          text: 'Se actualizo correctamente el Tour',
+          icon: 'success',
+          button: 'Aceptar',
+          timer: 2000
+        })
+      }
+    }
+  }
+  return {
+    db,
+    loading,
+    deleteCrucero,
+    createCrucero,
+    updateCrucero,
+    errorUpdate,
+    errorCreate,
+    loadingUpdate,
+    loadingCreate
+  }
 }
