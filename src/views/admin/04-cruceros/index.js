@@ -66,7 +66,7 @@ const Cruceros = () => {
   }, [db, loading])
 
   return (
-    <div className="shadow md:rounded bg-white p-5 py-10 md:p-10">
+    <div className="shadow md:rounded bg-white p-5 py-10 md:p-10 animate__fadeIn animate__animated">
       <div className="flex justify-between mb-5">
         <Heading>Cruceros</Heading>
         <Button

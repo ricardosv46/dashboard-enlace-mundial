@@ -63,7 +63,7 @@ const Tours = () => {
   }, [db])
 
   return (
-    <div className="shadow  md:rounded bg-white p-5 py-10 md:p-10">
+    <div className="shadow  md:rounded bg-white p-5 py-10 md:p-10 animate__fadeIn animate__animated">
       <div className="flex-col gap-y-9  flex items-center  sm:flex-row sm:justify-between mb-5">
         <Heading size="xl" className="text-3xl text-gray-800">
           Tours

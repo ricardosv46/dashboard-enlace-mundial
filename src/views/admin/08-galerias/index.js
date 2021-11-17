@@ -37,7 +37,7 @@ const Galerias = () => {
   const handleUpload = async (images) => await actions.uploadImages(images)
 
   const Images = () => (
-    <div className="grid grid-cols-auto gap-4">
+    <div className="grid grid-cols-auto gap-4 animate__fadeIn animate__animated">
       {imagenes.map((image) => (
         <div
           key={`image-${image.id}`}

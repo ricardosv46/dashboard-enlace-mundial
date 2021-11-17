@@ -51,7 +51,7 @@ const Blogs = () => {
   }, [data])
 
   return (
-    <div className="shadow md:rounded bg-white p-5 py-10 md:p-10 mb-20 min-h-screen ">
+    <div className="shadow md:rounded bg-white p-5 py-10 md:p-10 mb-20 min-h-screen animate__fadeIn animate__animated ">
       <div className="flex justify-between mb-5">
         <Heading>Publiacaciones Blog</Heading>
         <Button

@@ -1,11 +1,41 @@
 import { menuData } from './menuData'
 import MenuLink from './menuLink'
 import logo from '../../assets/imgs/logo.png'
+import iconDesplegar from '../../assets/imgs/desplegable.png'
+import { useContext, useState } from 'react'
+import { AuthContext } from '../../auth/authContext'
+import { types } from '../../types/types'
 
 const Sidebar1 = ({ handleShowBtn }) => {
+  const { dispatch } = useContext(AuthContext)
+  const [showLogout, setShowLogout] = useState(false)
+
   return (
     <div className="text-primary font-semibold top-0 bg-white w-64 pl-10 lg:w-80 z-90 h-screen sticky shadow-lg">
-      <img src={logo} className="pt-7 mb-5 cursor-pointer pr-3 w-50" />
+      <div className="flex items-center gap-x-3 relative">
+        <img src={logo} className="pt-7 mb-5 cursor-pointer pr-3 w-50  " />
+        <img
+          src={iconDesplegar}
+          alt=""
+          className="w-10 h-10 cursor-pointer p-1"
+          onClick={() => {
+            setShowLogout(state => !state)
+          }}
+        />
+        {showLogout && (
+          <div className="w-full rounded-lg shadow-md h-30 right-1 top-24 z-30 absolute px-10 flex items-center bg-white animate__animated animate__bounceInDown">
+            <button
+              className="btn btn-outline-blue w-full"
+              onClick={() => {
+                dispatch({
+                  type: types.logout
+                })
+              }}
+            > Salir </button>
+          </div>
+        )}
+      </div>
+
       {menuData.map((data) => (
         <MenuLink
           key={data.nameLink}

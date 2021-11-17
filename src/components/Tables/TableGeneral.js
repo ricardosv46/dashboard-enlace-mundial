@@ -23,7 +23,7 @@ const TableGeneral = ({
   const textColorH = `text-${headerTextColor}`
 
   return (
-    <div className="w-full mb-8 overflow-hidden rounded-md md:shadow-xl max-h-screen overflow-y-auto tableGeneral ">
+    <div className="w-full mb-8 overflow-hidden rounded-md md:shadow-xl max-h-screen overflow-y-auto animate__fadeIn animate__animated ">
       <div className="w-full overflow-x-auto min-h-screen">
         {dataBody && (
           <table className={`w-full  text-left border-2 ${borderC} `}>
@@ -46,7 +46,7 @@ const TableGeneral = ({
               {dataBody.map((row, index) => (
                 <tr
                   key={index}
-                  className=" font-medium hover:shadow-md  transform transition-all duration-300 border- cursor-pointer hover:-translate-y-1"
+                  className=" font-medium hover:shadow-md  transform transition-all duration-300  hover:-translate-y-1"
                 >
                   {handleArray(row).map((column, index) => (
                     <td

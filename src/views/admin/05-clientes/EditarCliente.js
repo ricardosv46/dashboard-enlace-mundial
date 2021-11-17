@@ -13,7 +13,7 @@ const EditarCliente = () => {
   const [Toggle, SetToggle] = useState(false)
   const [isOpenModal, openModal, closeModal] = useModal(false)
   return (
-    <div className="shadow md:rounded bg-white p-5 py-10 md:p-10">
+    <div className="shadow md:rounded bg-white p-5 py-10 md:p-10 animate__fadeIn animate__animated">
       <div className="flex justify-center pt-3 relative">
         <span
           onClick={() => history.goBack()}

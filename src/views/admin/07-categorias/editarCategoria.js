@@ -107,7 +107,7 @@ const EditarCategoria = () => {
     }
   }, [])
   return (
-    <div className="shadow md:rounded bg-white p-5 py-10 md:p-10">
+    <div className="shadow md:rounded bg-white p-5 py-10 md:p-10 animate__fadeIn animate__animated">
       <div className="flex justify-center pt-3 relative">
         <ButtonBack />
 

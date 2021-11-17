@@ -23,7 +23,8 @@ const BtnAcciones = ({
         <span className="-mt-10 ">.</span>
       </p>
       {show && (
-        <div className="absolute flex justify-end bg-transparent border  z-70 top-0 left-0 min-w-full h-full">
+        <div className={`absolute flex justify-end bg-transparent border 
+         z-70 top-0 left-0 min-w-full h-full ${show ? 'animate__fadeIn block' : 'animate__fadeOut hidden'} animate__animated `}>
           <div className=" flex justify-center items-center border border-gray-200 w-30 h-16 mr-18 sm:mr-20 mt-5  shadow-lg rounded-lg bg-white">
             <p
               className="  cursor-pointer  py-2  px-3 transition-all duration-300 transform hover:-translate-y-1"

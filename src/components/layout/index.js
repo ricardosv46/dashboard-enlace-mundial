@@ -11,7 +11,7 @@ const Layout = ({ children }) => {
   ]
 
   return (
-    <div className="max-w-full">
+    <div className="max-w-full animate__fadeIn animate__animated">
       <div className="flex max-w-full relative">
         {/* DESKTOP */}
         <div className="hidden md:block">

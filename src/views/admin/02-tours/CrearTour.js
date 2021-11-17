@@ -188,7 +188,7 @@ const CrearTour = () => {
   }, [handleSubmit])
 
   return (
-    <div className=" md:rounded bg-white p-5 py-10 md:p-10">
+    <div className=" md:rounded bg-white p-5 py-10 md:p-10 animate__fadeIn animate__animated">
       <div className="flex justify-center pt-3 relative">
         <ButtonBack />
 

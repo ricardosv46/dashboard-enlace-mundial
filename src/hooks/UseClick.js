@@ -1,16 +1,12 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 
-const UseClick = ({ onClick = () => { } }) => {
+const UseClick = ({ onClick = () => {} }) => {
   useEffect(() => {
     document.body.addEventListener('click', () => {
       onClick()
     })
   }, [])
-  return (
-    <div>
-
-    </div>
-  )
+  return <div></div>
 }
 
 export default UseClick
