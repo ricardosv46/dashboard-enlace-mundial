@@ -10,6 +10,8 @@ const SelectImage = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false)
 
+  console.log(value)
+
   // useEffect(() => {
   //   if (value) setImage(value)
   // }, [value])

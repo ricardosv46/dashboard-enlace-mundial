@@ -6,17 +6,14 @@ import ButtonBack from '../../../components/Buttons/ButtonBack'
 import InputText from '../../../components/Forms/InputText/InputText'
 import TextArea from '../../../components/Forms/TextArea'
 import Heading from '../../../components/Heading'
-import { useModal } from '../../../hooks/useModal'
-import Modal from '../../../components/Modales/Modal'
-import Galerias from '../08-galerias'
-// import { ImgContext } from '../../../context/auth/ImgContext'
-import MostrarGaleria from '../08-galerias/MostrarGaleria'
 import { useCategoriasServices } from '../../../services/useCategoriaServices'
 import UseForm from '../../../hooks/UseForm'
 import { Ciudades, Regiones } from '../../../data/dataPeru'
 import swal from 'sweetalert'
 import BtnEstado from '../../../components/BtnEstado/BtnEstado'
 import { useLunaMielServices } from '../../../services/useLunaMielServices'
+import SelectImage from '../../../components/SelectImage'
+import SelectMultiImages from '../../../components/SelectMultiImages'
 const initialForm = {
   titulo: '',
   categorias: '',
@@ -61,14 +58,6 @@ const CrearLunaDeMiel = () => {
     validationsForm
   )
 
-  const [isOpenModalGalria, openModalGaleria, closeModalGaleria] =
-    useModal(false)
-
-  // const { imgPrincipal, setImgPrincipal, imgSecundaria, setImgSecundaria, galeria } =
-  //   useContext(ImgContext)
-  // console.log(imgPrincipal, imgSecundaria)
-
-  const [seleccionarImagen, setSeleccionarImagen] = useState(1)
   const [estado, setEstado] = useState(false)
   const [destacado, setDestacado] = useState(false)
   const [incluye, setIncluye] = useState([])
@@ -85,7 +74,9 @@ const CrearLunaDeMiel = () => {
   const [politicas, setPoliticas] = useState([])
   const [textPoliticas, setTextPoliticas] = useState('')
   const [notas, setNotas] = useState([])
-
+  const [mainImage, setMainImage] = useState(null)
+  const [secondaryImage, setSecondaryImage] = useState(null)
+  const [galery, setGalery] = useState([])
   const eliminarItem = (value, data, setData) => {
     if (data.length === 0) {
       setData([])
@@ -98,15 +89,6 @@ const CrearLunaDeMiel = () => {
     const newData = new Set(data)
     return [...newData]
   }
-  // console.log(incluye.join(','))
-  const handleImg1 = () => {
-    setSeleccionarImagen(1)
-    openModalGaleria()
-  }
-  const handleImg2 = () => {
-    setSeleccionarImagen(2)
-    openModalGaleria()
-  }
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -118,7 +100,10 @@ const CrearLunaDeMiel = () => {
       actividades.length > 0 &&
       notas.length > 0 &&
       keywords.length > 0 &&
-      politicas.length > 0
+      politicas.length > 0 &&
+      mainImage &&
+      secondaryImage &&
+      galery.length > 0
     ) {
       createLunaMiel({
         titulo: form.titulo,
@@ -138,9 +123,9 @@ const CrearLunaDeMiel = () => {
         notas: eliminarDuplicado(notas),
         politicas: eliminarDuplicado(politicas),
         video: form.video,
-        idImgPrincipal: 3,
-        idImgSecundaria: 3,
-        galeria: []
+        idImgPrincipal: mainImage.id,
+        idImgSecundaria: secondaryImage.id,
+        galeria: eliminarDuplicado(galery)
       })
       console.log(errorCreate)
       if (errorCreate) {
@@ -163,6 +148,9 @@ const CrearLunaDeMiel = () => {
         setKeywords([])
         setDestacado(false)
         setEstado(false)
+        setMainImage(null)
+        setSecondaryImage(null)
+        setGalery([])
       }
     } else {
       swal({
@@ -766,49 +754,45 @@ const CrearLunaDeMiel = () => {
             value={form.video}
           />
         </div>
-
-        <div className="flex flex-col gap-y-5 sm:flex-row lg:space-x-4 items-center mb-5 ">
-          <div className="sm:w-1/2 flex flex-col items-center justify-evenly w-full py-4 gap-y-5 shadow-lg">
-            <div className="max-w-30 max-h-30">
-              <img
-                src=""
-                alt=""
-                className="text-gray-500 text-md text-center w-full h-full object-cover "
-              />
-            </div>
-            <Button onClick={handleImg1} className="btn1">
-              Imágen Principal
-            </Button>
+        <p className="mb-3 text-gray-700 text-left text-sm">
+          Agregar imagen principal y secundaria
+        </p>
+        <div className="grid grid-cols-auto gap-4 max-w-4xl mx-auto mb-5">
+          <div className="aspect-w-16 aspect-h-9">
+            {/* La propiedad value recibe un objecto con id, url y descripcion */}
+            {/* La propiedad onChange devuelve un objecto con id, url y descripcion */}
+            <SelectImage
+              label="Agregar imagen principal"
+              onChange={(img) => setMainImage(img)}
+              value={mainImage}
+            />
           </div>
-          <div className="sm:w-1/2 flex flex-col gap-y-5 items-center justify-evenly w-full shadow-lg py-4">
-            <div className=" max-w-30 max-h-30 ">
-              <img
-                src=""
-                alt=""
-                className="text-gray-500 text-md text-center w-full h-full object-cover"
-              />
-            </div>
-            <Button onClick={handleImg2}>Imágen Secundaria</Button>
+          <div className="aspect-w-16 aspect-h-9">
+            <SelectImage
+              label="Agregar imagen secundaria"
+              onChange={(img) => setSecondaryImage(img)}
+              value={secondaryImage}
+            />
           </div>
         </div>
-
-        <div className="flex flex-col gap-y-5 sm:flex-row lg:space-x-4 items-center mb-5 ">
-          <MostrarGaleria />
-        </div>
-
+        <p className="mb-3 text-gray-700 text-left text-sm">
+          Agregar imagen a la galeria
+        </p>
+        {/* La propiedad value recibe un Array de objetos con id, url y descripcion */}
+        {/* La propiedad onChange devuelve un Array de objetos con id, url y descripcion */}
+        <SelectMultiImages
+          onChange={(imgs) => {
+            setGalery([])
+            imgs.map((image) => setGalery([...galery, image.id]))
+            // console.log(imgs)
+          }}
+        />
         <div className="my-10 text-center">
           <Button variant="primary" size="lg" type="submit">
             CREAR
           </Button>
         </div>
       </form>
-      <Modal closeModal={closeModalGaleria} isOpen={isOpenModalGalria}>
-        <Galerias
-          opcion="botonEscoger"
-          seleccionarImagen={seleccionarImagen}
-          closeModalGaleria={closeModalGaleria}
-        />
-      </Modal>
     </div>
   )
 }

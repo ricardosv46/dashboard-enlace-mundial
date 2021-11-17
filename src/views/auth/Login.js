@@ -1,22 +1,22 @@
 import logo from '../../assets/imgs/logo.png'
 import portada from '../../assets/imgs/portada.jpg'
 import { useContext, useState } from 'react'
-import { AuthContext } from '../../context/auth/AuthState'
 import { ErrorMessage, Field, Form, Formik } from 'formik'
 import { useHistory } from 'react-router'
 import { validateFields } from '../../validateFields/valeidatefields'
 import pestanaFalse from '../../assets/imgs/pestana.png'
 import pestanaTrue from '../../assets/imgs/eye.svg'
-const Login = ({ setIsAuth }) => {
+import { AuthContext } from '../../auth/authContext'
+import { types } from '../../types/types'
+const Login = () => {
+  const { dispatch } = useContext(AuthContext)
   const [show, setShow] = useState(false)
-
   const [FormReady, setFormReady] = useState(false)
   const initial = {
     user: '',
     password: ''
   }
 
-  const { loginAction } = useContext(AuthContext)
   const history = useHistory()
 
   const handleClick = () => {
@@ -37,15 +37,16 @@ const Login = ({ setIsAuth }) => {
           initialValues={initial}
           validate={({ user, password }) => validateFields({ user, password })}
           onSubmit={({ user, password }, { resetForm }) => {
-            if (password === 'admin') {
-              console.log(password)
-              loginAction({
-                user: user,
-                email: 'admin@hotmail.com',
-                rol: 'administrador',
-                loggout: false
-              })
-              setIsAuth(true)
+            if (user === 'admin@gmail.com' && password === 'admin') {
+              const action = {
+                type: types.login,
+                payload: {
+                  usuario: user,
+                  contraseña: password
+                }
+              }
+              dispatch(action)
+              history.replace('/')
             }
 
             setFormReady(true)
@@ -62,7 +63,8 @@ const Login = ({ setIsAuth }) => {
                   Usuario
                 </label>
                 <Field
-                  className={`w-full rounded-xl text-gray-800 border-2 ${errors.user ? 'border-red-600' : 'border-primary-500'} mb-1 outline-none py-2 pl-4
+                  className={`w-full rounded-xl text-gray-800 border-2 ${errors.user ? 'border-red-600' : 'border-primary-500'
+                    } mb-1 outline-none py-2 pl-4
                         focus:ring-2  focus:ring-2 focus:ring-accent focus:border-primary-800`}
                   type="text"
                   id="user"
@@ -86,7 +88,8 @@ const Login = ({ setIsAuth }) => {
                 </label>
                 <div className="relative">
                   <Field
-                    className={`w-full rounded-xl text-gray-800 border-2 ${errors.password ? 'border-red-600' : 'border-primary-500'} mb-1 outline-none py-2 pl-4 focus:ring-2  focus:ring-2 focus:ring-accent focus:border-primary-800`}
+                    className={`w-full rounded-xl text-gray-800 border-2 ${errors.password ? 'border-red-600' : 'border-primary-500'
+                      } mb-1 outline-none py-2 pl-4 focus:ring-2  focus:ring-2 focus:ring-accent focus:border-primary-800`}
                     type={show ? 'text' : 'password'}
                     id="password"
                     name="password"

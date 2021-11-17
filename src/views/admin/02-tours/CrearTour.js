@@ -123,8 +123,8 @@ const CrearTour = () => {
         notas: eliminarDuplicado(notas),
         politicas: eliminarDuplicado(politicas),
         video: form.video,
-        idImgPrincipal: mainImage,
-        idImgSecundaria: secondaryImage,
+        idImgPrincipal: mainImage.id,
+        idImgSecundaria: secondaryImage.id,
         galeria: eliminarDuplicado(galery)
       })
       // console.log(errorCreate)
@@ -764,13 +764,15 @@ const CrearTour = () => {
             {/* La propiedad onChange devuelve un objecto con id, url y descripcion */}
             <SelectImage
               label="Agregar imagen principal"
-              onChange={(img) => setMainImage(img.id)}
+              onChange={(img) => setMainImage(img)}
+              value={mainImage}
             />
           </div>
           <div className="aspect-w-16 aspect-h-9">
             <SelectImage
               label="Agregar imagen secundaria"
-              onChange={(img) => setSecondaryImage(img.id)}
+              onChange={(img) => setSecondaryImage(img)}
+              value={secondaryImage}
             />
           </div>
         </div>

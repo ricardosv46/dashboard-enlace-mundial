@@ -21,43 +21,41 @@ const LunaDeMiel = () => {
   ]
 
   const history = useHistory()
-  const { db, deleteLunaMiel, loading, loadingDelete } = useLunaMielServices()
+  const { db, deleteLunaMiel, loading } = useLunaMielServices()
   console.log('valor de data luna miel', db.length)
   const [dataBody, setDataBody] = useState([])
-  // console.log('valor de data luna miel', dataBody)
-  console.log('valor loadind delete', loadingDelete)
-  useEffect(() => {
-    if (db.length >= 0) {
-      db.map((lunaMiel) =>
-        setDataBody([
-          ...dataBody,
 
-          {
-            id: lunaMiel?.lunaMielId,
-            imagen: (
-              <img
-                src={lunaMiel?.imagenPrincipalLuna?.url}
-                className="w-26 h-22"
-              />
-            ),
-            nombre: lunaMiel?.tituloLuna,
-            categoria: lunaMiel?.Categoria?.tituloCategoria,
-            estado: <BtnEstado estado={lunaMiel?.estadoLuna} />,
-            descatar: <BtnDestacado estado={false} />,
-            acciones: (
-              <BtnAccionesCalendary
-                handleEdit={() =>
-                  history.push(
-                    `/luna-de-miel/editar-luna-de-miel/${lunaMiel?.slugLuna}`,
-                    lunaMiel
-                  )
-                }
-                handleDelete={() => deleteLunaMiel(lunaMiel)}
-              />
-            )
-          }
-        ])
-      )
+  const armarFilasLunaMiel = (data, setDataBody, handleDeleteTour) => {
+    const filasLunaMiel = data.map((lunaMiel) => {
+      return {
+        id: lunaMiel?.lunaMielId,
+        imagen: (
+          <img src={lunaMiel?.imagenPrincipalLuna?.url} className="w-26 h-22" />
+        ),
+        nombre: lunaMiel?.tituloLuna,
+        categoria: lunaMiel?.Categoria?.tituloCategoria,
+        estado: <BtnEstado estado={lunaMiel?.estadoLuna} />,
+        descatar: <BtnDestacado estado={false} />,
+        acciones: (
+          <BtnAccionesCalendary
+            handleEdit={() =>
+              history.push(
+                `/luna-de-miel/editar-luna-de-miel/${lunaMiel?.slugLuna}`,
+                lunaMiel
+              )
+            }
+            handleDelete={() => handleDeleteTour(lunaMiel)}
+          />
+        )
+      }
+    })
+    if (filasLunaMiel.length > 0) {
+      setDataBody(filasLunaMiel)
+    }
+  }
+  useEffect(() => {
+    if (db.length > 0) {
+      armarFilasLunaMiel(db, setDataBody, deleteLunaMiel)
     }
   }, [db])
   return (

@@ -35,8 +35,8 @@ const CrearCategoria = () => {
     initialForm,
     validationsForm
   )
-  const [mainImage, setMainImage] = useState()
-  const [secondaryImage, setSecondaryImage] = useState()
+  const [mainImage, setMainImage] = useState(null)
+  const [secondaryImage, setSecondaryImage] = useState(null)
 
   const [estado, setEstado] = useState(false)
   const [destacado, setDestacado] = useState(false)
@@ -229,6 +229,7 @@ const CrearCategoria = () => {
             <SelectImage
               label="Agregar imagen secundaria"
               onChange={(img) => setSecondaryImage(img)}
+              value={secondaryImage}
             />
           </div>
         </div>
