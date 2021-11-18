@@ -2,7 +2,9 @@ import { useState } from 'react'
 import swal from 'sweetalert'
 import {
   useCreateHorarioTourMutation,
-  useGetHorariosTourQuery
+  useDeleteHorarioTourMutation,
+  useGetHorariosTourQuery,
+  useUpdateTourMutation
 } from '../generated/graphql'
 
 export const useHorariosServices = () => {
@@ -36,6 +38,21 @@ export const useHorariosServices = () => {
         console.log('onError creacion horario ', error)
       }
     })
+
+  const [deleteHorarioMutation, { loading: loadingDelete }] =
+    useDeleteHorarioTourMutation({
+      onError: (err) => {
+        // validar errores
+        console.log('Error delete Horario', err?.graphQLErrors[0]?.debugMessage)
+      }
+    })
+
+  const [updateHorarioMutation, { loading: loadingUpdate, error: errorUpdate }] = useUpdateTourMutation({
+    onError: (err) => {
+      // validar errores
+      console.log('onError Update Horario', err?.graphQLErrors[0]?.debugMessage)
+    }
+  })
   // FUNCION QUE CONSUME EL MUTATION PARA CREAR HORARIO
   const createHorario = async (horario) => {
     const response = await createHorarioMutation({
@@ -67,12 +84,76 @@ export const useHorariosServices = () => {
     }
   }
 
+  const deleteHorario = (horario) => {
+    swal({
+      title: `Desea eliminar la fecha ${horario?.fecha}?`,
+      text: 'Una vez eliminada, no podrás recuperar el tour!',
+      icon: 'warning',
+      buttons: true,
+      dangerMode: true
+    }).then(async (rpta) => {
+      if (rpta) {
+        await deleteHorarioMutation({
+          variables: {
+            input: {
+              horarioTourId: horario.horarioTourId
+            }
+          }
+        }).catch((error) => console.log('error', error))
+        refetch()
+        swal({
+          title: 'Eliminado',
+          text: 'Se elimino correctamente la fecha para el Tour',
+          icon: 'success',
+          button: 'Aceptar',
+          timer: 2000
+        })
+      }
+    })
+  }
   const fetchTourHorario = (id) => {
     setTourId(id)
   }
 
+  const updateHorario = async ({
+    id, hora, cupos, fecha, precio, tourId
+  }) => {
+    if (loadingUpdate === false) {
+      const res = await updateHorarioMutation({
+        variables: {
+          input: {
+            horarioTourId: id,
+            hora: hora,
+            cupos: cupos,
+            fecha: fecha,
+            precio: precio,
+            tourId: tourId
+          }
+        }
+      }).catch((error) => console.error('que error', error))
+      refetch()
+      console.log(res)
+      if (!errorUpdate) {
+        swal({
+          title: 'ACTUALIZAR',
+          text: 'Se actualizo correctamente la Fecha',
+          icon: 'success',
+          button: 'Aceptar',
+          timer: 2000
+        })
+      }
+    }
+  }
   // pipes
   const loading = loadingGet || loadingCreate
   console.log('data query ', data)
-  return { data, loading, createHorario, fetchTourHorario }
+  return {
+    data,
+    loading,
+    createHorario,
+    deleteHorario,
+    updateHorario,
+    loadingDelete,
+    fetchTourHorario
+  }
 }

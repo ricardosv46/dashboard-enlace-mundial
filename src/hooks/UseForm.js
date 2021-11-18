@@ -3,9 +3,9 @@ import { useState } from 'react'
 const UseForm = (initialForm = {}, validateForm) => {
   const [form, setForm] = useState(initialForm)
   const [errors, setErrors] = useState({})
-  const [loading, setLoading] = useState(false)
-  const [response, setResponse] = useState(null)
-  console.log(setLoading, setResponse)
+  const [loading] = useState(false)
+  const [response] = useState(null)
+  // console.log(setLoading, setResponse)
   const handleInputChange = (e) => {
     setForm({
       ...form,

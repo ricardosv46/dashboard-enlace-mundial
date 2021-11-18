@@ -93,7 +93,7 @@ export const useToursServices = () => {
           }
         }
       }).catch((error) => console.error('que error', error))
-      console.log(res, errorCreate)
+      console.log(res)
       refetch()
 
       if (!errorCreate) {

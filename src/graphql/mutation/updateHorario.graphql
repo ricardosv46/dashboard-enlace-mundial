@@ -1,0 +1,10 @@
+mutation UpdateHorarioTour($input:HorarioTourInput){
+  UpdateHorarioTour(input:$input){
+    horarioTourId
+    hora
+    cupos
+    precio
+    estado
+    fecha
+    touId
+  }

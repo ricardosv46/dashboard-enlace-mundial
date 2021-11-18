@@ -1,0 +1,3 @@
+mutation DeleteHorarioTour($input:HorarioTourInput){
+  DeleteHorarioTour(input:$input)
+}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Calendar, utils } from 'react-modern-calendar-datepicker'
 import Button from '../Buttons/Button'
 import Spinner from '../Spinner/Spinner'
@@ -8,7 +8,7 @@ const ModalCrearCalendario = ({
   isOpen,
   closeModal,
   tourId,
-  onCreateHorario = () => {},
+  onCreateHorario = () => { },
   loading
 }) => {
   const today = new Date()
@@ -64,9 +64,9 @@ const ModalCrearCalendario = ({
 
   return (
     <Modal isOpen={isOpen} closeModal={closeModal}>
-      <div className="flex gap-7 bg-gray-50 p-8 pr-16 rounded-xl">
+      <div className="flex flex-col  bg-gray-600 p-8 pr-16 rounded-xl justify-center items-center border">
         {/* CONTENEDOR CALENDARIO  */}
-        <div>
+        <div className="border mt-10 ">
           <Calendar
             value={selectedDay}
             onChange={setSelectedDay}
@@ -77,7 +77,7 @@ const ModalCrearCalendario = ({
         </div>
 
         {/* FORMULARIO CREAR HORARIO  */}
-        <form onSubmit={handleSubmit} className="w-full mt-4 max-w-80">
+        <form onSubmit={handleSubmit} className="w-full mt-4 max-w-80 border">
           <p className="text-center font-semibold text-xl text-gray-600">
             Fecha:{' '}
             {`${selectedDay.day} - ${selectedDay.month} - ${selectedDay.year}`}

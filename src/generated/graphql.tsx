@@ -867,6 +867,13 @@ export type DeleteCruceroMutationVariables = Exact<{
 
 export type DeleteCruceroMutation = { __typename?: 'Mutation', DeleteCrucero?: string | null | undefined };
 
+export type DeleteHorarioTourMutationVariables = Exact<{
+  input?: Maybe<HorarioTourInput>;
+}>;
+
+
+export type DeleteHorarioTourMutation = { __typename?: 'Mutation', DeleteHorarioTour?: string | null | undefined };
+
 export type DeleteImageMutationVariables = Exact<{
   input: ImagenesInput;
 }>;
@@ -1499,6 +1506,37 @@ export function useDeleteCruceroMutation(baseOptions?: Apollo.MutationHookOption
 export type DeleteCruceroMutationHookResult = ReturnType<typeof useDeleteCruceroMutation>;
 export type DeleteCruceroMutationResult = Apollo.MutationResult<DeleteCruceroMutation>;
 export type DeleteCruceroMutationOptions = Apollo.BaseMutationOptions<DeleteCruceroMutation, DeleteCruceroMutationVariables>;
+export const DeleteHorarioTourDocument = gql`
+    mutation DeleteHorarioTour($input: HorarioTourInput) {
+  DeleteHorarioTour(input: $input)
+}
+    `;
+export type DeleteHorarioTourMutationFn = Apollo.MutationFunction<DeleteHorarioTourMutation, DeleteHorarioTourMutationVariables>;
+
+/**
+ * __useDeleteHorarioTourMutation__
+ *
+ * To run a mutation, you first call `useDeleteHorarioTourMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteHorarioTourMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteHorarioTourMutation, { data, loading, error }] = useDeleteHorarioTourMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useDeleteHorarioTourMutation(baseOptions?: Apollo.MutationHookOptions<DeleteHorarioTourMutation, DeleteHorarioTourMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteHorarioTourMutation, DeleteHorarioTourMutationVariables>(DeleteHorarioTourDocument, options);
+      }
+export type DeleteHorarioTourMutationHookResult = ReturnType<typeof useDeleteHorarioTourMutation>;
+export type DeleteHorarioTourMutationResult = Apollo.MutationResult<DeleteHorarioTourMutation>;
+export type DeleteHorarioTourMutationOptions = Apollo.BaseMutationOptions<DeleteHorarioTourMutation, DeleteHorarioTourMutationVariables>;
 export const DeleteImageDocument = gql`
     mutation DeleteImage($input: ImagenesInput!) {
   DeleteImage(input: $input)
