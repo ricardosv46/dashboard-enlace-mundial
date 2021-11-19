@@ -4,7 +4,8 @@ mutation UpdateHorarioTour($input:HorarioTourInput){
     hora
     cupos
     precio
-    estado
     fecha
-    touId
+    tourId
+    estado
   }
+}

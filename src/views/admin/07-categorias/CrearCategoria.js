@@ -62,7 +62,6 @@ const CrearCategoria = () => {
       createCategoria({
         titulo: form.titulo,
         keywords: eliminarDuplicado(keywords),
-        estado: estado ? 'Activo' : 'Inactivo',
         destacado: destacado ? 'Activo' : 'Inactivo',
         descripcion: form.descripcion,
         idImgPrincipal: mainImage.id,

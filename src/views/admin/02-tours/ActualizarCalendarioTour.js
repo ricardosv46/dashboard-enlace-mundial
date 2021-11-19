@@ -1,21 +1,41 @@
 import Button from '../../../components/Buttons/Button'
 import Spinner from '../../../components/Spinner/Spinner'
-import UseForm from '../../../hooks/UseForm'
 
-const ActualizarCalendarioTour = ({ horario }) => {
-  const initialForm = {
-    cupos: '',
-    precio: '',
-    hora: ''
+const ActualizarCalendarioTour = ({
+  horario,
+  updateHorario,
+  loading,
+  setHorario,
+  resetForm,
+  form,
+  handleInputChange
+}) => {
+  // console.log('el horario es ', horario.fecha)
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    updateHorario({
+      cupos: form.cupos,
+      fecha: horario.fecha,
+      precio: form.precio,
+      hora: form.hora,
+      horarioTourId: horario.horarioTourId,
+      tourId: horario.tourId
+    }).then((rpta) => {
+      // console.log(rpta)
+      if (rpta === 'ok') {
+        setHorario({})
+        resetForm()
+      }
+    })
   }
-  const { handleInputChange, form } = UseForm(initialForm)
-  const handleSubmit = () => { }
+
   return (
     <div className="flex flex-col  bg-gray-white   rounded-xl justify-center items-center ">
       {/* FORMULARIO CREAR HORARIO  */}
       <form onSubmit={handleSubmit} className="w-full mt-4 max-w-100 ">
         <p className="text-center font-semibold text-xl text-gray-600">
-          Fecha:{' '}
+          Fecha: {horario.fecha}
         </p>
         {/* Inputs  */}
         <div className="w-full  grid grid-cols-1  gap-3 mt-5">
@@ -74,7 +94,7 @@ const ActualizarCalendarioTour = ({ horario }) => {
 
         <div className="mt-8 text-center">
           {/* eslint-disable */}
-          {false ? (
+          {loading ? (
             <Spinner />
           ) : (
             <Button type="submit" size="lg">

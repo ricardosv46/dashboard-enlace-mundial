@@ -4,7 +4,7 @@ import {
   useCreateHorarioTourMutation,
   useDeleteHorarioTourMutation,
   useGetHorariosTourQuery,
-  useUpdateTourMutation
+  useUpdateHorarioTourMutation
 } from '../generated/graphql'
 
 export const useHorariosServices = () => {
@@ -47,7 +47,10 @@ export const useHorariosServices = () => {
       }
     })
 
-  const [updateHorarioMutation, { loading: loadingUpdate, error: errorUpdate }] = useUpdateTourMutation({
+  const [
+    updateHorarioMutation,
+    { loading: loadingUpdate, error: errorUpdate }
+  ] = useUpdateHorarioTourMutation({
     onError: (err) => {
       // validar errores
       console.log('onError Update Horario', err?.graphQLErrors[0]?.debugMessage)
@@ -116,13 +119,18 @@ export const useHorariosServices = () => {
   }
 
   const updateHorario = async ({
-    id, hora, cupos, fecha, precio, tourId
+    horarioTourId,
+    hora,
+    cupos,
+    fecha,
+    precio,
+    tourId
   }) => {
     if (loadingUpdate === false) {
       const res = await updateHorarioMutation({
         variables: {
           input: {
-            horarioTourId: id,
+            horarioTourId: horarioTourId,
             hora: hora,
             cupos: cupos,
             fecha: fecha,
@@ -130,10 +138,9 @@ export const useHorariosServices = () => {
             tourId: tourId
           }
         }
-      }).catch((error) => console.error('que error', error))
-      refetch()
-      console.log(res)
-      if (!errorUpdate) {
+      })
+
+      if (res?.data?.UpdateHorarioTour) {
         swal({
           title: 'ACTUALIZAR',
           text: 'Se actualizo correctamente la Fecha',
@@ -141,19 +148,51 @@ export const useHorariosServices = () => {
           button: 'Aceptar',
           timer: 2000
         })
+        refetch()
+        console.log('horario creado ', res.data?.UpdateTour)
+        return 'ok'
+      } else {
+        swal({
+          title: 'ERROR',
+          text: 'Se prudujo un error en el servidor',
+          icon: 'error',
+          button: 'Aceptar',
+          timer: 2000
+        })
+        console.log(errorUpdate)
+      }
+    }
+  }
+  const updateHorarioEstado = async ({ horarioTourId, estado }) => {
+    if (loadingUpdate === false) {
+      const res = await updateHorarioMutation({
+        variables: {
+          input: {
+            horarioTourId: horarioTourId,
+            estado: estado
+          }
+        }
+      })
+
+      if (res?.data?.UpdateHorarioTour) {
+        refetch()
+        console.log('horario creado ', res.data?.UpdateTour)
+        return 'ok'
       }
     }
   }
   // pipes
-  const loading = loadingGet || loadingCreate
-  console.log('data query ', data)
+  const loading = loadingGet || loadingCreate || loadingUpdate
+  // console.log('data query ', data)
   return {
     data,
     loading,
     createHorario,
     deleteHorario,
     updateHorario,
+    updateHorarioEstado,
     loadingDelete,
-    fetchTourHorario
+    fetchTourHorario,
+    errorUpdate
   }
 }

@@ -24,7 +24,7 @@ const CrearCalendarioTours = ({
     estado: '',
     hora: ''
   })
-  console.log(formFecha)
+  // console.log(formFecha)
   const handleChangeForm = (e) => {
     if (e.target.name === 'cupos' || e.target.name === 'precio') {
       if (e.target.value < 0) {

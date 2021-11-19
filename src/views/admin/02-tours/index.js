@@ -13,7 +13,7 @@ const Tours = () => {
   const history = useHistory()
   const [dataBody, setDataBody] = useState([])
   const { db, loading, deleteTour } = useToursServices()
-
+  console.log('data es ', db)
   const dataHead = [
     ['Id', 'min-w-4', 'left'],
     ['Foto', 'min-w-20 ', 'left'],

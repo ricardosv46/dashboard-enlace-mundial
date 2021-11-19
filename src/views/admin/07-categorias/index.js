@@ -14,7 +14,7 @@ const Categorias = () => {
   const [dataBody, setDataBody] = useState([])
   const { db, loading, deleteCategoria } = useCategoriasServices()
 
-  // console.log('data vista ', db)
+  console.log('data vista ', db)
 
   const dataHead = [
     ['Id', 5, 'left'],

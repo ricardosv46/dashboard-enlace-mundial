@@ -909,6 +909,13 @@ export type UpdateCruceroMutationVariables = Exact<{
 
 export type UpdateCruceroMutation = { __typename?: 'Mutation', UpdateCrucero?: { __typename?: 'Crucero', cruceroId?: number | null | undefined, tituloCrucero?: string | null | undefined, slugCrucero?: string | null | undefined, estadoCrucero?: string | null | undefined, destacadoCrucero?: string | null | undefined, keywordsCrucero?: string | null | undefined, regionCrucero?: string | null | undefined, ciudadCrucero?: string | null | undefined, descripcionCortaCrucero?: string | null | undefined, descripcionLargaCrucero?: string | null | undefined, itinerarioCrucero?: string | null | undefined, puntoPartidaCrucero?: string | null | undefined, incluyeCrucero?: string | null | undefined, noIncluyeCrucero?: string | null | undefined, actividadesCrucero?: string | null | undefined, notasCrucero?: string | null | undefined, politicasCrucero?: string | null | undefined, videoPresentacionCrucero?: string | null | undefined, slugCategoria?: string | null | undefined, categoriaId?: string | null | undefined, imagenPrincipalCrucero?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined, imagenSecundariaCrucero?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined, galeriaCrucero?: Array<{ __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined> | null | undefined, Categoria?: { __typename?: 'Categoria', categoriaId?: number | null | undefined, slugCategoria?: string | null | undefined, tituloCategoria?: string | null | undefined, descripcion?: string | null | undefined, estadoCategoria?: string | null | undefined, keywordsCategoria?: string | null | undefined, imagenPrincipalCategoria?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined, imagenSecundariaCategoria?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined } | null | undefined } | null | undefined };
 
+export type UpdateHorarioTourMutationVariables = Exact<{
+  input?: Maybe<HorarioTourInput>;
+}>;
+
+
+export type UpdateHorarioTourMutation = { __typename?: 'Mutation', UpdateHorarioTour?: { __typename?: 'HorarioTour', horarioTourId?: number | null | undefined, hora?: string | null | undefined, cupos?: number | null | undefined, precio?: number | null | undefined, fecha?: string | null | undefined, tourId?: number | null | undefined, estado?: string | null | undefined } | null | undefined };
+
 export type UpdateImageMutationVariables = Exact<{
   input?: Maybe<ImagenesInput>;
 }>;
@@ -1763,6 +1770,45 @@ export function useUpdateCruceroMutation(baseOptions?: Apollo.MutationHookOption
 export type UpdateCruceroMutationHookResult = ReturnType<typeof useUpdateCruceroMutation>;
 export type UpdateCruceroMutationResult = Apollo.MutationResult<UpdateCruceroMutation>;
 export type UpdateCruceroMutationOptions = Apollo.BaseMutationOptions<UpdateCruceroMutation, UpdateCruceroMutationVariables>;
+export const UpdateHorarioTourDocument = gql`
+    mutation UpdateHorarioTour($input: HorarioTourInput) {
+  UpdateHorarioTour(input: $input) {
+    horarioTourId
+    hora
+    cupos
+    precio
+    fecha
+    tourId
+    estado
+  }
+}
+    `;
+export type UpdateHorarioTourMutationFn = Apollo.MutationFunction<UpdateHorarioTourMutation, UpdateHorarioTourMutationVariables>;
+
+/**
+ * __useUpdateHorarioTourMutation__
+ *
+ * To run a mutation, you first call `useUpdateHorarioTourMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateHorarioTourMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateHorarioTourMutation, { data, loading, error }] = useUpdateHorarioTourMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpdateHorarioTourMutation(baseOptions?: Apollo.MutationHookOptions<UpdateHorarioTourMutation, UpdateHorarioTourMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateHorarioTourMutation, UpdateHorarioTourMutationVariables>(UpdateHorarioTourDocument, options);
+      }
+export type UpdateHorarioTourMutationHookResult = ReturnType<typeof useUpdateHorarioTourMutation>;
+export type UpdateHorarioTourMutationResult = Apollo.MutationResult<UpdateHorarioTourMutation>;
+export type UpdateHorarioTourMutationOptions = Apollo.BaseMutationOptions<UpdateHorarioTourMutation, UpdateHorarioTourMutationVariables>;
 export const UpdateImageDocument = gql`
     mutation UpdateImage($input: ImagenesInput) {
   UpdateImage(input: $input) {
