@@ -6,10 +6,10 @@ import iconoAdd from '../../../assets/imgs/add.png'
 import TextArea from '../../../components/Forms/TextArea'
 import Heading from '../../../components/Heading'
 import UseForm from '../../../hooks/UseForm'
-import BtnEstado from '../../../components/BtnEstado/BtnEstado'
 import swal from 'sweetalert'
 import { useCategoriasServices } from '../../../services/useCategoriaServices'
 import SelectImage from '../../../components/SelectImage'
+import { useHistory } from 'react-router'
 const initialForm = {
   titulo: '',
   descripcion: ''
@@ -30,6 +30,7 @@ const validationsForm = (form) => {
 const otherErrors = {}
 
 const CrearCategoria = () => {
+  const history = useHistory()
   const { createCategoria, errorCreate } = useCategoriasServices()
   const { form, handleInputChange, handleBlur, errors, resetForm } = UseForm(
     initialForm,
@@ -37,9 +38,6 @@ const CrearCategoria = () => {
   )
   const [mainImage, setMainImage] = useState(null)
   const [secondaryImage, setSecondaryImage] = useState(null)
-
-  const [estado, setEstado] = useState(false)
-  const [destacado, setDestacado] = useState(false)
   const [keywords, setKeywords] = useState([])
   const [textKeywords, setTextKeywords] = useState('')
 
@@ -62,7 +60,6 @@ const CrearCategoria = () => {
       createCategoria({
         titulo: form.titulo,
         keywords: eliminarDuplicado(keywords),
-        destacado: destacado ? 'Activo' : 'Inactivo',
         descripcion: form.descripcion,
         idImgPrincipal: mainImage.id,
         idImgSecundaria: secondaryImage.id
@@ -79,10 +76,9 @@ const CrearCategoria = () => {
       } else {
         resetForm()
         setKeywords([])
-        setDestacado(false)
-        setEstado(false)
         setSecondaryImage(null)
         setMainImage(null)
+        history.push('/categorias')
       }
     } else {
       swal({
@@ -177,24 +173,6 @@ const CrearCategoria = () => {
             </div>
           </div>
         </div>
-
-        <div className="flex justify-between sm:justify-around lg:justify-start  my-5">
-          <div className="flex  items-center lg:w-full">
-            <label
-              htmlFor="estado"
-              className="block text-gray-700 text-left text-sm"
-            >
-              Estado
-            </label>
-            <div
-              className="ml-7 cursor-pointer"
-              onClick={() => setEstado(!estado)}
-            >
-              <BtnEstado estado={estado} />
-            </div>
-          </div>
-        </div>
-
         <div className="flex flex-col  lg:space-x-4  mb-5">
           <TextArea
             label="Descripción"

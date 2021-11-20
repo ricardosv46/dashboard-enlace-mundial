@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import iconoAdd from '../../../assets/imgs/add.png'
-import BtnDestacado from '../../../components/BtnDestacado/BtnDestacado'
 import Button from '../../../components/Buttons/Button'
 import ButtonBack from '../../../components/Buttons/ButtonBack'
 import InputText from '../../../components/Forms/InputText/InputText'
@@ -11,7 +10,6 @@ import UseForm from '../../../hooks/UseForm'
 import { Ciudades, Regiones } from '../../../data/dataPeru'
 import swal from 'sweetalert'
 import { useHistory, useLocation } from 'react-router'
-import BtnEstado from '../../../components/BtnEstado/BtnEstado'
 import SelectImage from '../../../components/SelectImage'
 import SelectMultiImages from '../../../components/SelectMultiImages'
 import { useCruceroServices } from '../../../services/useCruceroServices'
@@ -61,9 +59,6 @@ const EditarCrucero = () => {
     initialForm,
     validationsForm
   )
-
-  const [estado, setEstado] = useState(false)
-  const [destacado, setDestacado] = useState(false)
   const [incluye, setIncluye] = useState([])
   const [textIncluye, setTextIncluye] = useState('')
   const [noIncluye, setNoIncluye] = useState([])
@@ -116,8 +111,6 @@ const EditarCrucero = () => {
         slugCategoria: form.categorias,
         region: form.region,
         ciudad: form.ciudad,
-        estado: estado ? 'Activo' : 'Inactivo',
-        destacado: destacado ? 'Activo' : 'Inactivo',
         descripcionCorta: form.descripcionCorta,
         descripcionLarga: form.descripcionLarga,
         itinerario: eliminarDuplicado(itinerario),
@@ -166,8 +159,6 @@ const EditarCrucero = () => {
     form.descripcionCorta = objetoCrucero?.descripcionCortaCrucero
     form.puntoPartida = objetoCrucero?.puntoPartidaCrucero
     form.video = objetoCrucero?.videoPresentacionCrucero
-    setDestacado(objetoCrucero?.destacadoCrucero === 'Activo' && true)
-    setEstado(objetoCrucero?.estadoCrucero === 'Activo' && true)
     setItinerario(objetoCrucero?.itinerarioCrucero.split(','))
     setIncluye(objetoCrucero?.incluyeCrucero.split(','))
     setNoIncluye(objetoCrucero?.noIncluyeCrucero.split(','))
@@ -336,37 +327,6 @@ const EditarCrucero = () => {
                 {errors.ciudad}
               </p>
             )}
-          </div>
-        </div>
-
-        <div className="flex justify-between sm:justify-around lg:justify-start  my-5">
-          <div className="flex  items-center lg:w-full">
-            <label
-              htmlFor="estado"
-              className="block text-gray-700 text-left text-sm"
-            >
-              Estados
-            </label>
-            <div
-              onClick={() => setEstado(!estado)}
-              className="ml-7 cursor-pointer"
-            >
-              <BtnEstado estado={estado} />
-            </div>
-          </div>
-          <div className="flex  items-center lg:w-full ml-4">
-            <label
-              htmlFor="destacado"
-              className="block text-gray-700 text-left text-sm"
-            >
-              Destacado
-            </label>
-            <div
-              onClick={() => setDestacado(!destacado)}
-              className="ml-7 cursor-pointer"
-            >
-              <BtnDestacado estado={destacado} />
-            </div>
           </div>
         </div>
 

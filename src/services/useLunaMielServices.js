@@ -82,8 +82,6 @@ export const useLunaMielServices = () => {
     titulo,
     region,
     ciudad,
-    estado,
-    destacado,
     descripcionCorta,
     descripcionLarga,
     itinerario,
@@ -105,8 +103,6 @@ export const useLunaMielServices = () => {
         variables: {
           input: {
             tituloLuna: titulo,
-            estadoLuna: estado,
-            destacadoLuna: destacado,
             keywordsLuna: keywords.join(','),
             regionLuna: region,
             ciudadLuna: ciudad,
@@ -146,8 +142,6 @@ export const useLunaMielServices = () => {
     titulo,
     region,
     ciudad,
-    estado,
-    destacado,
     descripcionCorta,
     descripcionLarga,
     itinerario,
@@ -170,8 +164,6 @@ export const useLunaMielServices = () => {
           input: {
             lunaMielId: id,
             tituloLuna: titulo,
-            estadoLuna: estado,
-            destacadoLuna: destacado,
             keywordsLuna: keywords.join(','),
             regionLuna: region,
             ciudadLuna: ciudad,
@@ -206,12 +198,50 @@ export const useLunaMielServices = () => {
       }
     }
   }
+
+  const updateLunaMielEstado = async ({
+    id,
+    estado
+  }) => {
+    if (loadingUpdate === false) {
+      const res = await updateLunaMielMutation({
+        variables: {
+          input: {
+            lunaMielId: id,
+            estadoLuna: estado
+          }
+        }
+      }).catch((error) => console.error('que error', error))
+      refetch()
+      console.log(res)
+    }
+  }
+
+  const updateLunaMielDestacado = async ({
+    id,
+    destacado
+  }) => {
+    if (loadingUpdate === false) {
+      const res = await updateLunaMielMutation({
+        variables: {
+          input: {
+            lunaMielId: id,
+            destacadoLuna: destacado
+          }
+        }
+      }).catch((error) => console.error('que error', error))
+      refetch()
+      console.log(res)
+    }
+  }
   return {
     db,
     loading,
     deleteLunaMiel,
     createLunaMiel,
     updateLunaMiel,
+    updateLunaMielEstado,
+    updateLunaMielDestacado,
     loadingUpdate,
     errorUpdate,
     loadingDelete

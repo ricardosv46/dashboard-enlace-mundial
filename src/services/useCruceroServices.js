@@ -199,12 +199,44 @@ export const useCruceroServices = () => {
       }
     }
   }
+  const updateCruceroEstado = async ({ id, estado }) => {
+    if (loadingUpdate === false) {
+      const res = await updateCruceroMutation({
+        variables: {
+          input: {
+            cruceroId: id,
+
+            estadoCrucero: estado
+          }
+        }
+      }).catch((error) => console.error('que error', error))
+      refetch()
+      console.log(res)
+    }
+  }
+  const updateCruceroDestacado = async ({ id, destacado }) => {
+    if (loadingUpdate === false) {
+      const res = await updateCruceroMutation({
+        variables: {
+          input: {
+            cruceroId: id,
+            destacadoCrucero: destacado
+          }
+        }
+      }).catch((error) => console.error('que error', error))
+      refetch()
+      console.log(res)
+    }
+  }
+
   return {
     db,
     loading,
     deleteCrucero,
     createCrucero,
     updateCrucero,
+    updateCruceroEstado,
+    updateCruceroDestacado,
     errorUpdate,
     errorCreate,
     loadingUpdate,

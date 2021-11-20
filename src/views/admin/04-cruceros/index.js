@@ -22,27 +22,58 @@ const Cruceros = () => {
   ]
 
   const [dataBody, setDataBody] = useState([])
-  const { db, loading, deleteCrucero } = useCruceroServices()
+  const {
+    db,
+    loading,
+    deleteCrucero,
+    updateCruceroDestacado,
+    updateCruceroEstado
+  } = useCruceroServices()
 
   // console.log('data vista ', db)
 
-  const armarFilasCrucero = (
-    data,
-    setDataBody,
-    handleDeleteCrucero
-  ) => {
+  const armarFilasCrucero = (data, setDataBody, handleDeleteCrucero) => {
     const filasCrucero = data.map((crucero) => ({
       id: crucero?.cruceroId,
       imagen: (
-        <img
-          src={crucero?.imagenPrincipalCrucero?.url}
-          className="w-26 h-22"
-        />
+        <img src={crucero?.imagenPrincipalCrucero?.url} className="w-26 h-22" />
       ),
       nombre: crucero?.tituloCrucero,
       categoria: crucero?.Categoria?.tituloCategoria,
-      estado: <BtnEstado estado={crucero?.estadoCrucero} />,
-      descatar: <BtnDestacado estado={false} />,
+      estado: (
+        <div
+          div
+          className="flex justify-center cursor-pointer transition-all duration-300 transform hover:-translate-y-1 p-1"
+          onClick={() => {
+            updateCruceroEstado({
+              id: crucero?.cruceroId,
+              estado:
+                crucero?.estadoCrucero === 'Activado'
+                  ? 'Desactivado'
+                  : 'Activado'
+            })
+          }}
+        >
+          <BtnEstado estado={crucero?.estadoCrucero === 'Activado' ? 1 : 0} />
+        </div>
+      ),
+      descatar: (
+        <div
+          div
+          className="flex justify-center cursor-pointer transition-all duration-300 transform hover:-translate-y-1 p-1"
+          onClick={() => {
+            updateCruceroDestacado({
+              id: crucero?.cruceroId,
+              destacado:
+                crucero?.destacadoCrucero === 'Activado'
+                  ? 'Desactivado'
+                  : 'Activado'
+            })
+          }}
+        >
+          <BtnDestacado estado={crucero?.destacadoCrucero === 'Activado' && true} />
+        </div>
+      ),
       acciones: (
         <BtnAccionesCalendary
           handleEdit={() =>

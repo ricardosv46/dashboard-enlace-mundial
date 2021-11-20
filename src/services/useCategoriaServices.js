@@ -6,6 +6,7 @@ import {
   useUpdateCategoriaMutation
 } from '../generated/graphql'
 
+// Obtenemos todas las categorias
 export const useCategoriasServices = () => {
   const { loading, data, refetch } = useGetCategoriaQuery({
     fetchPolicy: 'network-only',
@@ -147,6 +148,24 @@ export const useCategoriasServices = () => {
     }
   }
 
+  const updateCategoriaEstado = async ({
+    estado,
+    id
+  }) => {
+    if (loadingUpdate === false) {
+      const res = await updateCategoriaMutation({
+        variables: {
+          input: {
+            categoriaId: id,
+            estadoCategoria: estado
+          }
+        }
+      }).catch((error) => console.error('error', error))
+      console.log(res, errorCreate)
+      refetch()
+    }
+  }
+
   return {
     db,
     loading,
@@ -156,6 +175,7 @@ export const useCategoriasServices = () => {
     errorCreate,
     errorUpdate,
     createCategoria,
-    updateCategoria
+    updateCategoria,
+    updateCategoriaEstado
   }
 }

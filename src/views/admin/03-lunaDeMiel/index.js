@@ -21,8 +21,16 @@ const LunaDeMiel = () => {
   ]
 
   const history = useHistory()
-  const { db, deleteLunaMiel, loading } = useLunaMielServices()
-  // console.log('valor de data luna miel', db.length)
+  const {
+    db,
+    deleteLunaMiel,
+    updateLunaMielEstado,
+    loading,
+    updateLunaMielDestacado,
+    loadingUpdate
+  } = useLunaMielServices()
+  console.log('valor update', loadingUpdate)
+  // console.log('valor de data luna miel', db)
   const [dataBody, setDataBody] = useState([])
 
   const armarFilasLunaMiel = (data, setDataBody, handleDeleteTour) => {
@@ -34,8 +42,42 @@ const LunaDeMiel = () => {
         ),
         nombre: lunaMiel?.tituloLuna,
         categoria: lunaMiel?.Categoria?.tituloCategoria,
-        estado: <BtnEstado estado={lunaMiel?.estadoLuna} />,
-        descatar: <BtnDestacado estado={false} />,
+        estado: (
+          <div
+            div
+            className="flex justify-center cursor-pointer transition-all duration-300 transform hover:-translate-y-1 p-1"
+            onClick={() => {
+              updateLunaMielEstado({
+                id: lunaMiel?.lunaMielId,
+                estado:
+                  lunaMiel?.estadoLuna === 'Activado'
+                    ? 'Desactivado'
+                    : 'Activado'
+              })
+            }}
+          >
+            <BtnEstado estado={lunaMiel?.estadoLuna === 'Activado' ? 1 : 0} />
+          </div>
+        ),
+        descatar: (
+          <div
+            div
+            className="flex justify-center cursor-pointer transition-all duration-300 transform hover:-translate-y-1 p-1"
+            onClick={() => {
+              updateLunaMielDestacado({
+                id: lunaMiel?.lunaMielId,
+                destacado:
+                  lunaMiel?.destacadoLuna === 'Activado'
+                    ? 'Desactivado'
+                    : 'Activado'
+              })
+            }}
+          >
+            <BtnDestacado
+              estado={lunaMiel?.destacadoLuna === 'Activado' && true}
+            />
+          </div>
+        ),
         acciones: (
           <BtnAccionesCalendary
             handleEdit={() =>
@@ -57,7 +99,7 @@ const LunaDeMiel = () => {
     if (db.length > 0) {
       armarFilasLunaMiel(db, setDataBody, deleteLunaMiel)
     }
-  }, [db])
+  }, [db, loadingUpdate])
   return (
     <div className="shadow md:rounded bg-white p-5 py-10 md:p-10 animate__fadeIn animate__animated">
       <div className="flex justify-between mb-5">

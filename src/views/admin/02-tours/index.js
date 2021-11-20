@@ -12,7 +12,8 @@ import Spinner from '../../../components/Spinner/Spinner'
 const Tours = () => {
   const history = useHistory()
   const [dataBody, setDataBody] = useState([])
-  const { db, loading, deleteTour } = useToursServices()
+  const { db, loading, deleteTour, updateTourDestacado, updateTourEstado } =
+    useToursServices()
   console.log('data es ', db)
   const dataHead = [
     ['Id', 'min-w-4', 'left'],
@@ -29,12 +30,45 @@ const Tours = () => {
       return {
         id: tour?.tourId,
         imagen: (
-          <img src={tour?.imagenPrincipalTour?.url} className="w-16 h-10 object-cover" />
+          <img
+            src={tour?.imagenPrincipalTour?.url}
+            className="w-16 h-10 object-cover"
+          />
         ),
         nombre: tour?.tituloTour,
         categoria: tour?.Categoria?.tituloCategoria,
-        estado: <BtnEstado estado={tour?.estadoTour} />,
-        descatar: <BtnDestacado estado={false} />,
+        estado: (
+          <div
+            div
+            className="flex justify-center cursor-pointer transition-all duration-300 transform hover:-translate-y-1 p-1"
+            onClick={() => {
+              updateTourEstado({
+                id: tour?.tourId,
+                estado:
+                  tour?.estadoTour === 'Activado' ? 'Desactivado' : 'Activado'
+              })
+            }}
+          >
+            <BtnEstado estado={tour?.estadoTour === 'Activado' ? 1 : 0} />
+          </div>
+        ),
+        descatar: (
+          <div
+            div
+            className="flex justify-center cursor-pointer transition-all duration-300 transform hover:-translate-y-1 p-1"
+            onClick={() => {
+              updateTourDestacado({
+                id: tour?.tourId,
+                destacado:
+                  tour?.destacadoTour === 'Activado'
+                    ? 'Desactivado'
+                    : 'Activado'
+              })
+            }}
+          >
+            <BtnDestacado estado={tour?.destacadoTour === 'Activado' && true} />
+          </div>
+        ),
         acciones: (
           <BtnAccionesCalendary
             handleEdit={() =>

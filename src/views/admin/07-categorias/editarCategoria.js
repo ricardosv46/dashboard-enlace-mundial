@@ -6,7 +6,6 @@ import iconoAdd from '../../../assets/imgs/add.png'
 import TextArea from '../../../components/Forms/TextArea'
 import Heading from '../../../components/Heading'
 import UseForm from '../../../hooks/UseForm'
-import BtnEstado from '../../../components/BtnEstado/BtnEstado'
 import swal from 'sweetalert'
 import { useCategoriasServices } from '../../../services/useCategoriaServices'
 import { useHistory, useLocation } from 'react-router'
@@ -38,8 +37,6 @@ const EditarCategoria = () => {
     initialForm,
     validationsForm
   )
-  const [estado, setEstado] = useState(false)
-  const [destacado, setDestacado] = useState(false)
   const [keywords, setKeywords] = useState([])
   const [textKeywords, setTextKeywords] = useState('')
   const [mainImage, setMainImage] = useState(null)
@@ -64,8 +61,6 @@ const EditarCategoria = () => {
         id: objetoCategoria.categoriaId,
         titulo: form.titulo,
         keywords: eliminarDuplicado(keywords),
-        estado: estado ? 'Activo' : 'Inactivo',
-        destacado: destacado ? 'Activo' : 'Inactivo',
         descripcion: form.descripcion,
         idImgPrincipal: mainImage.id,
         idImgSecundaria: secondaryImage.id
@@ -96,8 +91,6 @@ const EditarCategoria = () => {
   useEffect(() => {
     form.titulo = objetoCategoria.tituloCategoria
     form.descripcion = objetoCategoria.descripcion
-    setDestacado(objetoCategoria?.destacadoCategoria === 'Activo' && true)
-    setEstado(objetoCategoria?.estadoCategoria === 'Activo' && true)
     setKeywords(objetoCategoria?.keywordsCategoria.split(','))
     setMainImage(objetoCategoria.imagenPrincipalCategoria)
     setSecondaryImage(objetoCategoria.imagenSecundariaCategoria)
@@ -179,23 +172,6 @@ const EditarCategoria = () => {
                   <p className="text-sm  inline-block text-gra">{item}</p>
                 </div>
               ))}
-            </div>
-          </div>
-        </div>
-
-        <div className="flex justify-between sm:justify-around lg:justify-start  my-5">
-          <div className="flex  items-center lg:w-full">
-            <label
-              htmlFor="estado"
-              className="block text-gray-700 text-left text-sm"
-            >
-              Estado
-            </label>
-            <div
-              className="ml-7 cursor-pointer"
-              onClick={() => setEstado(!estado)}
-            >
-              <BtnEstado estado={estado} />
             </div>
           </div>
         </div>

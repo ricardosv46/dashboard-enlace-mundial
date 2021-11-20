@@ -1,6 +1,5 @@
 import { useHistory } from 'react-router'
 import BtnAcciones from '../../../components/btnAcciones/BtnAcciones'
-import BtnDestacado from '../../../components/BtnDestacado/BtnDestacado'
 import BtnEstado from '../../../components/BtnEstado/BtnEstado'
 import Button from '../../../components/Buttons/Button'
 import Heading from '../../../components/Heading'
@@ -12,17 +11,17 @@ import { useCategoriasServices } from '../../../services/useCategoriaServices'
 const Categorias = () => {
   const history = useHistory()
   const [dataBody, setDataBody] = useState([])
-  const { db, loading, deleteCategoria } = useCategoriasServices()
+  const { db, loading, deleteCategoria, updateCategoriaEstado } =
+    useCategoriasServices()
 
   console.log('data vista ', db)
 
   const dataHead = [
-    ['Id', 5, 'left'],
+    ['Id', 10, 'left'],
     ['Imagen', 20, 'left'],
     ['Nombre', 52, 'left'],
     ['Estado', 10, 'center'],
-    ['Destacar', 10, 'center'],
-    ['Acciones', 16, 'center']
+    ['Acciones', 20, 'center']
   ]
   const armarFilasCategorias = (
     categorias,
@@ -38,8 +37,25 @@ const Categorias = () => {
         />
       ),
       nombre: categoria?.tituloCategoria,
-      estado: <BtnEstado estado={categoria?.estadoCategoria} />,
-      descatar: <BtnDestacado estado={false} />,
+      estado: (
+        <div
+          div
+          className="flex justify-center cursor-pointer transition-all duration-300 transform hover:-translate-y-1 p-1"
+          onClick={() => {
+            updateCategoriaEstado({
+              id: categoria?.categoriaId,
+              estado:
+                categoria?.estadoCategoria === 'Activado'
+                  ? 'Desactivado'
+                  : 'Activado'
+            })
+          }}
+        >
+          <BtnEstado
+            estado={categoria?.estadoCategoria === 'Activado' ? 1 : 0}
+          />
+        </div>
+      ),
       acciones: (
         <BtnAcciones
           handleEdit={() =>

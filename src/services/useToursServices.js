@@ -200,12 +200,50 @@ export const useToursServices = () => {
       }
     }
   }
+
+  const updateTourEstado = async ({
+    id,
+    estado
+  }) => {
+    if (loadingUpdate === false) {
+      const res = await updateTourMutation({
+        variables: {
+          input: {
+            tourId: id,
+            estadoTour: estado
+          }
+        }
+      }).catch((error) => console.error('que error', error))
+      refetch()
+      console.log(res)
+    }
+  }
+
+  const updateTourDestacado = async ({
+    id,
+    destacado
+  }) => {
+    if (loadingUpdate === false) {
+      const res = await updateTourMutation({
+        variables: {
+          input: {
+            tourId: id,
+            destacadoTour: destacado
+          }
+        }
+      }).catch((error) => console.error('que error', error))
+      refetch()
+      console.log(res)
+    }
+  }
   return {
     db,
     loading,
     deleteTour,
     createTour,
     updateTour,
+    updateTourDestacado,
+    updateTourEstado,
     errorCreate,
     errorUpdate,
     loadingCreate,
