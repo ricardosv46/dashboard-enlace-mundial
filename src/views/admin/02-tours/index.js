@@ -16,13 +16,13 @@ const Tours = () => {
     useToursServices()
   console.log('data es ', db)
   const dataHead = [
-    ['Id', 'min-w-4', 'left'],
+    ['Id', 'min-w-10', 'left'],
     ['Foto', 'min-w-20 ', 'left'],
-    ['Titulo', 'min-w-50', 'left'],
-    ['Categoria', 'min-w-50', 'left'],
-    ['Estado', '', 'center'],
-    ['Destacado', '', 'center'],
-    ['Acciones', '', 'left']
+    ['Titulo', 'min-w-52', 'left'],
+    ['Categoria', 'min-w-52', 'left'],
+    ['Estado', 'min-w-10', 'center'],
+    ['Destacado', 'min-w-10', 'center'],
+    ['Acciones', 'min-w-20', 'left']
   ]
 
   const armarFilasTours = (data, setDataBody, handleDeleteTour) => {

@@ -31,7 +31,7 @@ const ModalSelectImage = ({
 
   return (
     <Modal isOpen={isOpen} closeModal={closeModal}>
-      <div className="bg-white rounded p-5 w-screen-9/10 h-screen-9/10">
+      <div className="bg-white rounded py-6 border px-2 w-screen-9/10 h-screen-9/10 overflow-y-auto">
         <div className="w-full h-full">
           <h2 className="mb-5 w-max">Selecciona una imagen</h2>
 

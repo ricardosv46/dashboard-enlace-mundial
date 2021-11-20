@@ -14,14 +14,14 @@ const Categorias = () => {
   const { db, loading, deleteCategoria, updateCategoriaEstado } =
     useCategoriasServices()
 
-  console.log('data vista ', db)
+  // console.log('data vista ', db)
 
   const dataHead = [
-    ['Id', 10, 'left'],
-    ['Imagen', 20, 'left'],
-    ['Nombre', 52, 'left'],
-    ['Estado', 10, 'center'],
-    ['Acciones', 20, 'center']
+    ['Id', 'min-w-10', 'left'],
+    ['Imagen', 'min-w-20', 'left'],
+    ['Nombre', 'min-w-52', 'left'],
+    ['Estado', 'min-w-10', 'center'],
+    ['Acciones', 'min-w-20', 'center']
   ]
   const armarFilasCategorias = (
     categorias,

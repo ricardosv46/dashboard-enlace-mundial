@@ -38,7 +38,7 @@ const Login = () => {
           initialValues={initial}
           validate={({ user, password }) => validateFields({ user, password })}
           onSubmit={({ user, password }, { resetForm }) => {
-            if (user === 'admin@gmail.com' && password === 'admin') {
+            if (user === 'admin@gmail.com' && password === '123456') {
               const action = {
                 type: types.login,
                 payload: {

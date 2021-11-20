@@ -6,7 +6,7 @@ const Layout = ({ children }) => {
   const [isOpen, onOpen, onClose] = useModal()
 
   const sidebarStyles = [
-    isOpen ? 'left-0' : '-left-full',
+    isOpen ? 'left-0 animate__bounceInLeft animate__animated' : '-left-full',
     'fixed h-screen w-full lg:hidden z-999 transition'
   ]
 
@@ -21,7 +21,7 @@ const Layout = ({ children }) => {
         <div className={sidebarStyles.join(' ')}>
           <div
             onClick={onClose}
-            className="absolute w-full h-full bg-black bg-opacity-50"
+            className="absolute w-full h-full bg-black bg-opacity-50 animate__animated animate__fadeIn"
           />
           <Sidebar handleShowBtn={onClose} />
         </div>

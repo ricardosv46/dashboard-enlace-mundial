@@ -43,11 +43,11 @@ const EditarFoto = ({
   const btnDisabled = text.trim() === ''
 
   return (
-    <div className="w-full md:w-100 flex flex-col bg-white p-5 shadow rounded z-9999">
+    <div className="w-full md:w-100 flex flex-col bg-white p-5 shadow rounded z-9999 min-w-72">
       <h2 className="mt-10 md:text-2xl font-semibold tracking-wide mb-5 flex items-center mx-auto">
         Información de la Imágen
       </h2>
-      <div className="aspect-w-16 aspect-h-9">
+      <div className="aspect-w-16 aspect-h-9 ">
         <img
           src={image.url}
           alt={image.descripcion}
@@ -55,7 +55,7 @@ const EditarFoto = ({
         />
       </div>
       <form onSubmit={handleSubmit}>
-      <div className="flex flex-col lg:flex-row lg:space-x-4 my-5">
+      <div className="flex flex-col lg:flex-row lg:space-x-4 my-5 ">
           <InputText
             name="id"
             label="ID"
