@@ -19,7 +19,7 @@ const dataHead = [
 ]
 const ListarCategoriasBlog = () => {
   const history = useHistory()
-  const [dataBody, setDataBody] = useState(null)
+  const [dataBody, setDataBody] = useState([{}])
   const { db, loading, deleteCategoria } = useCategoriasBlogServices()
 
   const armarFilasCategorias = (data, setDataBody, deleteCategoria) => {

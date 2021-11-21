@@ -13,6 +13,7 @@ import swal from 'sweetalert'
 import SelectImage from '../../../components/SelectImage'
 import SelectMultiImages from '../../../components/SelectMultiImages'
 import { useHistory } from 'react-router'
+import Spinner from '../../../components/Spinner/Spinner'
 const initialForm = {
   titulo: '',
   categorias: '',
@@ -51,7 +52,8 @@ const otherErrors = {}
 const CrearTour = () => {
   const history = useHistory()
   const { db: dataCategoria } = useCategoriasServices()
-  const { createTour, errorCreate } = useToursServices()
+  const { createTour, loadingCreate } = useToursServices()
+  console.log(loadingCreate)
   const { form, handleInputChange, handleBlur, errors, resetForm } = UseForm(
     initialForm,
     validationsForm
@@ -121,31 +123,23 @@ const CrearTour = () => {
         idImgPrincipal: mainImage.id,
         idImgSecundaria: secondaryImage.id,
         galeria: eliminarDuplicado(galery)
+      }).then((resp) => {
+        if (resp === 'exito') {
+          resetForm()
+          setActividades([])
+          setIncluye([])
+          setNoIncluye([])
+          setItinerario([])
+          setActividades([])
+          setNotas([])
+          setPoliticas([])
+          setKeywords([])
+          setMainImage(null)
+          setSecondaryImage(null)
+          setGalery([])
+          setTimeout(() => { history.push('/tours') }, 1100)
+        }
       })
-      // console.log(errorCreate)
-      if (errorCreate) {
-        swal({
-          title: 'ERROR',
-          text: 'OACURRIO UN ERROR EN EL SERVIDOR',
-          icon: 'error',
-          button: 'Aceptar',
-          timer: 2000
-        })
-      } else {
-        resetForm()
-        setActividades([])
-        setIncluye([])
-        setNoIncluye([])
-        setItinerario([])
-        setActividades([])
-        setNotas([])
-        setPoliticas([])
-        setKeywords([])
-        setMainImage(null)
-        setSecondaryImage(null)
-        setGalery([])
-        history.push('/tours')
-      }
     } else {
       swal({
         title: 'DATOS INCOMPLETOS',
@@ -201,7 +195,6 @@ const CrearTour = () => {
               onChange={handleInputChange}
               onBlur={handleBlur}
               value={form.titulo}
-              required
             />
             {errors.titulo && (
               <p className="text-sm text-red-500 font-medium mt-2 ml-1">
@@ -754,9 +747,12 @@ const CrearTour = () => {
         />
 
         <div className="my-10 text-center">
-          <Button variant="primary" size="lg" type="submit">
-            CREAR
-          </Button>
+          {loadingCreate
+            ? <Spinner />
+            : <Button variant="primary" size="lg" type="submit">
+              CREAR TOUR
+            </Button>
+          }
         </div>
       </form>
     </div>

@@ -2,29 +2,26 @@ import Button from '../../../components/Buttons/Button'
 import Spinner from '../../../components/Spinner/Spinner'
 
 const ActualizarCalendarioTour = ({
-  horario,
   updateHorario,
   loading,
-  setHorario,
   resetForm,
   form,
-  handleInputChange
+  handleInputChange,
+  closeModal
 }) => {
-  // console.log('el horario es ', horario.fecha)
-
   const handleSubmit = (e) => {
     e.preventDefault()
     updateHorario({
       cupos: form.cupos,
-      fecha: horario.fecha,
+      fecha: form.fecha,
       precio: form.precio,
       hora: form.hora,
-      horarioTourId: horario.horarioTourId,
-      tourId: horario.tourId
+      horarioTourId: form.horarioTourId,
+      tourId: form.tourId
     }).then((rpta) => {
       // console.log(rpta)
       if (rpta === 'ok') {
-        setHorario({})
+        closeModal()
         resetForm()
       }
     })
@@ -35,7 +32,7 @@ const ActualizarCalendarioTour = ({
       {/* FORMULARIO CREAR HORARIO  */}
       <form onSubmit={handleSubmit} className="w-full mt-4 max-w-100 ">
         <p className="text-center font-semibold text-xl text-gray-600">
-          Fecha: {horario.fecha}
+          Fecha: {form.fecha}
         </p>
         {/* Inputs  */}
         <div className="w-full  grid grid-cols-1  gap-3 mt-5">

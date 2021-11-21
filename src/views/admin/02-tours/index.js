@@ -14,7 +14,9 @@ const Tours = () => {
   const [dataBody, setDataBody] = useState([])
   const { db, loading, deleteTour, updateTourDestacado, updateTourEstado } =
     useToursServices()
-  console.log('data es ', db)
+  // console.log('data es ', db)
+  console.log('valor de databody', dataBody)
+  console.log('valor de loading', loading)
   const dataHead = [
     ['Id', 'min-w-10', 'left'],
     ['Foto', 'min-w-20 ', 'left'],
@@ -25,7 +27,7 @@ const Tours = () => {
     ['Acciones', 'min-w-20', 'left']
   ]
 
-  const armarFilasTours = (data, setDataBody, handleDeleteTour) => {
+  const armarFilasTours = (data, setDataBody, handleDelete) => {
     const filasTours = data.map((tour) => {
       return {
         id: tour?.tourId,
@@ -74,7 +76,7 @@ const Tours = () => {
             handleEdit={() =>
               history.push(`/tours/editar-tour/${tour?.tourId}`, tour)
             }
-            handleDelete={() => handleDeleteTour(tour)}
+            handleDelete={() => handleDelete(tour)}
             handleCalendary={() =>
               history.push(`/tour/calendario/${tour?.tourId}`)
             }

@@ -99,7 +99,7 @@ const LunaDeMiel = () => {
     if (db.length > 0) {
       armarFilasLunaMiel(db, setDataBody, deleteLunaMiel)
     }
-  }, [db, loadingUpdate])
+  }, [db])
   return (
     <div className="shadow md:rounded bg-white p-5 py-10 md:p-10 animate__fadeIn animate__animated">
       <div className="flex justify-between mb-5">

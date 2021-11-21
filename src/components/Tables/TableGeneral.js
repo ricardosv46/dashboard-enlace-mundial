@@ -25,8 +25,8 @@ const TableGeneral = ({
   return (
     <div className="w-full mb-8 overflow-hidden rounded-md md:shadow-xl max-h-screen overflow-y-auto animate__fadeIn animate__animated ">
       <div className="w-full overflow-x-auto min-h-screen">
-        {dataBody && (
-          <table className={`w-full  text-left border-2 ${borderC} `}>
+        {dataBody && dataBody.length > 0
+          ? <table className={`w-full  text-left border-2 ${borderC} `}>
             <thead className="">
               <tr
                 className={`text-lg font-semibold  tracking-wide bg-gray-100 ${textColorH} 
@@ -60,7 +60,8 @@ const TableGeneral = ({
               ))}
             </tbody>
           </table>
-        )}
+          : <div className="text-gray-600 text-center my-10">NO HAY INFORMACIÓN PARA MOSTRAR</div>
+        }
       </div>
     </div>
   )

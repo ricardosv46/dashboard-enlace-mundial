@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import 'react-modern-calendar-datepicker/lib/DatePicker.css'
 import Heading from '../../../components/Heading'
 import Button from '../../../components/Buttons/Button'
@@ -9,6 +9,7 @@ import { useParams } from 'react-router'
 import ButtonBack from '../../../components/Buttons/ButtonBack'
 import { useModal } from '../../../hooks/useModal'
 import ModalCustomer from '../../../components/Modales/ModalCustomer'
+import ModalEditarFecha from '../../../components/Modales/ModalEditaFecha'
 import CrearCalendarioTours from './CrearCalendarioTours'
 import { IconDelete, IconEdit } from '../../../assets/icons/icons'
 import BtnEstado from '../../../components/BtnEstado/BtnEstado'
@@ -41,8 +42,8 @@ const CalendarioTour = () => {
     openModalActualizarCalendario,
     closeModalActualizarCalendario
   ] = useModal(false)
-  const [db, setDb] = useState({})
-  console.log('valor db', db)
+
+  // console.log('valor db', db)
   // const [isOpenModalCrear, setIsOpenModalCrear] = useState(false)
   // seleccionamos el id del tour
   const { id } = useParams()
@@ -56,6 +57,15 @@ const CalendarioTour = () => {
     updateHorarioEstado
   } = useHorariosServices(id)
   // console.log('data vista ', data)
+  const handleClick = (horario) => {
+    openModalActualizarCalendario()
+    form.cupos = horario.cupos
+    form.precio = horario.precio
+    form.hora = horario.hora
+    form.fecha = horario.fecha
+    form.horarioTourId = horario.horarioTourId
+    form.tourId = horario.tourId
+  }
   const armarFilas = (data) => {
     // console.log('data horarios ', data)
     const filas = data.map((horario) => ({
@@ -81,10 +91,7 @@ const CalendarioTour = () => {
         <div className="flex justify-center gap-x-2">
           <div
             className="flex justify-center cursor-pointer transition-all duration-300 transform hover:-translate-y-1 p-1"
-            onClick={() => {
-              openModalActualizarCalendario()
-              setDb(horario)
-            }}
+            onClick={() => handleClick(horario)}
           >
             <IconEdit />
           </div>
@@ -105,11 +112,6 @@ const CalendarioTour = () => {
       fetchTourHorario(id)
     }
   }, [id])
-  useEffect(() => {
-    form.cupos = db.cupos
-    form.precio = db.precio
-    form.hora = db.hora
-  }, [db])
 
   return (
     <>
@@ -130,10 +132,9 @@ const CalendarioTour = () => {
         </div>
         {/* eslint-disable  */}
 
-          <TableGeneral dataBody={armarFilas(data)} dataHead={dataHead} />
-
+        <TableGeneral dataBody={armarFilas(data)} dataHead={dataHead} />
       </div>
-      // Modal para llamar la ventana crear calendario
+
       <ModalCustomer
         isOpen={isOpenModalCrearCalendario}
         closeModal={closeModalCrearCalendario}
@@ -145,8 +146,8 @@ const CalendarioTour = () => {
           closeModal={closeModalCrearCalendario}
         />
       </ModalCustomer>
-      //Modal para actualizar calendario
-      <ModalCustomer
+
+      <ModalEditarFecha
         isOpen={isOpenModalActualizarCalendario}
         closeModal={closeModalActualizarCalendario}
       >
@@ -155,14 +156,12 @@ const CalendarioTour = () => {
           loading={loading}
           tourId={id}
           closeModal={closeModalActualizarCalendario}
-          horario={db}
-          setHorario={setDb}
           loading={loading}
           handleInputChange={handleInputChange}
           form={form}
           resetForm={resetForm}
         />
-      </ModalCustomer>
+      </ModalEditarFecha>
     </>
   )
 }

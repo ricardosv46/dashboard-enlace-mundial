@@ -1,3 +1,4 @@
+
 import swal from 'sweetalert'
 import {
   useCreateTourMutation,
@@ -8,7 +9,8 @@ import {
 
 export const useToursServices = () => {
   // inicializacion de variables
-  const { loading, data, refetch } = useGetAllTourQuery({
+
+  const { loading, refetch, data } = useGetAllTourQuery({
     fetchPolicy: 'network-only',
     variables: {
       numberPaginate: 10,
@@ -16,6 +18,7 @@ export const useToursServices = () => {
       estadoTour: ''
     }
   })
+
   const db = data ? data?.GetAllTour?.data : []
   // llamando al metodo createTour
   const [createTourMutation, { loading: loadingCreate, error: errorCreate }] =
@@ -29,7 +32,7 @@ export const useToursServices = () => {
       }
     })
   // llamando al metodo deleteTour
-  const [deleteTourMutation] = useDeleteTourMutation({
+  const [deleteTourMutation, { loading: loadingDelete }] = useDeleteTourMutation({
     onError: (err) => {
       // validar errores
       console.log('Error delete Tour', err?.graphQLErrors[0]?.debugMessage)
@@ -43,6 +46,7 @@ export const useToursServices = () => {
         console.log('onError Update Tour', err?.graphQLErrors[0]?.debugMessage)
       }
     })
+
   // funcion que me permite crear un tour
   const createTour = async ({
     titulo,
@@ -66,45 +70,51 @@ export const useToursServices = () => {
     galeria,
     keywords
   }) => {
-    if (loadingCreate === false) {
-      const res = await createTourMutation({
-        variables: {
-          input: {
-            tituloTour: titulo,
-            regionTour: region,
-            ciudadTour: ciudad,
-            estadoTour: estado,
-            destacadoTour: destacado,
-            keywordsTour: keywords.join(','),
-            descripcionCortaTour: descripcionCorta,
-            descripcionLargaTour: descripcionLarga,
-            itinerarioTour: itinerario.join(','),
-            puntoPartidaTour: puntoPartida,
-            incluyeTour: incluye.join(','),
-            noIncluyeTour: noIncluye.join(','),
-            actividadesTour: actividades.join(','),
-            notasTour: notas.join(','),
-            politicasTour: politicas.join(','),
-            videoPresentacionTour: video,
-            imagenPrincipalTour: idImgPrincipal,
-            imagenSecundariaTour: idImgSecundaria,
-            galeriaTour: galeria,
-            slugCategoria: slugCategoria
-          }
+    const res = await createTourMutation({
+      variables: {
+        input: {
+          tituloTour: titulo,
+          regionTour: region,
+          ciudadTour: ciudad,
+          estadoTour: estado,
+          destacadoTour: destacado,
+          keywordsTour: keywords.join(','),
+          descripcionCortaTour: descripcionCorta,
+          descripcionLargaTour: descripcionLarga,
+          itinerarioTour: itinerario.join(','),
+          puntoPartidaTour: puntoPartida,
+          incluyeTour: incluye.join(','),
+          noIncluyeTour: noIncluye.join(','),
+          actividadesTour: actividades.join(','),
+          notasTour: notas.join(','),
+          politicasTour: politicas.join(','),
+          videoPresentacionTour: video,
+          imagenPrincipalTour: idImgPrincipal,
+          imagenSecundariaTour: idImgSecundaria,
+          galeriaTour: galeria,
+          slugCategoria: slugCategoria
         }
-      }).catch((error) => console.error('que error', error))
-      console.log(res)
-      refetch()
-
-      if (!errorCreate) {
-        swal({
-          title: 'CREAR',
-          text: 'Se creo correctamente el Tour',
-          icon: 'success',
-          button: 'Aceptar',
-          timer: 2000
-        })
       }
+    })
+    if (res?.data?.CreateTour) {
+      swal({
+        title: 'CREAR',
+        text: 'Se creo correctamente el Tour',
+        icon: 'success',
+        button: 'Aceptar',
+        timer: 1000
+      })
+      refetch()
+      return 'exito'
+    } else {
+      swal({
+        title: 'ERROR',
+        text: 'Hubo un error en el servidor',
+        icon: 'error',
+        button: 'Aceptar',
+        timer: 2000
+      })
+      return 'error'
     }
   }
   // funcion que me permite eliminar un tour
@@ -201,10 +211,7 @@ export const useToursServices = () => {
     }
   }
 
-  const updateTourEstado = async ({
-    id,
-    estado
-  }) => {
+  const updateTourEstado = async ({ id, estado }) => {
     if (loadingUpdate === false) {
       const res = await updateTourMutation({
         variables: {
@@ -219,10 +226,7 @@ export const useToursServices = () => {
     }
   }
 
-  const updateTourDestacado = async ({
-    id,
-    destacado
-  }) => {
+  const updateTourDestacado = async ({ id, destacado }) => {
     if (loadingUpdate === false) {
       const res = await updateTourMutation({
         variables: {
@@ -239,6 +243,7 @@ export const useToursServices = () => {
   return {
     db,
     loading,
+    loadingDelete,
     deleteTour,
     createTour,
     updateTour,
