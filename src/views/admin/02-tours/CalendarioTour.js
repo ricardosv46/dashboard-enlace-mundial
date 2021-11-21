@@ -154,7 +154,6 @@ const CalendarioTour = () => {
         <ActualizarCalendarioTour
           updateHorario={updateHorario}
           loading={loading}
-          tourId={id}
           closeModal={closeModalActualizarCalendario}
           loading={loading}
           handleInputChange={handleInputChange}

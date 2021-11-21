@@ -6,13 +6,13 @@ const Layout = ({ children }) => {
   const [isOpen, onOpen, onClose] = useModal()
 
   const sidebarStyles = [
-    isOpen ? 'left-0 animate__bounceInLeft animate__animated' : '-left-full',
-    'fixed h-screen w-full lg:hidden z-999 transition'
+    isOpen ? 'left-0 ' : '-left-full',
+    'fixed h-screen w-full lg:hidden z-999 transition-all duration-500'
   ]
 
   return (
     <div className="max-w-full animate__fadeIn animate__animated">
-      <div className="flex max-w-full relative">
+      <div className="flex max-w-full relative ">
         {/* DESKTOP */}
         <div className="hidden md:block">
           <Sidebar handleShowBtn={onClose} />
@@ -21,7 +21,7 @@ const Layout = ({ children }) => {
         <div className={sidebarStyles.join(' ')}>
           <div
             onClick={onClose}
-            className="absolute w-full h-full bg-black bg-opacity-50 animate__animated animate__fadeIn"
+            className="absolute w-full h-full  bg-black bg-opacity-50 "
           />
           <Sidebar handleShowBtn={onClose} />
         </div>

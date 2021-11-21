@@ -23,7 +23,7 @@ const Sidebar1 = ({ handleShowBtn }) => {
           }}
         />
         {showLogout && (
-          <div className="w-full rounded-lg shadow-md h-30 right-2 top-24 z-30 absolute px-10 flex items-center bg-white animate__animated animate__bounceInDown">
+          <div className="w-full rounded-lg shadow-md h-30 right-2 top-24 z-30 absolute px-10 flex items-center bg-white ">
             <button
               className="btn btn-outline-blue w-full"
               onClick={() => {
