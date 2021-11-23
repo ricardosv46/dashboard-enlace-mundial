@@ -17,7 +17,6 @@ const Login = () => {
     password: ''
   }
 
-  // console.log('valor de last', lastPath)
   const history = useHistory()
 
   const handleClick = () => {

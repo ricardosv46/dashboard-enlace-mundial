@@ -1,4 +1,4 @@
-import { Route, Switch } from 'react-router'
+import { Route, Switch, useLocation } from 'react-router'
 import Tours from '../views/admin/02-tours'
 import LunaDeMiel from '../views/admin/03-lunaDeMiel'
 import Cruceros from '../views/admin/04-cruceros'
@@ -29,9 +29,9 @@ import EditarCategoriaBlog from '../views/admin/09-blogs/categorias/editarCatego
 import Layout from '../components/layout'
 
 const DashboardRoutes = () => {
-  // const location = useLocation()
-  // localStorage.setItem('lastPath', location.pathname)
-  // console.log(location.pathname)
+  const location = useLocation()
+  localStorage.setItem('lastPath', location.pathname)
+  console.log(location.pathname)
   return (
     <>
       <Layout >

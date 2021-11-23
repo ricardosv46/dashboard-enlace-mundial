@@ -74,7 +74,7 @@ const Tours = () => {
         acciones: (
           <BtnAccionesCalendary
             handleEdit={() =>
-              history.push(`/tours/editar-tour/${tour?.tourId}`, tour)
+              history.push(`/tours/editar-tour/${tour?.slugTour}`, tour)
             }
             handleDelete={() => handleDelete(tour)}
             handleCalendary={() =>

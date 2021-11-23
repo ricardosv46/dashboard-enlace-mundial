@@ -34,7 +34,7 @@ const AppRouter = () => {
                 // eslint-disable-next-line indent
                 ? <>
                   <Route path="/" component={DashboardRoutes} />
-                  <Redirect to='/' />
+                  {/* <Redirect to='/' /> */}
                 </>
                 // eslint-disable-next-line indent
                 : <>

@@ -1011,6 +1011,13 @@ export type GetImagenesQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetImagenesQuery = { __typename?: 'Query', GetImagenes?: Array<{ __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined }> | null | undefined };
 
+export type GetSlugTourQueryVariables = Exact<{
+  slugTour?: Maybe<Scalars['String']>;
+}>;
+
+
+export type GetSlugTourQuery = { __typename?: 'Query', GetSlugTour?: { __typename?: 'Tour', tourId?: number | null | undefined, tituloTour?: string | null | undefined, slugTour?: string | null | undefined, regionTour?: string | null | undefined, ciudadTour?: string | null | undefined, estadoTour?: string | null | undefined, destacadoTour?: string | null | undefined, keywordsTour?: string | null | undefined, descripcionCortaTour?: string | null | undefined, descripcionLargaTour?: string | null | undefined, itinerarioTour?: string | null | undefined, puntoPartidaTour?: string | null | undefined, incluyeTour?: string | null | undefined, noIncluyeTour?: string | null | undefined, actividadesTour?: string | null | undefined, notasTour?: string | null | undefined, politicasTour?: string | null | undefined, videoPresentacionTour?: string | null | undefined, slugCategoria?: string | null | undefined, categoriaId?: string | null | undefined, imagenPrincipalTour?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined, imagenSecundariaTour?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined, galeriaTour?: Array<{ __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined> | null | undefined, Categoria?: { __typename?: 'Categoria', categoriaId?: number | null | undefined, slugCategoria?: string | null | undefined, tituloCategoria?: string | null | undefined, descripcion?: string | null | undefined, estadoCategoria?: string | null | undefined, keywordsCategoria?: string | null | undefined, imagenPrincipalCategoria?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined, imagenSecundariaCategoria?: { __typename?: 'Imagenes', id?: string | null | undefined, descripcion?: string | null | undefined, url?: string | null | undefined } | null | undefined } | null | undefined } | null | undefined };
+
 
 export const CreateCategoriaDocument = gql`
     mutation CreateCategoria($input: CategoriaInput) {
@@ -2617,3 +2624,90 @@ export function useGetImagenesLazyQuery(baseOptions?: Apollo.LazyQueryHookOption
 export type GetImagenesQueryHookResult = ReturnType<typeof useGetImagenesQuery>;
 export type GetImagenesLazyQueryHookResult = ReturnType<typeof useGetImagenesLazyQuery>;
 export type GetImagenesQueryResult = Apollo.QueryResult<GetImagenesQuery, GetImagenesQueryVariables>;
+export const GetSlugTourDocument = gql`
+    query GetSlugTour($slugTour: String) {
+  GetSlugTour(slugTour: $slugTour) {
+    tourId
+    tituloTour
+    slugTour
+    regionTour
+    ciudadTour
+    estadoTour
+    destacadoTour
+    keywordsTour
+    descripcionCortaTour
+    descripcionLargaTour
+    itinerarioTour
+    puntoPartidaTour
+    incluyeTour
+    noIncluyeTour
+    actividadesTour
+    notasTour
+    politicasTour
+    videoPresentacionTour
+    imagenPrincipalTour {
+      id
+      descripcion
+      url
+    }
+    imagenSecundariaTour {
+      id
+      descripcion
+      url
+    }
+    galeriaTour {
+      id
+      descripcion
+      url
+    }
+    slugCategoria
+    categoriaId
+    Categoria {
+      categoriaId
+      slugCategoria
+      tituloCategoria
+      descripcion
+      estadoCategoria
+      keywordsCategoria
+      imagenPrincipalCategoria {
+        id
+        descripcion
+        url
+      }
+      imagenSecundariaCategoria {
+        id
+        descripcion
+        url
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetSlugTourQuery__
+ *
+ * To run a query within a React component, call `useGetSlugTourQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetSlugTourQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetSlugTourQuery({
+ *   variables: {
+ *      slugTour: // value for 'slugTour'
+ *   },
+ * });
+ */
+export function useGetSlugTourQuery(baseOptions?: Apollo.QueryHookOptions<GetSlugTourQuery, GetSlugTourQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetSlugTourQuery, GetSlugTourQueryVariables>(GetSlugTourDocument, options);
+      }
+export function useGetSlugTourLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetSlugTourQuery, GetSlugTourQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetSlugTourQuery, GetSlugTourQueryVariables>(GetSlugTourDocument, options);
+        }
+export type GetSlugTourQueryHookResult = ReturnType<typeof useGetSlugTourQuery>;
+export type GetSlugTourLazyQueryHookResult = ReturnType<typeof useGetSlugTourLazyQuery>;
+export type GetSlugTourQueryResult = Apollo.QueryResult<GetSlugTourQuery, GetSlugTourQueryVariables>;

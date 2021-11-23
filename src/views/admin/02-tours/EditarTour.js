@@ -13,6 +13,7 @@ import swal from 'sweetalert'
 import { useHistory, useLocation } from 'react-router'
 import SelectImage from '../../../components/SelectImage'
 import SelectMultiImages from '../../../components/SelectMultiImages'
+import { useGetSlugTourQuery } from '../../../generated/graphql'
 const initialForm = {
   titulo: '',
   categorias: '',
@@ -50,10 +51,22 @@ const otherErrors = {}
 
 const EditarTour = () => {
   const history = useHistory()
-  const { state } = useLocation()
-  console.log(state.tourId)
-  const { state: objetoTour } = useLocation()
+  const path = useLocation()
+  // console.log('valor de pathname', (path.pathname.split('/').reverse().join('/')).indexOf('/'))
+  const cadenaInvertida = path.pathname.split('/').reverse().join('/')
+  const index = cadenaInvertida.indexOf('/')
+  const slug = cadenaInvertida.substring(0, index)
+  console.log(slug)
+  // const { state: objetoTour } = useLocation()
   const { db: dataCategoria } = useCategoriasServices()
+  const { data, loading } = useGetSlugTourQuery({
+    fetchPolicy: 'network-only',
+    variables: {
+      slugTour: slug
+    }
+  })
+  const objetoTour = data ? data?.GetSlugTour : []
+  console.log(objetoTour, loading)
   const { updateTour, errorUpdate } = useToursServices()
   const { form, handleInputChange, handleBlur, errors } = UseForm(
     initialForm,
@@ -151,23 +164,26 @@ const EditarTour = () => {
   }
 
   useEffect(() => {
-    form.titulo = objetoTour?.tituloTour
-    form.categorias = objetoTour?.slugCategoria
-    form.region = objetoTour?.regionTour
-    form.ciudad = objetoTour?.ciudadTour
-    form.descripcionLarga = objetoTour?.descripcionLargaTour
-    form.descripcionCorta = objetoTour?.descripcionCortaTour
-    form.puntoPartida = objetoTour?.puntoPartidaTour
-    form.video = objetoTour?.videoPresentacionTour
-    setItinerario(objetoTour?.itinerarioTour.split(','))
-    setIncluye(objetoTour?.incluyeTour.split(','))
-    setNoIncluye(objetoTour?.noIncluyeTour.split(','))
-    setActividades(objetoTour?.actividadesTour.split(','))
-    setNotas(objetoTour?.notasTour.split(','))
-    setKeywords(objetoTour?.keywordsTour.split(','))
-    setPoliticas(objetoTour?.politicasTour.split(','))
-    setMainImage(objetoTour.imagenPrincipalTour)
-    setSecondaryImage(objetoTour.imagenSecundariaTour)
+    if (!loading) {
+      form.titulo = objetoTour?.tituloTour
+      form.categorias = objetoTour?.slugCategoria
+      form.region = objetoTour?.regionTour
+      form.ciudad = objetoTour?.ciudadTour
+      form.descripcionLarga = objetoTour?.descripcionLargaTour
+      form.descripcionCorta = objetoTour?.descripcionCortaTour
+      form.puntoPartida = objetoTour?.puntoPartidaTour
+      form.video = objetoTour?.videoPresentacionTour
+      setItinerario(objetoTour?.itinerarioTour.split(','))
+      setIncluye(objetoTour?.incluyeTour.split(','))
+      setNoIncluye(objetoTour?.noIncluyeTour.split(','))
+      setActividades(objetoTour?.actividadesTour.split(','))
+      setNotas(objetoTour?.notasTour.split(','))
+      setKeywords(objetoTour?.keywordsTour.split(','))
+      setPoliticas(objetoTour?.politicasTour.split(','))
+      setMainImage(objetoTour.imagenPrincipalTour)
+      setSecondaryImage(objetoTour.imagenSecundariaTour)
+    }
+
     if (itinerario.length === 0) {
       otherErrors.itinerario = '( Ingrese al menos un Itinerario )'
     }
@@ -189,7 +205,7 @@ const EditarTour = () => {
     if (politicas.length === 0) {
       otherErrors.politicas = '( Ingrese una política )'
     }
-  }, [])
+  }, [loading])
 
   return (
     <div className="shadow md:rounded bg-white p-5 py-10 md:p-10 animate__fadeIn animate__animated">
