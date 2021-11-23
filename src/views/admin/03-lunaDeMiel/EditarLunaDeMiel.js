@@ -5,7 +5,6 @@ import ButtonBack from '../../../components/Buttons/ButtonBack'
 import InputText from '../../../components/Forms/InputText/InputText'
 import TextArea from '../../../components/Forms/TextArea'
 import Heading from '../../../components/Heading'
-import MostrarGaleria from '../08-galerias/MostrarGaleria'
 import { useCategoriasServices } from '../../../services/useCategoriaServices'
 import UseForm from '../../../hooks/UseForm'
 import { Ciudades, Regiones } from '../../../data/dataPeru'
@@ -126,8 +125,8 @@ const EditarLunaDeMiel = () => {
         notas: eliminarDuplicado(notas),
         politicas: eliminarDuplicado(politicas),
         video: form.video,
-        idImgPrincipal: 3,
-        idImgSecundaria: 3,
+        idImgPrincipal: mainImage.id,
+        idImgSecundaria: secondaryImage.id,
         keywords: eliminarDuplicado(keywords),
         galeria: eliminarDuplicado(galery)
       })
@@ -780,10 +779,6 @@ const EditarLunaDeMiel = () => {
             // console.log(imgs)
           }}
         />
-
-        <div className="flex flex-col gap-y-5 sm:flex-row lg:space-x-4 items-center mb-5 ">
-          <MostrarGaleria />
-        </div>
 
         <div className="my-10 text-center">
           <Button variant="primary" size="lg" type="submit">
