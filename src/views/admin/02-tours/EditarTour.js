@@ -10,7 +10,7 @@ import UseForm from '../../../hooks/UseForm'
 import { Ciudades, Regiones } from '../../../data/dataPeru'
 import { useToursServices } from '../../../services/useToursServices'
 import swal from 'sweetalert'
-import { useHistory, useLocation } from 'react-router'
+import { useHistory, useLocation, useParams } from 'react-router'
 import SelectImage from '../../../components/SelectImage'
 import SelectMultiImages from '../../../components/SelectMultiImages'
 import { useGetSlugTourQuery } from '../../../generated/graphql'
@@ -52,6 +52,10 @@ const otherErrors = {}
 const EditarTour = () => {
   const history = useHistory()
   const path = useLocation()
+  const params = useParams()
+  console.log('params', params)
+  // console.log('esto es el history', hi)
+  // console.log('esto es el path', path)
   // console.log('valor de pathname', (path.pathname.split('/').reverse().join('/')).indexOf('/'))
   const cadenaInvertida = path.pathname.split('/').reverse().join('/')
   const index = cadenaInvertida.indexOf('/')

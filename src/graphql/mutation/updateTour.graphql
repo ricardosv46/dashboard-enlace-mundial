@@ -6,6 +6,9 @@ mutation UpdateTour($input:TourInput){
     regionTour
     ciudadTour
     estadoTour
+    precioBaseTour
+    nroHoras
+    nroDias
     destacadoTour
     keywordsTour
     descripcionCortaTour
@@ -52,6 +55,45 @@ mutation UpdateTour($input:TourInput){
         descripcion
         url
       }
+      created_at
+      updated_at
     }
-  }
+    Incluye {
+      incluyeId
+      descripcionIncluye
+      created_at
+      updated_at
+    }
+    Actividades {
+      actividadId
+      descripcion_actividad
+      created_at
+      updated_at
+    }
+    Departamento {
+      DeparCodi
+      DeparNom
+      UbiDepCodi
+      DestacadoDepartamento
+      imagenPrincipal {
+        id
+        descripcion
+        url
+      }
+      imagenSecundaria {
+        id
+        descripcion
+        url
+      }
+      created_at
+      updated_at
+    }
+    Provincia {
+      ProvCodi
+      ProvNom
+      DeparCodi
+    }
+    created_at
+    updated_at
+  } 
 }

@@ -1,0 +1,20 @@
+mutation UpdateDepartamento($input:DepartamentoInput){
+  UpdateDepartamento(input:$input) {
+    DeparCodi
+    DeparNom
+    UbiDepCodi
+    DestacadoDepartamento
+    imagenPrincipal {
+      id
+      descripcion
+      url
+    }
+    imagenSecundaria {
+      id
+      descripcion
+      url
+    }
+    created_at
+    updated_at
+  }
+}

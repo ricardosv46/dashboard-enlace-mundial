@@ -10,6 +10,10 @@ import iconGaleria from '../../assets/imgs/galeria.png'
 import iconBlogs from '../../assets/imgs/blogs.png'
 import iconDesplegar from '../../assets/imgs/desplegable.png'
 import iconBall from '../../assets/imgs/ball.png'
+import iconDepartamentos from '../../assets/imgs/departamentos.png'
+import iconIncluye from '../../assets/imgs/incluye.png'
+import iconActividades from '../../assets/imgs/actividades.png'
+
 export const menuData = [
   {
     nameLink: 'Dashboard',
@@ -50,6 +54,49 @@ export const menuData = [
       value: false
     }
   },
+
+  {
+    nameLink: 'Departamentos',
+    icono: {
+      value: true,
+      getIcon: iconDepartamentos
+    },
+
+    path: '/departamentos',
+
+    subMenu: {
+      value: false
+    }
+  },
+
+  {
+    nameLink: 'Incluye',
+    icono: {
+      value: true,
+      getIcon: iconIncluye
+    },
+
+    path: '/incluye',
+
+    subMenu: {
+      value: false
+    }
+  },
+
+  {
+    nameLink: 'Actividades',
+    icono: {
+      value: true,
+      getIcon: iconActividades
+    },
+
+    path: '/actividades',
+
+    subMenu: {
+      value: false
+    }
+  },
+
   {
     nameLink: 'Tours',
     icono: {
@@ -102,7 +149,6 @@ export const menuData = [
       value: true,
       iconDeploy: iconDesplegar,
       links: [
-
         {
           nameLink: 'Categorias',
           icono: {
@@ -140,5 +186,4 @@ export const menuData = [
       value: false
     }
   }
-
 ]

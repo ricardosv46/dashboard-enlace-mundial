@@ -6,6 +6,8 @@ query GetAllTour($estadoTour:String,$page:Int,$numberPaginate:Int){
       tituloTour
       slugTour
       regionTour
+      nroHoras
+      nroDias
       ciudadTour
       estadoTour
       destacadoTour

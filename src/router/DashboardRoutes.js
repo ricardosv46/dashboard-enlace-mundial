@@ -27,6 +27,10 @@ import ListarCategoriasBlog from '../views/admin/09-blogs/categorias/ListaCatego
 import CrearCategoriaBlog from '../views/admin/09-blogs/categorias/CrearCategoria'
 import EditarCategoriaBlog from '../views/admin/09-blogs/categorias/editarCategoria'
 import Layout from '../components/layout'
+import Departamentos from '../views/admin/12-departamentos'
+import EditarDepartamento from '../views/admin/12-departamentos/editarCategoria'
+import Incluye from '../views/admin/13-incluye'
+import Actividades from '../views/admin/14-actividades'
 
 const DashboardRoutes = () => {
   const location = useLocation()
@@ -34,7 +38,7 @@ const DashboardRoutes = () => {
   console.log(location.pathname)
   return (
     <>
-      <Layout >
+      <Layout>
         <Switch>
           <Route exact path="/" component={Home} />
 
@@ -59,13 +63,29 @@ const DashboardRoutes = () => {
 
           {/* VISTAS DE CRUCEROS */}
           <Route exact path="/cruceros" component={Cruceros} />
-          <Route exact path="/cruceros/crear-crucero" component={CrearCrucero} />
-          <Route exact path="/cruceros/editar-crucero/:id" component={EditarCrucero} />
+          <Route
+            exact
+            path="/cruceros/crear-crucero"
+            component={CrearCrucero}
+          />
+          <Route
+            exact
+            path="/cruceros/editar-crucero/:id"
+            component={EditarCrucero}
+          />
 
           {/* VISTAS DE CLEINTES */}
           <Route exact path="/clientes" component={Clientes} />
-          <Route exact path="/clientes/crear-cliente" component={CrearCliente} />
-          <Route exact path="/clientes/editar-cliente" component={EditarCliente} />
+          <Route
+            exact
+            path="/clientes/crear-cliente"
+            component={CrearCliente}
+          />
+          <Route
+            exact
+            path="/clientes/editar-cliente"
+            component={EditarCliente}
+          />
 
           {/* VISTAS DE OFERTAS */}
           <Route exact path="/ofertas" component={Ofertas} />
@@ -84,6 +104,22 @@ const DashboardRoutes = () => {
             path="/categorias/crear-categoria"
             component={CrearCategoria}
           />
+          {/* VISTAS DE DEPARTAMENTOS */}
+
+          <Route exact path="/departamentos" component={Departamentos} />
+          <Route
+            exact
+            path="/departamentos-editar/:id"
+            component={EditarDepartamento}
+          />
+
+          {/* VISTAS DE INCLUYE */}
+
+          <Route exact path="/incluye" component={Incluye} />
+
+          {/* VISTAS DE ACTIVIDADES */}
+
+          <Route exact path="/actividades" component={Actividades} />
 
           {/* VISTAS DE LA GALERIA */}
           <Route exact path="/galerias" component={Galerias} />
@@ -100,7 +136,11 @@ const DashboardRoutes = () => {
             path="/blogs/editar-publiacion"
             component={EditarPublicacion}
           />
-          <Route exact path="/blogs/categorias" component={ListarCategoriasBlog} />
+          <Route
+            exact
+            path="/blogs/categorias"
+            component={ListarCategoriasBlog}
+          />
           <Route
             exact
             path="/blogs/categorias/crear-categoria"
@@ -114,7 +154,6 @@ const DashboardRoutes = () => {
         </Switch>
       </Layout>
     </>
-
   )
 }
 
