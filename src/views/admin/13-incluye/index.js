@@ -1,102 +1,116 @@
-import { useHistory } from 'react-router'
-import BtnAcciones from '../../../components/btnAcciones/BtnAcciones'
-import BtnEstado from '../../../components/BtnEstado/BtnEstado'
 import Button from '../../../components/Buttons/Button'
 import Heading from '../../../components/Heading'
-import TableGeneral from '../../../components/Tables/TableGeneral'
-import { useEffect, useState } from 'react'
 import Spinner from '../../../components/Spinner/Spinner'
-import { useCategoriasServices } from '../../../services/useCategoriaServices'
+import { IconDelete, IconEdit } from '../../../assets/icons/icons'
+import { Toaster, toast } from 'react-hot-toast'
+import { useModal } from '../../../hooks/useModal'
+import { useState } from 'react'
+import { useIncluyeServices } from '../../../services/useIncluyeServices'
+import ModalRegistrarIncluye from './ModalRegistrarIncluye'
+import ModalActualizarIncluye from './ModalActualizarIncluye'
 const Incluye = () => {
-  const history = useHistory()
-  const [dataBody, setDataBody] = useState([])
-  const { db, loading, deleteCategoria, updateCategoriaEstado } =
-    useCategoriasServices()
-
-  // console.log('data vista ', db)
-  const dataHead = [
-    ['Id', 'min-w-10', 'left'],
-    ['Imagen', 'min-w-20', 'left'],
-    ['Nombre', 'min-w-52', 'left'],
-    ['Estado', 'min-w-10', 'center'],
-    ['Acciones', 'min-w-20', 'center']
-  ]
-  const armarFilasCategorias = (
-    categorias,
-    setDataBody,
-    handleDeleteCategoria
-  ) => {
-    const filasCategorias = categorias.map((categoria) => ({
-      id: categoria.categoriaId,
-      imagen: (
-        <img
-          src={categoria?.imagenPrincipalCategoria?.url}
-          className="w-16 h-10 object-cover"
-        />
-      ),
-      nombre: categoria?.tituloCategoria,
-      estado: (
-        <div
-          div
-          className="flex justify-center cursor-pointer transition-all duration-300 transform hover:-translate-y-1 p-1"
-          onClick={() => {
-            updateCategoriaEstado({
-              id: categoria?.categoriaId,
-              estado:
-                categoria?.estadoCategoria === 'Activado'
-                  ? 'Desactivado'
-                  : 'Activado'
-            })
-          }}
-        >
-          <BtnEstado
-            estado={categoria?.estadoCategoria === 'Activado' ? 1 : 0}
-          />
-        </div>
-      ),
-      acciones: (
-        <BtnAcciones
-          handleEdit={() =>
-            history.push(
-              `/categorias/editar-categoria/${categoria?.slugCategoria}`,
-              categoria
-            )
-          }
-          handleDelete={() => handleDeleteCategoria(categoria)}
-        />
-      )
-    }))
-
-    if (filasCategorias.length > 0) {
-      setDataBody(filasCategorias)
-    }
-  }
-  useEffect(() => {
-    if (db.length > 0) {
-      armarFilasCategorias(db, setDataBody, deleteCategoria)
-    }
-  }, [db])
-
+  const {
+    db: dbIncluye,
+    deleteIncluyeTour,
+    loadingGetData
+  } = useIncluyeServices()
+  const [incluye, setIncluye] = useState({})
+  const [isOpenModalActualizar, openModalActualizar, closeModalActualizar] =
+    useModal()
+  const [isOpenModalRegistrar, openModalRegistrar, closeModalRegistrar] =
+    useModal()
   return (
-    <div className="shadow md:rounded bg-white p-5 py-10 md:p-10 mb-20 min-h-screen animate__fadeIn animate__animated">
-      <div className="flex justify-between mb-5">
-        <Heading>Categorias</Heading>
+    <>
+      <ModalActualizarIncluye
+        isOpen={isOpenModalActualizar}
+        closeModal={closeModalActualizar}
+        incluye={incluye}
+      />
+      <ModalRegistrarIncluye
+        isOpen={isOpenModalRegistrar}
+        closeModal={closeModalRegistrar}
+      />
+      <div className="shadow md:rounded bg-white p-5 py-10 md:p-10 mb-20 min-h-screen animate__fadeIn animate__animated">
+        <div className="flex justify-between mb-5">
+          <Toaster position="top-right" reverseOrder={true} />
+          <Heading>Incluye</Heading>
 
-        <Button
-          variant="primary"
-          size="md"
-          onClick={() => history.push('/categorias/crear-categoria')}
-        >
-          + Agregar Categoria
-        </Button>
+          <Button
+            variant="primary"
+            size="md"
+            onClick={() => openModalRegistrar()}
+          >
+            + Agregar Incluye
+          </Button>
+        </div>
+        {/* eslint-disable  */}
+        {loadingGetData ? (
+          <Spinner />
+        ) : (
+          <>
+            <div className="w-full mb-8 overflow-hidden rounded-md md:shadow-xl max-h-screen overflow-y-auto  ">
+              <div className="w-full overflow-x-auto min-h-screen">
+                <table className="w-full border-gray-100  text-left border-2 ">
+                  <thead className="text-gray-700">
+                    <tr className="text-lg font-semibold  tracking-wide bg-gray-100 text-center">
+                      <th className="px-4 py-6 textgray-600 min-w-10 text-left">
+                        ID
+                      </th>
+                      <th className="px-4 py-6 textgray-600 min-w-10 text-left">
+                        Descripcion
+                      </th>
+                      <th className="px-4 py-6 textgray-600 min-w-10 text-center">
+                        Acciones
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="text-base bg-white border-gray-100 text-gray-700 ">
+                    {dbIncluye.map((incluye) => (
+                      <tr
+                        key={incluye?.incluyeId}
+                        className="font-medium hover:shadow-md  transform transition-all duration-300  hover:-translate-y-1"
+                      >
+                        <td className='className="text-start  uppercase text-gray-600 py-6 px-4 min-h-20 "'>
+                          {incluye?.incluyeId}
+                        </td>
+                        <td className='className="text-start  uppercase text-gray-600 py-6 px-4 min-h-20 "'>
+                          {incluye?.descripcionIncluye}
+                        </td>
+                        <td className="text-start  uppercase text-gray-600 py-6 px-4 min-h-20">
+                          <div className="flex gap-x-10 items-center justify-center">
+                            <button
+                              onClick={() => {
+                                openModalActualizar()
+                                setIncluye({
+                                  id: incluye?.incluyeId,
+                                  descripcion: incluye?.descripcionIncluye
+                                })
+                              }}
+                            >
+                              <IconEdit />
+                            </button>
+                            <button
+                              onClick={() => {
+                                deleteIncluyeTour({
+                                  incluyeId: incluye?.incluyeId
+                                })
+                                toast.success('Incluye Eliminado!')
+                              }}
+                            >
+                              <IconDelete />
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </>
+        )}
       </div>
-      {/* eslint-disable  */}
-      {loading ? (
-        <Spinner />
-      ) : (
-        <TableGeneral dataBody={dataBody} dataHead={dataHead} />
-      )}
-    </div>
+    </>
   )
 }
 

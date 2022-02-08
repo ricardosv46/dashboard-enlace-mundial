@@ -32,7 +32,7 @@ const Actividades = () => {
       />
       <div className="shadow md:rounded bg-white p-5 py-10 md:p-10 mb-20 min-h-screen animate__fadeIn animate__animated">
         <div className="flex justify-between mb-5">
-          <Toaster position="bottom-right" reverseOrder={true} />
+          <Toaster position="top-right" reverseOrder={true} />
           <Heading>Actividades</Heading>
 
           <Button variant="primary" size="md" onClick={() => openModalRegistrar()}>
