@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react'
 import { Toaster, toast } from 'react-hot-toast'
 import { useHistory } from 'react-router'
 import swal from 'sweetalert'
@@ -10,19 +9,8 @@ import Spinner from '../../../components/Spinner/Spinner'
 import { useCategoriasServices } from '../../../services/useCategoriaServices'
 const Categorias = () => {
   const history = useHistory()
-  const { db, loading, updateCategoriaEstado, deleteCategoria } =
+  const { db, loadingGetData, updateCategoriaEstado, deleteCategoria } =
     useCategoriasServices()
-
-  const [mostrar, setMostrar] = useState(true)
-
-  useEffect(() => {
-    setTimeout(() => {
-      if (loading) {
-        setMostrar(false)
-      }
-    }, 1500)
-  }, [])
-
   return (
     <>
       <div className="shadow md:rounded bg-white p-5 py-10 md:p-10 mb-20 min-h-screen animate__fadeIn animate__animated">
@@ -39,11 +27,11 @@ const Categorias = () => {
           </Button>
         </div>
         {/* eslint-disable  */}
-        {mostrar ? (
+        {loadingGetData ? (
           <Spinner />
         ) : (
           <>
-            <div className="w-full mb-8 overflow-hidden rounded-md md:shadow-xl max-h-screen overflow-y-auto  ">
+            <div className="w-full mb-8 overflow-hidden rounded-md md:shadow-xl max-h-screen overflow-y-auto ">
               <div className="w-full overflow-x-auto min-h-screen">
                 <table className="w-full border-gray-100  text-left border-2 ">
                   <thead className="text-gray-700">
@@ -94,6 +82,7 @@ const Categorias = () => {
                                     ? 'Desactivado'
                                     : 'Activado'
                               })
+                              toast.success('Se modifico el estado')
                             }}
                           >
                             <BtnEstado

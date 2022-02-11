@@ -12,19 +12,23 @@ import { GET_ALL_CATEGORYS } from '../graphql/query/getAllCategorias'
 
 // Obtenemos todas las categorias
 export const useCategoriasServices = () => {
-  const { data, loading, refetch } = useQuery(GET_ALL_CATEGORYS, {
+  const {
+    data,
+    loading: loadingGetData,
+    refetch
+  } = useQuery(GET_ALL_CATEGORYS, {
     fetchPolicy: 'network-only',
-    variables: {
-      estadoCategoria: ''
-    },
     onError: (err) => {
       console.log(
         'onError getAllData Categorys',
         err?.graphQLErrors[0]?.debugMessage
       )
+    },
+    variables: {
+      estadoCategoria: ''
     }
   })
-  refetch()
+
   const db = data && data?.GetCategoria
 
   const [CreateCategoria, { loading: loadingCreate }] = useMutation(
@@ -141,7 +145,7 @@ export const useCategoriasServices = () => {
 
   return {
     db,
-    loading,
+    loadingGetData,
     loadingCreate,
     loadingUpdate,
     loadingDelete,

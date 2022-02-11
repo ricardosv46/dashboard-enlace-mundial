@@ -35,7 +35,11 @@ const Actividades = () => {
           <Toaster position="top-right" reverseOrder={true} />
           <Heading>Actividades</Heading>
 
-          <Button variant="primary" size="md" onClick={() => openModalRegistrar()}>
+          <Button
+            variant="primary"
+            size="md"
+            onClick={() => openModalRegistrar()}
+          >
             + Agregar Actividad
           </Button>
         </div>
