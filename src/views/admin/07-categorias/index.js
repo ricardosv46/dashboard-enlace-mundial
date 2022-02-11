@@ -1,104 +1,152 @@
+import { useEffect, useState } from 'react'
+import { Toaster, toast } from 'react-hot-toast'
 import { useHistory } from 'react-router'
-import BtnAcciones from '../../../components/btnAcciones/BtnAcciones'
+import swal from 'sweetalert'
+import { IconDelete, IconEdit } from '../../../assets/icons/icons'
 import BtnEstado from '../../../components/BtnEstado/BtnEstado'
 import Button from '../../../components/Buttons/Button'
 import Heading from '../../../components/Heading'
-import TableGeneral from '../../../components/Tables/TableGeneral'
-import { useEffect, useState } from 'react'
 import Spinner from '../../../components/Spinner/Spinner'
 import { useCategoriasServices } from '../../../services/useCategoriaServices'
-
 const Categorias = () => {
   const history = useHistory()
-  const [dataBody, setDataBody] = useState([])
-  const { db, loading, deleteCategoria, updateCategoriaEstado } =
+  const { db, loading, updateCategoriaEstado, deleteCategoria } =
     useCategoriasServices()
 
-  // console.log('data vista ', db)
+  const [mostrar, setMostrar] = useState(true)
 
-  const dataHead = [
-    ['Id', 'min-w-10', 'left'],
-    ['Imagen', 'min-w-20', 'left'],
-    ['Nombre', 'min-w-52', 'left'],
-    ['Estado', 'min-w-10', 'center'],
-    ['Acciones', 'min-w-20', 'center']
-  ]
-  const armarFilasCategorias = (
-    categorias,
-    setDataBody,
-    handleDeleteCategoria
-  ) => {
-    const filasCategorias = categorias.map((categoria) => ({
-      id: categoria.categoriaId,
-      imagen: (
-        <img
-          src={categoria?.imagenPrincipalCategoria?.url}
-          className="w-16 h-10 object-cover"
-        />
-      ),
-      nombre: categoria?.tituloCategoria,
-      estado: (
-        <div
-          div
-          className="flex justify-center cursor-pointer transition-all duration-300 transform hover:-translate-y-1 p-1"
-          onClick={() => {
-            updateCategoriaEstado({
-              id: categoria?.categoriaId,
-              estado:
-                categoria?.estadoCategoria === 'Activado'
-                  ? 'Desactivado'
-                  : 'Activado'
-            })
-          }}
-        >
-          <BtnEstado
-            estado={categoria?.estadoCategoria === 'Activado' ? 1 : 0}
-          />
-        </div>
-      ),
-      acciones: (
-        <BtnAcciones
-          handleEdit={() =>
-            history.push(
-              `/categorias/editar-categoria/${categoria?.slugCategoria}`,
-              categoria
-            )
-          }
-          handleDelete={() => handleDeleteCategoria(categoria)}
-        />
-      )
-    }))
-
-    if (filasCategorias.length > 0) {
-      setDataBody(filasCategorias)
-    }
-  }
   useEffect(() => {
-    if (db.length > 0) {
-      armarFilasCategorias(db, setDataBody, deleteCategoria)
-    }
-  }, [db])
+    setTimeout(() => {
+      if (loading) {
+        setMostrar(false)
+      }
+    }, 1500)
+  }, [])
 
   return (
-    <div className="shadow md:rounded bg-white p-5 py-10 md:p-10 mb-20 min-h-screen animate__fadeIn animate__animated">
-      <div className="flex justify-between mb-5">
-        <Heading>Categorias</Heading>
+    <>
+      <div className="shadow md:rounded bg-white p-5 py-10 md:p-10 mb-20 min-h-screen animate__fadeIn animate__animated">
+        <div className="flex justify-between mb-5">
+          <Toaster position="top-right" reverseOrder={true} />
+          <Heading>Categorias</Heading>
 
-        <Button
-          variant="primary"
-          size="md"
-          onClick={() => history.push('/categorias/crear-categoria')}
-        >
-          + Agregar Categoria
-        </Button>
+          <Button
+            variant="primary"
+            size="md"
+            onClick={() => history.push('/categorias/crear-categoria')}
+          >
+            + Agregar Categoria
+          </Button>
+        </div>
+        {/* eslint-disable  */}
+        {mostrar ? (
+          <Spinner />
+        ) : (
+          <>
+            <div className="w-full mb-8 overflow-hidden rounded-md md:shadow-xl max-h-screen overflow-y-auto  ">
+              <div className="w-full overflow-x-auto min-h-screen">
+                <table className="w-full border-gray-100  text-left border-2 ">
+                  <thead className="text-gray-700">
+                    <tr className="text-lg font-semibold  tracking-wide bg-gray-100 text-center">
+                      <th className="px-4 py-6 textgray-600 min-w-10 text-left">
+                        ID
+                      </th>
+                      <th className="px-4 py-6 textgray-600 min-w-10 text-left">
+                        Imagen
+                      </th>
+                      <th className="px-4 py-6 textgray-600 min-w-10 text-left">
+                        Nombre
+                      </th>
+                      <th className="px-4 py-6 textgray-600 min-w-10 text-left">
+                        Estado
+                      </th>
+                      <th className="px-4 py-6 textgray-600 min-w-10 text-center">
+                        Acciones
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="text-base bg-white border-gray-100 text-gray-700 ">
+                    {db.map((category) => (
+                      <tr
+                        key={category?.categoriaId}
+                        className="font-medium hover:shadow-md  transform transition-all duration-300  hover:-translate-y-1"
+                      >
+                        <td className='className="text-start  uppercase text-gray-600 py-6 px-4 min-h-20 "'>
+                          {category?.categoriaId}
+                        </td>
+                        <td className='className="text-start  uppercase text-gray-600 py-6 px-4 min-h-20 "'>
+                          <img
+                            className="w-16 h-10 object-cover"
+                            src={category?.imagenPrincipalCategoria.url}
+                          />
+                        </td>
+                        <td className='className="text-start  uppercase text-gray-600 py-6 px-4 min-h-20 '>
+                          {category?.tituloCategoria}
+                        </td>
+                        <td className='className="text-start  uppercase text-gray-600 py-6 px-4 min-h-20 '>
+                          <button
+                            className="cursor-pointer"
+                            onClick={() => {
+                              updateCategoriaEstado({
+                                id: category?.categoriaId,
+                                estado:
+                                  category?.estadoCategoria === 'Activado'
+                                    ? 'Desactivado'
+                                    : 'Activado'
+                              })
+                            }}
+                          >
+                            <BtnEstado
+                              estado={
+                                category?.estadoCategoria === 'Activado' ? 1 : 0
+                              }
+                            />
+                          </button>
+                        </td>
+                        <td className="text-start  uppercase text-gray-600 py-6 px-4 min-h-20">
+                          <div className="flex gap-x-10 items-center justify-center">
+                            <button
+                              onClick={() =>
+                                history.push(
+                                  `/categorias/editar-categoria/${category?.slugCategoria}`,
+                                  category
+                                )
+                              }
+                            >
+                              <IconEdit />
+                            </button>
+                            <button
+                              onClick={() => {
+                                swal({
+                                  title: `Desea eliminar la categoria ${category?.tituloCategoria}?`,
+                                  text: 'Se borraran todos los tours que esten asociados a esta categoria',
+                                  icon: 'warning',
+                                  buttons: true,
+                                  dangerMode: true
+                                }).then(async (rpta) => {
+                                  if (rpta) {
+                                    deleteCategoria({
+                                      id: category?.categoriaId
+                                    })
+                                    toast.success('Categoría Eliminada!')
+                                  }
+                                })
+                              }}
+                            >
+                              <IconDelete />
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </>
+        )}
       </div>
-      {/* eslint-disable  */}
-      {loading ? (
-        <Spinner />
-      ) : (
-        <TableGeneral dataBody={dataBody} dataHead={dataHead} />
-      )}
-    </div>
+    </>
   )
 }
 

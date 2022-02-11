@@ -98,7 +98,9 @@ export const useActividadesServices = () => {
       })
       refetch()
       console.log(resp)
-    } catch (err) { console.log('error ', err) }
+    } catch (err) {
+      console.log('error ', err)
+    }
   }
 
   return {

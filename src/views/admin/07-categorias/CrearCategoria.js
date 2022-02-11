@@ -31,7 +31,7 @@ const otherErrors = {}
 
 const CrearCategoria = () => {
   const history = useHistory()
-  const { createCategoria, errorCreate } = useCategoriasServices()
+  const { createCategory, errorCreate } = useCategoriasServices()
   const { form, handleInputChange, handleBlur, errors, resetForm } = UseForm(
     initialForm,
     validationsForm
@@ -57,7 +57,7 @@ const CrearCategoria = () => {
     e.preventDefault()
 
     if (keywords.length > 0 && mainImage && secondaryImage) {
-      createCategoria({
+      createCategory({
         titulo: form.titulo,
         keywords: eliminarDuplicado(keywords),
         descripcion: form.descripcion,
