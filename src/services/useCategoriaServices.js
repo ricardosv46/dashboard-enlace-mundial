@@ -1,5 +1,7 @@
 import { useMutation, useQuery } from '@apollo/client'
 import { CREATE_CATEGORYS } from '../graphql/mutation/createCategoria'
+import { UPDATE_CATEGORYS } from '../graphql/mutation/updateCategoria'
+import { DELETE_CATEGORY } from '../graphql/mutation/deleteCategoria'
 // import swal from 'sweetalert'
 // import {
 //   useCreateCategoriaMutation,
@@ -25,7 +27,7 @@ export const useCategoriasServices = () => {
   refetch()
   const db = data && data?.GetCategoria
 
-  const [createCategory, { loading: loadingCreate }] = useMutation(
+  const [CreateCategoria, { loading: loadingCreate }] = useMutation(
     CREATE_CATEGORYS,
     {
       onError: (err) => {
@@ -37,18 +39,20 @@ export const useCategoriasServices = () => {
     }
   )
 
-  const createcategorysTour = async ({
+  const createCategoria = async ({
     titulo,
     descripcion,
+    estado,
     keywords,
     idImgPrincipal,
     idImgSecundaria
   }) => {
-    const resp = await createCategory({
+    const resp = await CreateCategoria({
       variables: {
         input: {
           tituloCategoria: titulo,
           descripcion: descripcion,
+          estadoCategoria: estado,
           keywordsCategoria: keywords.join(','),
           imagenPrincipalCategoria: idImgPrincipal,
           imagenSecundariaCategoria: idImgSecundaria
@@ -57,147 +61,93 @@ export const useCategoriasServices = () => {
     })
     console.log('CreateCategorysTour', resp)
     refetch()
-    if (resp.data?.CreateActividadesTour) return 'exito'
+    if (resp.data?.createCategoria) return 'exito'
   }
 
-  // const [
-  //   createCategoriaMutation,
-  //   { loading: loadingCreate, error: errorCreate }
-  // ] = useCreateCategoriaMutation({
-  //   onError: (err) => {
-  //     // validar errores
-  //     console.log(
-  //       'onError creacion Categoria',
-  //       err?.graphQLErrors[0]?.debugMessage
-  //     )
-  //   }
-  // })
-  // const [
-  //   deleteCategoriaMutation,
-  //   { loading: loadingDelete, error: errorDelete }
-  // ] = useDeleteCategoriaMutation({
-  //   onError: (err) => {
-  //     // validar errores
-  //     console.log('onError delete', err?.graphQLErrors[0]?.debugMessage)
-  //   }
-  // })
-  // const [
-  //   updateCategoriaMutation,
-  //   { loading: loadingUpdate, error: errorUpdate }
-  // ] = useUpdateCategoriaMutation({
-  //   onError: (err) => {
-  //     // validar errores
-  //     console.log(
-  //       'onError Update Categoria',
-  //       err?.graphQLErrors[0]?.debugMessage
-  //     )
-  //   }
-  // })
+  const [updateCategorys, { loading: loadingUpdate }] = useMutation(
+    UPDATE_CATEGORYS,
+    {
+      onError: (err) => {
+        console.log(
+          'onError Update Categorys Tour',
+          err?.graphQLErrors[0]?.debugMessage
+        )
+      }
+    }
+  )
 
-  // const createCategoria = async ({
-  //   titulo,
-  //   descripcion,
-  //   estado,
-  //   keywords,
-  //   idImgPrincipal,
-  //   idImgSecundaria
-  // }) => {
-  //   if (loadingCreate === false) {
-  //     const res = await createCategoriaMutation({
-  //       variables: {
-  //         input: {
-  //           tituloCategoria: titulo,
-  //           descripcion: descripcion,
-  //           estadoCategoria: estado,
-  //           keywordsCategoria: keywords.join(','),
-  //           imagenPrincipalCategoria: idImgPrincipal,
-  //           imagenSecundariaCategoria: idImgSecundaria
-  //         }
-  //       }
-  //     }).catch((error) => console.error('error', error))
-  //     console.log(res, errorDelete)
-  //     refetch()
-  //   }
-  // }
+  const updateCategoria = async ({
+    titulo,
+    descripcion,
+    estado,
+    keywords,
+    idImgPrincipal,
+    idImgSecundaria,
+    id
+  }) => {
+    const resp = await updateCategorys({
+      variables: {
+        input: {
+          categoriaId: id,
+          tituloCategoria: titulo,
+          descripcion: descripcion,
+          estadoCategoria: estado,
+          keywordsCategoria: keywords.join(','),
+          imagenPrincipalCategoria: idImgPrincipal,
+          imagenSecundariaCategoria: idImgSecundaria
+        }
+      }
+    })
+    refetch()
+    if (resp.data?.updateCategoria) return 'exito'
+  }
 
-  // const deleteCategoria = async ({ id }) => {
-  //   if (loadingDelete === false) {
-  //     const res = await deleteCategoriaMutation({
-  //       variables: {
-  //         input: {
-  //           categoriaId: id
-  //         }
-  //       }
-  //     }).catch((error) => console.log('error', error))
-  //     console.log(res, errorCreate)
-  //     refetch()
-  //   }
-  // }
+  const [deleteCategorys, { loading: loadingDelete }] = useMutation(
+    DELETE_CATEGORY,
+    {
+      onError: (err) => {
+        console.log(
+          'onError Delete Categoria Tour',
+          err?.graphQLErrors[0]?.debugMessage
+        )
+      }
+    }
+  )
 
-  // const updateCategoria = async ({
-  //   titulo,
-  //   descripcion,
-  //   estado,
-  //   keywords,
-  //   idImgPrincipal,
-  //   idImgSecundaria,
-  //   id
-  // }) => {
-  //   if (loadingUpdate === false) {
-  //     const res = await updateCategoriaMutation({
-  //       variables: {
-  //         input: {
-  //           categoriaId: id,
-  //           tituloCategoria: titulo,
-  //           descripcion: descripcion,
-  //           estadoCategoria: estado,
-  //           keywordsCategoria: keywords.join(','),
-  //           imagenPrincipalCategoria: idImgPrincipal,
-  //           imagenSecundariaCategoria: idImgSecundaria
-  //         }
-  //       }
-  //     }).catch((error) => console.error('error', error))
-  //     console.log(res, errorUpdate)
-  //     refetch()
-  //     if (!errorCreate) {
-  //       swal({
-  //         title: 'ACTUALIZAR',
-  //         text: 'Se actualizo correctamente la Categoria',
-  //         icon: 'success',
-  //         button: 'Aceptar',
-  //         timer: 2000
-  //       })
-  //     }
-  //   }
-  // }
+  const deleteCategoria = async ({ id }) => {
+    const resp = await deleteCategorys({
+      variables: {
+        input: {
+          categoriaId: id
+        }
+      }
+    })
+    refetch()
+    if (resp.data?.updateCategoria) return 'exito'
+  }
 
-  // const updateCategoriaEstado = async ({ estado, id }) => {
-  //   if (loadingUpdate === false) {
-  //     const res = await updateCategoriaMutation({
-  //       variables: {
-  //         input: {
-  //           categoriaId: id,
-  //           estadoCategoria: estado
-  //         }
-  //       }
-  //     }).catch((error) => console.error('error', error))
-  //     console.log(res, errorCreate)
-  //     refetch()
-  //   }
-  // }
+  const updateCategoriaEstado = async ({ estado, id }) => {
+    const resp = await updateCategorys({
+      variables: {
+        input: {
+          categoriaId: id,
+          estadoCategoria: estado
+        }
+      }
+    })
+    refetch()
+    if (resp.data?.updateCategoria) return 'exito'
+  }
 
   return {
     db,
     loading,
     loadingCreate,
-    createcategorysTour
-    // deleteCategoria,
-    // loadingCreate,
-    // loadingUpdate,
-    // errorCreate,
-    // errorUpdate,
-    // createCategoria,
-    // updateCategoria,
-    // updateCategoriaEstado
+    loadingUpdate,
+    loadingDelete,
+    createCategoria,
+    updateCategoria,
+    deleteCategoria,
+    updateCategoriaEstado
   }
 }

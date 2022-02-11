@@ -28,7 +28,6 @@ import CrearCategoriaBlog from '../views/admin/09-blogs/categorias/CrearCategori
 import EditarCategoriaBlog from '../views/admin/09-blogs/categorias/editarCategoria'
 import Layout from '../components/layout'
 import Departamentos from '../views/admin/12-departamentos'
-import EditarDepartamento from '../views/admin/12-departamentos/editarCategoria'
 import Incluye from '../views/admin/13-incluye'
 import Actividades from '../views/admin/14-actividades'
 
@@ -107,11 +106,6 @@ const DashboardRoutes = () => {
           {/* VISTAS DE DEPARTAMENTOS */}
 
           <Route exact path="/departamentos" component={Departamentos} />
-          <Route
-            exact
-            path="/departamentos-editar/:id"
-            component={EditarDepartamento}
-          />
 
           {/* VISTAS DE INCLUYE */}
 

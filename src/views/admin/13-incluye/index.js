@@ -56,7 +56,7 @@ const Incluye = () => {
                       <th className="px-4 py-6 textgray-600 min-w-10 text-left">
                         ID
                       </th>
-                      <th className="px-4 py-6 textgray-600 min-w-10 text-left">
+                      <th className="px-4 py-6 textgray-600 min-w-24 text-left">
                         Descripcion
                       </th>
                       <th className="px-4 py-6 textgray-600 min-w-10 text-center">
@@ -73,7 +73,7 @@ const Incluye = () => {
                         <td className='className="text-start  uppercase text-gray-600 py-6 px-4 min-h-20 "'>
                           {incluye?.incluyeId}
                         </td>
-                        <td className='className="text-start  uppercase text-gray-600 py-6 px-4 min-h-20 "'>
+                        <td className='className="text-start uppercase text-gray-600 py-6 px-4 min-h-20 "'>
                           {incluye?.descripcionIncluye}
                         </td>
                         <td className="text-start  uppercase text-gray-600 py-6 px-4 min-h-20">

@@ -24,6 +24,7 @@
     "graphql": "^15.7.2",
     "html-to-draftjs": "^1.5.0",
     "react": "^17.0.2",
+    "react-data-table-component": "^7.4.7",
     "react-dom": "^17.0.2",
     "react-draft-wysiwyg": "^1.14.7",
     "react-feather": "^2.0.9",

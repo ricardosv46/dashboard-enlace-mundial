@@ -31,7 +31,7 @@ const otherErrors = {}
 
 const CrearCategoria = () => {
   const history = useHistory()
-  const { createCategory, errorCreate } = useCategoriasServices()
+  const { createCategoria, errorCreate } = useCategoriasServices()
   const { form, handleInputChange, handleBlur, errors, resetForm } = UseForm(
     initialForm,
     validationsForm
@@ -57,13 +57,15 @@ const CrearCategoria = () => {
     e.preventDefault()
 
     if (keywords.length > 0 && mainImage && secondaryImage) {
-      createCategory({
+      createCategoria({
         titulo: form.titulo,
         keywords: eliminarDuplicado(keywords),
+        estadoCategoria: 1,
         descripcion: form.descripcion,
         idImgPrincipal: mainImage.id,
         idImgSecundaria: secondaryImage.id
       })
+
       // console.log(errorCreate)
       if (errorCreate) {
         swal({
@@ -90,7 +92,6 @@ const CrearCategoria = () => {
       })
     }
   }
-
   useEffect(() => {
     if (keywords.length === 0) {
       otherErrors.keywords = '( Ingrese al menos una keyword )'
