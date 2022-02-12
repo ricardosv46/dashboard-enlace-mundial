@@ -6,7 +6,7 @@ import SelectImage from '../../../components/SelectImage'
 import { useDepartamentosServices } from '../../../services/useDepartamentosServices'
 
 const ModalActualizarDepartamento = ({ closeModal, isOpen, departamento }) => {
-  console.log(departamento)
+  // console.log(departamento)
   const [imagenPrincipal, setImagenPrincipal] = useState({})
   const [imagenSecundaria, setImagenSecundaria] = useState({})
   const { updateDepartamentos } = useDepartamentosServices()
@@ -69,7 +69,7 @@ const ModalActualizarDepartamento = ({ closeModal, isOpen, departamento }) => {
     <>
       <ModalCustomer isOpen={isOpen} closeModal={closeModal}>
         <h2 className="mt-5 md:text-2xl font-semibold tracking-wide text-center">
-          Editar Departamento
+          Editar Departamento de {departamento?.DeparNom}
         </h2>
         <form
           onSubmit={handleSubtmit}
