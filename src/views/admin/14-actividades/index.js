@@ -49,13 +49,13 @@ const Actividades = () => {
                 <table className="w-full border-gray-100  text-left border-2 ">
                   <thead className="text-gray-700">
                     <tr className="text-lg font-semibold  tracking-wide bg-gray-100 text-center">
-                      <th className="px-4 py-6 textgray-600 min-w-10 text-left">
+                      <th className="px-4 py-6 text-gray-600 min-w-10 text-left">
                         ID
                       </th>
-                      <th className="px-4 py-6 textgray-600 min-w-10 text-left">
+                      <th className="px-4 py-6 text-gray-600 min-w-10 text-left">
                         Descripcion
                       </th>
-                      <th className="px-4 py-6 textgray-600 min-w-10 text-center">
+                      <th className="px-4 py-6 text-gray-600 min-w-10 text-center">
                         Acciones
                       </th>
                     </tr>
@@ -73,7 +73,7 @@ const Actividades = () => {
                           {actividad?.descripcion_actividad}
                         </td>
                         <td className="text-start  uppercase text-gray-600 py-6 px-4 min-h-20">
-                          <div className="flex gap-x-10 items-center justify-center">
+                          <div className="flex gap-x-5 lg:gap-x-10 items-center justify-center">
                             <button
                               onClick={() => {
                                 openModalActualizar()

@@ -67,7 +67,7 @@ export const useActividadesServices = () => {
         }
       }
     })
-    console.log('updateActividadesTour', resp)
+
     refetch()
     if (resp.data?.UpdateActividadesTour) return 'exito'
   }
@@ -82,7 +82,7 @@ export const useActividadesServices = () => {
         }
       }
     })
-    console.log('CreateActividadesTour', resp)
+
     refetch()
     if (resp.data?.CreateActividadesTour) return 'exito'
   }
@@ -98,7 +98,9 @@ export const useActividadesServices = () => {
       })
       refetch()
       console.log(resp)
-    } catch (err) { console.log('error ', err) }
+    } catch (err) {
+      console.log('error ', err)
+    }
   }
 
   return {
