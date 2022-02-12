@@ -1,342 +1,95 @@
-// import { useMutation } from '@apollo/client'
-// import { useEffect } from 'react'
-import { useEffect, useState } from 'react'
-import { useHistory } from 'react-router'
-import BtnAcciones from '../../../components/btnAcciones/BtnAcciones'
-import BtnEstado from '../../../components/BtnEstado/BtnEstado'
-import Button from '../../../components/Buttons/Button'
+// import { IconDelete, IconEdit } from '../../../assets/icons/icons'
+// import BtnEstado from '../../../components/BtnEstado/BtnEstado'
+import { IconDelete, IconEdit } from '../../../assets/icons/icons'
 import Heading from '../../../components/Heading'
 import Spinner from '../../../components/Spinner/Spinner'
-import TableGeneral from '../../../components/Tables/TableGeneral'
-import { useGetAllUsersQuery } from '../../../generated/graphql'
-// import { CREAR_SUSCRIPCION } from '../../../graphql/mutation/CrearSuscripcion'
-// import { GET_ALL_USER } from '../../../graphql/query/getAllUser'
+import { useUserServices } from '../../../services/useUserServices'
 
 const Clientes = () => {
-  // const { loading, data } = useQuery(GET_ALL_USER, {
-  //   variables: {
-  //     numberPaginate: 12,
-  //     page: 1,
-  //     tipoUsuario: '',
-  //     estado: ''
-  //   }
-  // })
-  // const [getAllUser, { loading, data }] = useLazyQuery(GET_ALL_USER, {
-  //   variables: {
-  //     numberPaginate: 12,
-  //     page: 1,
-  //     tipoUsuario: '',
-  //     estado: ''
-  //   }
-  // })
-  // useEffect(() => { getAllUser() }, [])
-  // console.log(loading, data)
-  // const [crearSuscripcion, { loading }] = useMutation(CREAR_SUSCRIPCION)
-  // useEffect(() => {
-  //   crearSuscripcion({
-  //     variables: {
-  //       input: {
-  //         email: 'pepe@hotmail.com'
-  //       }
-  //     }
-  //   }).then(res => console.log(res))
-  // }, [])
-  // console.log(loading)
-  const [dataBodi, setDataBodi] = useState([])
-  const { data, loading } = useGetAllUsersQuery({
-    variables: {
-      numberPaginate: 12,
-      page: 1,
-      tipoUsuario: '',
-      estado: ''
-    }
-  })
-  console.log(loading)
-  useEffect(() => {
-    const dataUser = loading ? [] : data?.GetAllUsers?.data
-    dataUser.map((user) =>
-      setDataBodi((databodi) => [
-        ...databodi,
-        {
-          id: user.userId,
-          nombre: user.nombre,
-          apellido: user.apellidos,
-          email: user.email,
-          estado: < BtnEstado estado={user.estado === 1 && true} />,
-          acciones: (
-            <BtnAcciones
-              handleEdit={() => history.push('/clientes/editar-cliente')}
-              handleDelete={() => alert('cliente eliminado')}
-            />
-          )
-        }
-      ])
-    )
-  }, [loading, data])
+  // variables: {
+  //   numberPaginate: 12,
+  //   page: 1,
+  //   tipoUsuario: '',
+  //   estado: ''
+  // }
 
-  console.log(dataBodi)
-  const dataHead = [
-    ['Id', 'min-w-4', 'left'],
-    ['Nombres', 'min-w-40', 'left'],
-    ['Apellidos', 'min-w-40', 'left'],
-    ['Email', 'min-w-10', 'left'],
-    ['Estado', '', 'center'],
-    ['Acciones', '', 'center']
-  ]
-  const history = useHistory()
-  // const dataBody = [
-  //   {
-  //     id: 1,
-  //     foto: (
-  //       <img
-  //         className="w-24 h-24 rounded-full"
-  //         src="https://scontent.fpiu2-2.fna.fbcdn.net/v/t1.6435-9/38016079_1685679581559176_7469718601927229440_n.jpg?_nc_cat=111&ccb=1-5&_nc_sid=174925&_nc_eui2=AeFdP-U8FmK0WDmsQM3vLWnj_OZUsT2WWKD85lSxPZZYoF2Wo_ebIsUtXrZvvD1QUfqMasUn4hjqB4mk_Ll_Uwif&_nc_ohc=BBXn7-Cna38AX8Z_8MK&_nc_ht=scontent.fpiu2-2.fna&oh=27b4354e602ced048ff3799ebb9388e1&oe=619F3FEE"
-  //       />
-  //     ),
-  //     name: 'percy harold',
-  //     apellido: 'córdova flores',
-  //     email: 'cordovaflores1994@hotmail.com',
-  //     estado: <BtnEstado estado={true} />,
-  //     acciones: (
-  //       <BtnAcciones
-  //         handleEdit={() => history.push('/clientes/editar-cliente')}
-  //         handleDelete={() => alert('cliente eliminado')}
-  //       />
-  //     )
-  //   },
-  //   {
-  //     id: 2,
-  //     foto: (
-  //       <img
-  //         className="w-24 h-24 rounded-full"
-  //         src="https://scontent.fpiu2-2.fna.fbcdn.net/v/t1.6435-9/38016079_1685679581559176_7469718601927229440_n.jpg?_nc_cat=111&ccb=1-5&_nc_sid=174925&_nc_eui2=AeFdP-U8FmK0WDmsQM3vLWnj_OZUsT2WWKD85lSxPZZYoF2Wo_ebIsUtXrZvvD1QUfqMasUn4hjqB4mk_Ll_Uwif&_nc_ohc=BBXn7-Cna38AX8Z_8MK&_nc_ht=scontent.fpiu2-2.fna&oh=27b4354e602ced048ff3799ebb9388e1&oe=619F3FEE"
-  //       />
-  //     ),
-  //     name: 'percy harold',
-  //     apellido: 'córdova flores',
-  //     email: 'cordovaflores1994@hotmail.com',
-  //     estado: <BtnEstado estado={true} />,
-  //     acciones: (
-  //       <BtnAcciones
-  //         handleEdit={() => history.push('/clientes/editar-cliente')}
-  //         handleDelete={() => alert('cliente eliminado')}
-  //       />
-  //     )
-  //   },
-  //   {
-  //     id: 3,
-  //     foto: (
-  //       <img
-  //         className="w-24 h-24 rounded-full"
-  //         src="https://scontent.fpiu2-2.fna.fbcdn.net/v/t1.6435-9/38016079_1685679581559176_7469718601927229440_n.jpg?_nc_cat=111&ccb=1-5&_nc_sid=174925&_nc_eui2=AeFdP-U8FmK0WDmsQM3vLWnj_OZUsT2WWKD85lSxPZZYoF2Wo_ebIsUtXrZvvD1QUfqMasUn4hjqB4mk_Ll_Uwif&_nc_ohc=BBXn7-Cna38AX8Z_8MK&_nc_ht=scontent.fpiu2-2.fna&oh=27b4354e602ced048ff3799ebb9388e1&oe=619F3FEE"
-  //       />
-  //     ),
-  //     name: 'percy harold',
-  //     apellido: 'córdova flores',
-  //     email: 'cordovaflores1994@hotmail.com',
-  //     estado: <BtnEstado estado={false} />,
-  //     acciones: (
-  //       <BtnAcciones
-  //         handleEdit={() => history.push('/clientes/editar-cliente')}
-  //         handleDelete={() => alert('cliente eliminado')}
-  //       />
-  //     )
-  //   },
-  //   {
-  //     id: 4,
-  //     foto: (
-  //       <img
-  //         className="w-24 h-24 rounded-full"
-  //         src="https://scontent.fpiu2-2.fna.fbcdn.net/v/t1.6435-9/38016079_1685679581559176_7469718601927229440_n.jpg?_nc_cat=111&ccb=1-5&_nc_sid=174925&_nc_eui2=AeFdP-U8FmK0WDmsQM3vLWnj_OZUsT2WWKD85lSxPZZYoF2Wo_ebIsUtXrZvvD1QUfqMasUn4hjqB4mk_Ll_Uwif&_nc_ohc=BBXn7-Cna38AX8Z_8MK&_nc_ht=scontent.fpiu2-2.fna&oh=27b4354e602ced048ff3799ebb9388e1&oe=619F3FEE"
-  //       />
-  //     ),
-  //     name: 'percy harold',
-  //     apellido: 'córdova flores',
-  //     email: 'cordovaflores1994@hotmail.com',
-  //     estado: <BtnEstado estado={false} />,
-  //     acciones: (
-  //       <BtnAcciones
-  //         handleEdit={() => history.push('/clientes/editar-cliente')}
-  //         handleDelete={() => alert('cliente eliminado')}
-  //       />
-  //     )
-  //   },
-  //   {
-  //     id: 5,
-  //     foto: (
-  //       <img
-  //         className="w-24 h-24 rounded-full"
-  //         src="https://scontent.fpiu2-2.fna.fbcdn.net/v/t1.6435-9/38016079_1685679581559176_7469718601927229440_n.jpg?_nc_cat=111&ccb=1-5&_nc_sid=174925&_nc_eui2=AeFdP-U8FmK0WDmsQM3vLWnj_OZUsT2WWKD85lSxPZZYoF2Wo_ebIsUtXrZvvD1QUfqMasUn4hjqB4mk_Ll_Uwif&_nc_ohc=BBXn7-Cna38AX8Z_8MK&_nc_ht=scontent.fpiu2-2.fna&oh=27b4354e602ced048ff3799ebb9388e1&oe=619F3FEE"
-  //       />
-  //     ),
-  //     name: 'percy harold',
-  //     apellido: 'córdova flores',
-  //     email: 'cordovaflores1994@hotmail.com',
-  //     estado: <BtnEstado estado={false} />,
-  //     acciones: (
-  //       <BtnAcciones
-  //         handleEdit={() => history.push('/clientes/editar-cliente')}
-  //         handleDelete={() => alert('cliente eliminado')}
-  //       />
-  //     )
-  //   },
-  //   {
-  //     id: 6,
-  //     foto: (
-  //       <img
-  //         className="w-24 h-24 rounded-full"
-  //         src="https://scontent.fpiu2-2.fna.fbcdn.net/v/t1.6435-9/38016079_1685679581559176_7469718601927229440_n.jpg?_nc_cat=111&ccb=1-5&_nc_sid=174925&_nc_eui2=AeFdP-U8FmK0WDmsQM3vLWnj_OZUsT2WWKD85lSxPZZYoF2Wo_ebIsUtXrZvvD1QUfqMasUn4hjqB4mk_Ll_Uwif&_nc_ohc=BBXn7-Cna38AX8Z_8MK&_nc_ht=scontent.fpiu2-2.fna&oh=27b4354e602ced048ff3799ebb9388e1&oe=619F3FEE"
-  //       />
-  //     ),
-  //     name: 'percy harold',
-  //     apellido: 'córdova flores',
-  //     email: 'cordovaflores1994@hotmail.com',
-  //     estado: <BtnEstado estado={true} />,
-  //     acciones: <BtnAcciones />
-  //   },
-  //   {
-  //     id: 7,
-  //     foto: (
-  //       <img
-  //         className="w-24 h-24 rounded-full"
-  //         src="https://scontent.fpiu2-2.fna.fbcdn.net/v/t1.6435-9/38016079_1685679581559176_7469718601927229440_n.jpg?_nc_cat=111&ccb=1-5&_nc_sid=174925&_nc_eui2=AeFdP-U8FmK0WDmsQM3vLWnj_OZUsT2WWKD85lSxPZZYoF2Wo_ebIsUtXrZvvD1QUfqMasUn4hjqB4mk_Ll_Uwif&_nc_ohc=BBXn7-Cna38AX8Z_8MK&_nc_ht=scontent.fpiu2-2.fna&oh=27b4354e602ced048ff3799ebb9388e1&oe=619F3FEE"
-  //       />
-  //     ),
-  //     name: 'percy harold',
-  //     apellido: 'córdova flores',
-  //     email: 'cordovaflores1994@hotmail.com',
-  //     estado: <BtnEstado estado={false} />,
-  //     acciones: <BtnAcciones />
-  //   },
-  //   {
-  //     id: 8,
-  //     foto: (
-  //       <img
-  //         className="w-24 h-24 rounded-full"
-  //         src="https://scontent.fpiu2-2.fna.fbcdn.net/v/t1.6435-9/38016079_1685679581559176_7469718601927229440_n.jpg?_nc_cat=111&ccb=1-5&_nc_sid=174925&_nc_eui2=AeFdP-U8FmK0WDmsQM3vLWnj_OZUsT2WWKD85lSxPZZYoF2Wo_ebIsUtXrZvvD1QUfqMasUn4hjqB4mk_Ll_Uwif&_nc_ohc=BBXn7-Cna38AX8Z_8MK&_nc_ht=scontent.fpiu2-2.fna&oh=27b4354e602ced048ff3799ebb9388e1&oe=619F3FEE"
-  //       />
-  //     ),
-  //     name: 'percy harold',
-  //     apellido: 'córdova flores',
-  //     email: 'cordovaflores1994@hotmail.com',
-  //     estado: <BtnEstado estado={true} />,
-  //     acciones: <BtnAcciones />
-  //   },
-  //   {
-  //     id: 9,
-  //     foto: (
-  //       <img
-  //         className="w-24 h-24 rounded-full"
-  //         src="https://scontent.fpiu2-2.fna.fbcdn.net/v/t1.6435-9/38016079_1685679581559176_7469718601927229440_n.jpg?_nc_cat=111&ccb=1-5&_nc_sid=174925&_nc_eui2=AeFdP-U8FmK0WDmsQM3vLWnj_OZUsT2WWKD85lSxPZZYoF2Wo_ebIsUtXrZvvD1QUfqMasUn4hjqB4mk_Ll_Uwif&_nc_ohc=BBXn7-Cna38AX8Z_8MK&_nc_ht=scontent.fpiu2-2.fna&oh=27b4354e602ced048ff3799ebb9388e1&oe=619F3FEE"
-  //       />
-  //     ),
-  //     name: 'percy harold',
-  //     apellido: 'córdova flores',
-  //     email: 'cordovaflores1994@hotmail.com',
-  //     estado: <BtnEstado estado={true} />,
-  //     acciones: <BtnAcciones />
-  //   },
-  //   {
-  //     id: 10,
-  //     foto: (
-  //       <img
-  //         className="w-24 h-24 rounded-full"
-  //         src="https://scontent.fpiu2-2.fna.fbcdn.net/v/t1.6435-9/38016079_1685679581559176_7469718601927229440_n.jpg?_nc_cat=111&ccb=1-5&_nc_sid=174925&_nc_eui2=AeFdP-U8FmK0WDmsQM3vLWnj_OZUsT2WWKD85lSxPZZYoF2Wo_ebIsUtXrZvvD1QUfqMasUn4hjqB4mk_Ll_Uwif&_nc_ohc=BBXn7-Cna38AX8Z_8MK&_nc_ht=scontent.fpiu2-2.fna&oh=27b4354e602ced048ff3799ebb9388e1&oe=619F3FEE"
-  //       />
-  //     ),
-  //     name: 'percy harold',
-  //     apellido: 'córdova flores',
-  //     email: 'cordovaflores1994@hotmail.com',
-  //     estado: <BtnEstado estado={false} />,
-  //     acciones: <BtnAcciones />
-  //   },
-  //   {
-  //     id: 11,
-  //     foto: (
-  //       <img
-  //         className="w-24 h-24 rounded-full"
-  //         src="https://scontent.fpiu2-2.fna.fbcdn.net/v/t1.6435-9/38016079_1685679581559176_7469718601927229440_n.jpg?_nc_cat=111&ccb=1-5&_nc_sid=174925&_nc_eui2=AeFdP-U8FmK0WDmsQM3vLWnj_OZUsT2WWKD85lSxPZZYoF2Wo_ebIsUtXrZvvD1QUfqMasUn4hjqB4mk_Ll_Uwif&_nc_ohc=BBXn7-Cna38AX8Z_8MK&_nc_ht=scontent.fpiu2-2.fna&oh=27b4354e602ced048ff3799ebb9388e1&oe=619F3FEE"
-  //       />
-  //     ),
-  //     name: 'percy harold',
-  //     apellido: 'córdova flores',
-  //     email: 'cordovaflores1994@hotmail.com',
-  //     estado: <BtnEstado estado={false} />,
-  //     acciones: <BtnAcciones />
-  //   },
-  //   {
-  //     id: 12,
-  //     foto: (
-  //       <img
-  //         className="w-24 h-24 rounded-full"
-  //         src="https://scontent.fpiu2-2.fna.fbcdn.net/v/t1.6435-9/38016079_1685679581559176_7469718601927229440_n.jpg?_nc_cat=111&ccb=1-5&_nc_sid=174925&_nc_eui2=AeFdP-U8FmK0WDmsQM3vLWnj_OZUsT2WWKD85lSxPZZYoF2Wo_ebIsUtXrZvvD1QUfqMasUn4hjqB4mk_Ll_Uwif&_nc_ohc=BBXn7-Cna38AX8Z_8MK&_nc_ht=scontent.fpiu2-2.fna&oh=27b4354e602ced048ff3799ebb9388e1&oe=619F3FEE"
-  //       />
-  //     ),
-  //     name: 'percy harold',
-  //     apellido: 'córdova flores',
-  //     email: 'cordovaflores1994@hotmail.com',
-  //     estado: <BtnEstado estado={true} />,
-  //     acciones: <BtnAcciones />
-  //   },
-  //   {
-  //     id: 13,
-  //     foto: (
-  //       <img
-  //         className="w-24 h-24 rounded-full"
-  //         src="https://scontent.fpiu2-2.fna.fbcdn.net/v/t1.6435-9/38016079_1685679581559176_7469718601927229440_n.jpg?_nc_cat=111&ccb=1-5&_nc_sid=174925&_nc_eui2=AeFdP-U8FmK0WDmsQM3vLWnj_OZUsT2WWKD85lSxPZZYoF2Wo_ebIsUtXrZvvD1QUfqMasUn4hjqB4mk_Ll_Uwif&_nc_ohc=BBXn7-Cna38AX8Z_8MK&_nc_ht=scontent.fpiu2-2.fna&oh=27b4354e602ced048ff3799ebb9388e1&oe=619F3FEE"
-  //       />
-  //     ),
-  //     name: 'percy harold',
-  //     apellido: 'córdova flores',
-  //     email: 'cordovaflores1994@hotmail.com',
-  //     estado: <BtnEstado estado={false} />,
-  //     acciones: <BtnAcciones />
-  //   },
-  //   {
-  //     id: 14,
-  //     foto: (
-  //       <img
-  //         className="w-24 h-24 rounded-full"
-  //         src="https://scontent.fpiu2-2.fna.fbcdn.net/v/t1.6435-9/38016079_1685679581559176_7469718601927229440_n.jpg?_nc_cat=111&ccb=1-5&_nc_sid=174925&_nc_eui2=AeFdP-U8FmK0WDmsQM3vLWnj_OZUsT2WWKD85lSxPZZYoF2Wo_ebIsUtXrZvvD1QUfqMasUn4hjqB4mk_Ll_Uwif&_nc_ohc=BBXn7-Cna38AX8Z_8MK&_nc_ht=scontent.fpiu2-2.fna&oh=27b4354e602ced048ff3799ebb9388e1&oe=619F3FEE"
-  //       />
-  //     ),
-  //     name: 'percy harold',
-  //     apellido: 'córdova flores',
-  //     email: 'cordovaflores1994@hotmail.com',
-  //     estado: <BtnEstado estado={true} />,
-  //     acciones: <BtnAcciones />
-  //   },
-  //   {
-  //     id: 15,
-  //     foto: (
-  //       <img
-  //         className="w-24 h-24 rounded-full"
-  //         src="https://scontent.fpiu2-2.fna.fbcdn.net/v/t1.6435-9/38016079_1685679581559176_7469718601927229440_n.jpg?_nc_cat=111&ccb=1-5&_nc_sid=174925&_nc_eui2=AeFdP-U8FmK0WDmsQM3vLWnj_OZUsT2WWKD85lSxPZZYoF2Wo_ebIsUtXrZvvD1QUfqMasUn4hjqB4mk_Ll_Uwif&_nc_ohc=BBXn7-Cna38AX8Z_8MK&_nc_ht=scontent.fpiu2-2.fna&oh=27b4354e602ced048ff3799ebb9388e1&oe=619F3FEE"
-  //       />
-  //     ),
-  //     name: 'percy harold',
-  //     apellido: 'córdova flores',
-  //     email: 'cordovaflores1994@hotmail.com',
-  //     estado: <BtnEstado estado={false} />,
-  //     acciones: <BtnAcciones />
-  //   }
-  // ]
+  const { db, loadingGetData } = useUserServices()
+  console.log(db, loadingGetData)
+
   return (
     <div className="shadow md:rounded bg-white p-5 py-10 md:p-10 animate__fadeIn animate__animated">
       <div className="flex justify-between mb-5">
         <Heading>Clientes</Heading>
-        <Button
-          size="md"
-          onClick={() => history.push('/clientes/crear-cliente')}
-        >
-          + Agregar Cliente
-        </Button>
-      </div>{
-        loading
-          ? <Spinner />
-          : <TableGeneral dataBody={dataBodi} dataHead={dataHead} />
-      }
-
+      </div>
+      {/* eslint-disable  */}
+      {loadingGetData ? (
+        <Spinner />
+      ) : (
+        <>
+          <div className="w-full mb-8 overflow-hidden rounded-md md:shadow-xl max-h-screen overflow-y-auto ">
+            <div className="w-full overflow-x-auto min-h-screen">
+              <table className="w-full border-gray-100  text-left border-2 ">
+                <thead className="text-gray-700">
+                  <tr className="text-lg font-semibold  tracking-wide bg-gray-100 text-center">
+                    <th className="px-4 py-6 textgray-600 min-w-10 text-left">
+                      ID
+                    </th>
+                    <th className="px-4 py-6 textgray-600 min-w-10 text-left">
+                      Nombre
+                    </th>
+                    <th className="px-4 py-6 textgray-600 min-w-10 text-left">
+                      Apellidos
+                    </th>
+                    <th className="px-4 py-6 textgray-600 min-w-10 text-left">
+                      E-mail
+                    </th>
+                    <th className="px-4 py-6 textgray-600 min-w-10 text-left">
+                      Estado
+                    </th>
+                    <th className="px-4 py-6 textgray-600 min-w-10 text-center">
+                      Acciones
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="text-base bg-white border-gray-100 text-gray-700 ">
+                  {db.map((user) => (
+                    <tr
+                      key={user?.userId}
+                      className="font-medium hover:shadow-md  transform transition-all duration-300  hover:-translate-y-1"
+                    >
+                      <td className='className="text-start  uppercase text-gray-600 py-6 px-4 min-h-20 "'>
+                        {user?.userId}
+                      </td>
+                      <td className='className="text-start  uppercase text-gray-600 py-6 px-4 min-h-20 "'>
+                        {user?.nombre}
+                      </td>
+                      <td className='className="text-start  uppercase text-gray-600 py-6 px-4 min-h-20 "'>
+                        {user?.apellidos}
+                      </td>
+                      <td className='className="text-start  uppercase text-gray-600 py-6 px-4 min-h-20 "'>
+                        {user?.email}
+                      </td>
+                      <td className='className="text-start  uppercase text-gray-600 py-6 px-4 min-h-20 "'>
+                        {user?.estado}
+                      </td>
+                      <td className="text-start  uppercase text-gray-600 py-6 px-4 min-h-20">
+                        <div className="flex gap-x-10 items-center justify-center">
+                          <button>
+                            <IconEdit />
+                          </button>
+                          <button>
+                            <IconDelete />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </>
+      )}
     </div>
   )
 }
