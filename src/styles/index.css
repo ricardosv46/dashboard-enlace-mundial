@@ -14,3 +14,9 @@
   font-weight: 500;
   src: url(../assets/fonts/Poppins-Regular.woff2);
 }
+
+.toast {
+  z-index: 999;
+  position: absolute;
+  top: 80px;
+}

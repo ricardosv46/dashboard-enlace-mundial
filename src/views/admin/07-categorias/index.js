@@ -7,6 +7,7 @@ import Button from '../../../components/Buttons/Button'
 import Heading from '../../../components/Heading'
 import Spinner from '../../../components/Spinner/Spinner'
 import { useCategoriasServices } from '../../../services/useCategoriaServices'
+
 const Categorias = () => {
   const history = useHistory()
   const { db, loadingGetData, updateCategoriaEstado, deleteCategoria } =
@@ -14,8 +15,13 @@ const Categorias = () => {
   return (
     <>
       <div className="shadow md:rounded bg-white p-5 py-10 md:p-10 mb-20 min-h-screen animate__fadeIn animate__animated">
-        <div className="flex justify-between mb-5">
-          <Toaster position="top-right" reverseOrder={true} />
+        <div className="flex justify-between mb-5 ">
+          <Toaster
+            position="top-right"
+            reverseOrder={true}
+            containerClassName="top-18 md:top-5"
+          />
+
           <Heading>Categorias</Heading>
 
           <Button
