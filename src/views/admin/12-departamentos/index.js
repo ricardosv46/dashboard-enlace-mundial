@@ -50,6 +50,13 @@ const Departamentos = () => {
 
   const columnas = [
     {
+      name: 'Id',
+      selector: (row) => row.DeparCodi,
+      sortable: true,
+      grow: 2,
+      left: true
+    },
+    {
       name: 'Imagen',
       selector: (row) => <Img row={row} />
     },

@@ -68,8 +68,11 @@ const ModalActualizarDepartamento = ({ closeModal, isOpen, departamento }) => {
   return (
     <>
       <ModalCustomer isOpen={isOpen} closeModal={closeModal}>
-        <h2 className="mt-5 md:text-2xl font-semibold tracking-wide text-center">
-          Editar Departamento de {departamento?.DeparNom}
+        <h2 className="mt-8 md:text-2xl font-semibold tracking-wide text-center">
+          Editar departamento de{' '}
+          <span className="capitalize ">
+            {departamento?.DeparNom && (departamento?.DeparNom).toLowerCase()}
+          </span>
         </h2>
         <form
           onSubmit={handleSubtmit}

@@ -1,100 +1,30 @@
+// import { useEffect } from 'react'
 import { useEffect, useState } from 'react'
-import { useHistory } from 'react-router'
-import BtnAccionesCalendary from '../../../components/btnAcciones/BtnAccionesCalendary'
 import BtnDestacado from '../../../components/BtnDestacado/BtnDestacado'
 import BtnEstado from '../../../components/BtnEstado/BtnEstado'
-import Button from '../../../components/Buttons/Button'
 import Heading from '../../../components/Heading'
-import TableGeneral from '../../../components/Tables/TableGeneral'
 import { useToursServices } from '../../../services/useToursServices'
-import Spinner from '../../../components/Spinner/Spinner'
 
 const Tours = () => {
-  const history = useHistory()
-  const [dataBody, setDataBody] = useState([])
-  const { db, loading, deleteTour, updateTourDestacado, updateTourEstado } =
-    useToursServices()
-  // console.log('data es ', db)
-  console.log('valor de databody', dataBody)
-  console.log('valor de loading', loading)
-  const dataHead = [
-    ['Id', 'min-w-10', 'left'],
-    ['Foto', 'min-w-20 ', 'left'],
-    ['Titulo', 'min-w-52', 'left'],
-    ['Categoria', 'min-w-52', 'left'],
-    ['Estado', 'min-w-10', 'center'],
-    ['Destacado', 'min-w-10', 'center'],
-    ['Acciones', 'min-w-20', 'left']
-  ]
+  const [nroPagina, setNroPagina] = useState(1)
 
-  const armarFilasTours = (data, setDataBody, handleDelete) => {
-    const filasTours = data.map((tour) => {
-      return {
-        id: tour?.tourId,
-        imagen: (
-          <img
-            src={tour?.imagenPrincipalTour?.url}
-            className="w-16 h-10 object-cover"
-          />
-        ),
-        nombre: tour?.tituloTour,
-        categoria: tour?.Categoria?.tituloCategoria,
-        estado: (
-          <div
-            div
-            className="flex justify-center cursor-pointer transition-all duration-300 transform hover:-translate-y-1 p-1"
-            onClick={() => {
-              updateTourEstado({
-                id: tour?.tourId,
-                estado:
-                  tour?.estadoTour === 'Activado' ? 'Desactivado' : 'Activado'
-              })
-            }}
-          >
-            <BtnEstado estado={tour?.estadoTour === 'Activado' ? 1 : 0} />
-          </div>
-        ),
-        descatar: (
-          <div
-            div
-            className="flex justify-center cursor-pointer transition-all duration-300 transform hover:-translate-y-1 p-1"
-            onClick={() => {
-              updateTourDestacado({
-                id: tour?.tourId,
-                destacado:
-                  tour?.destacadoTour === 'Activado'
-                    ? 'Desactivado'
-                    : 'Activado'
-              })
-            }}
-          >
-            <BtnDestacado estado={tour?.destacadoTour === 'Activado' && true} />
-          </div>
-        ),
-        acciones: (
-          <BtnAccionesCalendary
-            handleEdit={() =>
-              history.push(`/tours/editar-tour/${tour?.slugTour}`, tour)
-            }
-            handleDelete={() => handleDelete(tour)}
-            handleCalendary={() =>
-              history.push(`/tour/calendario/${tour?.tourId}`)
-            }
-          />
-        )
-      }
-    })
+  const { loadingGetData, data } = useToursServices({
+    page: nroPagina,
+    estadoTour: '',
+    numberPaginate: 10
+  })
 
-    if (filasTours.length > 0) {
-      setDataBody(filasTours)
-    }
-  }
+  const [arregloSelect, setArregloSelect] = useState([])
 
   useEffect(() => {
-    if (db.length > 0) {
-      armarFilasTours(db, setDataBody, deleteTour)
+    if (!loadingGetData) {
+      setArregloSelect(
+        new Array(
+          Math.round(parseFloat(data?.GetAllTour?.nroTotalItems / 10))
+        ).fill(1)
+      )
     }
-  }, [db])
+  }, [loadingGetData])
 
   return (
     <div className="shadow  md:rounded bg-white p-5 py-10 md:p-10 animate__fadeIn animate__animated">
@@ -102,19 +32,98 @@ const Tours = () => {
         <Heading size="xl" className="text-3xl text-gray-800">
           Tours
         </Heading>
-        <Button
-          size="md"
-          className="border"
-          onClick={() => history.push('/tours/crear-tour')}
-        >
-          + Agregar Tour
-        </Button>
       </div>
+
       {/* eslint-disable  */}
-      {loading ? (
-        <Spinner />
+      {loadingGetData ? (
+        <div>Cargando ...</div>
       ) : (
-        <TableGeneral dataBody={dataBody} dataHead={dataHead} />
+        <>
+          <div className="flex-col gap-x-10  flex items-center  sm:flex-row  mb-5">
+            <p> Total de Datos {data?.GetAllTour?.nroTotalItems}</p>
+            <div className="">
+              <label htmlFor="paginas" className="mr-2">
+                Numero de Páginas
+              </label>
+              <select
+                id="paginas"
+                className="p-1"
+                onChange={(e) => setNroPagina(e.target.value)}
+                value={nroPagina}
+              >
+                {arregloSelect?.map((elemento, index) => (
+                  <option key={elemento + index} value={elemento + index}>
+                    {elemento + index}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          <div className="w-full mb-8 overflow-hidden rounded-md md:shadow-xl max-h-screen overflow-y-auto  ">
+            <div className="w-full overflow-x-auto min-h-screen">
+              <table className="w-full border-gray-100  text-left border-2 ">
+                <thead className="text-gray-700">
+                  <tr className="text-lg font-semibold  tracking-wide bg-gray-100 text-center">
+                    <th className="px-4 py-6 text-gray-600 min-w-10 text-left">
+                      #
+                    </th>
+                    <th className="px-4 py-6 text-gray-600 min-w-10 text-left">
+                      Imágen
+                    </th>
+                    <th className="px-4 py-6 text-gray-600 min-w-10 text-left">
+                      Titulo
+                    </th>
+                    <th className="px-4 py-6 text-gray-600 min-w-10 text-left">
+                      Categoria
+                    </th>
+                    <th className="px-4 py-6 text-gray-600 min-w-10 text-left">
+                      Destacado
+                    </th>
+                    <th className="px-4 py-6 text-gray-600 min-w-10 text-left">
+                      Estado
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="text-base bg-white border-gray-100 text-gray-700 ">
+                  {data?.GetAllTour?.data.map((tour, index) => (
+                    <tr
+                      key={tour?.tourId}
+                      className="font-medium hover:shadow-md  transform transition-all duration-300  hover:-translate-y-1"
+                    >
+                      <td className='className="text-start  uppercase text-gray-600 py-6 px-4 min-h-20 "'>
+                        {(nroPagina - 1) * 10 + index + 1}
+                      </td>
+                      <td className='className="text-start  uppercase text-gray-600 py-6 px-4 min-h-20 "'>
+                        <img
+                          src={tour?.imagenPrincipalTour?.url}
+                          alt=""
+                          className="max-w-20 max-h-24"
+                        />
+                      </td>
+                      <td className='className="text-start  uppercase text-gray-600 py-6 px-4 min-h-20 "'>
+                        {tour?.tituloTour}
+                      </td>
+                      <td className='className="text-start  uppercase text-gray-600 py-6 px-4 min-h-20 "'>
+                        {tour?.Categoria?.tituloCategoria}
+                      </td>
+                      <td className='className="text-start  uppercase text-gray-600 py-6 px-4 min-h-20 "'>
+                        <div className='cursor-pointer'>
+                          <BtnDestacado estado={tour?.destacadoTour === "Activado" && true} />
+                        </div>
+                      </td>
+                      <td className='className="text-start  uppercase text-gray-600 py-6 px-4 min-h-20 "'>
+                        <div className='cursor-pointer'>
+                          <BtnEstado estado={tour?.estadoTour === "Activado" && true} />
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </>
       )}
     </div>
   )
