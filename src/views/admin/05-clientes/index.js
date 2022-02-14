@@ -1,94 +1,100 @@
-// import { IconDelete, IconEdit } from '../../../assets/icons/icons'
-// import BtnEstado from '../../../components/BtnEstado/BtnEstado'
-import { IconDelete, IconEdit } from '../../../assets/icons/icons'
+import DataTable from 'react-data-table-component'
+import toast from 'react-hot-toast'
+import { useHistory } from 'react-router-dom'
+import swal from 'sweetalert'
+import { IconDelete } from '../../../assets/icons/icons'
+import Button from '../../../components/Buttons/Button'
 import Heading from '../../../components/Heading'
 import Spinner from '../../../components/Spinner/Spinner'
 import { useUserServices } from '../../../services/useUserServices'
+import { customStyles, paginacionOpciones } from './assetsDataTable'
 
 const Clientes = () => {
-  // variables: {
-  //   numberPaginate: 12,
-  //   page: 1,
-  //   tipoUsuario: '',
-  //   estado: ''
-  // }
+  const history = useHistory()
+  const { db: dbUsers, loadingGetData, deleteUser } = useUserServices()
 
-  const { db, loadingGetData } = useUserServices()
-  console.log(db, loadingGetData)
+  const columnas = [
+    {
+      name: 'ID',
+      selector: (row) => row.userId,
+      sortable: true,
+      grow: 2,
+      left: true
+    },
+    {
+      name: 'Nombre',
+      selector: (row) => row.nombre,
+      sortable: true,
+      grow: 2,
+      left: true
+    },
+    {
+      name: 'Apellido',
+      selector: (row) => row.apellidos,
+      sortable: true,
+      grow: 2,
+      left: true
+    },
+    {
+      name: 'E-mail',
+      selector: (row) => row.email,
+      sortable: true,
+      grow: 2,
+      left: true
+    },
+    {
+      name: 'Acciones',
+      selector: (row) => (
+        <button
+          className="ml-7 cursor-pointer "
+          onClick={() => {
+            swal({
+              title: `Desea eliminar el usuario ${row?.nombre}?`,
+              text: 'Se borraran todos los datos que esten asociados a este usuario',
+              icon: 'warning',
+              buttons: true,
+              dangerMode: true
+            }).then(async (rpta) => {
+              if (rpta) {
+                deleteUser({
+                  id: row?.userId
+                })
+                toast.success('Usuario Eliminado!')
+              }
+            })
+          }}
+        >
+          <IconDelete />
+        </button>
+      )
+    }
+  ]
 
   return (
     <div className="shadow md:rounded bg-white p-5 py-10 md:p-10 animate__fadeIn animate__animated">
       <div className="flex justify-between mb-5">
         <Heading>Clientes</Heading>
+        <Button
+          variant="primary"
+          size="md"
+          onClick={() => history.push('/clientes/crear-cliente')}
+        >
+          + Agregar Cliente
+        </Button>
       </div>
       {/* eslint-disable  */}
       {loadingGetData ? (
         <Spinner />
       ) : (
-        <>
-          <div className="w-full mb-8 overflow-hidden rounded-md md:shadow-xl max-h-screen overflow-y-auto ">
-            <div className="w-full overflow-x-auto min-h-screen">
-              <table className="w-full border-gray-100  text-left border-2 ">
-                <thead className="text-gray-700">
-                  <tr className="text-lg font-semibold  tracking-wide bg-gray-100 text-center">
-                    <th className="px-4 py-6 textgray-600 min-w-10 text-left">
-                      ID
-                    </th>
-                    <th className="px-4 py-6 textgray-600 min-w-10 text-left">
-                      Nombre
-                    </th>
-                    <th className="px-4 py-6 textgray-600 min-w-10 text-left">
-                      Apellidos
-                    </th>
-                    <th className="px-4 py-6 textgray-600 min-w-10 text-left">
-                      E-mail
-                    </th>
-                    <th className="px-4 py-6 textgray-600 min-w-10 text-left">
-                      Estado
-                    </th>
-                    <th className="px-4 py-6 textgray-600 min-w-10 text-center">
-                      Acciones
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="text-base bg-white border-gray-100 text-gray-700 ">
-                  {db.map((user) => (
-                    <tr
-                      key={user?.userId}
-                      className="font-medium hover:shadow-md  transform transition-all duration-300  hover:-translate-y-1"
-                    >
-                      <td className='className="text-start  uppercase text-gray-600 py-6 px-4 min-h-20 "'>
-                        {user?.userId}
-                      </td>
-                      <td className='className="text-start  uppercase text-gray-600 py-6 px-4 min-h-20 "'>
-                        {user?.nombre}
-                      </td>
-                      <td className='className="text-start  uppercase text-gray-600 py-6 px-4 min-h-20 "'>
-                        {user?.apellidos}
-                      </td>
-                      <td className='className="text-start  uppercase text-gray-600 py-6 px-4 min-h-20 "'>
-                        {user?.email}
-                      </td>
-                      <td className='className="text-start  uppercase text-gray-600 py-6 px-4 min-h-20 "'>
-                        {user?.estado}
-                      </td>
-                      <td className="text-start  uppercase text-gray-600 py-6 px-4 min-h-20">
-                        <div className="flex gap-x-10 items-center justify-center">
-                          <button>
-                            <IconEdit />
-                          </button>
-                          <button>
-                            <IconDelete />
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </>
+        <DataTable
+          data={dbUsers}
+          columns={columnas}
+          pagination
+          paginationComponentOptions={paginacionOpciones}
+          fixedHeader
+          fixedHeaderScrollHeight="85vh"
+          customStyles={customStyles}
+        />
       )}
     </div>
   )

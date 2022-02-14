@@ -24,7 +24,7 @@ const InputToggle = ({ status = false, ...props }) => {
           }  w-14 h-7 rounded-full`}
         ></div>
         <div
-          className={` absolute left-1 top-1  w-5 h-5 rounded-full transition ${
+          className={` absolute left-2 top-1  w-5 h-5 rounded-full transition ${
             state ? ' transform translate-x-full bg-white' : ' bg-primary-400'
           } `}
         ></div>
