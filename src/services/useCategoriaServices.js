@@ -127,7 +127,7 @@ export const useCategoriasServices = () => {
       }
     })
     refetch()
-    if (resp.data?.updateCategoria) return 'exito'
+    if (resp.data?.deleteCategoria) return 'exito'
   }
 
   const updateCategoriaEstado = async ({ estado, id }) => {

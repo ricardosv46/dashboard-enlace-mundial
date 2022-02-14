@@ -11,7 +11,12 @@ import ModalActualizarDepartamento from './ModalActualizarDepartamento'
 import { useState } from 'react'
 
 export const Img = ({ row }) => {
-  return <img className="w-26 max-h-16 object-cover" src={row.imagenPrincipal?.url} />
+  return (
+    <img
+      className="w-26 max-h-16 object-cover"
+      src={row.imagenPrincipal?.url}
+    />
+  )
 }
 export const Destacado = ({ row }) => {
   const { updateDepartamentos } = useDepartamentosServices()
