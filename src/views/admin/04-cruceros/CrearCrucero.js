@@ -18,6 +18,7 @@ const initialForm = {
   categorias: '',
   region: '',
   ciudad: '',
+  precioBase: '',
   descripcionCorta: '',
   descripcionLarga: '',
   puntoPartida: '',
@@ -119,6 +120,7 @@ const CrearCrucero = () => {
         notas: eliminarDuplicado(notas),
         politicas: eliminarDuplicado(politicas),
         video: form.video,
+        precioBaseCrucero: form.precioBase,
         idImgPrincipal: mainImage.id,
         idImgSecundaria: secondaryImage.id,
         galeria: eliminarDuplicado(galery)
@@ -230,7 +232,7 @@ const CrearCrucero = () => {
               <option className="cursor-pointer" value="" selected>
                 Selecciona una Categoria
               </option>
-              {dataCategoria.map((item) => (
+              {dataCategoria?.map((item) => (
                 <option key={item.categoriaId} value={item.slugCategoria}>
                   {item.tituloCategoria}
                 </option>
@@ -707,6 +709,18 @@ const CrearCrucero = () => {
             </div>
           </div>
         </div>
+        <div className="flex flex-col lg:flex-row lg:space-x-4 items-center mb-5">
+          <InputText
+            name="precioBase"
+            label="Precio Base"
+            placeholder="Ingresa un precio base"
+            type="text"
+            onChange={handleInputChange}
+            required
+            value={form.precioBase}
+          />
+        </div>
+
         <div className="flex flex-col lg:flex-row lg:space-x-4 items-center mb-5">
           <InputText
             name="video"

@@ -1,10 +1,11 @@
+import { useMutation } from '@apollo/client'
 import swal from 'sweetalert'
 import {
   useCreateCruceroMutation,
-  useDeleteCruceroMutation,
   useGetAllCruceroQuery,
   useUpdateCruceroMutation
 } from '../generated/graphql'
+import { CREATE_CRUCERO } from '../graphql/mutation/createcrucero'
 export const useCruceroServices = () => {
   const { loading, data, refetch } = useGetAllCruceroQuery({
     fetchPolicy: 'network-only',
@@ -15,7 +16,7 @@ export const useCruceroServices = () => {
     }
   })
   const db = data ? data?.GetAllCrucero?.data : []
-  const [deleteCruceroMutation] = useDeleteCruceroMutation({
+  const [deleteCruceroMutation] = useMutation(CREATE_CRUCERO, {
     onError: (err) => {
       // validar errores
       // eslint-disable-next-line eqeqeq
@@ -78,8 +79,8 @@ export const useCruceroServices = () => {
     titulo,
     region,
     ciudad,
-    estado,
-    destacado,
+    estado = 'Activado',
+    destacado = 'Desactivado',
     descripcionCorta,
     descripcionLarga,
     itinerario,
@@ -94,6 +95,7 @@ export const useCruceroServices = () => {
     idImgSecundaria,
     slugCategoria,
     galeria,
+    precioBaseCrucero,
     keywords
   }) => {
     if (loadingCreate === false) {
@@ -119,7 +121,8 @@ export const useCruceroServices = () => {
             imagenPrincipalCrucero: idImgPrincipal,
             imagenSecundariaCrucero: idImgSecundaria,
             galeriaCrucero: galeria,
-            slugCategoria: slugCategoria
+            slugCategoria: slugCategoria,
+            precioBaseCrucero: precioBaseCrucero
           }
         }
       }).catch((error) => console.error('que error', error))
