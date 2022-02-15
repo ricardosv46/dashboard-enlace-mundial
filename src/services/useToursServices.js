@@ -3,6 +3,7 @@ import { useDeleteTourMutation } from '../generated/graphql'
 import { CREATE_TOUR } from '../graphql/mutation/createTour'
 import { UPDATE_DESTACADO_TOUR } from '../graphql/mutation/updateDestacadoTour'
 import { UPDATE_ESTADO_TOUR } from '../graphql/mutation/updateEstadoTour'
+import { UPDATE_TOUR } from '../graphql/mutation/updateTour'
 import { GET_ALL_TOURS } from '../graphql/query/getAllTours'
 
 export const useToursServices = (
@@ -41,9 +42,15 @@ export const useToursServices = (
   const [updateEstadoMutation] = useMutation(UPDATE_ESTADO_TOUR, {
     onError: (err) => {
       console.log(
-        'onError get Estado Tours',
+        'onError Update Estado Tours',
         err?.graphQLErrors[0]?.debugMessage
       )
+    }
+  })
+
+  const [updateTourMutation, { loading: loadingUpdateTour }] = useMutation(UPDATE_TOUR, {
+    onError: (err) => {
+      console.log('onError Update Tours', err?.graphQLErrors[0]?.debugMessage)
     }
   })
 
@@ -89,9 +96,48 @@ export const useToursServices = (
         input: { ...inputs }
       }
     })
-    console.log(resp)
     refetch()
     if (resp?.data?.CreateTour) {
+      return 'exito'
+    }
+  }
+
+  const updateTour = async (
+    inputs = {
+      tourId: '',
+      tituloTour: '',
+      regionTour: '',
+      ciudadTour: '',
+      precioBaseTour: '',
+      nroHoras: '',
+      nroDias: '',
+      keywordsTour: '',
+      descripcionCortaTour: '',
+      descripcionLargaTour: '',
+      itinerarioTour: '',
+      puntoPartidaTour: '',
+      noIncluyeTour: '',
+      notasTour: '',
+      politicasTour: '',
+      videoPresentacionTour: '',
+      imagenPrincipalTour: '',
+      imagenSecundariaTour: '',
+      galeriaTour: '',
+      slugCategoria: '',
+      IncluyeTour: '',
+      ActividadesTour: '',
+      DeparCodi: '',
+      ProvCodi: ''
+    }
+  ) => {
+    const resp = await updateTourMutation({
+      variables: {
+        input: { ...inputs }
+      }
+    })
+    refetch()
+    console.log('madrid xd', resp)
+    if (resp?.data?.UpdateTour) {
       return 'exito'
     }
   }
@@ -141,8 +187,10 @@ export const useToursServices = (
     data,
     loadingGetData,
     loadingCrearTour,
+    loadingUpdateTour,
     deleteTour,
     updateEstadoTour,
+    updateTour,
     updateDestacadoTour,
     createTour
   }

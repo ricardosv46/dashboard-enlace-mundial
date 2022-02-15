@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import toast, { Toaster } from 'react-hot-toast'
 import { useHistory } from 'react-router-dom'
 import swal from 'sweetalert'
-import { IconDelete, IconEdit } from '../../../assets/icons/icons'
+import { IconDelete, IconEdit, IconCalendar } from '../../../assets/icons/icons'
 import BtnDestacado from '../../../components/BtnDestacado/BtnDestacado'
 import BtnEstado from '../../../components/BtnEstado/BtnEstado'
 import Button from '../../../components/Buttons/Button'
@@ -193,9 +193,24 @@ const Tours = () => {
                         </div>
                       </td>
                       <td className="text-start  uppercase text-gray-600 py-2 px-4 min-h-20">
-                        <div className="flex gap-x-5 lg:gap-x-10 items-center justify-center">
-                          <button>
+                        <div className="flex gap-x-4 items-center justify-center">
+                          <button
+                            onClick={() =>
+                              history.push(
+
+                                '/tours/editar-tour/'+tour?.slugTour,
+                                tour
+                              )
+                            }
+                          >
                             <IconEdit />
+                          </button>
+                          <button
+                            onClick={() =>
+                              history.push('/tour/calendario/' + tour?.tourId)
+                            }
+                          >
+                            <IconCalendar />
                           </button>
                           <button
                             onClick={() => {

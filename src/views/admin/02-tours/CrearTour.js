@@ -161,6 +161,14 @@ const CrearTour = () => {
             timer: 1000
           })
           history.push('/tours')
+        } else {
+          swal({
+            title: 'Error',
+            text: 'El Tour no se ha creado',
+            icon: 'error',
+            button: 'Aceptar',
+            timer: 1000
+          })
         }
       })
     } else {

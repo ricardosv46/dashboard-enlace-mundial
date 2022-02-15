@@ -7,34 +7,22 @@ import TextArea from '../../../components/Forms/TextArea'
 import Heading from '../../../components/Heading'
 import { useCategoriasServices } from '../../../services/useCategoriaServices'
 import UseForm from '../../../hooks/UseForm'
+import { Ciudades, Regiones } from '../../../data/dataPeru'
 import { useToursServices } from '../../../services/useToursServices'
 import swal from 'sweetalert'
+import { useHistory, useLocation, useParams } from 'react-router'
 import SelectImage from '../../../components/SelectImage'
 import SelectMultiImages from '../../../components/SelectMultiImages'
-import { useHistory, useParams } from 'react-router'
-import Spinner from '../../../components/Spinner/Spinner'
-import { useDepartamentosServices } from '../../../services/useDepartamentosServices'
-import { useProvinciasServices } from '../../../services/useProvinciasServices'
-import { useIncluyeServices } from '../../../services/useIncluyeServices'
-import { useActividadesServices } from '../../../services/useActividadesServices'
-import { useQuery } from '@apollo/client'
-import { GET_SLUG_TOUR } from '../../../graphql/query/getSlugTour'
+import { useGetSlugTourQuery } from '../../../generated/graphql'
 const initialForm = {
   titulo: '',
-  categorias: '1',
-  departamento: '1',
-  provincia: '1',
+  categorias: '',
+  region: '',
+  ciudad: '',
   descripcionCorta: '',
   descripcionLarga: '',
   puntoPartida: '',
-  video: '',
-  incluye: ' ',
-  precioBase: '',
-  regionTour: '',
-  ciudadTour: '',
-  actividades: ' ',
-  numeroDias: '',
-  numeroHoras: ''
+  video: ''
 }
 const validationsForm = (form) => {
   // eslint-disable-next-line prefer-const
@@ -44,6 +32,12 @@ const validationsForm = (form) => {
   }
   if (!form.categorias.trim()) {
     errors.categoria = 'Debe de Seleccionar una Categoria'
+  }
+  if (!form.region.trim()) {
+    errors.region = 'Debe de Seleccionar una Region'
+  }
+  if (!form.ciudad.trim()) {
+    errors.ciudad = 'Debe de Seleccionar una Ciudad'
   }
   if (!form.descripcionLarga.trim()) {
     errors.descripcionLarga = 'Debe de poner alguna descripcion para el Tour'
@@ -56,31 +50,38 @@ const validationsForm = (form) => {
 const otherErrors = {}
 
 const EditarTour = () => {
-  const { form, handleInputChange, handleBlur, errors, resetForm } = UseForm(
+  const history = useHistory()
+  const path = useLocation()
+  const params = useParams()
+  console.log('params', params)
+  // console.log('esto es el history', hi)
+  // console.log('esto es el path', path)
+  // console.log('valor de pathname', (path.pathname.split('/').reverse().join('/')).indexOf('/'))
+  const cadenaInvertida = path.pathname.split('/').reverse().join('/')
+  const index = cadenaInvertida.indexOf('/')
+  const slug = cadenaInvertida.substring(0, index)
+  console.log(slug)
+  // const { state: objetoTour } = useLocation()
+  const { db: dataCategoria } = useCategoriasServices()
+  const { data, loading } = useGetSlugTourQuery({
+    fetchPolicy: 'network-only',
+    variables: {
+      slugTour: slug
+    }
+  })
+  const objetoTour = data ? data?.GetSlugTour : []
+  console.log(objetoTour, loading)
+  const { updateTour, errorUpdate } = useToursServices()
+  const { form, handleInputChange, handleBlur, errors } = UseForm(
     initialForm,
     validationsForm
   )
-  const history = useHistory()
-  const params = useParams()
-  const { id: slugTour } = params
-  const { data, loading: loadingSlugTour } = useQuery(GET_SLUG_TOUR, {
-    variables: { slugTour }
-  })
-  const { db: dataCategoria, loadingGetData: loadingCategorias } =
-    useCategoriasServices()
-  const { db: dataDepartamentos, loadingGetData: loadingDepartamentos } =
-    useDepartamentosServices()
-  const { db: dataProvincias, loadingGetData: loadingProvincias } =
-    useProvinciasServices(form.departamento)
-  const { db: dataIncluye, loadingGetData: loadingIncluye } =
-    useIncluyeServices()
-  const { db: dataActividades, loadingGetData: loadingActividades } =
-    useActividadesServices()
-  const { updateTour, loadingUpdateTour } = useToursServices()
   const [incluye, setIncluye] = useState([])
+  const [textIncluye, setTextIncluye] = useState('')
   const [noIncluye, setNoIncluye] = useState([])
   const [textNoIncluye, setTextNoIncluye] = useState('')
   const [actividades, setActividades] = useState([])
+  const [textAactividades, setTextActividaes] = useState('')
   const [textItinerario, setTextItinerario] = useState('')
   const [itinerario, setItinerario] = useState([])
   const [textNotas, setTextNotas] = useState('')
@@ -105,7 +106,8 @@ const EditarTour = () => {
     const newData = new Set(data)
     return [...newData]
   }
-  const handleSubmit = (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault()
 
     if (
@@ -120,63 +122,40 @@ const EditarTour = () => {
       secondaryImage &&
       galery.length > 0
     ) {
-      updateTour({
-        tourId: data.GetSlugTour?.tourId,
-        ActividadesTour: eliminarDuplicado(actividades),
-        IncluyeTour: eliminarDuplicado(incluye),
-        DeparCodi: form.departamento,
-        ProvCodi: form.provincia,
-        ciudadTour: form.ciudadTour,
-        regionTour: form.regionTour,
-        descripcionCortaTour: form.descripcionCorta,
-        descripcionLargaTour: form.descripcionLarga,
-        galeriaTour: galery,
-        imagenPrincipalTour: mainImage?.id,
-        imagenSecundariaTour: secondaryImage?.id,
-        itinerarioTour: eliminarDuplicado(itinerario).join(','),
-        keywordsTour: eliminarDuplicado(keywords).join(','),
-        notasTour: eliminarDuplicado(notas).join(','),
-        noIncluyeTour: eliminarDuplicado(noIncluye).join(','),
-        nroDias: form.numeroDias,
-        nroHoras: form.numeroHoras,
-        precioBaseTour: form.precioBase,
-        politicasTour: eliminarDuplicado(politicas).join(','),
-        puntoPartidaTour: form.puntoPartida,
-        tituloTour: form.titulo,
-        videoPresentacionTour: form.video,
-        slugCategoria: form.categorias
-      }).then((resp) => {
-        if (resp === 'exito') {
-          resetForm()
-          setActividades([])
-          setIncluye([])
-          setNoIncluye([])
-          setItinerario([])
-          setActividades([])
-          setNotas([])
-          setPoliticas([])
-          setKeywords([])
-          setMainImage(null)
-          setSecondaryImage(null)
-          setGalery([])
-          swal({
-            title: 'Tour Editado',
-            text: 'El Tour se ha edito exitosamente',
-            icon: 'success',
-            button: 'Aceptar',
-            timer: 1000
-          })
-          history.push('/tours')
-        } else {
-          swal({
-            title: 'Error',
-            text: 'El Tour no se edito',
-            icon: 'error',
-            button: 'Aceptar',
-            timer: 1000
-          })
-        }
+      await updateTour({
+        id: objetoTour.tourId,
+        titulo: form.titulo,
+        slugCategoria: form.categorias,
+        region: form.region,
+        ciudad: form.ciudad,
+        descripcionCorta: form.descripcionCorta,
+        descripcionLarga: form.descripcionLarga,
+        itinerario: eliminarDuplicado(itinerario),
+        puntoPartida: form.puntoPartida,
+        incluye: eliminarDuplicado(incluye),
+        noIncluye: eliminarDuplicado(noIncluye),
+        actividades: eliminarDuplicado(actividades),
+        notas: eliminarDuplicado(notas),
+        politicas: eliminarDuplicado(politicas),
+        video: form.video,
+        idImgPrincipal: mainImage.id,
+        idImgSecundaria: secondaryImage.id,
+        keywords: eliminarDuplicado(keywords),
+        galeria: eliminarDuplicado(galery)
       })
+      // console.log(errorUpdate)
+
+      if (errorUpdate) {
+        swal({
+          title: 'ERROR',
+          text: 'OACURRIO UN ERROR EN EL SERVIDOR',
+          icon: 'error',
+          button: 'Aceptar',
+          timer: 2000
+        })
+      } else {
+        history.push('/tours')
+      }
     } else {
       swal({
         title: 'DATOS INCOMPLETOS',
@@ -187,7 +166,28 @@ const EditarTour = () => {
       })
     }
   }
+
   useEffect(() => {
+    if (!loading) {
+      form.titulo = objetoTour?.tituloTour
+      form.categorias = objetoTour?.slugCategoria
+      form.region = objetoTour?.regionTour
+      form.ciudad = objetoTour?.ciudadTour
+      form.descripcionLarga = objetoTour?.descripcionLargaTour
+      form.descripcionCorta = objetoTour?.descripcionCortaTour
+      form.puntoPartida = objetoTour?.puntoPartidaTour
+      form.video = objetoTour?.videoPresentacionTour
+      setItinerario(objetoTour?.itinerarioTour.split(','))
+      setIncluye(objetoTour?.incluyeTour.split(','))
+      setNoIncluye(objetoTour?.noIncluyeTour.split(','))
+      setActividades(objetoTour?.actividadesTour.split(','))
+      setNotas(objetoTour?.notasTour.split(','))
+      setKeywords(objetoTour?.keywordsTour.split(','))
+      setPoliticas(objetoTour?.politicasTour.split(','))
+      setMainImage(objetoTour.imagenPrincipalTour)
+      setSecondaryImage(objetoTour.imagenSecundariaTour)
+    }
+
     if (itinerario.length === 0) {
       otherErrors.itinerario = '( Ingrese al menos un Itinerario )'
     }
@@ -209,49 +209,18 @@ const EditarTour = () => {
     if (politicas.length === 0) {
       otherErrors.politicas = '( Ingrese una política )'
     }
-  }, [handleSubmit])
-
-  useEffect(() => {
-    if (!loadingSlugTour) {
-      form.titulo = data.GetSlugTour?.tituloTour
-      form.categorias = data.GetSlugTour?.slugCategoria
-      form.departamento = data.GetSlugTour?.Departamento?.DeparCodi
-      form.provincia = data.GetSlugTour?.Provincia?.ProvCodi
-      form.descripcionLarga = data.GetSlugTour?.descripcionLargaTour
-      form.descripcionCorta = data.GetSlugTour?.descripcionCortaTour
-      form.numeroDias = data.GetSlugTour?.nroDias
-      form.numeroHoras = data.GetSlugTour?.nroHoras
-      form.precioBase = data.GetSlugTour?.precioBaseTour
-      form.puntoPartida = data.GetSlugTour?.puntoPartidaTour
-      form.video = data.GetSlugTour?.videoPresentacionTour
-      form.ciudadTour = data.GetSlugTour?.ciudadTour
-      form.regionTour = data.GetSlugTour?.regionTour
-      setMainImage(data.GetSlugTour?.imagenPrincipalTour)
-      setSecondaryImage(data.GetSlugTour?.imagenSecundariaTour)
-      data.GetSlugTour?.ActividadesTour.map((el) =>
-        setActividades((actividad) => [el.actividadId, ...actividad])
-      )
-      data.GetSlugTour?.IncluyeTour.map((el) =>
-        setIncluye((incluye) => [el.incluyeId, ...incluye])
-      )
-      setNotas(data.GetSlugTour?.notasTour.split(','))
-      setKeywords(data.GetSlugTour?.keywordsTour.split(','))
-      setPoliticas(data.GetSlugTour?.politicasTour.split(','))
-      setItinerario(data.GetSlugTour?.itinerarioTour.split(','))
-      setNoIncluye(data.GetSlugTour?.noIncluyeTour.split(','))
-    }
-  }, [loadingSlugTour])
+  }, [loading])
 
   return (
-    <div className=" md:rounded bg-white p-5 py-10 md:p-10 animate__fadeIn animate__animated">
+    <div className="shadow md:rounded bg-white p-5 py-10 md:p-10 animate__fadeIn animate__animated">
       <div className="flex justify-center pt-3 relative">
         <ButtonBack />
 
-        <Heading>Crear Nuevo Tour</Heading>
+        <Heading>Editar Tour</Heading>
       </div>
       <form
         onSubmit={handleSubmit}
-        className="w-full lg:px-4 px-0 mx-auto py-10"
+        className="w-full lg:shadow-md lg:px-4 px-0 mx-auto py-10"
       >
         <div className="flex flex-col lg:flex-row lg:space-x-4 mb-5 gap-y-5">
           <div className="w-full">
@@ -262,6 +231,7 @@ const EditarTour = () => {
               onChange={handleInputChange}
               onBlur={handleBlur}
               value={form.titulo}
+              required
             />
             {errors.titulo && (
               <p className="text-sm text-red-500 font-medium mt-2 ml-1">
@@ -286,16 +256,18 @@ const EditarTour = () => {
               value={form.categorias}
               required
             >
-              {/* eslint-disable  */}
-              {loadingCategorias ? (
-                <option value={null}>Cargando...</option>
-              ) : (
-                dataCategoria?.map((item) => (
-                  <option key={item.categoriaId} value={item.slugCategoria}>
-                    {item.tituloCategoria}
-                  </option>
-                ))
-              )}
+              <option className="cursor-pointer" value="">
+                Selecciona una Categoria
+              </option>
+              {dataCategoria.map((item) => (
+                <option
+                  key={item.categoriaId}
+                  value={item.slugCategoria}
+                  selected={objetoTour.slugCategoria === item.slugCategoria}
+                >
+                  {item.tituloCategoria}
+                </option>
+              ))}
             </select>
             {errors.categoria && (
               <p className="text-sm text-red-500 font-medium mt-2 ml-1">
@@ -308,57 +280,73 @@ const EditarTour = () => {
         <div className="flex flex-col lg:flex-row lg:space-x-4 mb-5">
           <div className="flex flex-col w-full mb-4 lg:mb-0">
             <label
-              htmlFor="departamento"
+              htmlFor="region"
               className="block text-gray-700 text-left text-sm"
             >
-              Departamento
+              Región
             </label>
             <select
               required
               className="cursor-pointer w-full text-sm text-black transition ease-in duration-150 px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
-              id="departamento"
-              name="departamento"
+              id="region"
+              name="region"
               onChange={handleInputChange}
               onBlur={handleBlur}
-              value={form.departamento}
+              value={form.region}
             >
-              {loadingDepartamentos ? (
-                <option value={null}>Cargando...</option>
-              ) : (
-                dataDepartamentos?.map((item) => (
-                  <option key={item?.DeparCodi} value={item?.DeparCodi}>
-                    {item?.DeparNom}
-                  </option>
-                ))
-              )}
+              <option value="" className="cursor-pointer">
+                Selecciona una Region
+              </option>
+              {Regiones.map((region) => (
+                <option
+                  key={region}
+                  value={region}
+                  selected={region === objetoTour.regionTour}
+                >
+                  {region}
+                </option>
+              ))}
             </select>
+            {errors.region && (
+              <p className="text-sm text-red-500 font-medium mt-2 ml-1">
+                {errors.region}
+              </p>
+            )}
           </div>
           <div className="flex flex-col w-full mb-4 lg:mb-0">
             <label
-              htmlFor="provincia"
+              htmlFor="ciudad"
               className="block text-gray-700 text-left text-sm"
             >
-              Provincia
+              Ciudad
             </label>
             <select
               className="cursor-pointer w-full text-sm text-black transition ease-in duration-150 px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
-              id="provincia"
-              name="provincia"
+              id="ciudad"
+              name="ciudad"
               onChange={handleInputChange}
               onBlur={handleBlur}
               required
-              value={form.provincia}
+              value={form.ciudad}
             >
-              {loadingProvincias ? (
-                <option value={null}>Cargando...</option>
-              ) : (
-                dataProvincias?.map((item) => (
-                  <option key={item?.ProvCodi} value={item?.ProvCodi}>
-                    {item?.ProvNom}
-                  </option>
-                ))
-              )}
+              <option value="" className="cursor-pointer">
+                Selecciona una Ciudad
+              </option>
+              {Ciudades(form.region).map((ciudad) => (
+                <option
+                  key={ciudad}
+                  value={ciudad}
+                  selected={ciudad === objetoTour.ciudadTour}
+                >
+                  {ciudad}
+                </option>
+              ))}
             </select>
+            {errors.ciudad && (
+              <p className="text-sm text-red-500 font-medium mt-2 ml-1">
+                {errors.ciudad}
+              </p>
+            )}
           </div>
         </div>
 
@@ -368,8 +356,8 @@ const EditarTour = () => {
             name="descripcionLarga"
             rows="2"
             onChange={handleInputChange}
-            onBlur={handleBlur}
             value={form.descripcionLarga}
+            onBlur={handleBlur}
             required
           />
           {errors.descripcionLarga && (
@@ -395,6 +383,7 @@ const EditarTour = () => {
               alt=""
               className="rounded-full absolute right-2 bg-white top-8 border p-1 cursor-pointer"
               onClick={() => {
+                console.log(textItinerario)
                 if (textItinerario.trim() !== '') {
                   setItinerario((estado) => [...estado, textItinerario.trim()])
                   setTextItinerario('')
@@ -443,11 +432,11 @@ const EditarTour = () => {
             <InputText
               name="puntoPartida"
               onChange={handleInputChange}
+              value={form.puntoPartida}
               label="Punto de partida"
               placeholder="Punto de Partida"
               onBlur={handleBlur}
               required
-              value={form.puntoPartida}
             />
 
             {errors.puntoPartida && (
@@ -459,50 +448,40 @@ const EditarTour = () => {
         </div>
 
         <div className="flex flex-col lg:flex-row lg:space-x-4 items-start mb-5">
-          <div className="w-full">
-            <div className="flex gap-2">
-              <p className=" text-sm left-0"> Inluye</p>
-              {incluye.length === 0 && (
-                <p className="text-sm text-red-500 font-medium">
-                  {otherErrors.incluye}
-                </p>
-              )}
-            </div>
-
-            <select
-              className="cursor-pointer w-full text-sm text-black transition ease-in duration-150 px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
-              id="incluye"
-              name="incluye"
-              onChange={handleInputChange}
-              onBlur={handleBlur}
-              value={form.incluye}
-              required
-            >
-              {/* eslint-disable  */}
-              {loadingIncluye ? (
-                <option value={null}>Cargando...</option>
-              ) : (
-                dataIncluye?.map((item) => (
-                  <option
-                    key={item?.incluyeId}
-                    value={item?.incluyeId}
-                    onClick={() => {
-                      if (form.incluye.trim() !== '') {
-                        setIncluye((estado) => [...estado, form.incluye.trim()])
-                      }
-                    }}
-                  >
-                    {item?.incluyeId} - {item?.descripcionIncluye}
-                  </option>
-                ))
-              )}
-            </select>
-            {errors.categoria && (
-              <p className="text-sm text-red-500 font-medium mt-2 ml-1">
-                {errors.categoria}
+          <div className="w-full relative">
+            {incluye.length === 0 && (
+              <p className="text-sm text-red-500 font-medium mt-2 ml-1 absolute -top-2 left-12">
+                {otherErrors.incluye}
               </p>
             )}
-
+            <img
+              src={iconoAdd}
+              alt=""
+              className="rounded-full absolute right-2 bg-white top-8  p-1 cursor-pointer"
+              onClick={() => {
+                if (textIncluye.trim() !== '') {
+                  setIncluye((estado) => [...estado, textIncluye.trim()])
+                  setTextIncluye('')
+                }
+              }}
+            />
+            <InputText
+              name="incluye"
+              label="Incluye"
+              placeholder="Ingresar lo que incluye"
+              onChange={(e) => {
+                setTextIncluye(e.target.value)
+              }}
+              onKeyDown={({ code }) => {
+                if (code === 'Enter') {
+                  if (textIncluye.trim() !== '') {
+                    setIncluye((estado) => [...estado, textIncluye.trim()])
+                    setTextIncluye('')
+                  }
+                }
+              }}
+              value={textIncluye}
+            />
             <div className="flex flex-col gap-5 my-5">
               {eliminarDuplicado(incluye).map((item) => (
                 <div
@@ -567,48 +546,46 @@ const EditarTour = () => {
         </div>
 
         <div className="flex flex-col lg:flex-row lg:space-x-4 items-start mb-5">
-          <div className="w-full">
-            <div className="flex gap-2">
-              <p className=" text-sm left-0">Actividades</p>
-              {actividades.length === 0 && (
-                <p className="text-sm text-red-500 font-medium">
-                  {otherErrors.actividades}
-                </p>
-              )}
-            </div>
-
-            <select
-              className="cursor-pointer w-full text-sm text-black transition ease-in duration-150 px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
-              id="actividades"
+          <div className="w-full relative">
+            {actividades.length === 0 && (
+              <p className="text-sm text-red-500 font-medium mt-2 ml-1 absolute -top-2 left-20">
+                {otherErrors.actividades}
+              </p>
+            )}
+            <img
+              src={iconoAdd}
+              alt=""
+              className="rounded-full absolute right-2 bg-white top-8  p-1 cursor-pointer"
+              onClick={() => {
+                if (textAactividades.trim() !== '') {
+                  setActividades((estado) => [
+                    ...estado,
+                    textAactividades.trim()
+                  ])
+                  setTextActividaes('')
+                }
+              }}
+            />
+            <InputText
               name="actividades"
-              onChange={handleInputChange}
-              onBlur={handleBlur}
-              value={form.actividades}
-              required
-            >
-              {/* eslint-disable  */}
-              {loadingActividades ? (
-                <option value={null}>Cargando...</option>
-              ) : (
-                dataActividades?.map((item) => (
-                  <option
-                    key={item?.actividadId}
-                    value={item?.actividadId}
-                    onClick={() => {
-                      if (form.actividades.trim() !== '') {
-                        setActividades((estado) => [
-                          ...estado,
-                          form.actividades.trim()
-                        ])
-                      }
-                    }}
-                  >
-                    {item?.actividadId} - {item?.descripcion_actividad}
-                  </option>
-                ))
-              )}
-            </select>
-
+              label="Actividades"
+              placeholder="Ingrese las Actividades"
+              onChange={(e) => {
+                setTextActividaes(e.target.value)
+              }}
+              onKeyDown={({ code }) => {
+                if (code === 'Enter') {
+                  if (textAactividades.trim() !== '') {
+                    setActividades((estado) => [
+                      ...estado,
+                      textAactividades.trim()
+                    ])
+                    setTextActividaes('')
+                  }
+                }
+              }}
+              value={textAactividades}
+            />
             <div className="flex flex-col gap-5 my-5">
               {eliminarDuplicado(actividades).map((item) => (
                 <div
@@ -771,28 +748,7 @@ const EditarTour = () => {
             </div>
           </div>
         </div>
-        <div className="flex flex-col lg:flex-row lg:space-x-4 items-center gap-y-4 mb-5">
-          <InputText
-            name="regionTour"
-            label="Region"
-            placeholder="Ingresa la Region "
-            type="text"
-            onChange={handleInputChange}
-            required
-            value={form.regionTour}
-          />
-          <InputText
-            name="ciudadTour"
-            label="Ciudad"
-            placeholder="Ingrese la ciudad"
-            type="text"
-            onChange={handleInputChange}
-            required
-            value={form.ciudadTour}
-          />
-        </div>
-
-        <div className="flex flex-col lg:flex-row lg:space-x-4 items-center gap-y-4 mb-5">
+        <div className="flex flex-col lg:flex-row lg:space-x-4 items-center mb-5">
           <InputText
             name="video"
             label="Video de Presentacion"
@@ -802,38 +758,7 @@ const EditarTour = () => {
             required
             value={form.video}
           />
-          <InputText
-            name="precioBase"
-            label="Precio Base"
-            placeholder="Ingresa el Precio Base"
-            type="text"
-            onChange={handleInputChange}
-            required
-            value={form.precioBase}
-          />
         </div>
-
-        <div className="flex flex-col lg:flex-row lg:space-x-4 items-center gap-y-4 mb-5">
-          <InputText
-            name="numeroDias"
-            label="Número de Días"
-            placeholder="Ingresa el número de días del tour"
-            type="text"
-            onChange={handleInputChange}
-            required
-            value={form.numeroDias}
-          />
-          <InputText
-            name="numeroHoras"
-            label="Número de Horas"
-            placeholder="Ingresa el número de horas"
-            type="text"
-            onChange={handleInputChange}
-            required
-            value={form.numeroHoras}
-          />
-        </div>
-
         <p className="mb-3 text-gray-700 text-left text-sm">
           Agregar imagen principal y secundaria
         </p>
@@ -870,13 +795,9 @@ const EditarTour = () => {
         />
 
         <div className="my-10 text-center">
-          {loadingUpdateTour ? (
-            <Spinner />
-          ) : (
-            <Button variant="primary" size="lg" type="submit">
-              EDITAR TOUR
-            </Button>
-          )}
+          <Button variant="primary" size="lg" type="submit">
+            ACTUALIZAR
+          </Button>
         </div>
       </form>
     </div>
