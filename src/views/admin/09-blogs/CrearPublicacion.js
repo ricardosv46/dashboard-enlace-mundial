@@ -1,35 +1,127 @@
-import React, { useState } from 'react'
-import BtnDestacado from '../../../components/BtnDestacado/BtnDestacado'
 import Button from '../../../components/Buttons/Button'
 import ButtonBack from '../../../components/Buttons/ButtonBack'
 import InputText from '../../../components/Forms/InputText/InputText'
-import InputToggle from '../../../components/Forms/InputToggle/InputToggle'
 import TextArea from '../../../components/Forms/TextArea'
 import Heading from '../../../components/Heading'
-import { useModal } from '../../../hooks/useModal'
-import Modal from '../../../components/Modales/Modal'
-import Galerias from '../08-galerias'
-import EditorText from '../../../components/EditorText/EditorText'
-import { useCreateImageMutation } from '../../../generated/graphql'
-const CrearPublicacion = () => {
-  const [destacado, setDestacado] = useState(false)
-  // console.log(destacado)
-  const [isOpenModal, openModal, closeModal] = useModal(false)
-  const [createImge] = useCreateImageMutation({ onError: (err) => { console.log(err.graphQLErrors) } })
-  console.log(createImge)
-  const handleFile = async ({ target }) => {
-    const file = target.files[0]
-    console.log(file)
-    const foto = await createImge({
-      variables: {
-        input: {
-          descripcion: 'des'
-        },
-        imagen: file
-      }
-    })
-    console.log(foto)
+import SelectImage from '../../../components/SelectImage'
+import iconoAdd from '../../../assets/imgs/add.png'
+import { useEffect, useState } from 'react'
+import { useCategoriasBlogServices } from '../../../services/useCategoriasBlogServices'
+import SelectMultiImages from '../../../components/SelectMultiImages'
+import UseForm from '../../../hooks/UseForm'
+import { useBlogsServices } from '../../../services/useBlogsServices'
+import swal from 'sweetalert'
+import { useHistory } from 'react-router-dom'
+const initialForm = {
+  titulo: '',
+  descripcionCorta: '',
+  descripcionLarga: '',
+  categorias: ''
+}
+const validationsForm = (form) => {
+  // eslint-disable-next-line prefer-const
+  let errors = {}
+  if (!form.titulo.trim()) {
+    errors.titulo = 'El campo Título es requerido'
   }
+  if (!form.categorias.trim()) {
+    errors.categoria = 'Debe de Seleccionar una Categoria'
+  }
+  if (!form.descripcionLarga.trim()) {
+    errors.descripcionLarga =
+      'Debe de poner alguna descripción larga para la publicación'
+  }
+  if (!form.descripcionCorta.trim()) {
+    errors.descripcionCorta =
+      'Debe de poner alguna descripción corta para la publicación'
+  }
+
+  return errors
+}
+const otherErrors = {}
+const CrearPublicacion = () => {
+  const history = useHistory()
+  const [keywords, setKeywords] = useState([])
+  const [textKeywords, setTextKeywords] = useState('')
+  const [galery, setGalery] = useState([])
+  const [mainImage, setMainImage] = useState(null)
+  const [secondaryImage, setSecondaryImage] = useState(null)
+  const { form, handleInputChange, handleBlur, errors, resetForm } = UseForm(
+    initialForm,
+    validationsForm
+  )
+  const { createBlog, errorCreate } = useBlogsServices()
+
+  const { db: dataCategoriaBlogs } = useCategoriasBlogServices()
+
+  const eliminarItem = (value, data, setData) => {
+    if (data.length === 0) {
+      setData([])
+    } else {
+      const newData = data.filter((item) => item !== value)
+      setData(newData)
+    }
+  }
+  const eliminarDuplicado = (data) => {
+    const newData = new Set(data)
+    return [...newData]
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    if (
+      keywords.length > 0 &&
+      mainImage &&
+      secondaryImage &&
+      galery.length > 0
+    ) {
+      createBlog({
+        titulo: form.titulo,
+        slugCategoria: form.categorias,
+        descripcionLarga: form.descripcionLarga,
+        descripcionCorta: form.descripcionCorta,
+        estado: '1',
+        destacado: '1',
+        keywords: eliminarDuplicado(keywords),
+
+        idImgPrincipal: mainImage.id,
+        idImgSecundaria: secondaryImage.id,
+        galeria: eliminarDuplicado(galery)
+      })
+      console.log(errorCreate)
+      if (errorCreate) {
+        swal({
+          title: 'ERROR',
+          text: 'OACURRIO UN ERROR EN EL SERVIDOR',
+          icon: 'error',
+          button: 'Aceptar',
+          timer: 2000
+        })
+      } else {
+        resetForm()
+        setKeywords([])
+        setMainImage(null)
+        setSecondaryImage(null)
+        setGalery([])
+        history.push('/blogs')
+      }
+    } else {
+      swal({
+        title: 'DATOS INCOMPLETOS',
+        text: 'Complete todos los datos requeridos',
+        icon: 'warning',
+        button: 'Aceptar',
+        timer: 2000
+      })
+    }
+  }
+
+  useEffect(() => {
+    if (keywords.length === 0) {
+      otherErrors.keywords = '( Ingrese al menos una keyword )'
+    }
+  }, [handleSubmit])
+
   return (
     <div className="shadow md:rounded bg-white p-5 py-10 md:p-10 animate__fadeIn animate__animated">
       <div className="flex justify-center pt-3 relative">
@@ -38,7 +130,7 @@ const CrearPublicacion = () => {
         <Heading>Crear Nueva Publicación</Heading>
       </div>
       <form
-        onSubmit={() => { }}
+        onSubmit={() => {}}
         className="w-full lg:shadow-md lg:px-4 px-0 mx-auto py-10"
       >
         <div className="flex flex-col lg:flex-row lg:space-x-4 mb-5">
@@ -46,7 +138,16 @@ const CrearPublicacion = () => {
             name="titulo"
             label="Titulo"
             placeholder="Ingrese un título para tu Publicación"
+            onChange={handleInputChange}
+            onBlur={handleBlur}
+            value={form.titulo}
+            required
           />
+          {errors.titulo && (
+            <p className="text-sm text-red-500 font-medium mt-2 ml-1">
+              {errors.titulo}
+            </p>
+          )}
           <div className="flex flex-col w-full mb-4 lg:mb-0">
             <label
               htmlFor="categorias"
@@ -59,93 +160,149 @@ const CrearPublicacion = () => {
               id="categorias"
               name="categorias"
               autoComplete="off"
+              onChange={handleInputChange}
+              onBlur={handleBlur}
+              value={form.categorias}
+              required
             >
               <option defaultValue className="cursor-pointer">
                 Selecciona
               </option>
-              <option>VACACIONES FAMILIARES</option>
-              <option>VIDA Y SALUD</option>
-            </select>
+              {dataCategoriaBlogs.map((categoria) => (
+                <option
+                  key={categoria.categoriaBlogId}
+                  value={categoria.slugCategoriaBlog}
+                >
+                  {categoria.tituloCategoriaBlog}
+                </option>
+              ))}
+            </select>{' '}
+            {errors.categoria && (
+              <p className="text-sm text-red-500 font-medium mt-2 ml-1">
+                {errors.categoria}
+              </p>
+            )}
           </div>
         </div>
 
-        <div className="flex justify-between sm:justify-around lg:justify-start  my-5">
-          <div className="flex  items-center lg:w-full">
-            <label
-              htmlFor="estado"
-              className="block text-gray-700 text-left text-sm"
-            >
-              Estado
-            </label>
-            <div className="ml-7">
-              <InputToggle />
-            </div>
-          </div>
-          <div className="flex  items-center lg:w-full ml-4">
-            <label
-              htmlFor="destacado"
-              className="block text-gray-700 text-left text-sm"
-            >
-              Destacado
-            </label>
-            <div onClick={() => setDestacado(!destacado)} className="ml-7">
-              <BtnDestacado disabled={false} />
-            </div>
-          </div>
+        <div className="flex flex-col  lg:space-x-4  mb-5">
+          <TextArea
+            label="Descripción Larga"
+            name="descripcionLarga"
+            rows="2"
+            onBlur={handleBlur}
+            onChange={handleInputChange}
+            value={form.descripcionLarga}
+          />
+          {errors.descripcionLarga && (
+            <p className="text-sm text-red-500 font-medium mt-2 ml-1">
+              {errors.descripcionLarga}
+            </p>
+          )}
         </div>
-        <div className="flex flex-col lg:flex-row lg:space-x-4 items-center my-10 border shadow-lg ">
-          <EditorText />
-        </div>
-
-        <div className="flex flex-col lg:flex-row lg:space-x-4 items-center mb-5 ">
+        <div className="flex flex-col lg:space-x-4 mb-5">
           <TextArea
             label="Descripción Corta"
-            name="DescripcionCorta"
+            name="descripcionCorta"
             rows="1"
+            onBlur={handleBlur}
+            onChange={handleInputChange}
+            value={form.descripcionCorta}
           />
+          {errors.descripcionCorta && (
+            <p className="text-sm text-red-500 font-medium mt-2 ml-1">
+              {errors.descripcionCorta}
+            </p>
+          )}
         </div>
         <div className="flex flex-col lg:flex-row lg:space-x-4 items-center mb-5">
-          <InputText
-            name="keywords"
-            label="Keywords"
-            placeholder="ingrese las plabras claves separadas con comas"
-            type="text"
-          />
-        </div>
-        <div className="flex flex-col gap-y-5 sm:flex-row lg:space-x-4 items-center mb-5 ">
-          <div className="sm:w-1/2 flex items-center justify-evenly w-full ">
-            <Button onClick={openModal}>Imágen Principal</Button>
-            <div className="border-dashed border-2 border-primary w-30 h-30 shadow-lg">
-              <img
-                src=""
-                alt="sube la imágen principal"
-                className="text-gray-500 text-md text-center "
-              />
+          <div className="w-full relative">
+            {keywords.length === 0 && (
+              <p className="text-sm text-red-500 font-medium mt-2 ml-1 absolute -top-2 left-15">
+                {otherErrors.keywords}
+              </p>
+            )}
+            <img
+              src={iconoAdd}
+              alt=""
+              className="rounded-full absolute right-2 bg-white top-8  p-1 cursor-pointer"
+              onClick={() => {
+                if (textKeywords.trim() !== '') {
+                  setKeywords((estado) => [...estado, textKeywords.trim()])
+                  setTextKeywords('')
+                }
+              }}
+            />
+            <InputText
+              name="keywords"
+              label="Keywords"
+              placeholder="Ingrese las Keywords"
+              onChange={(e) => {
+                setTextKeywords(e.target.value)
+              }}
+              onKeyDown={({ code }) => {
+                if (code === 'Enter') {
+                  if (textKeywords.trim() !== '') {
+                    setKeywords((estado) => [...estado, textKeywords.trim()])
+                    setTextKeywords('')
+                  }
+                }
+              }}
+              value={textKeywords}
+            />
+            <div className="flex flex-col gap-5 my-5">
+              {eliminarDuplicado(keywords).map((item) => (
+                <div
+                  key={item}
+                  className="flex  items-center  gap-x-3 px-2 cursor-pointer "
+                  onClick={() => eliminarItem(item, keywords, setKeywords)}
+                >
+                  <span className="text-sm text-red-600">X</span>
+                  <p className="text-sm  inline-block text-gra">{item}</p>
+                </div>
+              ))}
             </div>
           </div>
-          <div className="sm:w-1/2 flex items-center justify-evenly w-full">
-            <Button onClick={openModal}>Imágen Secundaria</Button>
-            <div className="border-dashed w-30 h-30 border-2 border-primary shadow-lg">
-              <img
-                src=""
-                alt="sube la imágen secundaria"
-                className="text-gray-500 text-md text-center "
-              />
-            </div>
+        </div>
+        <p className="mb-3 text-gray-700 text-left text-sm">
+          Agregar imagen principal y secundaria
+        </p>
+        <div className="grid grid-cols-auto gap-4 max-w-4xl mx-auto mb-5">
+          <div className="aspect-w-16 aspect-h-9">
+            {/* La propiedad value recibe un objecto con id, url y descripcion */}
+            {/* La propiedad onChange devuelve un objecto con id, url y descripcion */}
+            <SelectImage
+              label="Agregar imagen principal"
+              onChange={(img) => setMainImage(img)}
+              value={mainImage}
+            />
+          </div>
+          <div className="aspect-w-16 aspect-h-9">
+            <SelectImage
+              label="Agregar imagen secundaria"
+              onChange={(img) => setSecondaryImage(img)}
+              value={secondaryImage}
+            />
           </div>
         </div>
+        <p className="mb-3 text-gray-700 text-left text-sm">
+          Agregar imagen a la galeria
+        </p>
+        {/* La propiedad value recibe un Array de objetos con id, url y descripcion */}
+        {/* La propiedad onChange devuelve un Array de objetos con id, url y descripcion */}
+        <SelectMultiImages
+          onChange={(imgs) => {
+            setGalery([])
+            imgs.map((image) => setGalery([...galery, image.id]))
+            // console.log(imgs)
+          }}
+        />
         <div className="my-10 text-center">
-          <Button variant="primary" size="lg">
+          <Button variant="primary" size="lg" onClick={handleSubmit}>
             CREAR
           </Button>
         </div>
       </form>
-      <div>
-        <input type="file" onChange={handleFile} />
-      </div>
-      <Modal closeModal={closeModal} isOpen={isOpenModal}>
-        <Galerias opcion={true} />
-      </Modal>
     </div>
   )
 }
