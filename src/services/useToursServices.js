@@ -1,5 +1,6 @@
 import { useMutation, useQuery } from '@apollo/client'
 import { useDeleteTourMutation } from '../generated/graphql'
+import { CREATE_TOUR } from '../graphql/mutation/createTour'
 import { UPDATE_DESTACADO_TOUR } from '../graphql/mutation/updateDestacadoTour'
 import { UPDATE_ESTADO_TOUR } from '../graphql/mutation/updateEstadoTour'
 import { GET_ALL_TOURS } from '../graphql/query/getAllTours'
@@ -28,6 +29,15 @@ export const useToursServices = (
     }
   })
 
+  const [createTourMutation, { loading: loadingCrearTour }] = useMutation(
+    CREATE_TOUR,
+    {
+      onError: (err) => {
+        console.log('onError Create Tour', err?.graphQLErrors[0]?.debugMessage)
+      }
+    }
+  )
+
   const [updateEstadoMutation] = useMutation(UPDATE_ESTADO_TOUR, {
     onError: (err) => {
       console.log(
@@ -45,6 +55,46 @@ export const useToursServices = (
       )
     }
   })
+  const createTour = async (
+    inputs = {
+      tituloTour: '',
+      estadoTour: '',
+      precioBaseTour: '',
+      nroHoras: '',
+      nroDias: '',
+      destacadoTour: '',
+      keywordsTour: '',
+      descripcionCortaTour: '',
+      descripcionLargaTour: '',
+      itinerarioTour: '',
+      puntoPartidaTour: '',
+      noIncluyeTour: '',
+      notasTour: '',
+      politicasTour: '',
+      videoPresentacionTour: '',
+      imagenPrincipalTour: '',
+      imagenSecundariaTour: '',
+      galeriaTour: '',
+      IncluyeTour: '',
+      ActividadesTour: '',
+      DeparCodi: '',
+      ProvCodi: '',
+      slugCategoria: '',
+      regionTour: '',
+      ciudadTour: ''
+    }
+  ) => {
+    const resp = await createTourMutation({
+      variables: {
+        input: { ...inputs }
+      }
+    })
+    console.log(resp)
+    refetch()
+    if (resp?.data?.CreateTour) {
+      return 'exito'
+    }
+  }
 
   const updateEstadoTour = async (inputs = { tourId: '', estadoTour: '' }) => {
     const resp = await updateEstadoMutation({
@@ -90,8 +140,10 @@ export const useToursServices = (
   return {
     data,
     loadingGetData,
+    loadingCrearTour,
     deleteTour,
     updateEstadoTour,
-    updateDestacadoTour
+    updateDestacadoTour,
+    createTour
   }
 }

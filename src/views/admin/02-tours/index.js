@@ -1,17 +1,17 @@
-// import { useEffect } from 'react'
 import { useEffect, useState } from 'react'
 import toast, { Toaster } from 'react-hot-toast'
+import { useHistory } from 'react-router-dom'
 import swal from 'sweetalert'
-// import swal from 'sweetalert'
 import { IconDelete, IconEdit } from '../../../assets/icons/icons'
 import BtnDestacado from '../../../components/BtnDestacado/BtnDestacado'
 import BtnEstado from '../../../components/BtnEstado/BtnEstado'
+import Button from '../../../components/Buttons/Button'
 import Heading from '../../../components/Heading'
 import { useToursServices } from '../../../services/useToursServices'
 
 const Tours = () => {
+  const history = useHistory()
   const [nroPagina, setNroPagina] = useState(1)
-
   const {
     loadingGetData,
     data,
@@ -30,7 +30,7 @@ const Tours = () => {
     if (!loadingGetData) {
       setArregloSelect(
         new Array(
-          Math.round(parseFloat(data?.GetAllTour?.nroTotalItems / 10))
+          Math.ceil(parseFloat(data?.GetAllTour?.nroTotalItems / 10))
         ).fill(1)
       )
     }
@@ -47,6 +47,13 @@ const Tours = () => {
         <Heading size="xl" className="text-3xl text-gray-800">
           Tours
         </Heading>
+        <Button
+          size="md"
+          className="border"
+          onClick={() => history.push('/tours/crear-tour')}
+        >
+          + Agregar Tour
+        </Button>
       </div>
 
       {/* eslint-disable  */}
