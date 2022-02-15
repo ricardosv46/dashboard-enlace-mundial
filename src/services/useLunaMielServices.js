@@ -33,18 +33,16 @@ export const useLunaMielServices = (
       }
     })
 
-  const [
-    createLunaMielMutation,
-    { loading: loadingUpadate, error: errorCreate }
-  ] = useCreateLunaMielMutation({
-    onError: (err) => {
-      // validar errores
-      console.log(
-        'onError creacion Luna Miel',
-        err?.graphQLErrors[0]?.debugMessage
-      )
-    }
-  })
+  const [createLunaMielMutation, { loading: loadingUpadate }] =
+    useCreateLunaMielMutation({
+      onError: (err) => {
+        // validar errores
+        console.log(
+          'onError creacion Luna Miel',
+          err?.graphQLErrors[0]?.debugMessage
+        )
+      }
+    })
   // llamando al metodo updateTour
 
   const deleteLunaMiel = async ({ id }) => {
@@ -57,7 +55,9 @@ export const useLunaMielServices = (
         }
       }).catch((error) => console.log('error', error))
       refetch()
-      console.log(res)
+      if (res?.data?.DeleteLunaMiel) {
+        return 'exito'
+      }
     }
   }
 
@@ -120,17 +120,10 @@ export const useLunaMielServices = (
           }
         }
       }).catch((error) => console.error(' error', error))
-      console.log(res)
-      refetch()
-      if (!errorCreate) {
-        swal({
-          title: 'CREAR',
-          text: 'Se creo correctamente la Luna Miel',
-          icon: 'success',
-          button: 'Aceptar',
-          timer: 2000
-        })
+      if (res?.data?.CreateLunaMiel) {
+        return 'exito'
       }
+      refetch()
     }
   }
 
@@ -209,7 +202,9 @@ export const useLunaMielServices = (
         }
       }).catch((error) => console.error('que error', error))
       refetch()
-      console.log(res)
+      if (res?.data?.UpdateLunaMielEstado) {
+        return 'exito'
+      }
     }
   }
 
@@ -225,7 +220,7 @@ export const useLunaMielServices = (
       }).catch((error) => console.error('que error', error))
 
       refetch()
-      if (res?.data?.UpdateLunaMiel) {
+      if (res?.data?.UpdateLunaMielDestacado) {
         return 'exito'
       }
     }

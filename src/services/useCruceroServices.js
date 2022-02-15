@@ -1,21 +1,28 @@
+import { useQuery } from '@apollo/client'
 import swal from 'sweetalert'
 import {
   useCreateCruceroMutation,
-  useGetAllCruceroQuery,
   useUpdateCruceroMutation,
   useDeleteCruceroMutation
 } from '../generated/graphql'
+import { GET_ALL_CRUCERO } from '../graphql/query/getAllCrucero'
 
-export const useCruceroServices = () => {
-  const { loading, data, refetch } = useGetAllCruceroQuery({
+export const useCruceroServices = (
+  input = { page: 0, numberPaginate: 10, estadoCrucero: '' }
+) => {
+  const { loading, data, refetch } = useQuery(GET_ALL_CRUCERO, {
     fetchPolicy: 'network-only',
-    variables: {
-      numberPaginate: 10,
-      page: 1,
-      estadoCrucero: ''
-    }
+    onError: (err) => {
+      console.log(
+        'onError getAllData Luna',
+        err?.graphQLErrors[0]?.debugMessage
+      )
+    },
+    variables: { ...input }
   })
+
   const db = data ? data?.GetAllCrucero?.data : []
+  const dbTotalItems = data ? data?.GetAllCrucero : []
 
   const [
     createCruceroMutation,
@@ -46,36 +53,23 @@ export const useCruceroServices = () => {
         // validar errores
         // eslint-disable-next-line eqeqeq
         console.log(err?.graphQLErrors)
-        swal('Error', 'Hubo un error en el servidor', 'error')
       }
     })
 
-  const deleteCrucero = (crucero) => {
-    swal({
-      title: `Desea eliminar el crucero ${crucero?.tituloCrucero}?`,
-      text: 'Una vez eliminada, no podrás recuperar el Crucero!',
-      icon: 'warning',
-      buttons: true,
-      dangerMode: true
-    }).then(async (rpta) => {
-      if (rpta) {
-        await deleteCruceroMutation({
-          variables: {
-            input: {
-              cruceroId: crucero.cruceroId
-            }
+  const deleteCrucero = async ({ id }) => {
+    if (loadingDelete === false) {
+      const res = await deleteCruceroMutation({
+        variables: {
+          input: {
+            cruceroId: id
           }
-        }).catch((error) => console.log('error', error))
-        refetch()
-        swal({
-          title: 'Eliminado',
-          text: 'Se elimino correctamente el Crucero',
-          icon: 'success',
-          button: 'Aceptar',
-          timer: 2000
-        })
+        }
+      }).catch((error) => console.log('error', error))
+      refetch()
+      if (res?.data?.DeleteCrucero) {
+        return 'exito'
       }
-    })
+    }
   }
 
   const createCrucero = async ({
@@ -129,25 +123,18 @@ export const useCruceroServices = () => {
           }
         }
       }).catch((error) => console.error('que error', error))
-      console.log(res)
       refetch()
-      swal({
-        title: 'CREAR',
-        text: 'Se creo correctamente el Crucero',
-        icon: 'success',
-        button: 'Aceptar',
-        timer: 2000
-      })
+      if (res?.data?.CreateCrucero) {
+        return 'exito'
+      }
     }
   }
-  // funcion que me permite actualizar un tour
+  // funcion que me permite actualizar un crucero
   const updateCrucero = async ({
     id,
     titulo,
     region,
     ciudad,
-    estado,
-    destacado,
     descripcionCorta,
     descripcionLarga,
     itinerario,
@@ -171,8 +158,6 @@ export const useCruceroServices = () => {
           input: {
             cruceroId: id,
             tituloCrucero: titulo,
-            estadoCrucero: estado,
-            destacadoCrucero: destacado,
             keywordsCrucero: keywords.join(','),
             regionCrucero: region,
             ciudadCrucero: ciudad,
@@ -196,10 +181,11 @@ export const useCruceroServices = () => {
       }).catch((error) => console.error('que error', error))
       refetch()
       console.log(res)
+      console.log(errorUpdate)
       if (!errorUpdate) {
         swal({
           title: 'ACTUALIZAR',
-          text: 'Se actualizo correctamente el Tour',
+          text: 'Se actualizo correctamente el Crucero',
           icon: 'success',
           button: 'Aceptar',
           timer: 2000
@@ -207,19 +193,21 @@ export const useCruceroServices = () => {
       }
     }
   }
+
   const updateCruceroEstado = async ({ id, estado }) => {
     if (loadingUpdate === false) {
       const res = await updateCruceroMutation({
         variables: {
           input: {
             cruceroId: id,
-
             estadoCrucero: estado
           }
         }
       }).catch((error) => console.error('que error', error))
       refetch()
-      console.log(res)
+      if (res?.data?.UpdateCruceroEstado) {
+        return 'exito'
+      }
     }
   }
   const updateCruceroDestacado = async ({ id, destacado }) => {
@@ -233,7 +221,9 @@ export const useCruceroServices = () => {
         }
       }).catch((error) => console.error('que error', error))
       refetch()
-      console.log(res)
+      if (res?.data?.UpdateCruceroDestacado) {
+        return 'exito'
+      }
     }
   }
 
@@ -249,6 +239,7 @@ export const useCruceroServices = () => {
     errorCreate,
     loadingUpdate,
     loadingCreate,
-    loadingDelete
+    loadingDelete,
+    dbTotalItems
   }
 }

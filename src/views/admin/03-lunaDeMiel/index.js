@@ -149,7 +149,7 @@ const LunaDeMiel = () => {
                                   ? 'Desactivado'
                                   : 'Activado'
                             }).then((res) => {
-                              toast.success('Se modifico el estado')
+                              toast.success('Se modifico el destacado')
                             })
                           }}
                         >
@@ -201,7 +201,8 @@ const LunaDeMiel = () => {
                                     luna?.tituloLuna,
                                   text: 'No podras revertir esto!',
                                   icon: 'warning',
-                                  buttons: true
+                                  buttons: true,
+                                  dangerMode: true
                                 }).then((res) => {
                                   if (res) {
                                     deleteLunaMiel({
@@ -209,7 +210,7 @@ const LunaDeMiel = () => {
                                     })
                                     swal(
                                       'Eliminado',
-                                      'El Tour fue eliminado',
+                                      'La luna de miel fue eliminada',
                                       'success'
                                     )
                                   }
