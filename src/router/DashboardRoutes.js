@@ -142,7 +142,7 @@ const DashboardRoutes = () => {
           />
           <Route
             exact
-            path="/blogs/categorias/editar-categoria"
+            path="/blogs/categorias/editar-categoria/:id"
             component={EditarCategoriaBlog}
           />
         </Switch>

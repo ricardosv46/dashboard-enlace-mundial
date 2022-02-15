@@ -34,7 +34,7 @@ const ListarCategoriasBlog = () => {
     loading,
     deleteCategoriaBlog
   } = useCategoriasBlogServices()
-  console.log(dataBlogs)
+
   const columnas = [
     {
       name: 'ID',
@@ -69,7 +69,16 @@ const ListarCategoriasBlog = () => {
       name: 'Acciones',
       selector: (row) => (
         <>
-          <button className="cursor-pointer">
+          <button
+            className="cursor-pointer"
+            onClick={() =>
+              history.push(
+                `/blogs/categorias/editar-categoria/${row?.categoriaBlogId}`,
+
+                row
+              )
+            }
+          >
             <IconEdit />
           </button>
           <button
