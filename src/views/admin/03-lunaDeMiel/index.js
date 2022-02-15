@@ -1,108 +1,49 @@
 import { useEffect, useState } from 'react'
+import toast, { Toaster } from 'react-hot-toast'
 import { useHistory } from 'react-router'
-import BtnAccionesCalendary from '../../../components/btnAcciones/BtnAccionesCalendary'
+import { IconDelete, IconEdit } from '../../../assets/icons/icons'
 import BtnDestacado from '../../../components/BtnDestacado/BtnDestacado'
 import BtnEstado from '../../../components/BtnEstado/BtnEstado'
 import Button from '../../../components/Buttons/Button'
 import Heading from '../../../components/Heading'
 import Spinner from '../../../components/Spinner/Spinner'
-import TableGeneral from '../../../components/Tables/TableGeneral'
 import { useLunaMielServices } from '../../../services/useLunaMielServices'
 
 const LunaDeMiel = () => {
-  const dataHead = [
-    ['Id', 'min-w-4', 'left'],
-    ['Foto', 'min-w-30', 'left'],
-    ['Titulo', 'min-w-50', 'left'],
-    ['Categoría', 'min-w-50', 'left'],
-    ['Estado', '', 'center'],
-    ['Destacado', '', 'center'],
-    ['Acciones', '', 'left']
-  ]
-
   const history = useHistory()
+  const [nroPagina, setNroPagina] = useState(1)
+  const [arregloSelect, setArregloSelect] = useState([])
   const {
-    db,
+    db: dbLuna,
+    loading: loadingGetData,
+    dbTotalItems,
     deleteLunaMiel,
     updateLunaMielEstado,
-    loading,
-    updateLunaMielDestacado,
-    loadingUpdate
-  } = useLunaMielServices()
-  console.log('valor update', loadingUpdate)
-  // console.log('valor de data luna miel', db)
-  const [dataBody, setDataBody] = useState([])
+    updateLunaMielDestacado
+  } = useLunaMielServices({
+    page: nroPagina,
+    estadoLuna: '',
+    numberPaginate: 10
+  })
 
-  const armarFilasLunaMiel = (data, setDataBody, handleDeleteTour) => {
-    const filasLunaMiel = data.map((lunaMiel) => {
-      return {
-        id: lunaMiel?.lunaMielId,
-        imagen: (
-          <img src={lunaMiel?.imagenPrincipalLuna?.url} className="w-26 h-22" />
-        ),
-        nombre: lunaMiel?.tituloLuna,
-        categoria: lunaMiel?.Categoria?.tituloCategoria,
-        estado: (
-          <div
-            div
-            className="flex justify-center cursor-pointer transition-all duration-300 transform hover:-translate-y-1 p-1"
-            onClick={() => {
-              updateLunaMielEstado({
-                id: lunaMiel?.lunaMielId,
-                estado:
-                  lunaMiel?.estadoLuna === 'Activado'
-                    ? 'Desactivado'
-                    : 'Activado'
-              })
-            }}
-          >
-            <BtnEstado estado={lunaMiel?.estadoLuna === 'Activado' ? 1 : 0} />
-          </div>
-        ),
-        descatar: (
-          <div
-            div
-            className="flex justify-center cursor-pointer transition-all duration-300 transform hover:-translate-y-1 p-1"
-            onClick={() => {
-              updateLunaMielDestacado({
-                id: lunaMiel?.lunaMielId,
-                destacado:
-                  lunaMiel?.destacadoLuna === 'Activado'
-                    ? 'Desactivado'
-                    : 'Activado'
-              })
-            }}
-          >
-            <BtnDestacado
-              estado={lunaMiel?.destacadoLuna === 'Activado' && true}
-            />
-          </div>
-        ),
-        acciones: (
-          <BtnAccionesCalendary
-            handleEdit={() =>
-              history.push(
-                `/luna-de-miel/editar-luna-de-miel/${lunaMiel?.slugLuna}`,
-                lunaMiel
-              )
-            }
-            handleDelete={() => handleDeleteTour(lunaMiel)}
-          />
-        )
-      }
-    })
-    if (filasLunaMiel.length > 0) {
-      setDataBody(filasLunaMiel)
-    }
-  }
   useEffect(() => {
-    if (db.length > 0) {
-      armarFilasLunaMiel(db, setDataBody, deleteLunaMiel)
+    if (!loadingGetData) {
+      setArregloSelect(
+        new Array(Math.ceil(parseFloat(dbTotalItems?.nroTotalItems / 10))).fill(
+          1
+        )
+      )
     }
-  }, [db])
+  }, [loadingGetData])
+
   return (
     <div className="shadow md:rounded bg-white p-5 py-10 md:p-10 animate__fadeIn animate__animated">
       <div className="flex justify-between mb-5">
+        <Toaster
+          position="top-right"
+          reverseOrder={true}
+          containerClassName="top-18 md:top-5"
+        />
         <Heading>Lunas de Miel</Heading>
         <Button
           onClick={() => history.push('/luna-de-miel/crear-luna-de-miel')}
@@ -112,10 +53,179 @@ const LunaDeMiel = () => {
         </Button>
       </div>
       {/* eslint-disable  */}
-      {loading ? (
+      {loadingGetData ? (
         <Spinner />
       ) : (
-        <TableGeneral dataBody={dataBody} dataHead={dataHead} />
+        <>
+          <div className="flex-col gap-y-10 gap-x-14  flex items-center  sm:flex-row  mb-5">
+            <p className="text-gray-800 text-xl">
+              {' '}
+              Total de Datos{' '}
+              <span className="font-bold">
+                {dbTotalItems?.nroTotalItems}
+              </span>{' '}
+            </p>
+            <div className="text-gray-700">
+              <label htmlFor="paginas" className="mr-2">
+                Numero de Páginas
+              </label>
+              <select
+                id="paginas"
+                className="p-1 w-20 text-center text-gray-600 "
+                onChange={(e) => setNroPagina(e.target.value)}
+                value={nroPagina}
+              >
+                {arregloSelect?.map((elemento, index) => (
+                  <option
+                    className="font-bold"
+                    key={elemento + index}
+                    value={elemento + index}
+                  >
+                    {elemento + index}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          <div className="w-full mb-8 overflow-hidden rounded-md md:shadow-xl max-h-screen overflow-y-auto  ">
+            <div className="w-full overflow-x-auto min-h-screen">
+              <table className="w-full border-gray-100  text-left border-2 ">
+                <thead className="text-gray-700">
+                  <tr className="text-lg font-semibold  tracking-wide bg-gray-100 text-center">
+                    <th className="px-4 py-6 text-gray-600 min-w-10 text-left">
+                      #
+                    </th>
+                    <th className="px-4 py-6 text-gray-600 min-w-10 text-left">
+                      Imágen
+                    </th>
+                    <th className="px-4 py-6 text-gray-600 min-w-10 text-left">
+                      Título
+                    </th>
+                    <th className="px-4 py-6 text-gray-600 min-w-10 text-left">
+                      Categoría
+                    </th>
+                    <th className="px-4 py-6 text-gray-600 min-w-10 text-left">
+                      Destacado
+                    </th>
+                    <th className="px-4 py-6 text-gray-600 min-w-10 text-left">
+                      Estado
+                    </th>
+                    <th className="px-4 py-6 text-gray-600 min-w-10 text-left">
+                      Acciones
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="text-base bg-white border-gray-100 text-gray-700 ">
+                  {dbLuna.map((luna, index) => (
+                    <tr
+                      key={luna?.lunaMielId}
+                      className="font-medium hover:shadow-md  transform transition-all duration-300  hover:-translate-y-1"
+                    >
+                      <td className='className="text-start  uppercase text-gray-600 py-6 px-4 min-h-20 "'>
+                        {(nroPagina - 1) * 10 + index + 1}
+                      </td>
+                      <td className="text-start  uppercase text-gray-600 py-6 px-4 min-h-20 ">
+                        <img
+                          src={luna?.imagenPrincipalLuna?.url}
+                          alt=""
+                          className="max-w-20 max-h-24"
+                        />
+                      </td>
+
+                      <td className="text-start  uppercase text-gray-600 py-6 px-4 min-h-20 ">
+                        {luna?.tituloLuna}
+                      </td>
+                      <td className="text-start  uppercase text-gray-600 py-6 px-4 min-h-20 ">
+                        {luna?.Categoria.tituloCategoria}
+                      </td>
+                      <td className="text-start  uppercase text-gray-600 py-6 px-4 min-h-20 ">
+                        <button
+                          onClick={() => {
+                            updateLunaMielDestacado({
+                              id: luna?.lunaMielId,
+                              destacado:
+                                luna?.destacadoLuna === 'Activado'
+                                  ? 'Desactivado'
+                                  : 'Activado'
+                            }).then((res) => {
+                              toast.success('Se modifico el estado')
+                            })
+                          }}
+                        >
+                          <BtnDestacado
+                            estado={luna?.destacadoLuna === 'Activado' && true}
+                          />
+                        </button>
+                      </td>
+                      <td className="text-left  uppercase text-gray-600 py-6 px-4 min-h-20">
+                        <button
+                          onClick={() => {
+                            updateLunaMielEstado({
+                              id: luna?.lunaMielId,
+                              estado:
+                                luna?.estadoLuna === 'Activado'
+                                  ? 'Desactivado'
+                                  : 'Activado'
+                            }).then((res) => {
+                              toast.success('Se modifico el estado')
+                            })
+                          }}
+                        >
+                          <BtnEstado
+                            estado={
+                              luna?.estadoLuna === 'Desactivado' ? false : true
+                            }
+                          />
+                        </button>
+                      </td>
+                      <td className="text-start  uppercase text-gray-600 py-6 px-4 min-h-20 ">
+                        <div className="flex gap-x-5 lg:gap-x-10 items-center justify-center">
+                          <button
+                            onClick={() =>
+                              history.push(
+                                `/luna-de-miel/editar-luna-de-miel/${luna?.lunaMielId}`,
+                                luna
+                              )
+                            }
+                          >
+                            <IconEdit />
+                          </button>
+                          <button>
+                            <IconDelete
+                              onClick={() => {
+                                swal({
+                                  title:
+                                    'Eliminaras la luna de miel' +
+                                    ' ' +
+                                    luna?.tituloLuna,
+                                  text: 'No podras revertir esto!',
+                                  icon: 'warning',
+                                  buttons: true
+                                }).then((res) => {
+                                  if (res) {
+                                    deleteLunaMiel({
+                                      id: luna?.lunaMielId
+                                    })
+                                    swal(
+                                      'Eliminado',
+                                      'El Tour fue eliminado',
+                                      'success'
+                                    )
+                                  }
+                                })
+                              }}
+                            />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </>
       )}
     </div>
   )

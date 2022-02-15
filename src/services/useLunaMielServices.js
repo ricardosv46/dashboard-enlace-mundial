@@ -1,22 +1,28 @@
+import { useQuery } from '@apollo/client'
 import swal from 'sweetalert'
 import {
   useCreateLunaMielMutation,
   useDeleteLunaMielMutation,
-  useGetAllLunaMielQuery,
   useUpdateLunaMielMutation
 } from '../generated/graphql'
+import { GET_ALL_LUNA_DE_MIEL } from '../graphql/query/getAllLunaMiel'
 
-export const useLunaMielServices = () => {
-  const { loading, data, refetch } = useGetAllLunaMielQuery({
+export const useLunaMielServices = (
+  input = { page: 0, numberPaginate: 10, estadoLuna: '' }
+) => {
+  const { loading, data, refetch } = useQuery(GET_ALL_LUNA_DE_MIEL, {
     fetchPolicy: 'network-only',
-    variables: {
-      numberPaginate: 12,
-      page: 1,
-      estadoLuna: ''
-    }
+    onError: (err) => {
+      console.log(
+        'onError getAllData Luna',
+        err?.graphQLErrors[0]?.debugMessage
+      )
+    },
+    variables: { ...input }
   })
 
   const db = data ? data?.GetAllLunaMiel?.data : []
+  const dbTotalItems = data ? data?.GetAllLunaMiel : []
 
   const [deleteLunaMielMutation, { loading: loadingDelete }] =
     useDeleteLunaMielMutation({
@@ -24,7 +30,6 @@ export const useLunaMielServices = () => {
         // validar errores
         // eslint-disable-next-line eqeqeq
         console.log(err?.graphQLErrors)
-        swal('Error', 'Hubo un error en el servidor', 'error')
       }
     })
 
@@ -42,33 +47,20 @@ export const useLunaMielServices = () => {
   })
   // llamando al metodo updateTour
 
-  const deleteLunaMiel = (lunaMiel) => {
-    swal({
-      title: `Desea eliminar la Luna de Miel ${lunaMiel?.tituloLuna}?`,
-      text: 'Una vez eliminada, no podrás recuperar el Luna de Miel!',
-      icon: 'warning',
-      buttons: true,
-      dangerMode: true
-    }).then(async (rpta) => {
-      if (rpta) {
-        await deleteLunaMielMutation({
-          variables: {
-            input: {
-              lunaMielId: lunaMiel.lunaMielId
-            }
+  const deleteLunaMiel = async ({ id }) => {
+    if (loadingDelete === false) {
+      const res = await deleteLunaMielMutation({
+        variables: {
+          input: {
+            lunaMielId: id
           }
-        }).catch((error) => console.log('error', error))
-        refetch()
-        swal({
-          title: 'Eliminado',
-          text: 'Se elimino correctamente la Luna de Miel',
-          icon: 'success',
-          button: 'Aceptar',
-          timer: 5000
-        })
-      }
-    })
+        }
+      }).catch((error) => console.log('error', error))
+      refetch()
+      console.log(res)
+    }
   }
+
   const [
     updateLunaMielMutation,
     { loading: loadingUpdate, error: errorUpdate }
@@ -231,8 +223,11 @@ export const useLunaMielServices = () => {
           }
         }
       }).catch((error) => console.error('que error', error))
+
       refetch()
-      console.log(res)
+      if (res?.data?.UpdateLunaMiel) {
+        return 'exito'
+      }
     }
   }
   return {
@@ -245,6 +240,7 @@ export const useLunaMielServices = () => {
     updateLunaMielDestacado,
     loadingUpdate,
     errorUpdate,
-    loadingDelete
+    loadingDelete,
+    dbTotalItems
   }
 }
