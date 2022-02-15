@@ -1,9 +1,14 @@
-query GetAllLunaMiel($estadoLuna:String,$page:Int,$numberPaginate:Int){
-  GetAllLunaMiel(estadoLuna:$estadoLuna,page:$page,numberPaginate:$numberPaginate){
+query GetAllLunaMiel($estadoLuna: String, $page: Int, $numberPaginate: Int) {
+  GetAllLunaMiel(
+    estadoLuna: $estadoLuna
+    page: $page
+    numberPaginate: $numberPaginate
+  ) {
     nroTotalItems
-    data{
+    data {
       lunaMielId
       tituloLuna
+      precioBaseLuna
       slugLuna
       estadoLuna
       destacadoLuna

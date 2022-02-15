@@ -18,6 +18,7 @@ const initialForm = {
   categorias: '',
   region: '',
   ciudad: '',
+  precioBase: '',
   descripcionCorta: '',
   descripcionLarga: '',
   puntoPartida: '',
@@ -118,6 +119,7 @@ const CrearLunaDeMiel = () => {
         notas: eliminarDuplicado(notas),
         politicas: eliminarDuplicado(politicas),
         video: form.video,
+        precioBaseLuna: form.precioBase,
         idImgPrincipal: mainImage.id,
         idImgSecundaria: secondaryImage.id,
         galeria: eliminarDuplicado(galery)
@@ -229,11 +231,12 @@ const CrearLunaDeMiel = () => {
               <option className="cursor-pointer" value="" defaultValue>
                 Selecciona una Categoria
               </option>
-              {dataCategoria.map((item) => (
-                <option key={item.categoriaId} value={item.slugCategoria}>
-                  {item.tituloCategoria}
-                </option>
-              ))}
+              {dataCategoria &&
+                dataCategoria.map((item) => (
+                  <option key={item.categoriaId} value={item.slugCategoria}>
+                    {item.tituloCategoria}
+                  </option>
+                ))}
             </select>
             {errors.categoria && (
               <p className="text-sm text-red-500 font-medium mt-2 ml-1">
@@ -705,6 +708,17 @@ const CrearLunaDeMiel = () => {
               ))}
             </div>
           </div>
+        </div>
+        <div className="flex flex-col lg:flex-row lg:space-x-4 items-center mb-5">
+          <InputText
+            name="precioBase"
+            label="Precio Base"
+            placeholder="Ingresa un precio base"
+            type="text"
+            onChange={handleInputChange}
+            required
+            value={form.precioBase}
+          />
         </div>
         <div className="flex flex-col lg:flex-row lg:space-x-4 items-center mb-5">
           <InputText

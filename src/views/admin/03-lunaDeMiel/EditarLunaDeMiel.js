@@ -18,6 +18,7 @@ const initialForm = {
   categorias: '',
   region: '',
   ciudad: '',
+  precioBase: '',
   descripcionCorta: '',
   descripcionLarga: '',
   puntoPartida: '',
@@ -125,6 +126,7 @@ const EditarLunaDeMiel = () => {
         notas: eliminarDuplicado(notas),
         politicas: eliminarDuplicado(politicas),
         video: form.video,
+        precioBaseLuna: form.precioBase,
         idImgPrincipal: mainImage.id,
         idImgSecundaria: secondaryImage.id,
         keywords: eliminarDuplicado(keywords),
@@ -163,6 +165,7 @@ const EditarLunaDeMiel = () => {
     form.descripcionCorta = objetoLuna?.descripcionCortaLuna
     form.puntoPartida = objetoLuna?.puntoPartidaLuna
     form.video = objetoLuna?.videoPresentacionLuna
+    form.precioBase = objetoLuna?.precioBaseLuna
     setDestacado(objetoLuna?.destacadoLuna === 'Activo' && true)
     setEstado(objetoLuna?.estadoLuna === 'Activo' && true)
     setItinerario(objetoLuna?.itinerarioLuna.split(','))
@@ -242,18 +245,19 @@ const EditarLunaDeMiel = () => {
               value={form.categorias}
               required
             >
-              <option className="cursor-pointer" value="">
+              <option className="cursor-pointer">
                 Selecciona una Categoria
               </option>
-              {dataCategoria.map((item) => (
-                <option
-                  key={item.categoriaId}
-                  value={item.slugCategoria}
-                  selected={objetoLuna.slugCategoria === item.slugCategoria}
-                >
-                  {item.tituloCategoria}
-                </option>
-              ))}
+              {dataCategoria &&
+                dataCategoria.map((item) => (
+                  <option
+                    key={item.categoriaId}
+                    value={item.slugCategoria}
+                    selected={objetoLuna.slugCategoria === item.slugCategoria}
+                  >
+                    {item.tituloCategoria}
+                  </option>
+                ))}
             </select>
             {errors.categoria && (
               <p className="text-sm text-red-500 font-medium mt-2 ml-1">
@@ -732,6 +736,17 @@ const EditarLunaDeMiel = () => {
               ))}
             </div>
           </div>
+        </div>
+        <div className="flex flex-col lg:flex-row lg:space-x-4 items-center mb-5">
+          <InputText
+            name="precioBase"
+            label="Precio Base"
+            placeholder="Ingresa un precio base"
+            type="text"
+            onChange={handleInputChange}
+            required
+            value={form.precioBase}
+          />
         </div>
         <div className="flex flex-col lg:flex-row lg:space-x-4 items-center mb-5">
           <InputText

@@ -10,20 +10,23 @@ export const useLunaMielServices = () => {
   const { loading, data, refetch } = useGetAllLunaMielQuery({
     fetchPolicy: 'network-only',
     variables: {
-      numberPaginate: 10,
+      numberPaginate: 12,
       page: 1,
       estadoLuna: ''
     }
   })
+
   const db = data ? data?.GetAllLunaMiel?.data : []
-  const [deleteLunaMielMutation, { loading: loadingDelete }] = useDeleteLunaMielMutation({
-    onError: (err) => {
-      // validar errores
-      // eslint-disable-next-line eqeqeq
-      console.log(err?.graphQLErrors)
-      swal('Error', 'Hubo un error en el servidor', 'error')
-    }
-  })
+
+  const [deleteLunaMielMutation, { loading: loadingDelete }] =
+    useDeleteLunaMielMutation({
+      onError: (err) => {
+        // validar errores
+        // eslint-disable-next-line eqeqeq
+        console.log(err?.graphQLErrors)
+        swal('Error', 'Hubo un error en el servidor', 'error')
+      }
+    })
 
   const [
     createLunaMielMutation,
@@ -96,6 +99,7 @@ export const useLunaMielServices = () => {
     idImgSecundaria,
     slugCategoria,
     galeria,
+    precioBaseLuna,
     keywords
   }) => {
     if (loadingUpadate === false) {
@@ -119,7 +123,8 @@ export const useLunaMielServices = () => {
             imagenPrincipalLuna: idImgPrincipal,
             imagenSecundariaLuna: idImgSecundaria,
             galeriaLuna: galeria,
-            slugCategoria: slugCategoria
+            slugCategoria: slugCategoria,
+            precioBaseLuna: precioBaseLuna
           }
         }
       }).catch((error) => console.error(' error', error))
@@ -156,6 +161,7 @@ export const useLunaMielServices = () => {
     idImgSecundaria,
     slugCategoria,
     galeria,
+    precioBaseLuna,
     keywords
   }) => {
     if (loadingUpdate === false) {
@@ -180,7 +186,8 @@ export const useLunaMielServices = () => {
             imagenPrincipalLuna: idImgPrincipal,
             imagenSecundariaLuna: idImgSecundaria,
             galeriaLuna: galeria,
-            slugCategoria: slugCategoria
+            slugCategoria: slugCategoria,
+            precioBaseLuna: precioBaseLuna
           }
         }
       }).catch((error) => console.error('que error', error))
@@ -199,10 +206,7 @@ export const useLunaMielServices = () => {
     }
   }
 
-  const updateLunaMielEstado = async ({
-    id,
-    estado
-  }) => {
+  const updateLunaMielEstado = async ({ id, estado }) => {
     if (loadingUpdate === false) {
       const res = await updateLunaMielMutation({
         variables: {
@@ -217,10 +221,7 @@ export const useLunaMielServices = () => {
     }
   }
 
-  const updateLunaMielDestacado = async ({
-    id,
-    destacado
-  }) => {
+  const updateLunaMielDestacado = async ({ id, destacado }) => {
     if (loadingUpdate === false) {
       const res = await updateLunaMielMutation({
         variables: {

@@ -1,11 +1,11 @@
-import { useMutation } from '@apollo/client'
 import swal from 'sweetalert'
 import {
   useCreateCruceroMutation,
   useGetAllCruceroQuery,
-  useUpdateCruceroMutation
+  useUpdateCruceroMutation,
+  useDeleteCruceroMutation
 } from '../generated/graphql'
-import { CREATE_CRUCERO } from '../graphql/mutation/createcrucero'
+
 export const useCruceroServices = () => {
   const { loading, data, refetch } = useGetAllCruceroQuery({
     fetchPolicy: 'network-only',
@@ -16,13 +16,6 @@ export const useCruceroServices = () => {
     }
   })
   const db = data ? data?.GetAllCrucero?.data : []
-  const [deleteCruceroMutation] = useMutation(CREATE_CRUCERO, {
-    onError: (err) => {
-      // validar errores
-      // eslint-disable-next-line eqeqeq
-      console.log('Error Delete Crucero', err?.graphQLErrors[0]?.debugMessage)
-    }
-  })
 
   const [
     createCruceroMutation,
@@ -46,6 +39,16 @@ export const useCruceroServices = () => {
       console.log('onError Update Crucero', err?.graphQLErrors[0]?.debugMessage)
     }
   })
+
+  const [deleteCruceroMutation, { loading: loadingDelete }] =
+    useDeleteCruceroMutation({
+      onError: (err) => {
+        // validar errores
+        // eslint-disable-next-line eqeqeq
+        console.log(err?.graphQLErrors)
+        swal('Error', 'Hubo un error en el servidor', 'error')
+      }
+    })
 
   const deleteCrucero = (crucero) => {
     swal({
@@ -159,6 +162,7 @@ export const useCruceroServices = () => {
     idImgSecundaria,
     slugCategoria,
     galeria,
+    precioBaseCrucero,
     keywords
   }) => {
     if (loadingUpdate === false) {
@@ -185,7 +189,8 @@ export const useCruceroServices = () => {
             imagenPrincipalCrucero: idImgPrincipal,
             imagenSecundariaCrucero: idImgSecundaria,
             galeriaCrucero: galeria,
-            slugCategoria: slugCategoria
+            slugCategoria: slugCategoria,
+            precioBaseCrucero: precioBaseCrucero
           }
         }
       }).catch((error) => console.error('que error', error))
@@ -243,6 +248,7 @@ export const useCruceroServices = () => {
     errorUpdate,
     errorCreate,
     loadingUpdate,
-    loadingCreate
+    loadingCreate,
+    loadingDelete
   }
 }

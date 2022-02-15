@@ -1,7 +1,8 @@
-mutation UpdateLunaMiel($input:LunaMielInput){
-  UpdateLunaMiel(input:$input) {
+mutation UpdateLunaMiel($input: LunaMielInput) {
+  UpdateLunaMiel(input: $input) {
     lunaMielId
     tituloLuna
+    precioBaseLuna
     slugLuna
     estadoLuna
     destacadoLuna

@@ -1,7 +1,8 @@
-mutation UpdateCrucero($input:CruceroInput){
-  UpdateCrucero(input:$input) {
+mutation UpdateCrucero($input: CruceroInput) {
+  UpdateCrucero(input: $input) {
     cruceroId
     tituloCrucero
+    precioBaseCrucero
     slugCrucero
     estadoCrucero
     destacadoCrucero

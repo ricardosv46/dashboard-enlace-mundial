@@ -86,15 +86,19 @@ const Clientes = () => {
       {loadingGetData ? (
         <Spinner />
       ) : (
-        <DataTable
-          data={dbUsers}
-          columns={columnas}
-          pagination
-          paginationComponentOptions={paginacionOpciones}
-          fixedHeader
-          fixedHeaderScrollHeight="85vh"
-          customStyles={customStyles}
-        />
+        <div className="w-full mb-8 overflow-hidden rounded-md md:shadow-xl max-h-screen overflow-y-auto  ">
+          <div className="w-full overflow-x-auto min-h-screen">
+            <DataTable
+              data={dbUsers}
+              columns={columnas}
+              pagination
+              paginationComponentOptions={paginacionOpciones}
+              fixedHeader
+              fixedHeaderScrollHeight="85vh"
+              customStyles={customStyles}
+            />
+          </div>
+        </div>
       )}
     </div>
   )

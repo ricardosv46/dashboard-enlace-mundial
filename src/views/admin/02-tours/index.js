@@ -108,13 +108,17 @@ const Tours = () => {
                         {tour?.Categoria?.tituloCategoria}
                       </td>
                       <td className='className="text-start  uppercase text-gray-600 py-6 px-4 min-h-20 "'>
-                        <div className='cursor-pointer'>
-                          <BtnDestacado estado={tour?.destacadoTour === "Activado" && true} />
+                        <div className="cursor-pointer">
+                          <BtnDestacado
+                            estado={tour?.destacadoTour === 'Activado' && true}
+                          />
                         </div>
                       </td>
                       <td className='className="text-start  uppercase text-gray-600 py-6 px-4 min-h-20 "'>
-                        <div className='cursor-pointer'>
-                          <BtnEstado estado={tour?.estadoTour === "Activado" && true} />
+                        <div className="cursor-pointer">
+                          <BtnEstado
+                            estado={tour?.estadoTour === 'Activado' && true}
+                          />
                         </div>
                       </td>
                     </tr>

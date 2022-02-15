@@ -18,6 +18,7 @@ const initialForm = {
   categorias: '',
   region: '',
   ciudad: '',
+  precioBase: '',
   descripcionCorta: '',
   descripcionLarga: '',
   puntoPartida: '',
@@ -121,6 +122,7 @@ const EditarCrucero = () => {
         notas: eliminarDuplicado(notas),
         politicas: eliminarDuplicado(politicas),
         video: form.video,
+        precioBaseCrucero: form.precioBase,
         idImgPrincipal: mainImage.id,
         idImgSecundaria: secondaryImage.id,
         keywords: eliminarDuplicado(keywords),
@@ -159,6 +161,7 @@ const EditarCrucero = () => {
     form.descripcionCorta = objetoCrucero?.descripcionCortaCrucero
     form.puntoPartida = objetoCrucero?.puntoPartidaCrucero
     form.video = objetoCrucero?.videoPresentacionCrucero
+    form.precioBase = objetoCrucero?.precioBaseCrucero
     setItinerario(objetoCrucero?.itinerarioCrucero.split(','))
     setIncluye(objetoCrucero?.incluyeCrucero.split(','))
     setNoIncluye(objetoCrucero?.noIncluyeCrucero.split(','))
@@ -239,15 +242,18 @@ const EditarCrucero = () => {
               <option className="cursor-pointer" value="">
                 Selecciona una Categoria
               </option>
-              {dataCategoria.map((item) => (
-                <option
-                  key={item.categoriaId}
-                  value={item.slugCategoria}
-                  selected={objetoCrucero.slugCategoria === item.slugCategoria}
-                >
-                  {item.tituloCategoria}
-                </option>
-              ))}
+              {dataCategoria &&
+                dataCategoria.map((item) => (
+                  <option
+                    key={item.categoriaId}
+                    value={item.slugCategoria}
+                    selected={
+                      objetoCrucero.slugCategoria === item.slugCategoria
+                    }
+                  >
+                    {item.tituloCategoria}
+                  </option>
+                ))}
             </select>
             {errors.categoria && (
               <p className="text-sm text-red-500 font-medium mt-2 ml-1">
@@ -727,6 +733,17 @@ const EditarCrucero = () => {
               ))}
             </div>
           </div>
+        </div>
+        <div className="flex flex-col lg:flex-row lg:space-x-4 items-center mb-5">
+          <InputText
+            name="precioBase"
+            label="Precio Base"
+            placeholder="Ingresa un precio base"
+            type="text"
+            onChange={handleInputChange}
+            required
+            value={form.precioBase}
+          />
         </div>
         <div className="flex flex-col lg:flex-row lg:space-x-4 items-center mb-5">
           <InputText
