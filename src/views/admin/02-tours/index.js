@@ -57,7 +57,10 @@ const Tours = () => {
           <div className="flex-col gap-y-10 gap-x-14  flex items-center  sm:flex-row  mb-5">
             <p className="text-gray-800 text-xl">
               {' '}
-              Total de Datos <span className='font-bold'>{data?.GetAllTour?.nroTotalItems}</span>{' '}
+              Total de Datos{' '}
+              <span className="font-bold">
+                {data?.GetAllTour?.nroTotalItems}
+              </span>{' '}
             </p>
             <div className="text-gray-700">
               <label htmlFor="paginas" className="mr-2">
@@ -70,10 +73,10 @@ const Tours = () => {
                 value={nroPagina}
               >
                 {arregloSelect?.map((elemento, index) => (
-                  <option 
-                  className='font-bold'
-                  key={elemento + index} 
-                  value={elemento + index}
+                  <option
+                    className="font-bold"
+                    key={elemento + index}
+                    value={elemento + index}
                   >
                     {elemento + index}
                   </option>
@@ -132,10 +135,6 @@ const Tours = () => {
                       <td className='className="text-start  uppercase text-gray-600 py-6 px-4 min-h-20 "'>
                         {tour?.Categoria?.tituloCategoria}
                       </td>
-<<<<<<< HEAD
-                      <td className='className="text-start  uppercase text-gray-600 py-6 px-4 min-h-20 "'>
-                        <div className="cursor-pointer">
-=======
                       <td className="text-start  uppercase text-gray-600 py-6 px-4 min-h-20">
                         <div
                           className="cursor-pointer"
@@ -155,19 +154,11 @@ const Tours = () => {
                             })
                           }}
                         >
->>>>>>> 993b1c4ec6bb81d807d2498fa98803d50d2bb934
                           <BtnDestacado
                             estado={tour?.destacadoTour === 'Activado' && true}
                           />
                         </div>
                       </td>
-<<<<<<< HEAD
-                      <td className='className="text-start  uppercase text-gray-600 py-6 px-4 min-h-20 "'>
-                        <div className="cursor-pointer">
-                          <BtnEstado
-                            estado={tour?.estadoTour === 'Activado' && true}
-                          />
-=======
                       <td className="text-start  uppercase text-gray-600 py-6 px-4 min-h-20 ">
                         <div
                           className="cursor-pointer"
@@ -223,7 +214,6 @@ const Tours = () => {
                           >
                             <IconDelete />
                           </button>
->>>>>>> 993b1c4ec6bb81d807d2498fa98803d50d2bb934
                         </div>
                       </td>
                     </tr>
