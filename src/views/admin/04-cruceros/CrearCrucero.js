@@ -229,14 +229,15 @@ const CrearCrucero = () => {
               value={form.categorias}
               required
             >
-              <option className="cursor-pointer" value="" selected>
+              <option className="cursor-pointer" value="" defaultValue>
                 Selecciona una Categoria
               </option>
-              {dataCategoria?.map((item) => (
-                <option key={item.categoriaId} value={item.slugCategoria}>
-                  {item.tituloCategoria}
-                </option>
-              ))}
+              {dataCategoria &&
+                dataCategoria.map((item) => (
+                  <option key={item.categoriaId} value={item.slugCategoria}>
+                    {item.tituloCategoria}
+                  </option>
+                ))}
             </select>
             {errors.categoria && (
               <p className="text-sm text-red-500 font-medium mt-2 ml-1">
@@ -263,7 +264,7 @@ const CrearCrucero = () => {
               onBlur={handleBlur}
               value={form.region}
             >
-              <option value="" className="cursor-pointer" selected>
+              <option value="" className="cursor-pointer" defaultValue>
                 Selecciona una Region
               </option>
               {Regiones.map((region) => (
@@ -294,7 +295,7 @@ const CrearCrucero = () => {
               required
               value={form.ciudad}
             >
-              <option value="" className="cursor-pointer" selected>
+              <option value="" className="cursor-pointer" defaultValue>
                 Selecciona una Ciudad
               </option>
               {Ciudades(form.region).map((ciudad) => (

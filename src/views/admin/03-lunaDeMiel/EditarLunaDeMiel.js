@@ -53,7 +53,6 @@ const EditarLunaDeMiel = () => {
   const history = useHistory()
 
   const { state: objetoLuna } = useLocation()
-  console.log(objetoLuna)
   const { db: dataCategoria } = useCategoriasServices()
   const { updateLunaMiel, errorUpdate } = useLunaMielServices()
   const { form, handleInputChange, handleBlur, errors } = UseForm(

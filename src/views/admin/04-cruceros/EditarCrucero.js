@@ -239,7 +239,7 @@ const EditarCrucero = () => {
               value={form.categorias}
               required
             >
-              <option className="cursor-pointer" value="">
+              <option className="cursor-pointer" value="" defaultValue>
                 Selecciona una Categoria
               </option>
               {dataCategoria &&
@@ -280,7 +280,7 @@ const EditarCrucero = () => {
               onBlur={handleBlur}
               value={form.region}
             >
-              <option value="" className="cursor-pointer">
+              <option className="cursor-pointer" value="" defaultValue>
                 Selecciona una Region
               </option>
               {Regiones.map((region) => (
@@ -315,7 +315,7 @@ const EditarCrucero = () => {
               required
               value={form.ciudad}
             >
-              <option value="" className="cursor-pointer">
+              <option className="cursor-pointer" value="" defaultValue>
                 Selecciona una Ciudad
               </option>
               {Ciudades(form.region).map((ciudad) => (
