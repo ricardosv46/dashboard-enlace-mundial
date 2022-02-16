@@ -82,7 +82,6 @@ export const useHorariosServices = () => {
         anio: null,
         mes: null
       })
-      console.log('horario creado ', response.data?.CreateHorarioTour)
       return 'ok'
     }
   }
@@ -149,7 +148,7 @@ export const useHorariosServices = () => {
           timer: 2000
         })
         refetch()
-        console.log('horario creado ', res.data?.UpdateTour)
+
         return 'ok'
       } else {
         swal({
@@ -159,7 +158,6 @@ export const useHorariosServices = () => {
           button: 'Aceptar',
           timer: 2000
         })
-        console.log(errorUpdate)
       }
     }
   }
@@ -176,7 +174,7 @@ export const useHorariosServices = () => {
 
       if (res?.data?.UpdateHorarioTour) {
         refetch()
-        console.log('horario creado ', res.data?.UpdateTour)
+
         return 'ok'
       }
     }

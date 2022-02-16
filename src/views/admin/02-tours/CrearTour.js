@@ -359,7 +359,7 @@ const CrearTour = () => {
               alt=""
               className="rounded-full absolute right-2 bg-white top-8 border p-1 cursor-pointer"
               onClick={() => {
-                console.log(textItinerario)
+                
                 if (textItinerario.trim() !== '') {
                   setItinerario((estado) => [...estado, textItinerario.trim()])
                   setTextItinerario('')

@@ -4,10 +4,11 @@ import { Calendar, utils } from 'react-modern-calendar-datepicker'
 import Button from '../../../components/Buttons/Button'
 import Spinner from '../../../components/Spinner/Spinner'
 import BtnEstado from '../../../components/BtnEstado/BtnEstado'
+import toast, { Toaster } from 'react-hot-toast'
 
 const CrearCalendarioTours = ({
   tourId,
-  onCreateHorario = () => { },
+  onCreateHorario = () => {},
   loading,
   closeModal
 }) => {
@@ -46,7 +47,7 @@ const CrearCalendarioTours = ({
       precio: formFecha.precio,
       tourId: tourId,
       fecha: `${selectedDay.year}-${selectedDay.month}-${selectedDay.day}`,
-      estado: formFecha.estado
+      estado: 'Activado'
     }).then((rpta) => {
       // console.log(rpta)
       if (rpta === 'ok') {
@@ -61,11 +62,17 @@ const CrearCalendarioTours = ({
         setSelectedDay(todayValue)
         // Cerramos el Modal
         closeModal()
+        toast.success('Se modifico el destacado')
       }
     })
   }
   return (
     <div className="flex flex-col  bg-gray-white   rounded-xl justify-center items-center ">
+      <Toaster
+        position="top-right"
+        reverseOrder={true}
+        containerClassName="top-18 md:top-5"
+      />
       {/* CONTENEDOR CALENDARIO  */}
       <div className=" mt-10 border">
         <Calendar
@@ -138,13 +145,13 @@ const CrearCalendarioTours = ({
             />
           </div>
           <div className=" flex items-center ">
-          <label
+            <label
               htmlFor="hora"
               className="block text-gray-700 text-left text-lg"
             >
               Estado
             </label>
-            <BtnEstado estado={1}/>
+            <BtnEstado estado={1} />
           </div>
         </div>
 

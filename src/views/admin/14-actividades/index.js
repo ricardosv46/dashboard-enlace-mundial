@@ -32,7 +32,11 @@ const Actividades = () => {
       />
       <div className="shadow md:rounded bg-white p-5 py-10 md:p-10 mb-20 min-h-screen animate__fadeIn animate__animated">
         <div className="flex justify-between mb-5">
-          <Toaster position="top-right" reverseOrder={true} />
+          <Toaster
+            position="top-right"
+            reverseOrder={true}
+            containerClassName="top-18 md:top-5"
+          />
           <Heading>Actividades</Heading>
 
           <Button
