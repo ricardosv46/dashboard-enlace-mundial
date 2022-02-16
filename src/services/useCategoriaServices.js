@@ -2,12 +2,7 @@ import { useMutation, useQuery } from '@apollo/client'
 import { CREATE_CATEGORYS } from '../graphql/mutation/createCategoria'
 import { UPDATE_CATEGORYS } from '../graphql/mutation/updateCategoria'
 import { DELETE_CATEGORY } from '../graphql/mutation/deleteCategoria'
-// import swal from 'sweetalert'
-// import {
-//   useCreateCategoriaMutation,
-//   useDeleteCategoriaMutation,
-//   useUpdateCategoriaMutation
-// } from '../generated/graphql'
+
 import { GET_ALL_CATEGORYS } from '../graphql/query/getAllCategorias'
 
 // Obtenemos todas las categorias

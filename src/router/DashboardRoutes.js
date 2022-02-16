@@ -127,7 +127,7 @@ const DashboardRoutes = () => {
           />
           <Route
             exact
-            path="/blogs/editar-publiacion"
+            path="/blogs/editar-publiacion/:id"
             component={EditarPublicacion}
           />
           <Route

@@ -20,7 +20,8 @@ const Blogs = () => {
     db: dbBlog,
     loading: loadingGetData,
     dbTotalItems,
-    deleteBlog
+    deleteBlog,
+    updateBlogEstado
   } = useBlogsServices({
     page: nroPagina,
     numberPaginate: 10,
@@ -36,7 +37,6 @@ const Blogs = () => {
     }
   }, [loadingGetData])
 
-  console.log(dbBlog, dbTotalItems)
   return (
     <div className="shadow md:rounded bg-white p-5 py-10 md:p-10 mb-20 min-h-screen animate__fadeIn animate__animated ">
       <div className="flex justify-between mb-5">
@@ -139,21 +139,74 @@ const Blogs = () => {
                         {blog?.tituloBlog}
                       </td>
                       <td className="text-start  uppercase text-gray-600 py-6 px-4 min-h-20 ">
-                        {blog?.CategoriaBlog?.descripcionCategoriaBlog}
+                        {blog?.CategoriaBlog?.tituloCategoriaBlog}
                       </td>
                       <td className="text-center  uppercase text-gray-600 py-6 px-4 min-h-20 ">
-                        <BtnEstado
-                          estado={blog?.estadoBlog === '1' ? true : false}
-                        />
+                        <button
+                          onClick={() => {
+                            updateBlogEstado({
+                              id: blog?.blogId,
+                              estado: blog?.estadoBlog === '1' ? '0' : '1',
+                              destacado: blog?.destacadoBlog,
+                              titulo: blog?.tituloBlog,
+                              slugCategoria: blog?.slugCategoriaBlog,
+                              descripcionLarga: blog?.descripcionLargaBlog,
+                              descripcionCorta: blog?.descripcionCortaBlog,
+                              keywords: blog?.keywordsBlog,
+                              idImgPrincipal: blog?.imagenPrincipalBlog?.id,
+                              idImgSecundaria: blog?.imagenSecundariaBlog?.id,
+                              galeria: blog?.galeriaBlog.map(
+                                (galery) => galery.id
+                              )
+                            }).then((res) => {
+                              toast.success('Se modifico el estado')
+                            })
+                          }}
+                        >
+                          <BtnEstado
+                            estado={blog?.estadoBlog === '1' ? true : false}
+                          />
+                        </button>
                       </td>
                       <td className="text-center  uppercase text-gray-600 py-6 px-4 min-h-20 ">
-                        <BtnDestacado
-                          estado={blog?.destacadoBlog === '1' ? true : false}
-                        />
+                        <button
+                          onClick={() => {
+                            updateBlogEstado({
+                              id: blog?.blogId,
+                              estado: blog?.estadoBlog,
+                              destacado:
+                                blog?.destacadoBlog === '1' ? '0' : '1',
+                              titulo: blog?.tituloBlog,
+                              slugCategoria: blog?.slugCategoriaBlog,
+                              descripcionLarga: blog?.descripcionLargaBlog,
+                              descripcionCorta: blog?.descripcionCortaBlog,
+                              keywords: blog?.keywordsBlog,
+                              idImgPrincipal: blog?.imagenPrincipalBlog?.id,
+                              idImgSecundaria: blog?.imagenSecundariaBlog?.id,
+                              galeria: blog?.galeriaBlog.map(
+                                (galery) => galery.id
+                              )
+                            }).then((res) => {
+                              toast.success('Se modifico el destacado')
+                            })
+                          }}
+                        >
+                          {' '}
+                          <BtnDestacado
+                            estado={blog?.destacadoBlog === '1' ? true : false}
+                          />
+                        </button>
                       </td>
                       <td className="text-start  uppercase text-gray-600 py-6 px-4 min-h-20 ">
                         <div className="flex gap-x-5 lg:gap-x-10 items-center justify-center">
-                          <button>
+                          <button
+                            onClick={() =>
+                              history.push(
+                                `/blogs/editar-publiacion/${blog?.blogId}?`,
+                                blog
+                              )
+                            }
+                          >
                             <IconEdit />
                           </button>
                           <button

@@ -67,7 +67,6 @@ export const useActividadesServices = () => {
         }
       }
     })
-
     refetch()
     if (resp.data?.UpdateActividadesTour) return 'exito'
   }
