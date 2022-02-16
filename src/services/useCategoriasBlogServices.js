@@ -112,6 +112,18 @@ export const useCategoriasBlogServices = () => {
     refetch()
     if (resp.data?.updateCategoriaBlog) return 'exito'
   }
+  const updateCategoriaBlogEstado = async ({ estado, id }) => {
+    const resp = await UpdateCategoriaBlog({
+      variables: {
+        input: {
+          categoriaBlogId: id,
+          estadoCategoriaBlog: estado
+        }
+      }
+    })
+    refetch()
+    if (resp.data?.updateCategoriaBlog) return 'exito'
+  }
 
   return {
     db,
@@ -121,6 +133,7 @@ export const useCategoriasBlogServices = () => {
     loadingCreate,
     createCategoriaBlog,
     updateCategoriaBlog,
-    loadingUpdate
+    loadingUpdate,
+    updateCategoriaBlogEstado
   }
 }

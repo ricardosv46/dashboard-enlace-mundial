@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import swal from 'sweetalert'
 import Button from '../../../../components/Buttons/Button'
 import ButtonBack from '../../../../components/Buttons/ButtonBack'
@@ -27,6 +27,7 @@ const validationsForm = (form) => {
   return errors
 }
 
+const otherErrors = {}
 const CrearCategoriaBlog = () => {
   const history = useHistory()
   const { createCategoriaBlog, errorCreate } = useCategoriasBlogServices()
@@ -47,7 +48,6 @@ const CrearCategoriaBlog = () => {
       setData(newData)
     }
   }
-  const otherErrors = {}
 
   const eliminarDuplicado = (data) => {
     const newData = new Set(data)
@@ -92,6 +92,11 @@ const CrearCategoriaBlog = () => {
       })
     }
   }
+  useEffect(() => {
+    if (keywords.length === 0) {
+      otherErrors.keywords = '( Ingrese al menos una keyword )'
+    }
+  }, [handleSubmit])
   return (
     <div className="shadow md:rounded bg-white p-5 py-10 md:p-10 animate__fadeIn animate__animated">
       <div className="flex justify-center pt-3 relative">

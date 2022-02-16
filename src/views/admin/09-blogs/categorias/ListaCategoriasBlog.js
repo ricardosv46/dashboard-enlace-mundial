@@ -19,21 +19,33 @@ export const Img = ({ row }) => {
   )
 }
 
-export const Estado = ({ row }) => {
-  return (
-    <div className="cursor-pointer">
-      <BtnEstado estado={row.estadoCategoriaBlog === 'Activado' && true} />
-    </div>
-  )
-}
-
 const ListarCategoriasBlog = () => {
   const history = useHistory()
   const {
     db: dataBlogs,
     loading,
-    deleteCategoriaBlog
+    deleteCategoriaBlog,
+    updateCategoriaBlogEstado
   } = useCategoriasBlogServices()
+  const Estado = ({ row }) => {
+    return (
+      <button
+        onClick={() => {
+          updateCategoriaBlogEstado({
+            id: row?.categoriaBlogId,
+            estado:
+              row?.estadoCategoriaBlog === 'Activado'
+                ? 'Desactivado'
+                : 'Activado'
+          }).then((res) => {
+            toast.success('Se modifico el estado')
+          })
+        }}
+      >
+        <BtnEstado estado={row.estadoCategoriaBlog === 'Activado' && true} />
+      </button>
+    )
+  }
 
   const columnas = [
     {

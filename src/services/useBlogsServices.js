@@ -1,6 +1,7 @@
 import { useMutation } from '@apollo/client'
 import { useGetAllBlogQuery } from '../generated/graphql'
 import { CREATE_BLOG } from '../graphql/mutation/createBlogs'
+import { DELETE_BLOG } from '../graphql/mutation/deleteBolg'
 
 export const useBlogsServices = (
   input = { page: 0, numberPaginate: 10, estadoBlog: '' }
@@ -49,10 +50,38 @@ export const useBlogsServices = (
         }
       }
     })
-    console.log('CreateBlog', resp)
     refetch()
+    console.log('CreateBlog', resp)
     if (resp.data?.createBlog) return 'exito'
   }
 
-  return { db, loading, dbTotalItems, createBlog, loadingCreate }
+  const [DeleteBlog, { loading: loadingDelete }] = useMutation(DELETE_BLOG, {
+    onError: (err) => {
+      console.log('onError Delete blog', err?.graphQLErrors[0]?.debugMessage)
+    }
+  })
+
+  const deleteBlog = async ({ id }) => {
+    const resp = await DeleteBlog({
+      variables: {
+        input: {
+          blogId: id
+        }
+      }
+    })
+
+    console.log('DeleteBlog', resp)
+    refetch()
+    if (resp.data?.deleteBlog) return 'exito'
+  }
+
+  return {
+    db,
+    loading,
+    dbTotalItems,
+    createBlog,
+    loadingCreate,
+    deleteBlog,
+    loadingDelete
+  }
 }

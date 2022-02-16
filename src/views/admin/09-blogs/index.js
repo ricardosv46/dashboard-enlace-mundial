@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
+import toast, { Toaster } from 'react-hot-toast'
 import { useHistory } from 'react-router'
+import swal from 'sweetalert'
 import { IconDelete, IconEdit } from '../../../assets/icons/icons'
 import BtnDestacado from '../../../components/BtnDestacado/BtnDestacado'
 import BtnEstado from '../../../components/BtnEstado/BtnEstado'
@@ -17,7 +19,8 @@ const Blogs = () => {
   const {
     db: dbBlog,
     loading: loadingGetData,
-    dbTotalItems
+    dbTotalItems,
+    deleteBlog
   } = useBlogsServices({
     page: nroPagina,
     numberPaginate: 10,
@@ -37,6 +40,11 @@ const Blogs = () => {
   return (
     <div className="shadow md:rounded bg-white p-5 py-10 md:p-10 mb-20 min-h-screen animate__fadeIn animate__animated ">
       <div className="flex justify-between mb-5">
+        <Toaster
+          position="top-right"
+          reverseOrder={true}
+          containerClassName="top-18 md:top-5"
+        />
         <Heading>Publiacaciones Blog</Heading>
         <Button
           variant="primary"
@@ -99,10 +107,10 @@ const Blogs = () => {
                     <th className="px-4 py-6 text-gray-600 min-w-10 text-left">
                       Categoría
                     </th>
-                    <th className="px-4 py-6 text-gray-600 min-w-10 text-left">
+                    <th className="px-4 py-6 text-gray-600 min-w-10 text-center">
                       Estado
                     </th>
-                    <th className="px-4 py-6 text-gray-600 min-w-10 text-left">
+                    <th className="px-4 py-6 text-gray-600 min-w-10 text-center">
                       Destacado
                     </th>
                     <th className="px-4 py-6 text-gray-600 min-w-10 text-left">
@@ -133,12 +141,12 @@ const Blogs = () => {
                       <td className="text-start  uppercase text-gray-600 py-6 px-4 min-h-20 ">
                         {blog?.CategoriaBlog?.descripcionCategoriaBlog}
                       </td>
-                      <td className="text-start  uppercase text-gray-600 py-6 px-4 min-h-20 ">
+                      <td className="text-center  uppercase text-gray-600 py-6 px-4 min-h-20 ">
                         <BtnEstado
                           estado={blog?.estadoBlog === '1' ? true : false}
                         />
                       </td>
-                      <td className="text-start  uppercase text-gray-600 py-6 px-4 min-h-20 ">
+                      <td className="text-center  uppercase text-gray-600 py-6 px-4 min-h-20 ">
                         <BtnDestacado
                           estado={blog?.destacadoBlog === '1' ? true : false}
                         />
@@ -148,7 +156,23 @@ const Blogs = () => {
                           <button>
                             <IconEdit />
                           </button>
-                          <button>
+                          <button
+                            onClick={() => {
+                              swal({
+                                title: `Desea eliminar la categoria ${blog?.tituloBlog}?`,
+                                icon: 'warning',
+                                buttons: true,
+                                dangerMode: true
+                              }).then(async (rpta) => {
+                                if (rpta) {
+                                  deleteBlog({
+                                    id: blog?.blogId
+                                  })
+                                  toast.success('Blog Eliminado!')
+                                }
+                              })
+                            }}
+                          >
                             <IconDelete />
                           </button>
                         </div>
