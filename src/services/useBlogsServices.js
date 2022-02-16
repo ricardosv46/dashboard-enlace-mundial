@@ -1,62 +1,58 @@
-import { useState } from 'react'
-import swal from 'sweetalert'
-import { useDeleteBlogMutation, useGetAllBlogQuery } from '../generated/graphql'
+import { useMutation } from '@apollo/client'
+import { useGetAllBlogQuery } from '../generated/graphql'
+import { CREATE_BLOG } from '../graphql/mutation/createBlogs'
 
-export const useBlogsServices = () => {
-  const [data, setData] = useState([])
-
-  const { loading } = useGetAllBlogQuery({
+export const useBlogsServices = (
+  input = { page: 0, numberPaginate: 10, estadoBlog: '' }
+) => {
+  const { data, loading, refetch } = useGetAllBlogQuery({
     fetchPolicy: 'network-only',
     variables: {
-      numberPaginate: 10,
-      page: 1,
-      estadoBlog: ''
-    },
-    onCompleted: (blogs) => {
-      if (blogs.GetAllBlog.data.length > 0) {
-        setData(blogs.GetAllBlog.data)
-      }
+      ...input
     }
   })
 
-  const [deleteBlogMutation] = useDeleteBlogMutation({
+  const db = data ? data?.GetAllBlog?.data : []
+  const dbTotalItems = data ? data?.GetAllBlog : []
+
+  const [CreateBlog, { loading: loadingCreate }] = useMutation(CREATE_BLOG, {
     onError: (err) => {
-      // validar errores
-      console.log('onError delete', err?.graphQLErrors[0]?.debugMessage)
+      console.log('onError Create blog', err?.graphQLErrors[0]?.debugMessage)
     }
   })
 
-  const deleteBlog = (blog) => {
-    swal({
-      title: `Desea eliminar el blog ${blog?.tituloBlog}?`,
-      text: 'Una vez eliminada, no podrás recuperar el blog!',
-      icon: 'warning',
-      buttons: ['NO', 'SI'],
-      timer: 5000,
-      dangerMode: true
-    }).then((rpta) => {
-      if (rpta) {
-        deleteBlogMutation({
-          variables: {
-            input: {
-              categoriaBlogId: blog.blogId
-            }
-          }
-        }).catch((error) => console.log('error', error))
-        const newData = data.filter(
-          (el) => el.blogId !== blog.blogId
-        )
-        setData(newData)
-        swal({
-          title: 'Eliminado',
-          text: 'Se elimino correctamente el Blog',
-          icon: 'success',
-          button: 'Aceptar',
-          timer: 5000
-        })
+  const createBlog = async ({
+    titulo,
+    slugCategoria,
+    descripcionLarga,
+    descripcionCorta,
+    estado,
+    destacado,
+    keywords,
+    idImgPrincipal,
+    idImgSecundaria,
+    galeria
+  }) => {
+    const resp = await CreateBlog({
+      variables: {
+        input: {
+          tituloBlog: titulo,
+          slugCategoriaBlog: slugCategoria,
+          descripcionLargaBlog: descripcionLarga,
+          descripcionCortaBlog: descripcionCorta,
+          estadoBlog: estado,
+          destacadoBlog: destacado,
+          keywordsBlog: keywords.join(','),
+          imagenPrincipalBlog: idImgPrincipal,
+          imagenSecundariaBlog: idImgSecundaria,
+          galeriaBlog: galeria
+        }
       }
     })
+    console.log('CreateBlog', resp)
+    refetch()
+    if (resp.data?.createBlog) return 'exito'
   }
 
-  return { data, loading, deleteBlog }
+  return { db, loading, dbTotalItems, createBlog, loadingCreate }
 }
