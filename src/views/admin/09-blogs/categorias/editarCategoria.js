@@ -10,6 +10,7 @@ import { useCategoriasBlogServices } from '../../../../services/useCategoriasBlo
 import { useHistory, useLocation } from 'react-router-dom'
 import swal from 'sweetalert'
 import SelectImage from '../../../../components/SelectImage'
+import toast from 'react-hot-toast'
 const initialForm = {
   titulo: '',
   descripcion: ''
@@ -31,7 +32,7 @@ const otherErrors = {}
 
 const EditarCategoriaBlog = () => {
   const history = useHistory()
-  const { updateCategoriaBlog, errorUpdate } = useCategoriasBlogServices()
+  const { updateCategoriaBlog } = useCategoriasBlogServices()
   const { state: objetoCategoriaBlog } = useLocation()
   const { form, handleInputChange, handleBlur, errors } = UseForm(
     initialForm,
@@ -65,19 +66,14 @@ const EditarCategoriaBlog = () => {
         descripcion: form.descripcion,
         idImgPrincipal: mainImage.id,
         idImgSecundaria: secondaryImage.id
+      }).then((res) => {
+        if (res === 'exito') {
+          toast.success('Se actualizo la categoria')
+          history.push('/blogs/categorias')
+        } else {
+          toast.success('No se pudo actualizar la categoría ')
+        }
       })
-
-      if (errorUpdate) {
-        swal({
-          title: 'ERROR',
-          text: 'OACURRIO UN ERROR EN EL SERVIDOR',
-          icon: 'error',
-          button: 'Aceptar',
-          timer: 2000
-        })
-      } else {
-        history.push('/blogs/categorias')
-      }
     } else {
       swal({
         title: 'DATOS INCOMPLETOS',

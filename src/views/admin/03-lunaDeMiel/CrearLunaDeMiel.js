@@ -13,6 +13,7 @@ import { useLunaMielServices } from '../../../services/useLunaMielServices'
 import SelectImage from '../../../components/SelectImage'
 import SelectMultiImages from '../../../components/SelectMultiImages'
 import { useHistory } from 'react-router'
+import toast from 'react-hot-toast'
 const initialForm = {
   titulo: '',
   categorias: '',
@@ -51,7 +52,7 @@ const otherErrors = {}
 const CrearLunaDeMiel = () => {
   // console.log('othe', otherErrors)
   const { db: dataCategoria } = useCategoriasServices()
-  const { createLunaMiel, errorCreate } = useLunaMielServices()
+  const { createLunaMiel } = useLunaMielServices()
   // console.log(createTour)
   const { form, handleInputChange, handleBlur, errors, resetForm } = UseForm(
     initialForm,
@@ -123,31 +124,26 @@ const CrearLunaDeMiel = () => {
         idImgPrincipal: mainImage.id,
         idImgSecundaria: secondaryImage.id,
         galeria: eliminarDuplicado(galery)
+      }).then((res) => {
+        if (res === 'exito') {
+          resetForm()
+          setActividades([])
+          setIncluye([])
+          setNoIncluye([])
+          setItinerario([])
+          setActividades([])
+          setNotas([])
+          setPoliticas([])
+          setKeywords([])
+          setMainImage(null)
+          setSecondaryImage(null)
+          setGalery([])
+          toast.success('Se creo luna de miel')
+          history.push('/luna-de-miel')
+        } else {
+          toast.success('No se pudo crear luna de miel')
+        }
       })
-      console.log(errorCreate)
-      if (errorCreate) {
-        swal({
-          title: 'ERROR',
-          text: 'OACURRIO UN ERROR EN EL SERVIDOR',
-          icon: 'error',
-          button: 'Aceptar',
-          timer: 2000
-        })
-      } else {
-        resetForm()
-        setActividades([])
-        setIncluye([])
-        setNoIncluye([])
-        setItinerario([])
-        setActividades([])
-        setNotas([])
-        setPoliticas([])
-        setKeywords([])
-        setMainImage(null)
-        setSecondaryImage(null)
-        setGalery([])
-        history.push('/luna-de-miel')
-      }
     } else {
       swal({
         title: 'DATOS INCOMPLETOS',
@@ -714,7 +710,7 @@ const CrearLunaDeMiel = () => {
             name="precioBase"
             label="Precio Base"
             placeholder="Ingresa un precio base"
-            type="text"
+            type="number"
             onChange={handleInputChange}
             required
             value={form.precioBase}

@@ -10,6 +10,7 @@ import swal from 'sweetalert'
 import { useCategoriasServices } from '../../../services/useCategoriaServices'
 import SelectImage from '../../../components/SelectImage'
 import { useHistory } from 'react-router'
+import toast from 'react-hot-toast'
 const initialForm = {
   titulo: '',
   descripcion: ''
@@ -31,7 +32,7 @@ const otherErrors = {}
 
 const CrearCategoria = () => {
   const history = useHistory()
-  const { createCategoria, errorCreate } = useCategoriasServices()
+  const { createCategoria } = useCategoriasServices()
   const { form, handleInputChange, handleBlur, errors, resetForm } = UseForm(
     initialForm,
     validationsForm
@@ -64,24 +65,19 @@ const CrearCategoria = () => {
         descripcion: form.descripcion,
         idImgPrincipal: mainImage.id,
         idImgSecundaria: secondaryImage.id
+      }).then((res) => {
+        console.log(res)
+        if (res === 'exito') {
+          resetForm()
+          setKeywords([])
+          setSecondaryImage(null)
+          setMainImage(null)
+          toast.success('Se creo la categoría')
+          history.push('/categorias')
+        } else {
+          toast.error('No se puedo crear la categoría')
+        }
       })
-
-      // console.log(errorCreate)
-      if (errorCreate) {
-        swal({
-          title: 'ERROR',
-          text: 'OACURRIO UN ERROR EN EL SERVIDOR',
-          icon: 'error',
-          button: 'Aceptar',
-          timer: 2000
-        })
-      } else {
-        resetForm()
-        setKeywords([])
-        setSecondaryImage(null)
-        setMainImage(null)
-        history.push('/categorias')
-      }
     } else {
       swal({
         title: 'DATOS INCOMPLETOS',

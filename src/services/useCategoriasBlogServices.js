@@ -49,7 +49,7 @@ export const useCategoriasBlogServices = () => {
     })
     console.log('CreateCategoriaBlog', resp)
     refetch()
-    if (resp.data?.createCategoriaBlog) return 'exito'
+    if (resp.data?.CreateCategoriaBlog) return 'exito'
   }
 
   const [deleteCategoriaBlogMutation, { loading: loadingDelete }] =
@@ -110,7 +110,7 @@ export const useCategoriasBlogServices = () => {
       }
     })
     refetch()
-    if (resp.data?.updateCategoriaBlog) return 'exito'
+    if (resp.data?.UpdateCategoriaBlog) return 'exito'
   }
   const updateCategoriaBlogEstado = async ({ estado, id }) => {
     const resp = await UpdateCategoriaBlog({
@@ -122,7 +122,7 @@ export const useCategoriasBlogServices = () => {
       }
     })
     refetch()
-    if (resp.data?.updateCategoriaBlog) return 'exito'
+    if (resp.data?.UpdateCategoriaBlog) return 'exito'
   }
 
   return {

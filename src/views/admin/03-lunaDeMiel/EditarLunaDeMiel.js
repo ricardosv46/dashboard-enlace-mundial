@@ -13,6 +13,7 @@ import { useHistory, useLocation } from 'react-router'
 import { useLunaMielServices } from '../../../services/useLunaMielServices'
 import SelectImage from '../../../components/SelectImage'
 import SelectMultiImages from '../../../components/SelectMultiImages'
+import toast from 'react-hot-toast'
 const initialForm = {
   titulo: '',
   categorias: '',
@@ -54,7 +55,7 @@ const EditarLunaDeMiel = () => {
 
   const { state: objetoLuna } = useLocation()
   const { db: dataCategoria } = useCategoriasServices()
-  const { updateLunaMiel, errorUpdate } = useLunaMielServices()
+  const { updateLunaMiel } = useLunaMielServices()
   const { form, handleInputChange, handleBlur, errors } = UseForm(
     initialForm,
     validationsForm
@@ -130,20 +131,17 @@ const EditarLunaDeMiel = () => {
         idImgSecundaria: secondaryImage.id,
         keywords: eliminarDuplicado(keywords),
         galeria: eliminarDuplicado(galery)
+      }).then((res) => {
+        if (res === 'exito') {
+          toast.success('Se actualizo Luna de Miel')
+          history.push('/luna-de-miel')
+        } else {
+          toast.success('No se pudo actualizar Luna de Miel')
+        }
       })
       // console.log(errorUpdate)
 
-      if (errorUpdate) {
-        swal({
-          title: 'ERROR',
-          text: 'OACURRIO UN ERROR EN EL SERVIDOR',
-          icon: 'error',
-          button: 'Aceptar',
-          timer: 2000
-        })
-      } else {
-        history.push('/luna-de-miel')
-      }
+      history.push('/luna-de-miel')
     } else {
       swal({
         title: 'DATOS INCOMPLETOS',
@@ -244,16 +242,12 @@ const EditarLunaDeMiel = () => {
               value={form.categorias}
               required
             >
-              <option className="cursor-pointer">
+              <option className="cursor-pointer" defaultValue>
                 Selecciona una Categoria
               </option>
               {dataCategoria &&
                 dataCategoria.map((item) => (
-                  <option
-                    key={item.categoriaId}
-                    value={item.slugCategoria}
-                    selected={objetoLuna.slugCategoria === item.slugCategoria}
-                  >
+                  <option key={item.categoriaId} value={item.slugCategoria}>
                     {item.tituloCategoria}
                   </option>
                 ))}
@@ -283,15 +277,11 @@ const EditarLunaDeMiel = () => {
               onBlur={handleBlur}
               value={form.region}
             >
-              <option value="" className="cursor-pointer">
+              <option className="cursor-pointer" defaultValue>
                 Selecciona una Region
               </option>
               {Regiones.map((region) => (
-                <option
-                  key={region}
-                  value={region}
-                  selected={region === objetoLuna.regionLuna}
-                >
+                <option key={region} value={region}>
                   {region}
                 </option>
               ))}
@@ -318,15 +308,11 @@ const EditarLunaDeMiel = () => {
               value={form.ciudad}
               required
             >
-              <option value="" className="cursor-pointer">
+              <option className="cursor-pointer" defaultValue>
                 Selecciona una Ciudad
               </option>
               {Ciudades(form.region).map((ciudad) => (
-                <option
-                  key={ciudad}
-                  value={ciudad}
-                  selected={ciudad === objetoLuna.ciudadLuna}
-                >
+                <option key={ciudad} value={ciudad}>
                   {ciudad}
                 </option>
               ))}
@@ -741,7 +727,7 @@ const EditarLunaDeMiel = () => {
             name="precioBase"
             label="Precio Base"
             placeholder="Ingresa un precio base"
-            type="text"
+            type="number"
             onChange={handleInputChange}
             required
             value={form.precioBase}

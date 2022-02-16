@@ -13,6 +13,7 @@ import SelectImage from '../../../components/SelectImage'
 import SelectMultiImages from '../../../components/SelectMultiImages'
 import { useCruceroServices } from '../../../services/useCruceroServices'
 import { useHistory } from 'react-router'
+import toast from 'react-hot-toast'
 const initialForm = {
   titulo: '',
   categorias: '',
@@ -52,7 +53,7 @@ const otherErrors = {}
 const CrearCrucero = () => {
   const history = useHistory()
   const { db: dataCategoria } = useCategoriasServices()
-  const { createCrucero, errorCreate } = useCruceroServices()
+  const { createCrucero } = useCruceroServices()
   const { form, handleInputChange, handleBlur, errors, resetForm } = UseForm(
     initialForm,
     validationsForm
@@ -124,31 +125,27 @@ const CrearCrucero = () => {
         idImgPrincipal: mainImage.id,
         idImgSecundaria: secondaryImage.id,
         galeria: eliminarDuplicado(galery)
+      }).then((res) => {
+        if (res === 'exito') {
+          resetForm()
+          setActividades([])
+          setIncluye([])
+          setNoIncluye([])
+          setItinerario([])
+          setActividades([])
+          setNotas([])
+          setPoliticas([])
+          setKeywords([])
+          setMainImage(null)
+          setSecondaryImage(null)
+          setGalery([])
+          toast.success('Se creo el Crucero')
+          history.push('/cruceros')
+        } else {
+          toast.error('No se pudp crear el Crucero')
+        }
       })
       // console.log(errorCreate)
-      if (errorCreate) {
-        swal({
-          title: 'ERROR',
-          text: 'OACURRIO UN ERROR EN EL SERVIDOR',
-          icon: 'error',
-          button: 'Aceptar',
-          timer: 2000
-        })
-      } else {
-        resetForm()
-        setActividades([])
-        setIncluye([])
-        setNoIncluye([])
-        setItinerario([])
-        setActividades([])
-        setNotas([])
-        setPoliticas([])
-        setKeywords([])
-        setMainImage(null)
-        setSecondaryImage(null)
-        setGalery([])
-        history.push('/cruceros')
-      }
     } else {
       swal({
         title: 'DATOS INCOMPLETOS',
@@ -715,7 +712,7 @@ const CrearCrucero = () => {
             name="precioBase"
             label="Precio Base"
             placeholder="Ingresa un precio base"
-            type="text"
+            type="number"
             onChange={handleInputChange}
             required
             value={form.precioBase}

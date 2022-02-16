@@ -53,7 +53,7 @@ export const useBlogsServices = (
     })
     refetch()
     console.log('CreateBlog')
-    if (resp.data?.createBlog) return 'exito'
+    if (resp.data?.CreateBlog) return 'exito'
   }
 
   const [UpdateBlog, { loading: loadingUpdate }] = useMutation(UPDATE_BLOG, {
@@ -93,8 +93,9 @@ export const useBlogsServices = (
       }
     })
     refetch()
-    console.log('UpdateBlog')
-    if (resp.data?.updateBlog) return 'exito'
+    if (resp?.data?.UpdateBlog) {
+      return 'exito'
+    }
   }
 
   const updateBlogEstado = async ({

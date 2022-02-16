@@ -10,6 +10,7 @@ import swal from 'sweetalert'
 import { useCategoriasServices } from '../../../services/useCategoriaServices'
 import { useHistory, useLocation } from 'react-router'
 import SelectImage from '../../../components/SelectImage'
+import toast from 'react-hot-toast'
 const initialForm = {
   titulo: '',
   descripcion: ''
@@ -32,7 +33,7 @@ const otherErrors = {}
 const EditarCategoria = () => {
   const history = useHistory()
   const { state: objetoCategoria } = useLocation()
-  const { updateCategoria, errorUpdate } = useCategoriasServices()
+  const { updateCategoria } = useCategoriasServices()
   const { form, handleInputChange, handleBlur, errors } = UseForm(
     initialForm,
     validationsForm
@@ -64,19 +65,16 @@ const EditarCategoria = () => {
         descripcion: form.descripcion,
         idImgPrincipal: mainImage.id,
         idImgSecundaria: secondaryImage.id
+      }).then((res) => {
+        console.log(res)
+        if (res === 'exito') {
+          toast.success('Se actualizo la categoria')
+          history.push('/categorias')
+        } else {
+          toast.error('No se puedo actualizar la categoria')
+        }
       })
       // console.log(errorUpdate)
-      if (errorUpdate) {
-        swal({
-          title: 'ERROR',
-          text: 'OACURRIO UN ERROR EN EL SERVIDOR',
-          icon: 'error',
-          button: 'Aceptar',
-          timer: 2000
-        })
-      } else {
-        history.push('/categorias')
-      }
     } else {
       swal({
         title: 'DATOS INCOMPLETOS',

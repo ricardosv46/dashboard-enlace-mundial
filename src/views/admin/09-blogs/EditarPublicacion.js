@@ -12,6 +12,7 @@ import UseForm from '../../../hooks/UseForm'
 import { useBlogsServices } from '../../../services/useBlogsServices'
 import swal from 'sweetalert'
 import { useHistory, useLocation } from 'react-router-dom'
+import toast from 'react-hot-toast'
 const initialForm = {
   titulo: '',
   descripcionCorta: '',
@@ -41,7 +42,6 @@ const validationsForm = (form) => {
 const otherErrors = {}
 const EditarPublicacion = () => {
   const { state: objetoBlog } = useLocation()
-  console.log(objetoBlog)
   const history = useHistory()
   const [keywords, setKeywords] = useState([])
   const [textKeywords, setTextKeywords] = useState('')
@@ -52,7 +52,7 @@ const EditarPublicacion = () => {
     initialForm,
     validationsForm
   )
-  const { updateBlog, errorUpdate } = useBlogsServices()
+  const { updateBlog } = useBlogsServices()
 
   const { db: dataCategoriaBlogs } = useCategoriasBlogServices()
 
@@ -89,24 +89,19 @@ const EditarPublicacion = () => {
         idImgPrincipal: mainImage.id,
         idImgSecundaria: secondaryImage.id,
         galeria: eliminarDuplicado(galery)
+      }).then((res) => {
+        if (res === 'exito') {
+          resetForm()
+          setKeywords([])
+          setMainImage(null)
+          setSecondaryImage(null)
+          setGalery([])
+          toast.success('Se actualizo el Blog')
+          history.push('/blogs')
+        } else {
+          toast.success('No se pudo actualizar el Blog')
+        }
       })
-      console.log(errorUpdate)
-      if (errorUpdate) {
-        swal({
-          title: 'ERROR',
-          text: 'OACURRIO UN ERROR EN EL SERVIDOR',
-          icon: 'error',
-          button: 'Aceptar',
-          timer: 2000
-        })
-      } else {
-        resetForm()
-        setKeywords([])
-        setMainImage(null)
-        setSecondaryImage(null)
-        setGalery([])
-        history.push('/blogs')
-      }
     } else {
       swal({
         title: 'DATOS INCOMPLETOS',

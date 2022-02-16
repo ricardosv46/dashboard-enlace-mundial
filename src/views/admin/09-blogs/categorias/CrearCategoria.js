@@ -10,6 +10,7 @@ import SelectImage from '../../../../components/SelectImage'
 import UseForm from '../../../../hooks/UseForm'
 import { useCategoriasBlogServices } from '../../../../services/useCategoriasBlogServices'
 import { useHistory } from 'react-router-dom'
+import toast from 'react-hot-toast'
 const initialForm = {
   titulo: '',
   descripcion: ''
@@ -30,7 +31,7 @@ const validationsForm = (form) => {
 const otherErrors = {}
 const CrearCategoriaBlog = () => {
   const history = useHistory()
-  const { createCategoriaBlog, errorCreate } = useCategoriasBlogServices()
+  const { createCategoriaBlog } = useCategoriasBlogServices()
   const { form, handleInputChange, handleBlur, errors, resetForm } = UseForm(
     initialForm,
     validationsForm
@@ -64,24 +65,18 @@ const CrearCategoriaBlog = () => {
         descripcion: form.descripcion,
         idImgPrincipal: mainImage.id,
         idImgSecundaria: secondaryImage.id
+      }).then((res) => {
+        if (res === 'exito') {
+          resetForm()
+          setKeywords([])
+          setSecondaryImage(null)
+          setMainImage(null)
+          toast.success('Se creo la categoría')
+          history.push('/blogs/categorias')
+        } else {
+          toast.success('No se pudo creo la categoría')
+        }
       })
-
-      // console.log(errorCreate)
-      if (errorCreate) {
-        swal({
-          title: 'ERROR',
-          text: 'OACURRIO UN ERROR EN EL SERVIDOR',
-          icon: 'error',
-          button: 'Aceptar',
-          timer: 2000
-        })
-      } else {
-        resetForm()
-        setKeywords([])
-        setSecondaryImage(null)
-        setMainImage(null)
-        history.push('/blogs/categorias')
-      }
     } else {
       swal({
         title: 'DATOS INCOMPLETOS',

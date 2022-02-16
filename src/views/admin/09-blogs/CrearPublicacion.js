@@ -12,6 +12,7 @@ import UseForm from '../../../hooks/UseForm'
 import { useBlogsServices } from '../../../services/useBlogsServices'
 import swal from 'sweetalert'
 import { useHistory } from 'react-router-dom'
+import toast from 'react-hot-toast'
 const initialForm = {
   titulo: '',
   descripcionCorta: '',
@@ -50,7 +51,7 @@ const CrearPublicacion = () => {
     initialForm,
     validationsForm
   )
-  const { createBlog, errorCreate } = useBlogsServices()
+  const { createBlog } = useBlogsServices()
 
   const { db: dataCategoriaBlogs } = useCategoriasBlogServices()
 
@@ -87,24 +88,19 @@ const CrearPublicacion = () => {
         idImgPrincipal: mainImage.id,
         idImgSecundaria: secondaryImage.id,
         galeria: eliminarDuplicado(galery)
+      }).then((res) => {
+        if (res === 'exito') {
+          resetForm()
+          setKeywords([])
+          setMainImage(null)
+          setSecondaryImage(null)
+          setGalery([])
+          toast.success('Se creo el Blog')
+          history.push('/blogs')
+        } else {
+          toast.success('No se pudo crear el Blog')
+        }
       })
-      console.log(errorCreate)
-      if (errorCreate) {
-        swal({
-          title: 'ERROR',
-          text: 'OACURRIO UN ERROR EN EL SERVIDOR',
-          icon: 'error',
-          button: 'Aceptar',
-          timer: 2000
-        })
-      } else {
-        resetForm()
-        setKeywords([])
-        setMainImage(null)
-        setSecondaryImage(null)
-        setGalery([])
-        history.push('/blogs')
-      }
     } else {
       swal({
         title: 'DATOS INCOMPLETOS',

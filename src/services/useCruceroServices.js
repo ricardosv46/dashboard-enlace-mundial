@@ -1,5 +1,4 @@
 import { useQuery } from '@apollo/client'
-import swal from 'sweetalert'
 import {
   useCreateCruceroMutation,
   useUpdateCruceroMutation,
@@ -124,6 +123,7 @@ export const useCruceroServices = (
         }
       }).catch((error) => console.error('que error', error))
       refetch()
+
       if (res?.data?.CreateCrucero) {
         return 'exito'
       }
@@ -180,16 +180,8 @@ export const useCruceroServices = (
         }
       }).catch((error) => console.error('que error', error))
       refetch()
-      console.log(res)
-      console.log(errorUpdate)
-      if (!errorUpdate) {
-        swal({
-          title: 'ACTUALIZAR',
-          text: 'Se actualizo correctamente el Crucero',
-          icon: 'success',
-          button: 'Aceptar',
-          timer: 2000
-        })
+      if (res?.data?.UpdateCrucero) {
+        return 'exito'
       }
     }
   }
@@ -205,7 +197,7 @@ export const useCruceroServices = (
         }
       }).catch((error) => console.error('que error', error))
       refetch()
-      if (res?.data?.UpdateCruceroEstado) {
+      if (res?.data?.UpdateCrucero) {
         return 'exito'
       }
     }
@@ -221,7 +213,7 @@ export const useCruceroServices = (
         }
       }).catch((error) => console.error('que error', error))
       refetch()
-      if (res?.data?.UpdateCruceroDestacado) {
+      if (res?.data?.UpdateCrucero) {
         return 'exito'
       }
     }

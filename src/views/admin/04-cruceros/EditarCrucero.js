@@ -8,11 +8,11 @@ import Heading from '../../../components/Heading'
 import { useCategoriasServices } from '../../../services/useCategoriaServices'
 import UseForm from '../../../hooks/UseForm'
 import { Ciudades, Regiones } from '../../../data/dataPeru'
-import swal from 'sweetalert'
 import { useHistory, useLocation } from 'react-router'
 import SelectImage from '../../../components/SelectImage'
 import SelectMultiImages from '../../../components/SelectMultiImages'
 import { useCruceroServices } from '../../../services/useCruceroServices'
+import toast from 'react-hot-toast'
 const initialForm = {
   titulo: '',
   categorias: '',
@@ -51,11 +51,9 @@ const otherErrors = {}
 
 const EditarCrucero = () => {
   const history = useHistory()
-  const { state } = useLocation()
-  console.log(state.tourId)
   const { state: objetoCrucero } = useLocation()
   const { db: dataCategoria } = useCategoriasServices()
-  const { updateCrucero, errorUpdate } = useCruceroServices()
+  const { updateCrucero } = useCruceroServices()
   const { form, handleInputChange, handleBlur, errors } = UseForm(
     initialForm,
     validationsForm
@@ -127,27 +125,13 @@ const EditarCrucero = () => {
         idImgSecundaria: secondaryImage.id,
         keywords: eliminarDuplicado(keywords),
         galeria: eliminarDuplicado(galery)
-      })
-      // console.log(errorUpdate)
-
-      if (errorUpdate) {
-        swal({
-          title: 'ERROR',
-          text: 'OACURRIO UN ERROR EN EL SERVIDOR',
-          icon: 'error',
-          button: 'Aceptar',
-          timer: 2000
-        })
-      } else {
-        history.push('/cruceros')
-      }
-    } else {
-      swal({
-        title: 'DATOS INCOMPLETOS',
-        text: 'Complete todos los datos requeridos',
-        icon: 'warning',
-        button: 'Aceptar',
-        timer: 2000
+      }).then((res) => {
+        if (res === 'exito') {
+          toast.success('Se actualizo el Crucero')
+          history.push('/cruceros')
+        } else {
+          toast.error('Nose puedo actualizar el Crucero')
+        }
       })
     }
   }
@@ -234,23 +218,18 @@ const EditarCrucero = () => {
               className="cursor-pointer w-full text-sm text-black transition ease-in duration-150 px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
               id="categorias"
               name="categorias"
+              autoComplete="off"
               onChange={handleInputChange}
               onBlur={handleBlur}
               value={form.categorias}
               required
             >
-              <option className="cursor-pointer" value="" defaultValue>
+              <option className="cursor-pointer" defaultValue>
                 Selecciona una Categoria
               </option>
               {dataCategoria &&
                 dataCategoria.map((item) => (
-                  <option
-                    key={item.categoriaId}
-                    value={item.slugCategoria}
-                    selected={
-                      objetoCrucero.slugCategoria === item.slugCategoria
-                    }
-                  >
+                  <option key={item.categoriaId} value={item.slugCategoria}>
                     {item.tituloCategoria}
                   </option>
                 ))}
@@ -280,15 +259,11 @@ const EditarCrucero = () => {
               onBlur={handleBlur}
               value={form.region}
             >
-              <option className="cursor-pointer" value="" defaultValue>
+              <option className="cursor-pointer" defaultValue>
                 Selecciona una Region
               </option>
               {Regiones.map((region) => (
-                <option
-                  key={region}
-                  value={region}
-                  selected={region === objetoCrucero.regionTour}
-                >
+                <option key={region} value={region}>
                   {region}
                 </option>
               ))}
@@ -315,15 +290,11 @@ const EditarCrucero = () => {
               required
               value={form.ciudad}
             >
-              <option className="cursor-pointer" value="" defaultValue>
+              <option className="cursor-pointer" defaultValue>
                 Selecciona una Ciudad
               </option>
               {Ciudades(form.region).map((ciudad) => (
-                <option
-                  key={ciudad}
-                  value={ciudad}
-                  selected={ciudad === objetoCrucero.ciudadTour}
-                >
+                <option key={ciudad} value={ciudad}>
                   {ciudad}
                 </option>
               ))}
@@ -739,7 +710,7 @@ const EditarCrucero = () => {
             name="precioBase"
             label="Precio Base"
             placeholder="Ingresa un precio base"
-            type="text"
+            type="number"
             onChange={handleInputChange}
             required
             value={form.precioBase}

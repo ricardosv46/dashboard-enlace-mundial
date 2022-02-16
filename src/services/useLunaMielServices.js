@@ -1,5 +1,4 @@
 import { useQuery } from '@apollo/client'
-import swal from 'sweetalert'
 import {
   useCreateLunaMielMutation,
   useDeleteLunaMielMutation,
@@ -120,6 +119,7 @@ export const useLunaMielServices = (
           }
         }
       }).catch((error) => console.error(' error', error))
+      console.log({ res })
       if (res?.data?.CreateLunaMiel) {
         return 'exito'
       }
@@ -175,19 +175,12 @@ export const useLunaMielServices = (
             precioBaseLuna: precioBaseLuna
           }
         }
-      }).catch((error) => console.error('que error', error))
-      refetch()
-      console.log(res)
-      console.log(errorUpdate)
-      if (!errorUpdate) {
-        swal({
-          title: 'ACTUALIZAR',
-          text: 'Se actualizo correctamente la Luna Miel',
-          icon: 'success',
-          button: 'Aceptar',
-          timer: 2000
-        })
+      }).catch((error) => console.error(' error', error))
+
+      if (res?.data?.UpdateLunaMiel) {
+        return 'exito'
       }
+      refetch()
     }
   }
 
@@ -220,6 +213,7 @@ export const useLunaMielServices = (
       }).catch((error) => console.error('que error', error))
 
       refetch()
+
       if (res?.data?.UpdateLunaMielDestacado) {
         return 'exito'
       }

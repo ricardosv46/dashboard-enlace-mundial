@@ -123,8 +123,15 @@ const Categorias = () => {
                                   if (rpta) {
                                     deleteCategoria({
                                       id: category?.categoriaId
+                                    }).then((res) => {
+                                      if (res === 'exito') {
+                                        toast.success('Categoría Eliminada!')
+                                      } else {
+                                        toast.error(
+                                          'No se pudo Eliminar categoría'
+                                        )
+                                      }
                                     })
-                                    toast.success('Categoría Eliminada!')
                                   }
                                 })
                               }}

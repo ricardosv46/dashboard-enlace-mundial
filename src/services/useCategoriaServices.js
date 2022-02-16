@@ -12,7 +12,6 @@ export const useCategoriasServices = () => {
     loading: loadingGetData,
     refetch
   } = useQuery(GET_ALL_CATEGORYS, {
-    fetchPolicy: 'network-only',
     onError: (err) => {
       console.log(
         'onError getAllData Categorys',
@@ -60,7 +59,7 @@ export const useCategoriasServices = () => {
     })
     console.log('CreateCategorysTour', resp)
     refetch()
-    if (resp.data?.createCategoria) return 'exito'
+    if (resp.data?.CreateCategoria) return 'exito'
   }
 
   const [updateCategorys, { loading: loadingUpdate }] = useMutation(
@@ -98,7 +97,8 @@ export const useCategoriasServices = () => {
       }
     })
     refetch()
-    if (resp.data?.updateCategoria) return 'exito'
+
+    if (resp.data?.UpdateCategoria) return 'exito'
   }
 
   const [deleteCategorys, { loading: loadingDelete }] = useMutation(
@@ -122,7 +122,7 @@ export const useCategoriasServices = () => {
       }
     })
     refetch()
-    if (resp.data?.deleteCategoria) return 'exito'
+    if (resp) return 'exito'
   }
 
   const updateCategoriaEstado = async ({ estado, id }) => {
