@@ -359,7 +359,7 @@ const CrearTour = () => {
               alt=""
               className="rounded-full absolute right-2 bg-white top-8 border p-1 cursor-pointer"
               onClick={() => {
-                
+
                 if (textItinerario.trim() !== '') {
                   setItinerario((estado) => [...estado, textItinerario.trim()])
                   setTextItinerario('')
@@ -438,7 +438,12 @@ const CrearTour = () => {
               className="cursor-pointer w-full text-sm text-black transition ease-in duration-150 px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
               id="incluye"
               name="incluye"
-              onChange={handleInputChange}
+              onChange={(e) => {
+                handleInputChange(e)
+                if (e.target.value.trim() !== '') {
+                  setIncluye((estado) => [...estado, e.target.value])
+                }
+              }}
               onBlur={handleBlur}
               value={form.incluye}
               required
@@ -451,11 +456,6 @@ const CrearTour = () => {
                   <option
                     key={item?.incluyeId}
                     value={item?.incluyeId}
-                    onClick={() => {
-                      if (form.incluye.trim() !== '') {
-                        setIncluye((estado) => [...estado, form.incluye.trim()])
-                      }
-                    }}
                   >
                     {item?.incluyeId} - {item?.descripcionIncluye}
                   </option>
@@ -546,7 +546,15 @@ const CrearTour = () => {
               className="cursor-pointer w-full text-sm text-black transition ease-in duration-150 px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
               id="actividades"
               name="actividades"
-              onChange={handleInputChange}
+              onChange={(e) => {
+                handleInputChange(e)
+                if (e.target.value.trim() !== '') {
+                  setActividades((estado) => [
+                    ...estado,
+                    e.target.value
+                  ])
+                }
+              }}
               onBlur={handleBlur}
               value={form.actividades}
               required
@@ -559,14 +567,6 @@ const CrearTour = () => {
                   <option
                     key={item?.actividadId}
                     value={item?.actividadId}
-                    onClick={() => {
-                      if (form.actividades.trim() !== '') {
-                        setActividades((estado) => [
-                          ...estado,
-                          form.actividades.trim()
-                        ])
-                      }
-                    }}
                   >
                     {item?.actividadId} - {item?.descripcion_actividad}
                   </option>
