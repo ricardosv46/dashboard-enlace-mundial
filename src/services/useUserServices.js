@@ -20,7 +20,7 @@ export const useUserServices = () => {
       estado: '',
       numberPaginate: 12,
       page: 1,
-      tipoUsuario: 1
+      tipoUsuario: 2
     }
   })
 

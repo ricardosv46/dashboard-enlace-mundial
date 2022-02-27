@@ -8,6 +8,7 @@ import pestanaFalse from '../../assets/imgs/pestana.png'
 import pestanaTrue from '../../assets/imgs/eye.svg'
 import { AuthContext } from '../../auth/authContext'
 import { types } from '../../types/types'
+import { useLoginServices } from '../../services/useLoginServices'
 const Login = () => {
   const { dispatch } = useContext(AuthContext)
   const [show, setShow] = useState(false)
@@ -23,6 +24,8 @@ const Login = () => {
     history.push('/auth/login/olvidaste-contrasena')
   }
 
+  const { loginUsuario } = useLoginServices()
+
   return (
     <div className="h-screen flex justify-center px-4 md:px-0 ">
       <img
@@ -37,18 +40,19 @@ const Login = () => {
           initialValues={initial}
           validate={({ user, password }) => validateFields({ user, password })}
           onSubmit={({ user, password }, { resetForm }) => {
-            if (user === 'admin@gmail.com' && password === '123456') {
-              const action = {
-                type: types.login,
-                payload: {
-                  usuario: user,
-                  contraseña: password
+            loginUsuario({ email: user, password: password }).then((res) => {
+              if (res === 'exito') {
+                const action = {
+                  type: types.login,
+                  payload: {
+                    usuario: user,
+                    contraseña: password
+                  }
                 }
+                dispatch(action)
+                history.push('/')
               }
-              dispatch(action)
-              history.push('/')
-            }
-
+            })
             setFormReady(true)
             setTimeout(() => setFormReady(false), 6000)
           }}
@@ -63,8 +67,9 @@ const Login = () => {
                   Usuario
                 </label>
                 <Field
-                  className={`w-full rounded-xl text-gray-800 border-2 ${errors.user ? 'border-red-600' : 'border-primary-500'
-                    } mb-1 outline-none py-2 pl-4
+                  className={`w-full rounded-xl text-gray-800 border-2 ${
+                    errors.user ? 'border-red-600' : 'border-primary-500'
+                  } mb-1 outline-none py-2 pl-4
                         focus:ring-2  focus:ring-2 focus:ring-accent focus:border-primary-800`}
                   type="text"
                   id="user"
@@ -88,8 +93,9 @@ const Login = () => {
                 </label>
                 <div className="relative">
                   <Field
-                    className={`w-full rounded-xl text-gray-800 border-2 ${errors.password ? 'border-red-600' : 'border-primary-500'
-                      } mb-1 outline-none py-2 pl-4 focus:ring-2  focus:ring-2 focus:ring-accent focus:border-primary-800`}
+                    className={`w-full rounded-xl text-gray-800 border-2 ${
+                      errors.password ? 'border-red-600' : 'border-primary-500'
+                    } mb-1 outline-none py-2 pl-4 focus:ring-2  focus:ring-2 focus:ring-accent focus:border-primary-800`}
                     type={show ? 'text' : 'password'}
                     id="password"
                     name="password"
