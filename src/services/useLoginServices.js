@@ -18,7 +18,7 @@ export const useLoginServices = () => {
         }
       }
     })
-    console.log('LoginUsuario', res)
+    console.log('LoginUsuario')
 
     if (res.data?.login?.tipoUsuario === 1) {
       return 'exito'

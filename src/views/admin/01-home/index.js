@@ -25,38 +25,38 @@ const Home = () => {
   useEffect(() => {
     // console.log('useEffect[counter1]')
   }, [counter1])
-  const datos = [
-    // {
-    //   nombre: 'percy',
-    //   edad: 27
-    // },
-    // {
-    //   nombre: 'pedro',
-    //   edad: 60
-    // }
-  ]
-  const getDatos = () => {
-    return new Promise((resolve, reject) => {
-      if (datos.length === 0) {
-        reject(new Error('No existe Datos'))
-      }
-      setTimeout(() => {
-        resolve(datos)
-      }, 1500)
-    })
-  }
+  // const datos = [
+  //   // {
+  //   //   nombre: 'percy',
+  //   //   edad: 27
+  //   // },
+  //   // {
+  //   //   nombre: 'pedro',
+  //   //   edad: 60
+  //   // }
+  // ]
+  // const getDatos = () => {
+  //   return new Promise((resolve, reject) => {
+  //     if (datos.length === 0) {
+  //       reject(new Error('No existe Datos'))
+  //     }
+  //     setTimeout(() => {
+  //       resolve(datos)
+  //     }, 1500)
+  //   })
+  // }
   // getDatos()
   //   .then((datos) => console.log(datos))
   //   .catch((error) => console.log(error))
-  const fetcDatos = async () => {
-    try {
-      const db = await getDatos()
-      console.log(db)
-    } catch (error) {
-      console.log(error.message)
-    }
-  }
-  console.log(fetcDatos())
+  // const fetcDatos = async () => {
+  //   try {
+  //     const db = await getDatos()
+  //     console.log(db)
+  //   } catch (error) {
+  //     console.log(error.message)
+  //   }
+  // }
+  // console.log(fetcDatos())
   return (
     <div className="">
       <h1>Clicks c1: {counter1}</h1>

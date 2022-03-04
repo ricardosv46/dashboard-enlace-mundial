@@ -185,5 +185,18 @@ export const menuData = [
     subMenu: {
       value: false
     }
+  },
+  {
+    nameLink: 'Checkout',
+    icono: {
+      value: true,
+      getIcon: iconOfertas
+    },
+
+    path: '/checkout',
+
+    subMenu: {
+      value: false
+    }
   }
 ]

@@ -51,9 +51,11 @@ const Login = () => {
                 }
                 dispatch(action)
                 history.push('/')
+              } else {
+                setFormReady(true)
               }
             })
-            setFormReady(true)
+
             setTimeout(() => setFormReady(false), 6000)
           }}
         >
