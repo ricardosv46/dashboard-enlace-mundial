@@ -76,6 +76,7 @@ const Blogs = () => {
                 className="p-1 w-20 text-center text-gray-600 "
                 onChange={(e) => setNroPagina(e.target.value)}
                 value={nroPagina}
+                y
               >
                 {arregloSelect?.map((elemento, index) => (
                   <option

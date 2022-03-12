@@ -26,8 +26,7 @@ const dataHead = [
 ]
 const initialForm = {
   cupos: '',
-  precio: '',
-  hora: ''
+  precio: ''
 }
 const CalendarioTour = () => {
   const { handleInputChange, form, resetForm } = UseForm(initialForm)
@@ -61,7 +60,8 @@ const CalendarioTour = () => {
     openModalActualizarCalendario()
     form.cupos = horario.cupos
     form.precio = horario.precio
-    form.hora = horario.hora
+    form.horaIncial = horario.hora.split(',')[0]
+    form.horaFinal = horario.hora.split(',')[1]
     form.fecha = horario.fecha
     form.horarioTourId = horario.horarioTourId
     form.tourId = horario.tourId
@@ -155,7 +155,6 @@ const CalendarioTour = () => {
           updateHorario={updateHorario}
           loading={loading}
           closeModal={closeModalActualizarCalendario}
-          loading={loading}
           handleInputChange={handleInputChange}
           form={form}
           resetForm={resetForm}

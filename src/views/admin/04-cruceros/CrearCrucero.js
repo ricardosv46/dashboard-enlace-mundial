@@ -67,6 +67,7 @@ const CrearCrucero = () => {
   const [textAactividades, setTextActividaes] = useState('')
   const [textItinerario, setTextItinerario] = useState('')
   const [itinerario, setItinerario] = useState([])
+  console.log(itinerario)
   const [textNotas, setTextNotas] = useState('')
   const [keywords, setKeywords] = useState([])
   const [textKeywords, setTextKeywords] = useState('')

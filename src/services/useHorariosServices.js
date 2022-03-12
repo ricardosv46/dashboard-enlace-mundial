@@ -61,7 +61,7 @@ export const useHorariosServices = () => {
     const response = await createHorarioMutation({
       variables: {
         input: {
-          hora: horario.hora,
+          hora: horario.hora.join(','),
           cupos: horario.cupos,
           precio: horario.precio,
           tourId: horario.tourId,
@@ -130,7 +130,7 @@ export const useHorariosServices = () => {
         variables: {
           input: {
             horarioTourId: horarioTourId,
-            hora: hora,
+            hora: hora.join(','),
             cupos: cupos,
             fecha: fecha,
             precio: precio,

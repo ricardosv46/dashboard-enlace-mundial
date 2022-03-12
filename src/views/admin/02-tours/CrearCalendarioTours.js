@@ -3,7 +3,6 @@ import 'react-modern-calendar-datepicker/lib/DatePicker.css'
 import { Calendar, utils } from 'react-modern-calendar-datepicker'
 import Button from '../../../components/Buttons/Button'
 import Spinner from '../../../components/Spinner/Spinner'
-import BtnEstado from '../../../components/BtnEstado/BtnEstado'
 import toast, { Toaster } from 'react-hot-toast'
 
 const CrearCalendarioTours = ({
@@ -22,10 +21,10 @@ const CrearCalendarioTours = ({
   const [formFecha, setFormFecha] = useState({
     cupos: '',
     precio: '',
-    estado: '',
-    hora: ''
+    horaIncial: '',
+    horaFinal: ''
   })
-  // console.log(formFecha)
+  console.log(formFecha)
   const handleChangeForm = (e) => {
     if (e.target.name === 'cupos' || e.target.name === 'precio') {
       if (e.target.value < 0) {
@@ -39,10 +38,12 @@ const CrearCalendarioTours = ({
     }))
   }
 
+  const hora = [formFecha.horaIncial, formFecha.horaFinal]
+
   const handleSubmit = (e) => {
     e.preventDefault()
     onCreateHorario({
-      hora: formFecha.hora,
+      hora: hora,
       cupos: formFecha.cupos,
       precio: formFecha.precio,
       tourId: tourId,
@@ -55,8 +56,8 @@ const CrearCalendarioTours = ({
         setFormFecha({
           cupos: '',
           precio: '',
-          estado: '',
-          hora: ''
+          horaIncial: '',
+          horaFinal: ''
         })
         // reseteamos el calendario a la fecha actual
         setSelectedDay(todayValue)
@@ -132,6 +133,44 @@ const CrearCalendarioTours = ({
               htmlFor="hora"
               className="block text-gray-700 text-left text-lg"
             >
+              Hora Inicial
+            </label>
+            <input
+              className="shadow-sm text-lg px-3 py-2 rounded-lg border focus:border-blue-500 focus:bg-white focus:outline-none"
+              required
+              id="horaInical"
+              name="horaIncial"
+              type="time"
+              min="09:00"
+              max="18:00"
+              value={formFecha.horaIncial}
+              onChange={handleChangeForm}
+            />
+          </div>
+          <div className="flex flex-col">
+            <label
+              htmlFor="hora"
+              className="block text-gray-700 text-left text-lg"
+            >
+              Hora final
+            </label>
+            <input
+              className="shadow-sm text-lg px-3 py-2 rounded-lg border focus:border-blue-500 focus:bg-white focus:outline-none"
+              required
+              id="horaFinal"
+              name="horaFinal"
+              type="time"
+              min="09:00"
+              max="18:00"
+              value={formFecha.horaFinal}
+              onChange={handleChangeForm}
+            />
+          </div>
+          {/* <div className="flex flex-col">
+            <label
+              htmlFor="hora"
+              className="block text-gray-700 text-left text-lg"
+            >
               Hora
             </label>
             <input
@@ -143,16 +182,7 @@ const CrearCalendarioTours = ({
               value={formFecha.hora}
               onChange={handleChangeForm}
             />
-          </div>
-          <div className=" flex items-center ">
-            <label
-              htmlFor="hora"
-              className="block text-gray-700 text-left text-lg"
-            >
-              Estado
-            </label>
-            <BtnEstado estado={1} />
-          </div>
+          </div> */}
         </div>
 
         <div className="mt-8 text-center">

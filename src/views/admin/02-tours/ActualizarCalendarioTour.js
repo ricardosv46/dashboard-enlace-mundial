@@ -9,13 +9,14 @@ const ActualizarCalendarioTour = ({
   handleInputChange,
   closeModal
 }) => {
+  console.log(form)
   const handleSubmit = (e) => {
     e.preventDefault()
     updateHorario({
       cupos: form.cupos,
       fecha: form.fecha,
       precio: form.precio,
-      hora: form.hora,
+      hora: [form.horaIncial, form.horaFinal],
       horarioTourId: form.horarioTourId,
       tourId: form.tourId
     }).then((rpta) => {
@@ -75,6 +76,44 @@ const ActualizarCalendarioTour = ({
               htmlFor="hora"
               className="block text-gray-700 text-left text-lg"
             >
+              Hora Inicial
+            </label>
+            <input
+              className="shadow-sm text-lg px-3 py-2 rounded-lg border focus:border-blue-500 focus:bg-white focus:outline-none"
+              required
+              id="horaInical"
+              name="horaIncial"
+              type="time"
+              min="09:00"
+              max="18:00"
+              value={form.horaIncial}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className="flex flex-col">
+            <label
+              htmlFor="hora"
+              className="block text-gray-700 text-left text-lg"
+            >
+              Hora final
+            </label>
+            <input
+              className="shadow-sm text-lg px-3 py-2 rounded-lg border focus:border-blue-500 focus:bg-white focus:outline-none"
+              required
+              id="horaFinal"
+              name="horaFinal"
+              type="time"
+              min="09:00"
+              max="18:00"
+              value={form.horaFinal}
+              onChange={handleInputChange}
+            />
+          </div>
+          {/* <div className="flex flex-col">
+            <label
+              htmlFor="hora"
+              className="block text-gray-700 text-left text-lg"
+            >
               Hora
             </label>
             <input
@@ -86,7 +125,7 @@ const ActualizarCalendarioTour = ({
               value={form.hora}
               onChange={handleInputChange}
             />
-          </div>
+          </div> */}
         </div>
 
         <div className="mt-8 text-center">
