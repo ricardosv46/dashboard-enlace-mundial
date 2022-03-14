@@ -18,6 +18,7 @@ const CrearCalendarioTours = ({
     day: today.getDate()
   }
   const [selectedDay, setSelectedDay] = useState(todayValue)
+  console.log({ todayValue })
   const [formFecha, setFormFecha] = useState({
     cupos: '',
     precio: '',
