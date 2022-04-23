@@ -105,7 +105,11 @@ const Checkout = () => {
                       </td>
 
                       <td className="text-start  uppercase text-gray-600 py-6 px-4 min-h-20 text-center">
-                        {orden?.Pasajes[0].Tour?.imagenPrincipalTour?.url}
+                        <img
+                          src={orden?.Pasajes[0].Tour?.imagenPrincipalTour?.url}
+                          alt=""
+                          className="max-w-20 max-h-24"
+                        />
                       </td>
 
                       <td className="text-start  uppercase text-gray-600 py-6 px-4 min-h-20 text-center">
