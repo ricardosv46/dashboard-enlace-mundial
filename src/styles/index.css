@@ -20,3 +20,16 @@
   position: absolute;
   top: 80px;
 }
+
+
+
+/* custom scroll bar */
+.scroll::-webkit-scrollbar {
+  height: 5px;
+  width: 5px;
+}
+.scroll::-webkit-scrollbar-thumb {
+  background-color: #dee2e6;
+  border-radius: 5px;
+}
+
