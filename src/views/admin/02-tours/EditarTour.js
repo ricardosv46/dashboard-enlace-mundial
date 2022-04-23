@@ -247,7 +247,7 @@ const EditarTour = () => {
       <div className="flex justify-center pt-3 relative">
         <ButtonBack />
 
-        <Heading>Crear Nuevo Tour</Heading>
+        <Heading>Editar Nuevo Tour</Heading>
       </div>
       <form
         onSubmit={handleSubmit}

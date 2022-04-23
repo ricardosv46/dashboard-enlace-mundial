@@ -7,7 +7,7 @@ import toast, { Toaster } from 'react-hot-toast'
 
 const CrearCalendarioTours = ({
   tourId,
-  onCreateHorario = () => {},
+  onCreateHorario = () => { },
   loading,
   closeModal
 }) => {
@@ -142,8 +142,6 @@ const CrearCalendarioTours = ({
               id="horaInical"
               name="horaIncial"
               type="time"
-              min="09:00"
-              max="18:00"
               value={formFecha.horaIncial}
               onChange={handleChangeForm}
             />
@@ -161,8 +159,6 @@ const CrearCalendarioTours = ({
               id="horaFinal"
               name="horaFinal"
               type="time"
-              min="09:00"
-              max="18:00"
               value={formFecha.horaFinal}
               onChange={handleChangeForm}
             />

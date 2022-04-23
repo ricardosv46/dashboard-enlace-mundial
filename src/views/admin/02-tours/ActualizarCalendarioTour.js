@@ -84,8 +84,6 @@ const ActualizarCalendarioTour = ({
               id="horaInical"
               name="horaIncial"
               type="time"
-              min="09:00"
-              max="18:00"
               value={form.horaIncial}
               onChange={handleInputChange}
             />
@@ -103,8 +101,6 @@ const ActualizarCalendarioTour = ({
               id="horaFinal"
               name="horaFinal"
               type="time"
-              min="09:00"
-              max="18:00"
               value={form.horaFinal}
               onChange={handleInputChange}
             />
