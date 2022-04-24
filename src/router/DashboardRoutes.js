@@ -31,6 +31,7 @@ import Departamentos from '../views/admin/12-departamentos'
 import Incluye from '../views/admin/13-incluye'
 import Actividades from '../views/admin/14-actividades'
 import Checkout from '../views/admin/Checkout'
+import DetallesCompra from '../views/admin/Checkout/[id]'
 
 const DashboardRoutes = () => {
   const location = useLocation()
@@ -147,6 +148,11 @@ const DashboardRoutes = () => {
             component={EditarCategoriaBlog}
           />
           <Route exact path="/checkout" component={Checkout} />
+          <Route
+            exact
+            path="/checkout/:id"
+            component={DetallesCompra}
+          />
         </Switch>
       </Layout>
     </>

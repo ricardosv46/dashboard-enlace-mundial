@@ -5,7 +5,7 @@ import ModalSelectImage from '../Modales/ModalSelectImage'
 
 import styles from './index.module.css'
 
-const SelectMultiImages = ({ value, onChange = () => {} }) => {
+const SelectMultiImages = ({ value, onChange = () => { } }) => {
   const [images, setImages] = useState([])
   const [isOpen, setIsOpen] = useState(false)
 

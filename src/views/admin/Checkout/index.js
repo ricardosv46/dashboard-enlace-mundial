@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import toast, { Toaster } from 'react-hot-toast'
+import { useHistory } from 'react-router-dom'
+import { IconEyes } from '../../../assets/icons/icons'
 import BtnEstado from '../../../components/BtnEstado/BtnEstado'
 
 import Heading from '../../../components/Heading'
@@ -7,6 +9,8 @@ import Spinner from '../../../components/Spinner/Spinner'
 import { useOrdenServices } from '../../../services/useOrdenServices'
 
 const Checkout = () => {
+  const history = useHistory()
+
   const [nroPagina, setNroPagina] = useState(1)
   const [arregloSelect, setArregloSelect] = useState([])
   const { dataOrden, loadingGetData, nroTotalItems, updateOrdenTourEstado } =
@@ -92,6 +96,9 @@ const Checkout = () => {
                     <th className="px-4 py-6 text-gray-600 min-w-10 text-center">
                       Acciones
                     </th>
+                    <th className="px-4 py-6 text-gray-600 min-w-10 text-center">
+                      Detalle
+                    </th>
                   </tr>
                 </thead>
                 <tbody className="text-base bg-white border-gray-100 text-gray-700 ">
@@ -101,10 +108,11 @@ const Checkout = () => {
                       className="font-medium hover:shadow-md  transform transition-all duration-300  hover:-translate-y-1"
                     >
                       <td className="text-start  uppercase text-gray-600 py-6 px-4 min-h-20 text-center">
-                        {(nroPagina - 1) * 10 + index + 1}
+                        {/*   {(nroPagina - 1) * 10 + index + 1} */}
+                        {orden?.ordenTourId}
                       </td>
 
-                      <td className="text-start  uppercase text-gray-600 py-6 px-4 min-h-20 text-center">
+                      <td className="flex justify-center  uppercase text-gray-600 py-6 px-4 min-h-20 text-center">
                         <img
                           src={orden?.Pasajes[0].Tour?.imagenPrincipalTour?.url}
                           alt=""
@@ -143,6 +151,14 @@ const Checkout = () => {
                             }
                           />
                         </button>
+                      </td>
+                      <td className="  uppercase text-gray-600 py-6 px-4 min-h-20 text-center">
+                        <button onClick={() => {
+                          history.push(`/checkout/${orden?.ordenTourId}`, orden)
+                        }}>
+                          <IconEyes width="24" height="24" />
+                        </button>
+
                       </td>
                     </tr>
                   ))}

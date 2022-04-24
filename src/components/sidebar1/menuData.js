@@ -29,6 +29,19 @@ export const menuData = [
     }
   },
   {
+    nameLink: 'Reservas',
+    icono: {
+      value: true,
+      getIcon: iconOfertas
+    },
+
+    path: '/checkout',
+
+    subMenu: {
+      value: false
+    }
+  },
+  {
     nameLink: 'Galeria',
     icono: {
       value: true,
@@ -181,19 +194,6 @@ export const menuData = [
     },
 
     path: '/ofertas',
-
-    subMenu: {
-      value: false
-    }
-  },
-  {
-    nameLink: 'Checkout',
-    icono: {
-      value: true,
-      getIcon: iconOfertas
-    },
-
-    path: '/checkout',
 
     subMenu: {
       value: false

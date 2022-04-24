@@ -228,6 +228,7 @@ const EditarTour = () => {
       form.regionTour = data.GetSlugTour?.regionTour
       setMainImage(data.GetSlugTour?.imagenPrincipalTour)
       setSecondaryImage(data.GetSlugTour?.imagenSecundariaTour)
+      /*   setGalery(data.GetSlugTour?.galeriaTour) */
       data.GetSlugTour?.ActividadesTour.map((el) =>
         setActividades((actividad) => [el.actividadId, ...actividad])
       )
@@ -855,11 +856,13 @@ const EditarTour = () => {
         </p>
         {/* La propiedad value recibe un Array de objetos con id, url y descripcion */}
         {/* La propiedad onChange devuelve un Array de objetos con id, url y descripcion */}
+
         <SelectMultiImages
+          /* value={galery} */
           onChange={(imgs) => {
             setGalery([])
             imgs.map((image) => setGalery([...galery, image.id]))
-            // console.log(imgs)
+
           }}
         />
 
