@@ -1,7 +1,6 @@
 import { useQuery } from '@apollo/client'
-import { GET_ID_ORDEN_TOUR } from '../graphql/queries/getIdOrderTour'
+import { GET_ID_ORDEN_TOUR } from '../graphql/query/getIdOrdenTour'
 
-//
 export const useIdOrdenServices = ({ ordenTourId }) => {
   const { data, loading: loadingGetData } = useQuery(GET_ID_ORDEN_TOUR, {
     fetchPolicy: 'network-only',
