@@ -98,6 +98,9 @@ const CrearTour = () => {
     const newData = new Set(data)
     return [...newData]
   }
+
+  console.log(dataActividades)
+
   const handleSubmit = (e) => {
     e.preventDefault()
 
@@ -127,14 +130,14 @@ const CrearTour = () => {
         galeriaTour: galery,
         imagenPrincipalTour: mainImage?.id,
         imagenSecundariaTour: secondaryImage?.id,
-        itinerarioTour: (eliminarDuplicado(itinerario)).join(','),
-        keywordsTour: (eliminarDuplicado(keywords)).join(','),
-        notasTour: (eliminarDuplicado(notas)).join(','),
-        noIncluyeTour: (eliminarDuplicado(noIncluye)).join(','),
+        itinerarioTour: eliminarDuplicado(itinerario).join(','),
+        keywordsTour: eliminarDuplicado(keywords).join(','),
+        notasTour: eliminarDuplicado(notas).join(','),
+        noIncluyeTour: eliminarDuplicado(noIncluye).join(','),
         nroDias: form.numeroDias,
         nroHoras: form.numeroHoras,
         precioBaseTour: form.precioBase,
-        politicasTour: (eliminarDuplicado(politicas)).join(','),
+        politicasTour: eliminarDuplicado(politicas).join(','),
         puntoPartidaTour: form.puntoPartida,
         tituloTour: form.titulo,
         videoPresentacionTour: form.video,
@@ -359,7 +362,6 @@ const CrearTour = () => {
               alt=""
               className="rounded-full absolute right-2 bg-white top-8 border p-1 cursor-pointer"
               onClick={() => {
-
                 if (textItinerario.trim() !== '') {
                   setItinerario((estado) => [...estado, textItinerario.trim()])
                   setTextItinerario('')
@@ -440,6 +442,7 @@ const CrearTour = () => {
               name="incluye"
               onChange={(e) => {
                 handleInputChange(e)
+                console.log(e.target.value)
                 if (e.target.value.trim() !== '') {
                   setIncluye((estado) => [...estado, e.target.value])
                 }
@@ -453,10 +456,7 @@ const CrearTour = () => {
                 <option value={null}>Cargando...</option>
               ) : (
                 dataIncluye?.map((item) => (
-                  <option
-                    key={item?.incluyeId}
-                    value={item?.incluyeId}
-                  >
+                  <option key={item?.incluyeId} value={item?.incluyeId}>
                     {item?.incluyeId} - {item?.descripcionIncluye}
                   </option>
                 ))
@@ -476,7 +476,13 @@ const CrearTour = () => {
                   onClick={() => eliminarItem(item, incluye, setIncluye)}
                 >
                   <span className="text-sm text-red-600">X</span>
-                  <p className="text-sm  inline-block text-gra">{item}</p>
+                  <p className="text-sm  inline-block text-gra">
+                    {
+                      dataIncluye?.find(
+                        (value) => parseInt(value?.incluyeId) === parseInt(item)
+                      ).descripcionIncluye
+                    }
+                  </p>
                 </div>
               ))}
             </div>
@@ -549,10 +555,7 @@ const CrearTour = () => {
               onChange={(e) => {
                 handleInputChange(e)
                 if (e.target.value.trim() !== '') {
-                  setActividades((estado) => [
-                    ...estado,
-                    e.target.value
-                  ])
+                  setActividades((estado) => [...estado, e.target.value])
                 }
               }}
               onBlur={handleBlur}
@@ -564,10 +567,7 @@ const CrearTour = () => {
                 <option value={null}>Cargando...</option>
               ) : (
                 dataActividades?.map((item) => (
-                  <option
-                    key={item?.actividadId}
-                    value={item?.actividadId}
-                  >
+                  <option key={item?.actividadId} value={item?.actividadId}>
                     {item?.actividadId} - {item?.descripcion_actividad}
                   </option>
                 ))
@@ -584,7 +584,14 @@ const CrearTour = () => {
                   }
                 >
                   <span className="text-sm text-red-600">X</span>
-                  <p className="text-sm  inline-block text-gra">{item}</p>
+                  <p className="text-sm  inline-block text-gra">
+                    {
+                      dataActividades?.find(
+                        (value) =>
+                          parseInt(value?.actividadId) === parseInt(item)
+                      ).descripcion_actividad
+                    }
+                  </p>
                 </div>
               ))}
             </div>
@@ -820,8 +827,6 @@ const CrearTour = () => {
             />
           </div>
         </div>
-
-
 
         <p className="mb-3 text-gray-700 text-left text-sm">
           Agregar imagen a la galeria

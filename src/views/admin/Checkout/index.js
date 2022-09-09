@@ -13,6 +13,7 @@ const Checkout = () => {
 
   const [nroPagina, setNroPagina] = useState(1)
   const [arregloSelect, setArregloSelect] = useState([])
+
   const { dataOrden, loadingGetData, nroTotalItems, updateOrdenTourEstado } =
     useOrdenServices({
       page: nroPagina,
@@ -60,15 +61,16 @@ const Checkout = () => {
                 onChange={(e) => setNroPagina(e.target.value)}
                 value={nroPagina}
               >
-                {arregloSelect?.map((elemento, index) => (
-                  <option
-                    className="font-bold"
-                    key={elemento + index}
-                    value={elemento + index}
-                  >
-                    {elemento + index}
-                  </option>
-                ))}
+                {arregloSelect.length > 0 &&
+                  arregloSelect?.map((elemento, index) => (
+                    <option
+                      className="font-bold"
+                      key={elemento + index}
+                      value={elemento + index}
+                    >
+                      {elemento + index}
+                    </option>
+                  ))}
               </select>
             </div>
           </div>
@@ -102,66 +104,75 @@ const Checkout = () => {
                   </tr>
                 </thead>
                 <tbody className="text-base bg-white border-gray-100 text-gray-700 ">
-                  {dataOrden.map((orden, index) => (
-                    <tr
-                      key={orden?.ordenTourId}
-                      className="font-medium hover:shadow-md  transform transition-all duration-300  hover:-translate-y-1"
-                    >
-                      <td className="text-start  uppercase text-gray-600 py-6 px-4 min-h-20 text-center">
-                        {/*   {(nroPagina - 1) * 10 + index + 1} */}
-                        {orden?.ordenTourId}
-                      </td>
+                  {dataOrden.length > 0 &&
+                    dataOrden.map((orden, index) => (
+                      <tr
+                        key={orden?.ordenTourId}
+                        className="font-medium hover:shadow-md  transform transition-all duration-300  hover:-translate-y-1"
+                      >
+                        <td className="text-start  uppercase text-gray-600 py-6 px-4 min-h-20 text-center">
+                          {/*   {(nroPagina - 1) * 10 + index + 1} */}
+                          {orden?.ordenTourId}
+                        </td>
 
-                      <td className="flex justify-center  uppercase text-gray-600 py-6 px-4 min-h-20 text-center">
-                        <img
-                          src={orden?.Pasajes[0].Tour?.imagenPrincipalTour?.url}
-                          alt=""
-                          className="max-w-20 max-h-24"
-                        />
-                      </td>
-
-                      <td className="text-start  uppercase text-gray-600 py-6 px-4 min-h-20 text-center">
-                        {orden?.Pasajes[0].tituloTour}
-                      </td>
-
-                      <td className="text-start  uppercase text-gray-600 py-6 px-4 min-h-20 text-center">
-                        {orden?.Pasajes.length}
-                      </td>
-
-                      <td className="text-start  uppercase text-gray-600 py-6 px-4 min-h-20 text-center">
-                        {orden?.estadoOrdenTour}
-                      </td>
-
-                      <td className="text-start  uppercase text-gray-600 py-6 px-4 min-h-20 text-center">
-                        <button
-                          onClick={() => {
-                            updateOrdenTourEstado({
-                              ordenTourId: orden?.ordenTourId,
-                              estadoOrdenTour:
-                                orden?.estadoOrdenTour === 'PAGADO'
-                                  ? 'PENDIENTE'
-                                  : 'PAGADO'
-                            })
-                            toast.success('Se modifico el estado')
-                          }}
-                        >
-                          <BtnEstado
-                            estado={
-                              orden?.estadoOrdenTour === 'PAGADO' ? true : false
+                        <td className="flex justify-center  uppercase text-gray-600 py-6 px-4 min-h-20 text-center">
+                          <img
+                            src={
+                              orden?.Pasajes[0]?.Tour?.imagenPrincipalTour?.url
                             }
+                            alt=""
+                            className="max-w-20 max-h-24"
                           />
-                        </button>
-                      </td>
-                      <td className="  uppercase text-gray-600 py-6 px-4 min-h-20 text-center">
-                        <button onClick={() => {
-                          history.push(`/checkout/${orden?.ordenTourId}`, orden)
-                        }}>
-                          <IconEyes width="24" height="24" />
-                        </button>
+                        </td>
 
-                      </td>
-                    </tr>
-                  ))}
+                        <td className="text-start  uppercase text-gray-600 py-6 px-4 min-h-20 text-center">
+                          {orden?.Pasajes[0]?.tituloTour}
+                        </td>
+
+                        <td className="text-start  uppercase text-gray-600 py-6 px-4 min-h-20 text-center">
+                          {orden?.Pasajes.length}
+                        </td>
+
+                        <td className="text-start  uppercase text-gray-600 py-6 px-4 min-h-20 text-center">
+                          {orden?.estadoOrdenTour}
+                        </td>
+
+                        <td className="text-start  uppercase text-gray-600 py-6 px-4 min-h-20 text-center">
+                          <button
+                            onClick={() => {
+                              updateOrdenTourEstado({
+                                ordenTourId: orden?.ordenTourId,
+                                estadoOrdenTour:
+                                  orden?.estadoOrdenTour === 'PAGADO'
+                                    ? 'PENDIENTE'
+                                    : 'PAGADO'
+                              })
+                              toast.success('Se modifico el estado')
+                            }}
+                          >
+                            <BtnEstado
+                              estado={
+                                orden?.estadoOrdenTour === 'PAGADO'
+                                  ? true
+                                  : false
+                              }
+                            />
+                          </button>
+                        </td>
+                        <td className="  uppercase text-gray-600 py-6 px-4 min-h-20 text-center">
+                          <button
+                            onClick={() => {
+                              history.push(
+                                `/checkout/${orden?.ordenTourId}`,
+                                orden
+                              )
+                            }}
+                          >
+                            <IconEyes width="24" height="24" />
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
                 </tbody>
               </table>
             </div>

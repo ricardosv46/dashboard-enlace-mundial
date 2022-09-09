@@ -509,7 +509,13 @@ const EditarTour = () => {
                   onClick={() => eliminarItem(item, incluye, setIncluye)}
                 >
                   <span className="text-sm text-red-600">X</span>
-                  <p className="text-sm  inline-block text-gra">{item}</p>
+                  <p className="text-sm  inline-block text-gra">
+                    {
+                      dataIncluye?.find(
+                        (value) => parseInt(value?.incluyeId) === parseInt(item)
+                      ).descripcionIncluye
+                    }
+                  </p>
                 </div>
               ))}
             </div>
@@ -582,10 +588,7 @@ const EditarTour = () => {
               onChange={(e) => {
                 handleInputChange(e)
                 if (e.target.value.trim() !== '') {
-                  setActividades((estado) => [
-                    ...estado,
-                    e.target.value
-                  ])
+                  setActividades((estado) => [...estado, e.target.value])
                 }
               }}
               onBlur={handleBlur}
@@ -614,7 +617,14 @@ const EditarTour = () => {
                   }
                 >
                   <span className="text-sm text-red-600">X</span>
-                  <p className="text-sm  inline-block text-gra">{item}</p>
+                  <p className="text-sm  inline-block text-gra">
+                    {
+                      dataActividades?.find(
+                        (value) =>
+                          parseInt(value?.actividadId) === parseInt(item)
+                      ).descripcion_actividad
+                    }
+                  </p>
                 </div>
               ))}
             </div>
@@ -862,7 +872,6 @@ const EditarTour = () => {
           onChange={(imgs) => {
             setGalery([])
             imgs.map((image) => setGalery([...galery, image.id]))
-
           }}
         />
 
