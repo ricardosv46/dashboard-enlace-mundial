@@ -75,7 +75,6 @@ const CalendarioTour = () => {
       precio: `s/. ${horario.precio}.00`,
       editar: (
         <div
-          div
           className="flex justify-center cursor-pointer transition-all duration-300 transform hover:-translate-y-1 p-1"
           onClick={() => {
             updateHorarioEstado({
