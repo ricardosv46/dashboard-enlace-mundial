@@ -117,8 +117,8 @@ const EditarTour = () => {
       keywords.length > 0 &&
       politicas.length > 0 &&
       mainImage &&
-      secondaryImage &&
-      galery.length > 0
+      secondaryImage
+      // galery.length > 0
     ) {
       updateTour({
         tourId: data.GetSlugTour?.tourId,
@@ -842,7 +842,7 @@ const EditarTour = () => {
         <p className="mb-3 text-gray-700 text-left text-sm">
           Agregar imagen principal y secundaria
         </p>
-        <div className="grid grid-cols-auto gap-4 max-w-4xl mx-auto mb-5">
+        <div className="grid grid-cols-auto gap-4 max-w-4xl mx-auto mb-5 ">
           <div className="aspect-w-16 aspect-h-9">
             {/* La propiedad value recibe un objecto con id, url y descripcion */}
             {/* La propiedad onChange devuelve un objecto con id, url y descripcion */}
@@ -861,7 +861,7 @@ const EditarTour = () => {
           </div>
         </div>
 
-        <p className="mb-3 text-gray-700 text-left text-sm">
+        <p className="mb-3 text-gray-700 text-left text-sm ">
           Agregar imagen a la galeria
         </p>
         {/* La propiedad value recibe un Array de objetos con id, url y descripcion */}

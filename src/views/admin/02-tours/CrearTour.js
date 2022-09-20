@@ -771,7 +771,6 @@ const CrearTour = () => {
             placeholder="Ingresa la URL del video"
             type="text"
             onChange={handleInputChange}
-            required
             value={form.video}
           />
           <InputText
