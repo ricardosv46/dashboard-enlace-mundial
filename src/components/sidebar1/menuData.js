@@ -35,7 +35,7 @@ export const menuData = [
       getIcon: iconOfertas
     },
 
-    path: '/checkout',
+    path: '/reservas',
 
     subMenu: {
       value: false

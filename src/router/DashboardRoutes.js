@@ -147,10 +147,10 @@ const DashboardRoutes = () => {
             path="/blogs/categorias/editar-categoria/:id"
             component={EditarCategoriaBlog}
           />
-          <Route exact path="/checkout" component={Checkout} />
+          <Route exact path="/reservas" component={Checkout} />
           <Route
             exact
-            path="/checkout/:id"
+            path="/reservas/:id"
             component={DetallesCompra}
           />
         </Switch>

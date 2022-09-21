@@ -9,7 +9,7 @@ const DetallesCompra = () => {
   /*   console.log(params) */
   const [items, setItems] = useState(null)
   const { dataIdOrden, loadingGetData } = useIdOrdenServices({ ordenTourId: params.id })
-  console.log(items)
+  // console.log(items)
 
   useEffect(() => {
     !loadingGetData && setItems(dataIdOrden)
@@ -30,7 +30,7 @@ const DetallesCompra = () => {
         </div>
 
         <div className="grid  sm:grid-cols-2 gap-3 mt-3">
-          <div className="font-extrabold">Nombre del tour: <span className="font-normal">{items?.Pasajes[0].tituloTour}</span></div>
+          <div className="font-extrabold">Nombre del tour: <span className="font-normal">{items?.Pasajes[0]?.tituloTour || ''}</span></div>
           <div className="font-extrabold">Estado del tour: <span className="font-normal">{items?.estadoOrdenTour}</span></div>
         </div>
 
@@ -49,7 +49,7 @@ const DetallesCompra = () => {
           <div className="flex flex-col justify-between">
             <div className="flex justify-between mt-2">
               <div className="font-normal">Sub Total: </div>
-              <div className="font-normal">S/. {items?.Pasajes[0].precioTour}</div>
+              <div className="font-normal">S/. {items?.Pasajes[0]?.precioTour || 'error'}</div>
             </div>
             <div className="flex justify-between mt-2">
               <div className="font-extrabold">Descuento: </div>
@@ -58,7 +58,7 @@ const DetallesCompra = () => {
 
             <div className="flex justify-between mt-2 border-t  pt-2">
               <div className="font-extrabold">Total: </div>
-              <div className="font-extrabold">S/. {items?.Pasajes[0].precioTour - items?.descuento}</div>
+              <div className="font-extrabold">S/. {items?.Pasajes[0]?.precioTour | 0 - items?.descuento || 0}</div>
             </div>
           </div>
         </div>

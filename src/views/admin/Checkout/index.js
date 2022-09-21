@@ -163,7 +163,7 @@ const Checkout = () => {
                           <button
                             onClick={() => {
                               history.push(
-                                `/checkout/${orden?.ordenTourId}`,
+                                `/reservas/${orden?.ordenTourId}`,
                                 orden
                               )
                             }}
