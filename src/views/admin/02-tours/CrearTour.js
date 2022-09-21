@@ -127,7 +127,7 @@ const CrearTour = () => {
         descripcionLargaTour: form.descripcionLarga,
         destacadoTour: 'Desactivado',
         estadoTour: 'Activado',
-        galeriaTour: galery,
+        galeriaTour: galery.map((img) => img.id),
         imagenPrincipalTour: mainImage?.id,
         imagenSecundariaTour: secondaryImage?.id,
         itinerarioTour: eliminarDuplicado(itinerario).join(','),

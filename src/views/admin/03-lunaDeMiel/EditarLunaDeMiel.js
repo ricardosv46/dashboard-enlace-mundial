@@ -52,7 +52,6 @@ const otherErrors = {}
 
 const EditarLunaDeMiel = () => {
   const history = useHistory()
-
   const { state: objetoLuna } = useLocation()
   const { db: dataCategoria } = useCategoriasServices()
   const { updateLunaMiel } = useLunaMielServices()
@@ -130,18 +129,18 @@ const EditarLunaDeMiel = () => {
         idImgPrincipal: mainImage.id,
         idImgSecundaria: secondaryImage.id,
         keywords: eliminarDuplicado(keywords),
-        galeria: eliminarDuplicado(galery)
+        galeria: galery.map((img) => img.id)
       }).then((res) => {
         if (res === 'exito') {
+          console.log(res)
           toast.success('Se actualizo Luna de Miel')
           history.push('/luna-de-miel')
         } else {
           toast.success('No se pudo actualizar Luna de Miel')
         }
-      })
+      }).catch((err) => { console.log(err) })
       // console.log(errorUpdate)
-
-      history.push('/luna-de-miel')
+      // history.push('/luna-de-miel')
     } else {
       swal({
         title: 'DATOS INCOMPLETOS',
@@ -741,7 +740,6 @@ const EditarLunaDeMiel = () => {
             placeholder="Ingresa la URL del video"
             type="text"
             onChange={handleInputChange}
-            required
             value={form.video}
           />
         </div>

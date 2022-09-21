@@ -125,7 +125,7 @@ const CrearCrucero = () => {
         precioBaseCrucero: form.precioBase,
         idImgPrincipal: mainImage.id,
         idImgSecundaria: secondaryImage.id,
-        galeria: eliminarDuplicado(galery)
+        galeria: galery.map((img) => img.id)
       }).then((res) => {
         if (res === 'exito') {
           resetForm()
@@ -760,8 +760,8 @@ const CrearCrucero = () => {
         {/* La propiedad value recibe un Array de objetos con id, url y descripcion */}
         {/* La propiedad onChange devuelve un Array de objetos con id, url y descripcion */}
         <SelectMultiImages
-            galery={galery || []}
-            setGalery={setGalery}
+          galery={galery || []}
+          setGalery={setGalery}
         />
 
         <div className="my-10 text-center">

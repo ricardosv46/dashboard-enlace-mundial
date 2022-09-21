@@ -124,7 +124,7 @@ const EditarCrucero = () => {
         idImgPrincipal: mainImage.id,
         idImgSecundaria: secondaryImage.id,
         keywords: eliminarDuplicado(keywords),
-        galeria: eliminarDuplicado(galery)
+        galeria: galery.map((img) => img.id)
       }).then((res) => {
         if (res === 'exito') {
           toast.success('Se actualizo el Crucero')

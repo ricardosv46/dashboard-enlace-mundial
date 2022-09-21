@@ -130,7 +130,8 @@ const EditarTour = () => {
         regionTour: form.regionTour,
         descripcionCortaTour: form.descripcionCorta,
         descripcionLargaTour: form.descripcionLarga,
-        galeriaTour: galery,
+        // galeriaTour: galery.map((img) => JSON.stringify(img)).join(','),
+        galeriaTour: galery.map((img) => img.id),
         imagenPrincipalTour: mainImage?.id,
         imagenSecundariaTour: secondaryImage?.id,
         itinerarioTour: eliminarDuplicado(itinerario).join(','),
@@ -804,7 +805,6 @@ const EditarTour = () => {
             placeholder="Ingresa la URL del video"
             type="text"
             onChange={handleInputChange}
-            required
             value={form.video}
           />
           <InputText

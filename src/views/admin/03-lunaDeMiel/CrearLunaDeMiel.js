@@ -123,7 +123,7 @@ const CrearLunaDeMiel = () => {
         precioBaseLuna: form.precioBase,
         idImgPrincipal: mainImage.id,
         idImgSecundaria: secondaryImage.id,
-        galeria: eliminarDuplicado(galery)
+        galeriaLuna: galery.map((img) => img.id)
       }).then((res) => {
         if (res === 'exito') {
           resetForm()
