@@ -117,8 +117,8 @@ const EditarTour = () => {
       keywords.length > 0 &&
       politicas.length > 0 &&
       mainImage &&
-      secondaryImage
-      // galery.length > 0
+      secondaryImage &&
+      galery.length > 0
     ) {
       updateTour({
         tourId: data.GetSlugTour?.tourId,
@@ -228,7 +228,6 @@ const EditarTour = () => {
       form.regionTour = data.GetSlugTour?.regionTour
       setMainImage(data.GetSlugTour?.imagenPrincipalTour)
       setSecondaryImage(data.GetSlugTour?.imagenSecundariaTour)
-      /*   setGalery(data.GetSlugTour?.galeriaTour) */
       data.GetSlugTour?.ActividadesTour.map((el) =>
         setActividades((actividad) => [el.actividadId, ...actividad])
       )
@@ -240,6 +239,7 @@ const EditarTour = () => {
       setPoliticas(data.GetSlugTour?.politicasTour.split(','))
       setItinerario(data.GetSlugTour?.itinerarioTour.split(','))
       setNoIncluye(data.GetSlugTour?.noIncluyeTour.split(','))
+      setGalery(data?.GetSlugTour?.galeriaTour || [])
     }
   }, [loadingSlugTour])
 
@@ -868,11 +868,11 @@ const EditarTour = () => {
         {/* La propiedad onChange devuelve un Array de objetos con id, url y descripcion */}
 
         <SelectMultiImages
-          /* value={galery} */
-          onChange={(imgs) => {
-            setGalery([])
-            imgs.map((image) => setGalery([...galery, image.id]))
-          }}
+          galery={galery || []}
+          setGalery={setGalery}
+        // onChange={(imgs) => {
+        //   imgs.map((image) => setGalery([...galery, image]))
+        // }}
         />
 
         <div className="my-10 text-center">

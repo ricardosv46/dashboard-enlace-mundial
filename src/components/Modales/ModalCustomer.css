@@ -10,6 +10,7 @@
   justify-content: center;
   align-items: center;
 }
+
 .modal.isOpen {
   display: flex;
 }
@@ -29,6 +30,7 @@
   scrollbar-color: #23ce6b rgba(0, 0, 0, 0.75);
   scrollbar-width: thin;
 }
+
 .modalClose {
   position: absolute;
   top: 1rem;

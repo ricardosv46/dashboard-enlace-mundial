@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import ReactDOM from 'react-dom'
+import { MdOutlineClose } from 'react-icons/md'
 import styles from './modal.module.css'
 
 const Modal = ({ children, isOpen, closeModal }) => {
@@ -17,8 +18,8 @@ const Modal = ({ children, isOpen, closeModal }) => {
     <article className={styles.modal}>
       <div className={styles.modal_overlay} onClick={closeModal} />
       <div className={styles.modal_content}>
-        <button className={styles.modal_closeBtn} onClick={closeModal}>
-          X
+        <button className={`${styles.modal_closeBtn} z-99999`} onClick={closeModal}>
+          <MdOutlineClose className='m-auto' />
         </button>
         {children}
       </div>

@@ -754,11 +754,8 @@ const CrearLunaDeMiel = () => {
         {/* La propiedad value recibe un Array de objetos con id, url y descripcion */}
         {/* La propiedad onChange devuelve un Array de objetos con id, url y descripcion */}
         <SelectMultiImages
-          onChange={(imgs) => {
-            setGalery([])
-            imgs.map((image) => setGalery([...galery, image.id]))
-            // console.log(imgs)
-          }}
+          galery={galery || []}
+          setGalery={setGalery}
         />
         <div className="my-10 text-center">
           <Button variant="primary" size="lg" type="submit">

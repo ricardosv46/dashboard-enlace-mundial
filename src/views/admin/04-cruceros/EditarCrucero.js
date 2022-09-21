@@ -150,6 +150,7 @@ const EditarCrucero = () => {
     setIncluye(objetoCrucero?.incluyeCrucero.split(','))
     setNoIncluye(objetoCrucero?.noIncluyeCrucero.split(','))
     setActividades(objetoCrucero?.actividadesCrucero.split(','))
+    setGalery(objetoCrucero?.galeriaCrucero || [])
     setNotas(objetoCrucero?.notasCrucero.split(','))
     setKeywords(objetoCrucero?.keywordsCrucero.split(','))
     setPoliticas(objetoCrucero?.politicasCrucero.split(','))
@@ -755,11 +756,8 @@ const EditarCrucero = () => {
         {/* La propiedad value recibe un Array de objetos con id, url y descripcion */}
         {/* La propiedad onChange devuelve un Array de objetos con id, url y descripcion */}
         <SelectMultiImages
-          onChange={(imgs) => {
-            setGalery([])
-            imgs.map((image) => setGalery([...galery, image.id]))
-            // console.log(imgs)
-          }}
+          galery={galery || []}
+          setGalery={setGalery}
         />
 
         <div className="my-10 text-center">
