@@ -1,5 +1,5 @@
 overwrite: true
-schema: "https://apienlacemundial.softaki.com/public/graphql"
+schema: "https://api.enlacemundialperu.com/public/graphql"
 documents: "src/**/*.graphql"
 generates:
   src/generated/graphql.tsx:
