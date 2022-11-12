@@ -30,7 +30,7 @@ const AppRouter = () => {
           {conexion
             ? (
               // eslint-disable-next-line indent
-              logged
+              !logged
                 // eslint-disable-next-line indent
                 ? <>
                   <Route path="/" component={DashboardRoutes} />

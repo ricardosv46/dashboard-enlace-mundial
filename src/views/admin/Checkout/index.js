@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import toast, { Toaster } from 'react-hot-toast'
+import { Toaster } from 'react-hot-toast'
 import { useHistory } from 'react-router-dom'
 import { IconEyes } from '../../../assets/icons/icons'
-import BtnEstado from '../../../components/BtnEstado/BtnEstado'
-
+// import BtnEstado from '../../../components/BtnEstado/BtnEstado'
 import Heading from '../../../components/Heading'
 import Spinner from '../../../components/Spinner/Spinner'
 import { useOrdenServices } from '../../../services/useOrdenServices'
@@ -14,7 +13,7 @@ const Checkout = () => {
   const [nroPagina, setNroPagina] = useState(1)
   const [arregloSelect, setArregloSelect] = useState([])
 
-  const { dataOrden, loadingGetData, nroTotalItems, updateOrdenTourEstado } =
+  const { dataOrden, loadingGetData, nroTotalItems } =
     useOrdenServices({
       page: nroPagina,
       numberPaginate: 10,
@@ -30,7 +29,7 @@ const Checkout = () => {
   }, [loadingGetData])
 
   return (
-    <div className="shadow  md:rounded bg-white p-5 py-10 md:p-10 animate__fadeIn animate__animated ">
+    <div className="p-5 py-10 bg-white shadow md:rounded md:p-10 animate__fadeIn animate__animated ">
       <div className="flex justify-between mb-5">
         <Toaster
           position="top-right"
@@ -44,8 +43,8 @@ const Checkout = () => {
         <Spinner />
       ) : (
         <>
-          <div className="flex-col gap-y-10 gap-x-14  flex items-center  sm:flex-row  mb-5">
-            <p className="text-gray-800 text-xl">
+          <div className="flex flex-col items-center mb-5 gap-y-10 gap-x-14 sm:flex-row">
+            <p className="text-xl text-gray-800">
               {' '}
               Total de Datos <span className="font-bold">
                 {nroTotalItems}
@@ -57,7 +56,7 @@ const Checkout = () => {
               </label>
               <select
                 id="paginas"
-                className="p-1 w-20 text-center text-gray-600 "
+                className="w-20 p-1 text-center text-gray-600 "
                 onChange={(e) => setNroPagina(e.target.value)}
                 value={nroPagina}
               >
@@ -75,47 +74,47 @@ const Checkout = () => {
             </div>
           </div>
 
-          <div className="w-full mb-8 overflow-hidden rounded-md md:shadow-xl max-h-screen overflow-y-auto  ">
-            <div className="w-full overflow-x-auto min-h-screen">
-              <table className="w-full border-gray-100  text-left border-2 ">
+          <div className="w-full max-h-screen mb-8 overflow-hidden overflow-y-auto rounded-md md:shadow-xl ">
+            <div className="w-full min-h-screen overflow-x-auto">
+              <table className="w-full text-left border-2 border-gray-100 ">
                 <thead className="text-gray-700">
-                  <tr className="text-lg font-semibold  tracking-wide bg-gray-100 text-center">
-                    <th className="px-4 py-6 text-gray-600 min-w-10 text-center">
+                  <tr className="text-lg font-semibold tracking-wide text-center bg-gray-100">
+                    <th className="px-4 py-6 text-center text-gray-600 min-w-10">
                       #
                     </th>
-                    <th className="px-4 py-6 text-gray-600 min-w-10 text-center">
+                    <th className="px-4 py-6 text-center text-gray-600 min-w-10">
                       Imágen
                     </th>
-                    <th className="px-4 py-6 text-gray-600 min-w-10 text-center">
+                    <th className="px-4 py-6 text-center text-gray-600 min-w-10">
                       Título
                     </th>
-                    <th className="px-4 py-6 text-gray-600 min-w-10 text-center">
+                    <th className="px-4 py-6 text-center text-gray-600 min-w-10">
                       Pasajes
                     </th>
-                    <th className="px-4 py-6 text-gray-600 min-w-10 text-center">
+                    <th className="px-4 py-6 text-center text-gray-600 min-w-10">
                       Estado
                     </th>
-                    <th className="px-4 py-6 text-gray-600 min-w-10 text-center">
+                    {/* <th className="px-4 py-6 text-center text-gray-600 min-w-10">
                       Acciones
-                    </th>
-                    <th className="px-4 py-6 text-gray-600 min-w-10 text-center">
+                    </th> */}
+                    <th className="px-4 py-6 text-center text-gray-600 min-w-10">
                       Detalle
                     </th>
                   </tr>
                 </thead>
-                <tbody className="text-base bg-white border-gray-100 text-gray-700 ">
+                <tbody className="text-base text-gray-700 bg-white border-gray-100 ">
                   {dataOrden.length > 0 &&
                     dataOrden.map((orden, index) => (
                       <tr
                         key={orden?.ordenTourId}
-                        className="font-medium hover:shadow-md  transform transition-all duration-300  hover:-translate-y-1"
+                        className="font-medium transition-all duration-300 transform hover:shadow-md hover:-translate-y-1"
                       >
-                        <td className="text-start  uppercase text-gray-600 py-6 px-4 min-h-20 text-center">
+                        <td className="px-4 py-6 text-center text-gray-600 uppercase text-start min-h-20">
                           {/*   {(nroPagina - 1) * 10 + index + 1} */}
                           {orden?.ordenTourId}
                         </td>
 
-                        <td className="flex justify-center  uppercase text-gray-600 py-6 px-4 min-h-20 text-center">
+                        <td className="flex justify-center px-4 py-6 text-center text-gray-600 uppercase min-h-20">
                           <img
                             src={
                               orden?.Pasajes[0]?.Tour?.imagenPrincipalTour?.url
@@ -125,19 +124,19 @@ const Checkout = () => {
                           />
                         </td>
 
-                        <td className="text-start  uppercase text-gray-600 py-6 px-4 min-h-20 text-center">
+                        <td className="px-4 py-6 text-center text-gray-600 uppercase text-start min-h-20">
                           {orden?.Pasajes[0]?.tituloTour}
                         </td>
 
-                        <td className="text-start  uppercase text-gray-600 py-6 px-4 min-h-20 text-center">
+                        <td className="px-4 py-6 text-center text-gray-600 uppercase text-start min-h-20">
                           {orden?.Pasajes.length}
                         </td>
 
-                        <td className="text-start  uppercase text-gray-600 py-6 px-4 min-h-20 text-center">
+                        <td className="px-4 py-6 text-center text-gray-600 uppercase text-start min-h-20">
                           {orden?.estadoOrdenTour}
                         </td>
 
-                        <td className="text-start  uppercase text-gray-600 py-6 px-4 min-h-20 text-center">
+                        {/* <td className="px-4 py-6 text-center text-gray-600 uppercase text-start min-h-20">
                           <button
                             onClick={() => {
                               updateOrdenTourEstado({
@@ -158,8 +157,8 @@ const Checkout = () => {
                               }
                             />
                           </button>
-                        </td>
-                        <td className="  uppercase text-gray-600 py-6 px-4 min-h-20 text-center">
+                        </td> */}
+                        <td className="px-4 py-6 text-center text-gray-600 uppercase min-h-20">
                           <button
                             onClick={() => {
                               history.push(

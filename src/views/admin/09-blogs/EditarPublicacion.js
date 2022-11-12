@@ -13,26 +13,23 @@ import { useBlogsServices } from '../../../services/useBlogsServices'
 import swal from 'sweetalert'
 import { useHistory, useLocation } from 'react-router-dom'
 import toast from 'react-hot-toast'
+import { isEmpty } from '../../../utils/isEmpty'
+import EditorAdvanzado from '../../../components/EditorAdvanzado/EditorAdvanzado'
 const initialForm = {
   titulo: '',
   descripcionCorta: '',
-  descripcionLarga: '',
   categorias: ''
 }
 const validationsForm = (form) => {
   // eslint-disable-next-line prefer-const
   let errors = {}
-  if (!form.titulo.trim()) {
+  if (isEmpty(form.titulo)) {
     errors.titulo = 'El campo Título es requerido'
   }
-  if (!form.categorias.trim()) {
+  if (isEmpty(form.categorias)) {
     errors.categoria = 'Debe de Seleccionar una Categoria'
   }
-  if (!form.descripcionLarga.trim()) {
-    errors.descripcionLarga =
-      'Debe de poner alguna descripción larga para la publicación'
-  }
-  if (!form.descripcionCorta.trim()) {
+  if (isEmpty(form.descripcionCorta)) {
     errors.descripcionCorta =
       'Debe de poner alguna descripción corta para la publicación'
   }
@@ -53,8 +50,8 @@ const EditarPublicacion = () => {
     validationsForm
   )
   const { updateBlog } = useBlogsServices()
-
-  const { db: dataCategoriaBlogs } = useCategoriasBlogServices()
+  const [descripcionLarga, setDescripcionLarga] = useState('')
+  const { db: dataCategoriaBlogs, loading } = useCategoriasBlogServices()
 
   const eliminarItem = (value, data, setData) => {
     if (data.length === 0) {
@@ -75,20 +72,21 @@ const EditarPublicacion = () => {
       keywords.length > 0 &&
       mainImage &&
       secondaryImage &&
-      galery.length > 0
+      galery.length > 0 &&
+      descripcionLarga.length > 0
     ) {
       updateBlog({
         id: objetoBlog.blogId,
         titulo: form.titulo,
         slugCategoria: form.categorias,
-        descripcionLarga: form.descripcionLarga,
+        descripcionLarga,
         descripcionCorta: form.descripcionCorta,
         estado: objetoBlog.estadoBlog,
         destacado: objetoBlog.destacadoBlog,
         keywords: eliminarDuplicado(keywords),
         idImgPrincipal: mainImage.id,
         idImgSecundaria: secondaryImage.id,
-        galeria: eliminarDuplicado(galery)
+        galeria: galery.map((img) => img.id)
       }).then((res) => {
         if (res === 'exito') {
           resetForm()
@@ -114,31 +112,38 @@ const EditarPublicacion = () => {
   }
 
   useEffect(() => {
+    console.log({ objetoBlog })
     form.titulo = objetoBlog.tituloBlog
     form.descripcionCorta = objetoBlog.descripcionCortaBlog
-    form.descripcionLarga = objetoBlog.descripcionLargaBlog
+    setDescripcionLarga(objetoBlog.descripcionLargaBlog)
     form.categorias = objetoBlog.slugCategoriaBlog
     setKeywords(objetoBlog?.keywordsBlog.split(','))
     setMainImage(objetoBlog.imagenPrincipalBlog)
     setSecondaryImage(objetoBlog.imagenSecundariaBlog)
+    setGalery(objetoBlog?.galeriaBlog || [])
+  }, [])
 
+  useEffect(() => {
     if (keywords.length === 0) {
       otherErrors.keywords = '( Ingrese al menos una keyword )'
     }
-  }, [])
+    if (isEmpty(descripcionLarga)) {
+      otherErrors.descripcionLarga = 'Debe de poner alguna descripción larga para la publicación'
+    }
+  }, [descripcionLarga, keywords])
 
   return (
-    <div className="shadow md:rounded bg-white p-5 py-10 md:p-10 animate__fadeIn animate__animated">
-      <div className="flex justify-center pt-3 relative">
+    <div className="p-5 py-10 bg-white shadow md:rounded md:p-10 animate__fadeIn animate__animated">
+      <div className="relative flex justify-center pt-3">
         <ButtonBack />
 
         <Heading>Editar Publicación</Heading>
       </div>
       <form
-        onSubmit={() => {}}
-        className="w-full lg:shadow-md lg:px-4 px-0 mx-auto py-10"
+        onSubmit={() => { }}
+        className="w-full px-0 py-10 mx-auto lg:shadow-md lg:px-4"
       >
-        <div className="flex flex-col lg:flex-row lg:space-x-4 mb-5">
+        <div className="flex flex-col mb-5 lg:flex-row lg:space-x-4">
           <InputText
             name="titulo"
             label="Titulo"
@@ -149,19 +154,19 @@ const EditarPublicacion = () => {
             required
           />
           {errors.titulo && (
-            <p className="text-sm text-red-500 font-medium mt-2 ml-1">
+            <p className="mt-2 ml-1 text-sm font-medium text-red-500">
               {errors.titulo}
             </p>
           )}
           <div className="flex flex-col w-full mb-4 lg:mb-0">
             <label
               htmlFor="categorias"
-              className="block text-gray-700 text-left text-sm"
+              className="block text-sm text-left text-gray-700"
             >
               Categorias
             </label>
             <select
-              className="cursor-pointer w-full text-sm text-black transition ease-in duration-150 px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
+              className="w-full px-4 py-3 mt-2 text-sm text-black transition duration-150 ease-in bg-gray-200 border rounded-lg cursor-pointer focus:border-blue-500 focus:bg-white focus:outline-none"
               id="categorias"
               name="categorias"
               autoComplete="off"
@@ -183,29 +188,23 @@ const EditarPublicacion = () => {
               ))}
             </select>{' '}
             {errors.categoria && (
-              <p className="text-sm text-red-500 font-medium mt-2 ml-1">
+              <p className="mt-2 ml-1 text-sm font-medium text-red-500">
                 {errors.categoria}
               </p>
             )}
           </div>
         </div>
 
-        <div className="flex flex-col  lg:space-x-4  mb-5">
-          <TextArea
-            label="Descripción Larga"
-            name="descripcionLarga"
-            rows="2"
-            onBlur={handleBlur}
-            onChange={handleInputChange}
-            value={form.descripcionLarga}
-          />
-          {errors.descripcionLarga && (
-            <p className="text-sm text-red-500 font-medium mt-2 ml-1">
-              {errors.descripcionLarga}
+        <div className="flex flex-col mb-5 lg:space-x-4">
+          {!loading &&
+            <EditorAdvanzado titulo='Descripcion Larga' content={descripcionLarga} setContent={setDescripcionLarga} />}
+          {descripcionLarga.length === 0 && (
+            <p className="mt-2 ml-1 text-sm font-medium text-red-500">
+              {otherErrors.descripcionLarga}
             </p>
           )}
         </div>
-        <div className="flex flex-col lg:space-x-4 mb-5">
+        <div className="flex flex-col mb-5 lg:space-x-4">
           <TextArea
             label="Descripción Corta"
             name="descripcionCorta"
@@ -215,22 +214,22 @@ const EditarPublicacion = () => {
             value={form.descripcionCorta}
           />
           {errors.descripcionCorta && (
-            <p className="text-sm text-red-500 font-medium mt-2 ml-1">
+            <p className="mt-2 ml-1 text-sm font-medium text-red-500">
               {errors.descripcionCorta}
             </p>
           )}
         </div>
-        <div className="flex flex-col lg:flex-row lg:space-x-4 items-center mb-5">
-          <div className="w-full relative">
+        <div className="flex flex-col items-center mb-5 lg:flex-row lg:space-x-4">
+          <div className="relative w-full">
             {keywords.length === 0 && (
-              <p className="text-sm text-red-500 font-medium mt-2 ml-1 absolute -top-2 left-15">
+              <p className="absolute mt-2 ml-1 text-sm font-medium text-red-500 -top-2 left-15">
                 {otherErrors.keywords}
               </p>
             )}
             <img
               src={iconoAdd}
               alt=""
-              className="rounded-full absolute right-2 bg-white top-8  p-1 cursor-pointer"
+              className="absolute p-1 bg-white rounded-full cursor-pointer right-2 top-8"
               onClick={() => {
                 if (textKeywords.trim() !== '') {
                   setKeywords((estado) => [...estado, textKeywords.trim()])
@@ -259,20 +258,20 @@ const EditarPublicacion = () => {
               {eliminarDuplicado(keywords).map((item) => (
                 <div
                   key={item}
-                  className="flex  items-center  gap-x-3 px-2 cursor-pointer "
+                  className="flex items-center px-2 cursor-pointer gap-x-3 "
                   onClick={() => eliminarItem(item, keywords, setKeywords)}
                 >
                   <span className="text-sm text-red-600">X</span>
-                  <p className="text-sm  inline-block text-gra">{item}</p>
+                  <p className="inline-block text-sm text-gra">{item}</p>
                 </div>
               ))}
             </div>
           </div>
         </div>
-        <p className="mb-3 text-gray-700 text-left text-sm">
+        <p className="mb-3 text-sm text-left text-gray-700">
           Agregar imagen principal y secundaria
         </p>
-        <div className="grid grid-cols-auto gap-4 max-w-4xl mx-auto mb-5">
+        <div className="grid max-w-4xl gap-4 mx-auto mb-5 grid-cols-auto">
           <div className="aspect-w-16 aspect-h-9">
             {/* La propiedad value recibe un objecto con id, url y descripcion */}
             {/* La propiedad onChange devuelve un objecto con id, url y descripcion */}
@@ -290,17 +289,12 @@ const EditarPublicacion = () => {
             />
           </div>
         </div>
-        <p className="mb-3 text-gray-700 text-left text-sm">
+        <p className="mb-3 text-sm text-left text-gray-700">
           Agregar imagen a la galeria
         </p>
-        {/* La propiedad value recibe un Array de objetos con id, url y descripcion */}
-        {/* La propiedad onChange devuelve un Array de objetos con id, url y descripcion */}
         <SelectMultiImages
-          onChange={(imgs) => {
-            setGalery([])
-            imgs.map((image) => setGalery([...galery, image.id]))
-            // console.log(imgs)
-          }}
+          setGalery={setGalery}
+          galery={galery}
         />
         <div className="my-10 text-center">
           <Button variant="primary" size="lg" onClick={handleSubmit}>

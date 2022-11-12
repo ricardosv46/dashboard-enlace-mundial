@@ -6,6 +6,7 @@ import ModalSelectImage from '../Modales/ModalSelectImage'
 import styles from './index.module.css'
 
 const SelectMultiImages = ({ galery, setGalery }) => {
+  console.log({ galery })
   const [isOpen, setIsOpen] = useState(false)
 
   // useEffect(() => {
@@ -26,16 +27,16 @@ const SelectMultiImages = ({ galery, setGalery }) => {
     <div className="w-full h-full mb-10">
       <div className={styles.grid_images}>
         {galery && galery.map((image) => (
-          <div key={`multi-image-${image.id}`} className=" relative">
+          <div key={`multi-image-${image.id}`} className="relative ">
             <div
               onClick={() => handleDeleteImg(image)}
-              className='absolute w-7 h-7 z-80 right-0 top-0 hover:bg-red-500 rounded-bl-lg cursor-pointer'>
+              className='absolute top-0 right-0 rounded-bl-lg cursor-pointer w-7 h-7 z-80 hover:bg-red-500'>
               <MdOutlineDeleteForever className="w-full h-full text-red-700 hover:text-white" />
             </div>
             <Image
               src={image.url}
               alt={image.descripcion}
-              className="rounded hover:shadow-lg transition-shadow"
+              className="transition-shadow rounded hover:shadow-lg"
             />
           </div>
         ))}
@@ -43,7 +44,7 @@ const SelectMultiImages = ({ galery, setGalery }) => {
           onClick={() => setIsOpen(true)}
           className="w-full h-full aspect-w-16 aspect-h-9"
         >
-          <div className="w-full h-full grid place-items-center border border-gray-200 rounded cursor-pointer">
+          <div className="grid w-full h-full border border-gray-200 rounded cursor-pointer place-items-center">
             <p className="text-gray-400">Agregar imagen</p>
           </div>
         </div>
