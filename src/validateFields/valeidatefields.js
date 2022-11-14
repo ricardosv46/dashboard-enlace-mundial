@@ -1,3 +1,6 @@
+
+import { isEmail } from '../utils/isEmail'
+
 export const validateFields = ({ user, password }) => {
   const errores = {}
   // if (!user.trim()) {
@@ -7,10 +10,9 @@ export const validateFields = ({ user, password }) => {
   // }
   if (!user.trim()) {
     errores.user = 'Por favor ingrese un correo de usuario'
-  } else if (!/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(user)) {
+  } else if (!isEmail(user)) {
     errores.user = 'Ingrese un correo válido'
   }
-
   if (!password.trim()) {
     errores.password = 'Por favor ingrese su contraseña'
   }
