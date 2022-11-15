@@ -89,7 +89,7 @@ export const useLunaMielServices = (
     idImgPrincipal,
     idImgSecundaria,
     slugCategoria,
-    galeria,
+    galeriaLuna,
     precioBaseLuna,
     keywords
   }) => {
@@ -113,7 +113,7 @@ export const useLunaMielServices = (
             videoPresentacionLuna: video,
             imagenPrincipalLuna: idImgPrincipal,
             imagenSecundariaLuna: idImgSecundaria,
-            galeriaLuna: galeria,
+            galeriaLuna: galeriaLuna,
             slugCategoria: slugCategoria,
             precioBaseLuna: precioBaseLuna
           }

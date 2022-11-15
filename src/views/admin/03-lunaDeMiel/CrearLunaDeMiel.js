@@ -14,6 +14,8 @@ import SelectImage from '../../../components/SelectImage'
 import SelectMultiImages from '../../../components/SelectMultiImages'
 import { useHistory } from 'react-router'
 import toast from 'react-hot-toast'
+import EditorAdvanzado from '../../../components/EditorAdvanzado/EditorAdvanzado'
+import { isEmail } from '../../../utils/isEmail'
 const initialForm = {
   titulo: '',
   categorias: '',
@@ -21,29 +23,25 @@ const initialForm = {
   ciudad: '',
   precioBase: '',
   descripcionCorta: '',
-  descripcionLarga: '',
   puntoPartida: '',
   video: ''
 }
 const validationsForm = (form) => {
   // eslint-disable-next-line prefer-const
   let errors = {}
-  if (!form.titulo.trim()) {
+  if (isEmail(form.titulo)) {
     errors.titulo = 'El campo Título es requerido'
   }
-  if (!form.categorias.trim()) {
+  if (isEmail(form.categorias)) {
     errors.categoria = 'Debe de Seleccionar una Categoria'
   }
-  if (!form.region.trim()) {
+  if (isEmail(form.region)) {
     errors.region = 'Debe de Seleccionar una Region'
   }
-  if (!form.ciudad.trim()) {
+  if (isEmail(form.ciudad)) {
     errors.ciudad = 'Debe de Seleccionar una Ciudad'
   }
-  if (!form.descripcionLarga.trim()) {
-    errors.descripcionLarga = 'Debe de poner alguna descripcion para el Tour'
-  }
-  if (!form.puntoPartida.trim()) {
+  if (isEmail(form.puntoPartida)) {
     errors.puntoPartida = 'Debe de Ingresar un punto de partida'
   }
   return errors
@@ -75,6 +73,7 @@ const CrearLunaDeMiel = () => {
   const [notas, setNotas] = useState([])
   const [mainImage, setMainImage] = useState(null)
   const [secondaryImage, setSecondaryImage] = useState(null)
+  const [descripcionLarga, setDescripcionLarga] = useState('')
   const [galery, setGalery] = useState([])
   const eliminarItem = (value, data, setData) => {
     if (data.length === 0) {
@@ -102,7 +101,7 @@ const CrearLunaDeMiel = () => {
       politicas.length > 0 &&
       mainImage &&
       secondaryImage &&
-      galery.length > 0
+      galery.length > 0 && descripcionLarga.length > 0
     ) {
       createLunaMiel({
         titulo: form.titulo,
@@ -111,7 +110,7 @@ const CrearLunaDeMiel = () => {
         ciudad: form.ciudad,
         keywords: eliminarDuplicado(keywords),
         descripcionCorta: form.descripcionCorta,
-        descripcionLarga: form.descripcionLarga,
+        descripcionLarga,
         itinerario: eliminarDuplicado(itinerario),
         puntoPartida: form.puntoPartida,
         incluye: eliminarDuplicado(incluye),
@@ -177,20 +176,23 @@ const CrearLunaDeMiel = () => {
     if (politicas.length === 0) {
       otherErrors.politicas = '( Ingrese una política )'
     }
-  }, [handleSubmit])
+    if (descripcionLarga.length === 0) {
+      otherErrors.descripcionLarga = 'Debe de poner alguna descripción larga para la publicación'
+    }
+  }, [descripcionLarga, itinerario, incluye, noIncluye, actividades, notas, keywords, politicas])
 
   return (
-    <div className="shadow md:rounded bg-white p-5 py-10 md:p-10 animate__fadeIn animate__animated">
-      <div className="flex justify-center pt-3 relative">
+    <div className="p-5 py-10 bg-white shadow md:rounded md:p-10 animate__fadeIn animate__animated">
+      <div className="relative flex justify-center pt-3">
         <ButtonBack />
 
         <Heading>Crear Nueva Luna de Miel</Heading>
       </div>
       <form
         onSubmit={handleSubmit}
-        className="w-full lg:shadow-md lg:px-4 px-0 mx-auto py-10"
+        className="w-full px-0 py-10 mx-auto lg:shadow-md lg:px-4"
       >
-        <div className="flex flex-col lg:flex-row lg:space-x-4 mb-5 gap-y-5">
+        <div className="flex flex-col mb-5 lg:flex-row lg:space-x-4 gap-y-5">
           <div className="w-full">
             <InputText
               name="titulo"
@@ -202,7 +204,7 @@ const CrearLunaDeMiel = () => {
               required
             />
             {errors.titulo && (
-              <p className="text-sm text-red-500 font-medium mt-2 ml-1">
+              <p className="mt-2 ml-1 text-sm font-medium text-red-500">
                 {errors.titulo}
               </p>
             )}
@@ -211,12 +213,12 @@ const CrearLunaDeMiel = () => {
           <div className="flex flex-col w-full mb-4 lg:mb-0">
             <label
               htmlFor="categorias"
-              className="block text-gray-700 text-left text-sm"
+              className="block text-sm text-left text-gray-700"
             >
               Categorias
             </label>
             <select
-              className="cursor-pointer w-full text-sm text-black transition ease-in duration-150 px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
+              className="w-full px-4 py-3 mt-2 text-sm text-black transition duration-150 ease-in bg-gray-200 border rounded-lg cursor-pointer focus:border-blue-500 focus:bg-white focus:outline-none"
               id="categorias"
               name="categorias"
               onChange={handleInputChange}
@@ -235,24 +237,24 @@ const CrearLunaDeMiel = () => {
                 ))}
             </select>
             {errors.categoria && (
-              <p className="text-sm text-red-500 font-medium mt-2 ml-1">
+              <p className="mt-2 ml-1 text-sm font-medium text-red-500">
                 {errors.categoria}
               </p>
             )}
           </div>
         </div>
 
-        <div className="flex flex-col lg:flex-row lg:space-x-4 mb-5">
+        <div className="flex flex-col mb-5 lg:flex-row lg:space-x-4">
           <div className="flex flex-col w-full mb-4 lg:mb-0">
             <label
               htmlFor="region"
-              className="block text-gray-700 text-left text-sm"
+              className="block text-sm text-left text-gray-700"
             >
               Región
             </label>
             <select
               required
-              className="cursor-pointer w-full text-sm text-black transition ease-in duration-150 px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
+              className="w-full px-4 py-3 mt-2 text-sm text-black transition duration-150 ease-in bg-gray-200 border rounded-lg cursor-pointer focus:border-blue-500 focus:bg-white focus:outline-none"
               id="region"
               name="region"
               onChange={handleInputChange}
@@ -269,7 +271,7 @@ const CrearLunaDeMiel = () => {
               ))}
             </select>
             {errors.region && (
-              <p className="text-sm text-red-500 font-medium mt-2 ml-1">
+              <p className="mt-2 ml-1 text-sm font-medium text-red-500">
                 {errors.region}
               </p>
             )}
@@ -277,12 +279,12 @@ const CrearLunaDeMiel = () => {
           <div className="flex flex-col w-full mb-4 lg:mb-0">
             <label
               htmlFor="ciudad"
-              className="block text-gray-700 text-left text-sm"
+              className="block text-sm text-left text-gray-700"
             >
               Ciudad
             </label>
             <select
-              className="cursor-pointer w-full text-sm text-black transition ease-in duration-150 px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
+              className="w-full px-4 py-3 mt-2 text-sm text-black transition duration-150 ease-in bg-gray-200 border rounded-lg cursor-pointer focus:border-blue-500 focus:bg-white focus:outline-none"
               id="ciudad"
               name="ciudad"
               onChange={handleInputChange}
@@ -300,30 +302,22 @@ const CrearLunaDeMiel = () => {
               ))}
             </select>
             {errors.ciudad && (
-              <p className="text-sm text-red-500 font-medium mt-2 ml-1">
+              <p className="mt-2 ml-1 text-sm font-medium text-red-500">
                 {errors.ciudad}
               </p>
             )}
           </div>
         </div>
 
-        <div className="flex flex-col  lg:space-x-4  mb-5">
-          <TextArea
-            label="Descripción Larga"
-            name="descripcionLarga"
-            rows="2"
-            onChange={handleInputChange}
-            onBlur={handleBlur}
-            value={form.descripcionLarga}
-            required
-          />
-          {errors.descripcionLarga && (
-            <p className="text-sm text-red-500 font-medium mt-2 ml-1">
-              {errors.descripcionLarga}
+        <div className="flex flex-col mb-5 lg:space-x-4">
+          <EditorAdvanzado titulo='Descripcion Larga' content={descripcionLarga} setContent={setDescripcionLarga} />
+          {descripcionLarga.length === 0 && (
+            <p className="mt-2 ml-1 text-sm font-medium text-red-500">
+              {otherErrors.descripcionLarga}
             </p>
           )}
         </div>
-        <div className="flex flex-col lg:flex-row lg:space-x-4 items-center mb-5">
+        <div className="flex flex-col items-center mb-5 lg:flex-row lg:space-x-4">
           <TextArea
             label="Descripción Corta"
             name="descripcionCorta"
@@ -333,12 +327,12 @@ const CrearLunaDeMiel = () => {
           />
         </div>
 
-        <div className="flex flex-col lg:flex-row lg:space-x-4 items-start mb-5">
-          <div className="w-full relative ">
+        <div className="flex flex-col items-start mb-5 lg:flex-row lg:space-x-4">
+          <div className="relative w-full ">
             <img
               src={iconoAdd}
               alt=""
-              className="rounded-full absolute right-2 bg-white top-8 border p-1 cursor-pointer"
+              className="absolute p-1 bg-white border rounded-full cursor-pointer right-2 top-8"
               onClick={() => {
                 console.log(textItinerario)
                 if (textItinerario.trim() !== '') {
@@ -348,7 +342,7 @@ const CrearLunaDeMiel = () => {
               }}
             />
             {itinerario.length === 0 && (
-              <p className="text-sm text-red-500 font-medium mt-2 ml-1 absolute -top-2 left-15">
+              <p className="absolute mt-2 ml-1 text-sm font-medium text-red-500 -top-2 left-15">
                 {otherErrors.itinerario}
               </p>
             )}
@@ -376,11 +370,11 @@ const CrearLunaDeMiel = () => {
               {eliminarDuplicado(itinerario).map((item) => (
                 <div
                   key={item}
-                  className="flex  items-center  gap-x-3 px-2 cursor-pointer "
+                  className="flex items-center px-2 cursor-pointer gap-x-3 "
                   onClick={() => eliminarItem(item, itinerario, setItinerario)}
                 >
                   <span className="text-sm text-red-600">X</span>
-                  <p className="text-sm  inline-block text-gra">{item}</p>
+                  <p className="inline-block text-sm text-gra">{item}</p>
                 </div>
               ))}
             </div>
@@ -397,24 +391,24 @@ const CrearLunaDeMiel = () => {
             />
 
             {errors.puntoPartida && (
-              <p className="text-sm text-red-500 font-medium mt-2 ml-1">
+              <p className="mt-2 ml-1 text-sm font-medium text-red-500">
                 {errors.puntoPartida}
               </p>
             )}
           </div>
         </div>
 
-        <div className="flex flex-col lg:flex-row lg:space-x-4 items-start mb-5">
-          <div className="w-full relative">
+        <div className="flex flex-col items-start mb-5 lg:flex-row lg:space-x-4">
+          <div className="relative w-full">
             {incluye.length === 0 && (
-              <p className="text-sm text-red-500 font-medium mt-2 ml-1 absolute -top-2 left-12">
+              <p className="absolute mt-2 ml-1 text-sm font-medium text-red-500 -top-2 left-12">
                 {otherErrors.incluye}
               </p>
             )}
             <img
               src={iconoAdd}
               alt=""
-              className="rounded-full absolute right-2 bg-white top-8  p-1 cursor-pointer"
+              className="absolute p-1 bg-white rounded-full cursor-pointer right-2 top-8"
               onClick={() => {
                 if (textIncluye.trim() !== '') {
                   setIncluye((estado) => [...estado, textIncluye.trim()])
@@ -443,26 +437,26 @@ const CrearLunaDeMiel = () => {
               {eliminarDuplicado(incluye).map((item) => (
                 <div
                   key={item}
-                  className="flex  items-center  gap-x-3 px-2 cursor-pointer "
+                  className="flex items-center px-2 cursor-pointer gap-x-3 "
                   onClick={() => eliminarItem(item, incluye, setIncluye)}
                 >
                   <span className="text-sm text-red-600">X</span>
-                  <p className="text-sm  inline-block text-gra">{item}</p>
+                  <p className="inline-block text-sm text-gra">{item}</p>
                 </div>
               ))}
             </div>
           </div>
 
-          <div className="w-full relative">
+          <div className="relative w-full">
             {noIncluye.length === 0 && (
-              <p className="text-sm text-red-500 font-medium mt-2 ml-1 absolute -top-2 left-15">
+              <p className="absolute mt-2 ml-1 text-sm font-medium text-red-500 -top-2 left-15">
                 {otherErrors.noIncluye}
               </p>
             )}
             <img
               src={iconoAdd}
               alt=""
-              className="rounded-full absolute right-2 bg-white top-8  p-1 cursor-pointer"
+              className="absolute p-1 bg-white rounded-full cursor-pointer right-2 top-8"
               onClick={() => {
                 if (textNoIncluye.trim() !== '') {
                   setNoIncluye((estado) => [...estado, textNoIncluye.trim()])
@@ -491,28 +485,28 @@ const CrearLunaDeMiel = () => {
               {eliminarDuplicado(noIncluye).map((item) => (
                 <div
                   key={item}
-                  className="flex  items-center  gap-x-3 px-2 cursor-pointer "
+                  className="flex items-center px-2 cursor-pointer gap-x-3 "
                   onClick={() => eliminarItem(item, noIncluye, setNoIncluye)}
                 >
                   <span className="text-sm text-red-600">X</span>
-                  <p className="text-sm  inline-block text-gra">{item}</p>
+                  <p className="inline-block text-sm text-gra">{item}</p>
                 </div>
               ))}
             </div>
           </div>
         </div>
 
-        <div className="flex flex-col lg:flex-row lg:space-x-4 items-start mb-5">
-          <div className="w-full relative">
+        <div className="flex flex-col items-start mb-5 lg:flex-row lg:space-x-4">
+          <div className="relative w-full">
             {actividades.length === 0 && (
-              <p className="text-sm text-red-500 font-medium mt-2 ml-1 absolute -top-2 left-20">
+              <p className="absolute mt-2 ml-1 text-sm font-medium text-red-500 -top-2 left-20">
                 {otherErrors.actividades}
               </p>
             )}
             <img
               src={iconoAdd}
               alt=""
-              className="rounded-full absolute right-2 bg-white top-8  p-1 cursor-pointer"
+              className="absolute p-1 bg-white rounded-full cursor-pointer right-2 top-8"
               onClick={() => {
                 if (textAactividades.trim() !== '') {
                   setActividades((estado) => [
@@ -547,27 +541,27 @@ const CrearLunaDeMiel = () => {
               {eliminarDuplicado(actividades).map((item) => (
                 <div
                   key={item}
-                  className="flex  items-center  gap-x-3 px-2 cursor-pointer "
+                  className="flex items-center px-2 cursor-pointer gap-x-3 "
                   onClick={() =>
                     eliminarItem(item, actividades, setActividades)
                   }
                 >
                   <span className="text-sm text-red-600">X</span>
-                  <p className="text-sm  inline-block text-gra">{item}</p>
+                  <p className="inline-block text-sm text-gra">{item}</p>
                 </div>
               ))}
             </div>
           </div>
-          <div className="w-full relative">
+          <div className="relative w-full">
             {notas.length === 0 && (
-              <p className="text-sm text-red-500 font-medium mt-2 ml-1 absolute -top-2 left-15">
+              <p className="absolute mt-2 ml-1 text-sm font-medium text-red-500 -top-2 left-15">
                 {otherErrors.notas}
               </p>
             )}
             <img
               src={iconoAdd}
               alt=""
-              className="rounded-full absolute right-2 bg-white top-8  p-1 cursor-pointer"
+              className="absolute p-1 bg-white rounded-full cursor-pointer right-2 top-8"
               onClick={() => {
                 if (textNotas.trim() !== '') {
                   setNotas((estado) => [...estado, textNotas.trim()])
@@ -597,28 +591,28 @@ const CrearLunaDeMiel = () => {
               {eliminarDuplicado(notas).map((item) => (
                 <div
                   key={item}
-                  className="flex  items-center  gap-x-3 px-2 cursor-pointer "
+                  className="flex items-center px-2 cursor-pointer gap-x-3 "
                   onClick={() => eliminarItem(item, notas, setNotas)}
                 >
                   <span className="text-sm text-red-600">X</span>
-                  <p className="text-sm  inline-block text-gra">{item}</p>
+                  <p className="inline-block text-sm text-gra">{item}</p>
                 </div>
               ))}
             </div>
           </div>
         </div>
 
-        <div className="flex flex-col lg:flex-row lg:space-x-4 items-start mb-5">
-          <div className="w-full relative">
+        <div className="flex flex-col items-start mb-5 lg:flex-row lg:space-x-4">
+          <div className="relative w-full">
             {keywords.length === 0 && (
-              <p className="text-sm text-red-500 font-medium mt-2 ml-1 absolute -top-2 left-15">
+              <p className="absolute mt-2 ml-1 text-sm font-medium text-red-500 -top-2 left-15">
                 {otherErrors.keywords}
               </p>
             )}
             <img
               src={iconoAdd}
               alt=""
-              className="rounded-full absolute right-2 bg-white top-8  p-1 cursor-pointer"
+              className="absolute p-1 bg-white rounded-full cursor-pointer right-2 top-8"
               onClick={() => {
                 if (textKeywords.trim() !== '') {
                   setKeywords((estado) => [...estado, textKeywords.trim()])
@@ -647,25 +641,25 @@ const CrearLunaDeMiel = () => {
               {eliminarDuplicado(keywords).map((item) => (
                 <div
                   key={item}
-                  className="flex  items-center  gap-x-3 px-2 cursor-pointer "
+                  className="flex items-center px-2 cursor-pointer gap-x-3 "
                   onClick={() => eliminarItem(item, keywords, setKeywords)}
                 >
                   <span className="text-sm text-red-600">X</span>
-                  <p className="text-sm  inline-block text-gra">{item}</p>
+                  <p className="inline-block text-sm text-gra">{item}</p>
                 </div>
               ))}
             </div>
           </div>
-          <div className="w-full relative">
+          <div className="relative w-full">
             {politicas.length === 0 && (
-              <p className="text-sm text-red-500 font-medium mt-2 ml-1 absolute -top-2 left-40">
+              <p className="absolute mt-2 ml-1 text-sm font-medium text-red-500 -top-2 left-40">
                 {otherErrors.politicas}
               </p>
             )}
             <img
               src={iconoAdd}
               alt=""
-              className="rounded-full absolute right-2 bg-white top-8  p-1 cursor-pointer"
+              className="absolute p-1 bg-white rounded-full cursor-pointer right-2 top-8"
               onClick={() => {
                 if (textPoliticas.trim() !== '') {
                   setPoliticas((estado) => [...estado, textPoliticas.trim()])
@@ -695,17 +689,17 @@ const CrearLunaDeMiel = () => {
               {eliminarDuplicado(politicas).map((item) => (
                 <div
                   key={item}
-                  className="flex  items-center  gap-x-3 px-2 cursor-pointer "
+                  className="flex items-center px-2 cursor-pointer gap-x-3 "
                   onClick={() => eliminarItem(item, politicas, setPoliticas)}
                 >
                   <span className="text-sm text-red-600">X</span>
-                  <p className="text-sm  inline-block text-gra">{item}</p>
+                  <p className="inline-block text-sm text-gra">{item}</p>
                 </div>
               ))}
             </div>
           </div>
         </div>
-        <div className="flex flex-col lg:flex-row lg:space-x-4 items-center mb-5">
+        <div className="flex flex-col items-center mb-5 lg:flex-row lg:space-x-4">
           <InputText
             name="precioBase"
             label="Precio Base"
@@ -716,7 +710,7 @@ const CrearLunaDeMiel = () => {
             value={form.precioBase}
           />
         </div>
-        <div className="flex flex-col lg:flex-row lg:space-x-4 items-center mb-5">
+        <div className="flex flex-col items-center mb-5 lg:flex-row lg:space-x-4">
           <InputText
             name="video"
             label="Video de Presentacion"
@@ -727,10 +721,10 @@ const CrearLunaDeMiel = () => {
             value={form.video}
           />
         </div>
-        <p className="mb-3 text-gray-700 text-left text-sm">
+        <p className="mb-3 text-sm text-left text-gray-700">
           Agregar imagen principal y secundaria
         </p>
-        <div className="grid grid-cols-auto gap-4 max-w-4xl mx-auto mb-5">
+        <div className="grid max-w-4xl gap-4 mx-auto mb-5 grid-cols-auto">
           <div className="aspect-w-16 aspect-h-9">
             {/* La propiedad value recibe un objecto con id, url y descripcion */}
             {/* La propiedad onChange devuelve un objecto con id, url y descripcion */}
@@ -748,7 +742,7 @@ const CrearLunaDeMiel = () => {
             />
           </div>
         </div>
-        <p className="mb-3 text-gray-700 text-left text-sm">
+        <p className="mb-3 text-sm text-left text-gray-700">
           Agregar imagen a la galeria
         </p>
         {/* La propiedad value recibe un Array de objetos con id, url y descripcion */}

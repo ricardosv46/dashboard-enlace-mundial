@@ -17,13 +17,14 @@ import { useDepartamentosServices } from '../../../services/useDepartamentosServ
 import { useProvinciasServices } from '../../../services/useProvinciasServices'
 import { useIncluyeServices } from '../../../services/useIncluyeServices'
 import { useActividadesServices } from '../../../services/useActividadesServices'
+import EditorAdvanzado from '../../../components/EditorAdvanzado/EditorAdvanzado'
+import { isEmpty } from '../../../utils/isEmpty'
 const initialForm = {
   titulo: '',
   categorias: '1',
   departamento: '1',
   provincia: '1',
   descripcionCorta: '',
-  descripcionLarga: '',
   puntoPartida: '',
   video: '',
   incluye: ' ',
@@ -37,16 +38,13 @@ const initialForm = {
 const validationsForm = (form) => {
   // eslint-disable-next-line prefer-const
   let errors = {}
-  if (!form.titulo.trim()) {
+  if (isEmpty(form.titulo)) {
     errors.titulo = 'El campo Título es requerido'
   }
-  if (!form.categorias.trim()) {
+  if (isEmpty(form.categorias)) {
     errors.categoria = 'Debe de Seleccionar una Categoria'
   }
-  if (!form.descripcionLarga.trim()) {
-    errors.descripcionLarga = 'Debe de poner alguna descripcion para el Tour'
-  }
-  if (!form.puntoPartida.trim()) {
+  if (isEmpty(form.puntoPartida)) {
     errors.puntoPartida = 'Debe de Ingresar un punto de partida'
   }
   return errors
@@ -85,7 +83,7 @@ const CrearTour = () => {
   const [mainImage, setMainImage] = useState(null)
   const [secondaryImage, setSecondaryImage] = useState(null)
   const [galery, setGalery] = useState([])
-
+  const [descripcionLargaTour, setDescripcionLargaTour] = useState('')
   const eliminarItem = (value, data, setData) => {
     if (data.length === 0) {
       setData([])
@@ -98,8 +96,6 @@ const CrearTour = () => {
     const newData = new Set(data)
     return [...newData]
   }
-
-  console.log(dataActividades)
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -114,7 +110,7 @@ const CrearTour = () => {
       politicas.length > 0 &&
       mainImage &&
       secondaryImage &&
-      galery.length > 0
+      galery.length > 0 && descripcionLargaTour.length > 0
     ) {
       createTour({
         ActividadesTour: eliminarDuplicado(actividades),
@@ -124,7 +120,7 @@ const CrearTour = () => {
         ciudadTour: form.ciudadTour,
         regionTour: form.regionTour,
         descripcionCortaTour: form.descripcionCorta,
-        descripcionLargaTour: form.descripcionLarga,
+        descripcionLargaTour,
         destacadoTour: 'Desactivado',
         estadoTour: 'Activado',
         galeriaTour: galery.map((img) => img.id),
@@ -207,20 +203,23 @@ const CrearTour = () => {
     if (politicas.length === 0) {
       otherErrors.politicas = '( Ingrese una política )'
     }
-  }, [handleSubmit])
+    if (descripcionLargaTour.length === 0) {
+      otherErrors.descripcionLargaTour = 'Debe de poner alguna descripción larga para la publicación'
+    }
+  }, [descripcionLargaTour, keywords, itinerario, incluye, noIncluye, actividades, notas, politicas])
 
   return (
-    <div className=" md:rounded bg-white p-5 py-10 md:p-10 animate__fadeIn animate__animated">
-      <div className="flex justify-center pt-3 relative">
+    <div className="p-5 py-10 bg-white md:rounded md:p-10 animate__fadeIn animate__animated">
+      <div className="relative flex justify-center pt-3">
         <ButtonBack />
 
         <Heading>Crear Nuevo Tour</Heading>
       </div>
       <form
         onSubmit={handleSubmit}
-        className="w-full lg:px-4 px-0 mx-auto py-10"
+        className="w-full px-0 py-10 mx-auto lg:px-4"
       >
-        <div className="flex flex-col lg:flex-row lg:space-x-4 mb-5 gap-y-5">
+        <div className="flex flex-col mb-5 lg:flex-row lg:space-x-4 gap-y-5">
           <div className="w-full">
             <InputText
               name="titulo"
@@ -231,7 +230,7 @@ const CrearTour = () => {
               value={form.titulo}
             />
             {errors.titulo && (
-              <p className="text-sm text-red-500 font-medium mt-2 ml-1">
+              <p className="mt-2 ml-1 text-sm font-medium text-red-500">
                 {errors.titulo}
               </p>
             )}
@@ -240,12 +239,12 @@ const CrearTour = () => {
           <div className="flex flex-col w-full mb-4 lg:mb-0">
             <label
               htmlFor="categorias"
-              className="block text-gray-700 text-left text-sm"
+              className="block text-sm text-left text-gray-700"
             >
               Categorias
             </label>
             <select
-              className="cursor-pointer w-full text-sm text-black transition ease-in duration-150 px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
+              className="w-full px-4 py-3 mt-2 text-sm text-black transition duration-150 ease-in bg-gray-200 border rounded-lg cursor-pointer focus:border-blue-500 focus:bg-white focus:outline-none"
               id="categorias"
               name="categorias"
               onChange={handleInputChange}
@@ -265,24 +264,24 @@ const CrearTour = () => {
               )}
             </select>
             {errors.categoria && (
-              <p className="text-sm text-red-500 font-medium mt-2 ml-1">
+              <p className="mt-2 ml-1 text-sm font-medium text-red-500">
                 {errors.categoria}
               </p>
             )}
           </div>
         </div>
 
-        <div className="flex flex-col lg:flex-row lg:space-x-4 mb-5">
+        <div className="flex flex-col mb-5 lg:flex-row lg:space-x-4">
           <div className="flex flex-col w-full mb-4 lg:mb-0">
             <label
               htmlFor="departamento"
-              className="block text-gray-700 text-left text-sm"
+              className="block text-sm text-left text-gray-700"
             >
               Departamento
             </label>
             <select
               required
-              className="cursor-pointer w-full text-sm text-black transition ease-in duration-150 px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
+              className="w-full px-4 py-3 mt-2 text-sm text-black transition duration-150 ease-in bg-gray-200 border rounded-lg cursor-pointer focus:border-blue-500 focus:bg-white focus:outline-none"
               id="departamento"
               name="departamento"
               onChange={handleInputChange}
@@ -303,12 +302,12 @@ const CrearTour = () => {
           <div className="flex flex-col w-full mb-4 lg:mb-0">
             <label
               htmlFor="provincia"
-              className="block text-gray-700 text-left text-sm"
+              className="block text-sm text-left text-gray-700"
             >
               Provincia
             </label>
             <select
-              className="cursor-pointer w-full text-sm text-black transition ease-in duration-150 px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
+              className="w-full px-4 py-3 mt-2 text-sm text-black transition duration-150 ease-in bg-gray-200 border rounded-lg cursor-pointer focus:border-blue-500 focus:bg-white focus:outline-none"
               id="provincia"
               name="provincia"
               onChange={handleInputChange}
@@ -329,23 +328,16 @@ const CrearTour = () => {
           </div>
         </div>
 
-        <div className="flex flex-col  lg:space-x-4  mb-5">
-          <TextArea
-            label="Descripción Larga"
-            name="descripcionLarga"
-            rows="2"
-            onChange={handleInputChange}
-            onBlur={handleBlur}
-            value={form.descripcionLarga}
-            required
-          />
-          {errors.descripcionLarga && (
-            <p className="text-sm text-red-500 font-medium mt-2 ml-1">
-              {errors.descripcionLarga}
+        <div className="flex flex-col mb-5 lg:space-x-4">
+          <EditorAdvanzado titulo='Descripcion Larga' content={descripcionLargaTour} setContent={setDescripcionLargaTour} />
+          {descripcionLargaTour.length === 0 && (
+            <p className="mt-2 ml-1 text-sm font-medium text-red-500">
+              {otherErrors.descripcionLargaTour}
             </p>
           )}
+
         </div>
-        <div className="flex flex-col lg:flex-row lg:space-x-4 items-center mb-5">
+        <div className="flex flex-col items-center mb-5 lg:flex-row lg:space-x-4">
           <TextArea
             label="Descripción Corta"
             name="descripcionCorta"
@@ -355,12 +347,12 @@ const CrearTour = () => {
           />
         </div>
 
-        <div className="flex flex-col lg:flex-row lg:space-x-4 items-start mb-5">
-          <div className="w-full relative ">
+        <div className="flex flex-col items-start mb-5 lg:flex-row lg:space-x-4">
+          <div className="relative w-full ">
             <img
               src={iconoAdd}
               alt=""
-              className="rounded-full absolute right-2 bg-white top-8 border p-1 cursor-pointer"
+              className="absolute p-1 bg-white border rounded-full cursor-pointer right-2 top-8"
               onClick={() => {
                 if (textItinerario.trim() !== '') {
                   setItinerario((estado) => [...estado, textItinerario.trim()])
@@ -369,7 +361,7 @@ const CrearTour = () => {
               }}
             />
             {itinerario.length === 0 && (
-              <p className="text-sm text-red-500 font-medium mt-2 ml-1 absolute -top-2 left-15">
+              <p className="absolute mt-2 ml-1 text-sm font-medium text-red-500 -top-2 left-15">
                 {otherErrors.itinerario}
               </p>
             )}
@@ -397,11 +389,11 @@ const CrearTour = () => {
               {eliminarDuplicado(itinerario).map((item) => (
                 <div
                   key={item}
-                  className="flex  items-center  gap-x-3 px-2 cursor-pointer "
+                  className="flex items-center px-2 cursor-pointer gap-x-3 "
                   onClick={() => eliminarItem(item, itinerario, setItinerario)}
                 >
                   <span className="text-sm text-red-600">X</span>
-                  <p className="text-sm  inline-block text-gra">{item}</p>
+                  <p className="inline-block text-sm text-gra">{item}</p>
                 </div>
               ))}
             </div>
@@ -418,26 +410,26 @@ const CrearTour = () => {
             />
 
             {errors.puntoPartida && (
-              <p className="text-sm text-red-500 font-medium mt-2 ml-1">
+              <p className="mt-2 ml-1 text-sm font-medium text-red-500">
                 {errors.puntoPartida}
               </p>
             )}
           </div>
         </div>
 
-        <div className="flex flex-col lg:flex-row lg:space-x-4 items-start mb-5">
+        <div className="flex flex-col items-start mb-5 lg:flex-row lg:space-x-4">
           <div className="w-full">
             <div className="flex gap-2">
-              <p className=" text-sm left-0"> Inluye</p>
+              <p className="left-0 text-sm "> Inluye</p>
               {incluye.length === 0 && (
-                <p className="text-sm text-red-500 font-medium">
+                <p className="text-sm font-medium text-red-500">
                   {otherErrors.incluye}
                 </p>
               )}
             </div>
 
             <select
-              className="cursor-pointer w-full text-sm text-black transition ease-in duration-150 px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
+              className="w-full px-4 py-3 mt-2 text-sm text-black transition duration-150 ease-in bg-gray-200 border rounded-lg cursor-pointer focus:border-blue-500 focus:bg-white focus:outline-none"
               id="incluye"
               name="incluye"
               onChange={(e) => {
@@ -463,7 +455,7 @@ const CrearTour = () => {
               )}
             </select>
             {errors.categoria && (
-              <p className="text-sm text-red-500 font-medium mt-2 ml-1">
+              <p className="mt-2 ml-1 text-sm font-medium text-red-500">
                 {errors.categoria}
               </p>
             )}
@@ -472,11 +464,11 @@ const CrearTour = () => {
               {eliminarDuplicado(incluye).map((item) => (
                 <div
                   key={item}
-                  className="flex  items-center  gap-x-3 px-2 cursor-pointer "
+                  className="flex items-center px-2 cursor-pointer gap-x-3 "
                   onClick={() => eliminarItem(item, incluye, setIncluye)}
                 >
                   <span className="text-sm text-red-600">X</span>
-                  <p className="text-sm  inline-block text-gra">
+                  <p className="inline-block text-sm text-gra">
                     {
                       dataIncluye?.find(
                         (value) => parseInt(value?.incluyeId) === parseInt(item)
@@ -488,16 +480,16 @@ const CrearTour = () => {
             </div>
           </div>
 
-          <div className="w-full relative">
+          <div className="relative w-full">
             {noIncluye.length === 0 && (
-              <p className="text-sm text-red-500 font-medium mt-2 ml-1 absolute -top-2 left-15">
+              <p className="absolute mt-2 ml-1 text-sm font-medium text-red-500 -top-2 left-15">
                 {otherErrors.noIncluye}
               </p>
             )}
             <img
               src={iconoAdd}
               alt=""
-              className="rounded-full absolute right-2 bg-white top-8  p-1 cursor-pointer"
+              className="absolute p-1 bg-white rounded-full cursor-pointer right-2 top-8"
               onClick={() => {
                 if (textNoIncluye.trim() !== '') {
                   setNoIncluye((estado) => [...estado, textNoIncluye.trim()])
@@ -526,30 +518,30 @@ const CrearTour = () => {
               {eliminarDuplicado(noIncluye).map((item) => (
                 <div
                   key={item}
-                  className="flex  items-center  gap-x-3 px-2 cursor-pointer "
+                  className="flex items-center px-2 cursor-pointer gap-x-3 "
                   onClick={() => eliminarItem(item, noIncluye, setNoIncluye)}
                 >
                   <span className="text-sm text-red-600">X</span>
-                  <p className="text-sm  inline-block text-gra">{item}</p>
+                  <p className="inline-block text-sm text-gra">{item}</p>
                 </div>
               ))}
             </div>
           </div>
         </div>
 
-        <div className="flex flex-col lg:flex-row lg:space-x-4 items-start mb-5">
+        <div className="flex flex-col items-start mb-5 lg:flex-row lg:space-x-4">
           <div className="w-full">
             <div className="flex gap-2">
-              <p className=" text-sm left-0">Actividades</p>
+              <p className="left-0 text-sm ">Actividades</p>
               {actividades.length === 0 && (
-                <p className="text-sm text-red-500 font-medium">
+                <p className="text-sm font-medium text-red-500">
                   {otherErrors.actividades}
                 </p>
               )}
             </div>
 
             <select
-              className="cursor-pointer w-full text-sm text-black transition ease-in duration-150 px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
+              className="w-full px-4 py-3 mt-2 text-sm text-black transition duration-150 ease-in bg-gray-200 border rounded-lg cursor-pointer focus:border-blue-500 focus:bg-white focus:outline-none"
               id="actividades"
               name="actividades"
               onChange={(e) => {
@@ -578,13 +570,13 @@ const CrearTour = () => {
               {eliminarDuplicado(actividades).map((item) => (
                 <div
                   key={item}
-                  className="flex  items-center  gap-x-3 px-2 cursor-pointer "
+                  className="flex items-center px-2 cursor-pointer gap-x-3 "
                   onClick={() =>
                     eliminarItem(item, actividades, setActividades)
                   }
                 >
                   <span className="text-sm text-red-600">X</span>
-                  <p className="text-sm  inline-block text-gra">
+                  <p className="inline-block text-sm text-gra">
                     {
                       dataActividades?.find(
                         (value) =>
@@ -596,16 +588,16 @@ const CrearTour = () => {
               ))}
             </div>
           </div>
-          <div className="w-full relative">
+          <div className="relative w-full">
             {notas.length === 0 && (
-              <p className="text-sm text-red-500 font-medium mt-2 ml-1 absolute -top-2 left-15">
+              <p className="absolute mt-2 ml-1 text-sm font-medium text-red-500 -top-2 left-15">
                 {otherErrors.notas}
               </p>
             )}
             <img
               src={iconoAdd}
               alt=""
-              className="rounded-full absolute right-2 bg-white top-8  p-1 cursor-pointer"
+              className="absolute p-1 bg-white rounded-full cursor-pointer right-2 top-8"
               onClick={() => {
                 if (textNotas.trim() !== '') {
                   setNotas((estado) => [...estado, textNotas.trim()])
@@ -635,28 +627,28 @@ const CrearTour = () => {
               {eliminarDuplicado(notas).map((item) => (
                 <div
                   key={item}
-                  className="flex  items-center  gap-x-3 px-2 cursor-pointer "
+                  className="flex items-center px-2 cursor-pointer gap-x-3 "
                   onClick={() => eliminarItem(item, notas, setNotas)}
                 >
                   <span className="text-sm text-red-600">X</span>
-                  <p className="text-sm  inline-block text-gra">{item}</p>
+                  <p className="inline-block text-sm text-gra">{item}</p>
                 </div>
               ))}
             </div>
           </div>
         </div>
 
-        <div className="flex flex-col lg:flex-row lg:space-x-4 items-start mb-5">
-          <div className="w-full relative">
+        <div className="flex flex-col items-start mb-5 lg:flex-row lg:space-x-4">
+          <div className="relative w-full">
             {keywords.length === 0 && (
-              <p className="text-sm text-red-500 font-medium mt-2 ml-1 absolute -top-2 left-15">
+              <p className="absolute mt-2 ml-1 text-sm font-medium text-red-500 -top-2 left-15">
                 {otherErrors.keywords}
               </p>
             )}
             <img
               src={iconoAdd}
               alt=""
-              className="rounded-full absolute right-2 bg-white top-8  p-1 cursor-pointer"
+              className="absolute p-1 bg-white rounded-full cursor-pointer right-2 top-8"
               onClick={() => {
                 if (textKeywords.trim() !== '') {
                   setKeywords((estado) => [...estado, textKeywords.trim()])
@@ -685,25 +677,25 @@ const CrearTour = () => {
               {eliminarDuplicado(keywords).map((item) => (
                 <div
                   key={item}
-                  className="flex  items-center  gap-x-3 px-2 cursor-pointer "
+                  className="flex items-center px-2 cursor-pointer gap-x-3 "
                   onClick={() => eliminarItem(item, keywords, setKeywords)}
                 >
                   <span className="text-sm text-red-600">X</span>
-                  <p className="text-sm  inline-block text-gra">{item}</p>
+                  <p className="inline-block text-sm text-gra">{item}</p>
                 </div>
               ))}
             </div>
           </div>
-          <div className="w-full relative">
+          <div className="relative w-full">
             {politicas.length === 0 && (
-              <p className="text-sm text-red-500 font-medium mt-2 ml-1 absolute -top-2 left-40">
+              <p className="absolute mt-2 ml-1 text-sm font-medium text-red-500 -top-2 left-40">
                 {otherErrors.politicas}
               </p>
             )}
             <img
               src={iconoAdd}
               alt=""
-              className="rounded-full absolute right-2 bg-white top-8  p-1 cursor-pointer"
+              className="absolute p-1 bg-white rounded-full cursor-pointer right-2 top-8"
               onClick={() => {
                 if (textPoliticas.trim() !== '') {
                   setPoliticas((estado) => [...estado, textPoliticas.trim()])
@@ -733,17 +725,17 @@ const CrearTour = () => {
               {eliminarDuplicado(politicas).map((item) => (
                 <div
                   key={item}
-                  className="flex  items-center  gap-x-3 px-2 cursor-pointer "
+                  className="flex items-center px-2 cursor-pointer gap-x-3 "
                   onClick={() => eliminarItem(item, politicas, setPoliticas)}
                 >
                   <span className="text-sm text-red-600">X</span>
-                  <p className="text-sm  inline-block text-gra">{item}</p>
+                  <p className="inline-block text-sm text-gra">{item}</p>
                 </div>
               ))}
             </div>
           </div>
         </div>
-        <div className="flex flex-col lg:flex-row lg:space-x-4 items-center gap-y-4 mb-5">
+        <div className="flex flex-col items-center mb-5 lg:flex-row lg:space-x-4 gap-y-4">
           <InputText
             name="regionTour"
             label="Region"
@@ -764,7 +756,7 @@ const CrearTour = () => {
           />
         </div>
 
-        <div className="flex flex-col lg:flex-row lg:space-x-4 items-center gap-y-4 mb-5">
+        <div className="flex flex-col items-center mb-5 lg:flex-row lg:space-x-4 gap-y-4">
           <InputText
             name="video"
             label="Video de Presentacion"
@@ -784,7 +776,7 @@ const CrearTour = () => {
           />
         </div>
 
-        <div className="flex flex-col lg:flex-row lg:space-x-4 items-center gap-y-4 mb-5">
+        <div className="flex flex-col items-center mb-5 lg:flex-row lg:space-x-4 gap-y-4">
           <InputText
             name="numeroDias"
             label="Número de Días"
@@ -805,10 +797,10 @@ const CrearTour = () => {
           />
         </div>
 
-        <p className="mb-3 text-gray-700 text-left text-sm">
+        <p className="mb-3 text-sm text-left text-gray-700">
           Agregar imagen principal y secundaria
         </p>
-        <div className="grid grid-cols-auto gap-4 max-w-4xl mx-auto mb-5">
+        <div className="grid max-w-4xl gap-4 mx-auto mb-5 grid-cols-auto">
           <div className="aspect-w-16 aspect-h-9">
             {/* La propiedad value recibe un objecto con id, url y descripcion */}
             {/* La propiedad onChange devuelve un objecto con id, url y descripcion */}
@@ -827,7 +819,7 @@ const CrearTour = () => {
           </div>
         </div>
 
-        <p className="mb-3 text-gray-700 text-left text-sm">
+        <p className="mb-3 text-sm text-left text-gray-700">
           Agregar imagen a la galeria
         </p>
         {/* La propiedad value recibe un Array de objetos con id, url y descripcion */}
